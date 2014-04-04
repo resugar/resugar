@@ -16,7 +16,6 @@ $ npm install [--save-dev] esnext
 * Allow using future JavaScript syntax today.
 * Require as little runtime code as possible.
 * Generate human-readable code.
-* TODO: Provide source maps from the original source to compiled source.
 * TODO: Integrate with build tools such as [broccoli][broccoli].
 
 ## Non-Goals
@@ -50,7 +49,9 @@ in the future.
 
 ```js
 var compile = require('esnext').compile;
-console.log(compile(es6Source).code);
+var result = compile(es6Source);
+fs.writeFileSync('result.js', result.code, 'utf8');
+fs.writeFileSync('result.js.map', JSON.stringify(result.map), 'utf8');
 ```
 
 ## Contributing
@@ -89,9 +90,19 @@ When you have a change you'd like to see in the master repository, [send a pull
 request](https://github.com/square/esnext/pulls). Before we merge your
 request, we'll make sure you're in the list of people who have signed a CLA.
 
+## Acknowledgements
+
+Huge thanks to [Ben Newman][benjamn] for [recast][recast] and
+[regenerator][regenerator]. Thanks also to [Thomas Boyt][thomasboyt] for his
+work on the [es6-module-transpiler][es6-module-transpiler],
+[es6-class][es6-class], [es6-arrow-function][es6-arrow-function], and others.
+
+[benjamn]: https://github.com/benjamn
 [broccoli]: https://github.com/joliss/broccoli
 [es6-arrow-function]: https://github.com/square/es6-arrow-function
 [es6-class]: https://github.com/square/es6-class
 [es6-module-transpiler]: https://github.com/square/es6-module-transpiler
+[recast]: https://github.com/benjamn/recast
 [regenerator]: http://facebook.github.io/regenerator/
+[thomasboyt]: http://www.thomasboyt.com/
 [traceur]: https://github.com/google/traceur-compiler
