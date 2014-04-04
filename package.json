@@ -1,0 +1,30 @@
+{
+  "name": "esnext",
+  "version": "0.0.0",
+  "description": "Transform next-generation JavaScript to today's JavaScript.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "node test/runner.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/square/esnext"
+  },
+  "keywords": [
+    "es6"
+  ],
+  "author": "Square, Inc.",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/square/esnext/issues"
+  },
+  "homepage": "https://github.com/square/esnext",
+  "devDependencies": {
+    "example-runner": "0.0.2"
+  },
+  "dependencies": {
+    "es6-class": "^0.2.0",
+    "es6-arrow-function": "^0.2.0",
+    "regenerator": "^0.4.5"
+  }
+}
