@@ -20,11 +20,13 @@
   },
   "homepage": "https://github.com/square/esnext",
   "devDependencies": {
-    "example-runner": "0.0.2"
+    "example-runner": "^0.0.3"
   },
   "dependencies": {
     "es6-class": "^0.2.0",
     "es6-arrow-function": "^0.2.0",
-    "regenerator": "^0.4.5"
+    "regenerator": "^0.4.5",
+    "esprima": "git://github.com/ariya/esprima.git#harmony",
+    "recast": "^0.5.14"
   }
 }
