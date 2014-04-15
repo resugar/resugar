@@ -20,6 +20,10 @@ class Counter {
   toString() {
     return `[Counter count=${this.count}]`;
   }
+
+  static forCounts(...counts) {
+    return counts.map(count => new this(count));
+  }
 }
 
 function* upto(n) {
@@ -45,3 +49,8 @@ assert.equal(counter.count, 3);
 counter.consume(upto(4));
 assert.equal(counter.count, 13);
 assert.equal(counter.toString(), '[Counter count=13]');
+
+assert.deepEqual(
+  Counter.forCounts(9, 99).map(counter => counter.count),
+  [9, 99]
+);

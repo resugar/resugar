@@ -31,12 +31,12 @@ $ npm install [--save-dev] esnext
 * generators (via [regenerator][regenerator])
 * arrow functions (via [es6-arrow-function][es6-arrow-function])
 * template strings (via [es6-templates][es6-templates])
+* rest params (via [es6-rest-params][es6-rest-params])
 
 ### TODO
 
 * modules (integration with [es6-module-transpiler][es6-module-transpiler] required)
 * spread arguments
-* rest parameters
 * block scoping (`let`)
 * destructuring
 
@@ -103,6 +103,7 @@ work on the [es6-module-transpiler][es6-module-transpiler],
 [es6-arrow-function]: https://github.com/square/es6-arrow-function
 [es6-class]: https://github.com/square/es6-class
 [es6-module-transpiler]: https://github.com/square/es6-module-transpiler
+[es6-rest-params]: https://github.com/thomasboyt/es6-rest-params
 [es6-templates]: https://github.com/square/es6-templates
 [es6features]: https://github.com/lukehoban/es6features
 [recast]: https://github.com/benjamn/recast
