@@ -16,6 +16,10 @@ class Counter {
       this.count += info.value;
     }
   }
+
+  toString() {
+    return `[Counter count=${this.count}]`;
+  }
 }
 
 function* upto(n) {
@@ -40,3 +44,4 @@ assert.equal(counter.count, 3);
 
 counter.consume(upto(4));
 assert.equal(counter.count, 13);
+assert.equal(counter.toString(), '[Counter count=13]');

@@ -30,6 +30,7 @@ $ npm install [--save-dev] esnext
 * classes (via [es6-class][es6-class])
 * generators (via [regenerator][regenerator])
 * arrow functions (via [es6-arrow-function][es6-arrow-function])
+* template strings (via [es6-templates][es6-templates])
 
 ### TODO
 
@@ -40,10 +41,10 @@ $ npm install [--save-dev] esnext
 * destructuring
 
 Any omissions here are not intentional and we'd love to integrate support for
-more future JavaScript syntax. See the Contributing section below. Keep in mind
-that, as of right now, this project is intended to support new JavaScript
-*syntax* only. Any new APIs should be handled using polyfills. This may change
-in the future.
+more future JavaScript syntax (see [es6features][es6features] for a more
+complete list). See the Contributing section below. Keep in mind that, as of
+right now, this project is intended to support new JavaScript *syntax* only.
+Any new APIs should be handled using polyfills. This may change in the future.
 
 ## Usage
 
@@ -102,6 +103,8 @@ work on the [es6-module-transpiler][es6-module-transpiler],
 [es6-arrow-function]: https://github.com/square/es6-arrow-function
 [es6-class]: https://github.com/square/es6-class
 [es6-module-transpiler]: https://github.com/square/es6-module-transpiler
+[es6-templates]: https://github.com/square/es6-templates
+[es6features]: https://github.com/lukehoban/es6features
 [recast]: https://github.com/benjamn/recast
 [regenerator]: http://facebook.github.io/regenerator/
 [thomasboyt]: http://www.thomasboyt.com/
