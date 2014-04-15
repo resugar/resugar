@@ -29,7 +29,7 @@
     "esprima": "git://github.com/ariya/esprima.git#harmony",
     "recast": "^0.5.14",
     "through": "^2.3.4",
-    "es6-templates": "0.0.1",
+    "es6-templates": "^0.0.2",
     "ast-types": "^0.3.23"
   }
 }
