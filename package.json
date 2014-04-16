@@ -24,13 +24,14 @@
     "es6-rest-params": "^0.1.0"
   },
   "dependencies": {
-    "es6-class": "^0.3.1",
+    "es6-class": "^0.3.3",
     "es6-arrow-function": "^0.3.0",
     "regenerator": "^0.4.5",
     "esprima": "git://github.com/ariya/esprima.git#harmony",
     "recast": "^0.5.14",
     "through": "^2.3.4",
     "es6-templates": "^0.0.2",
-    "ast-types": "^0.3.23"
+    "ast-types": "^0.3.23",
+    "es6-default-params": "0.0.1"
   }
 }

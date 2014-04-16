@@ -1,8 +1,8 @@
 /* jshint esnext:true */
 
 class Counter {
-  constructor(count) {
-    this.count = count || 0;
+  constructor(count=0) {
+    this.count = count;
   }
 
   makeIncr() {
