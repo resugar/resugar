@@ -32,6 +32,7 @@ $ npm install [--save-dev] esnext
 * arrow functions (via [es6-arrow-function][es6-arrow-function])
 * template strings (via [es6-templates][es6-templates])
 * rest params (via [es6-rest-params][es6-rest-params])
+* default params (via [es6-default-params][es6-default-params])
 
 ### TODO
 
@@ -102,6 +103,7 @@ work on the [es6-module-transpiler][es6-module-transpiler],
 [broccoli]: https://github.com/joliss/broccoli
 [es6-arrow-function]: https://github.com/square/es6-arrow-function
 [es6-class]: https://github.com/square/es6-class
+[es6-default-params]: https://github.com/square/es6-default-params
 [es6-module-transpiler]: https://github.com/square/es6-module-transpiler
 [es6-rest-params]: https://github.com/thomasboyt/es6-rest-params
 [es6-templates]: https://github.com/square/es6-templates
