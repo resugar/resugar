@@ -27,19 +27,19 @@ $ npm install [--save-dev] esnext
 
 ### Available
 
-* classes (via [es6-class][es6-class])
-* generators (via [regenerator][regenerator])
-* arrow functions (via [es6-arrow-function][es6-arrow-function])
-* template strings (via [es6-templates][es6-templates])
-* rest params (via [es6-rest-params][es6-rest-params])
-* default params (via [es6-default-params][es6-default-params])
+* [classes][features-classes] (via [es6-class][es6-class])
+* [generators][features-generators] (via [regenerator][regenerator])
+* [arrow functions][features-arrows] (via [es6-arrow-function][es6-arrow-function])
+* [template strings][features-template-strings] (via [es6-templates][es6-templates])
+* [rest params][features-default-rest-spread] (via [es6-rest-params][es6-rest-params])
+* [default params][features-default-rest-spread] (via [es6-default-params][es6-default-params])
 
 ### TODO
 
-* modules (integration with [es6-module-transpiler][es6-module-transpiler] required)
-* spread arguments
-* block scoping (`let`)
-* destructuring
+* [modules][features-modules] (i.e. integration with [es6-module-transpiler][es6-module-transpiler])
+* [spread arguments][features-default-rest-spread]
+* [block scoping (`let`)][features-let-const]
+* [destructuring][features-destructuring]
 
 Any omissions here are not intentional and we'd love to integrate support for
 more future JavaScript syntax (see [es6features][es6features] for a more
@@ -108,6 +108,14 @@ work on the [es6-module-transpiler][es6-module-transpiler],
 [es6-rest-params]: https://github.com/thomasboyt/es6-rest-params
 [es6-templates]: https://github.com/square/es6-templates
 [es6features]: https://github.com/lukehoban/es6features
+[features-arrows]: https://github.com/lukehoban/es6features#arrows
+[features-classes]: https://github.com/lukehoban/es6features#classes
+[features-default-rest-spread]: https://github.com/lukehoban/es6features#default--rest--spread
+[features-destructuring]: https://github.com/lukehoban/es6features#destructuring
+[features-generators]: https://github.com/lukehoban/es6features#generators
+[features-let-const]: https://github.com/lukehoban/es6features#let--const
+[features-modules]: https://github.com/lukehoban/es6features#modules
+[features-template-strings]: https://github.com/lukehoban/es6features#template-strings
 [recast]: https://github.com/benjamn/recast
 [regenerator]: http://facebook.github.io/regenerator/
 [thomasboyt]: http://www.thomasboyt.com/
