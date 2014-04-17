@@ -54,3 +54,8 @@ assert.deepEqual(
   Counter.forCounts(9, 99).map(counter => counter.count),
   [9, 99]
 );
+
+assert.deepEqual(
+  Counter.forCounts(...[1, 2]).map(counter => counter.count),
+  [1, 2]
+);
