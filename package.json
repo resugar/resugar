@@ -24,7 +24,7 @@
     "es6-rest-params": "^0.1.0"
   },
   "dependencies": {
-    "es6-class": "^0.3.3",
+    "es6-class": "^0.4.0",
     "es6-arrow-function": "^0.3.0",
     "regenerator": "^0.4.5",
     "esprima": "git://github.com/ariya/esprima.git#harmony",
