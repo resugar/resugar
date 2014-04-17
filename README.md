@@ -33,11 +33,11 @@ $ npm install [--save-dev] esnext
 * [template strings][features-template-strings] (via [es6-templates][es6-templates])
 * [rest params][features-default-rest-spread] (via [es6-rest-params][es6-rest-params])
 * [default params][features-default-rest-spread] (via [es6-default-params][es6-default-params])
+* [spread][features-default-rest-spread] (via [es6-spread][es6-spread])
 
 ### TODO
 
 * [modules][features-modules] (i.e. integration with [es6-module-transpiler][es6-module-transpiler])
-* [spread arguments][features-default-rest-spread]
 * [block scoping (`let`)][features-let-const]
 * [destructuring][features-destructuring]
 
@@ -106,6 +106,7 @@ work on the [es6-module-transpiler][es6-module-transpiler],
 [es6-default-params]: https://github.com/square/es6-default-params
 [es6-module-transpiler]: https://github.com/square/es6-module-transpiler
 [es6-rest-params]: https://github.com/thomasboyt/es6-rest-params
+[es6-spread]: https://github.com/square/es6-spread
 [es6-templates]: https://github.com/square/es6-templates
 [es6features]: https://github.com/lukehoban/es6features
 [features-arrows]: https://github.com/lukehoban/es6features#arrows
