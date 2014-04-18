@@ -32,7 +32,7 @@
     "es6-templates": "^0.0.2",
     "ast-types": "^0.3.24",
     "es6-default-params": "^0.0.1",
-    "es6-spread": "^0.0.2",
+    "es6-spread": "^0.0.3",
     "es6-rest-params": "^0.1.0"
   }
 }
