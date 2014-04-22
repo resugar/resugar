@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/square/esnext",
   "devDependencies": {
-    "example-runner": "^0.0.3"
+    "example-runner": "^0.1.0"
   },
   "dependencies": {
     "es6-class": "^0.4.2",
