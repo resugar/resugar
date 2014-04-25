@@ -56,6 +56,11 @@ fs.writeFileSync('result.js', result.code, 'utf8');
 fs.writeFileSync('result.js.map', JSON.stringify(result.map), 'utf8');
 ```
 
+Or, use one of these libraries that integrate esnext with other tools:
+
+* [broccoli-esnext][broccoli-esnext]
+* [grunt-esnext][grunt-esnext]
+
 ## Contributing
 
 [![Build Status](https://travis-ci.org/square/esnext.png?branch=master)](https://travis-ci.org/square/esnext)
@@ -100,6 +105,7 @@ work on the [es6-module-transpiler][es6-module-transpiler],
 [es6-class][es6-class], [es6-arrow-function][es6-arrow-function], and others.
 
 [benjamn]: https://github.com/benjamn
+[broccoli-esnext]: https://github.com/shinnn/broccoli-esnext
 [broccoli]: https://github.com/joliss/broccoli
 [es6-arrow-function]: https://github.com/square/es6-arrow-function
 [es6-class]: https://github.com/square/es6-class
@@ -117,6 +123,7 @@ work on the [es6-module-transpiler][es6-module-transpiler],
 [features-let-const]: https://github.com/lukehoban/es6features#let--const
 [features-modules]: https://github.com/lukehoban/es6features#modules
 [features-template-strings]: https://github.com/lukehoban/es6features#template-strings
+[grunt-esnext]: https://github.com/shinnn/grunt-esnext
 [recast]: https://github.com/benjamn/recast
 [regenerator]: http://facebook.github.io/regenerator/
 [thomasboyt]: http://www.thomasboyt.com/
