@@ -1,6 +1,6 @@
 {
   "name": "esnext",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "description": "Transform next-generation JavaScript to today's JavaScript.",
   "main": "lib/index.js",
   "scripts": {
