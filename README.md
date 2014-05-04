@@ -34,6 +34,7 @@ $ npm install [--save-dev] esnext
 * [rest params][features-default-rest-spread] (via [es6-rest-params][es6-rest-params])
 * [default params][features-default-rest-spread] (via [es6-default-params][es6-default-params])
 * [spread][features-default-rest-spread] (via [es6-spread][es6-spread])
+* [comprehensions][features-comprehensions] (via [es6-comprehensions][es6-comprehensions])
 
 ### TODO
 
@@ -109,6 +110,7 @@ work on the [es6-module-transpiler][es6-module-transpiler],
 [broccoli]: https://github.com/joliss/broccoli
 [es6-arrow-function]: https://github.com/square/es6-arrow-function
 [es6-class]: https://github.com/square/es6-class
+[es6-comprehensions]: https://github.com/dreame4/es6-comprehensions
 [es6-default-params]: https://github.com/square/es6-default-params
 [es6-module-transpiler]: https://github.com/square/es6-module-transpiler
 [es6-rest-params]: https://github.com/thomasboyt/es6-rest-params
@@ -117,6 +119,7 @@ work on the [es6-module-transpiler][es6-module-transpiler],
 [es6features]: https://github.com/lukehoban/es6features
 [features-arrows]: https://github.com/lukehoban/es6features#arrows
 [features-classes]: https://github.com/lukehoban/es6features#classes
+[features-comprehensions]: https://github.com/lukehoban/es6features#comprehensions
 [features-default-rest-spread]: https://github.com/lukehoban/es6features#default--rest--spread
 [features-destructuring]: https://github.com/lukehoban/es6features#destructuring
 [features-generators]: https://github.com/lukehoban/es6features#generators
