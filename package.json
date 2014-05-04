@@ -33,6 +33,7 @@
     "ast-types": "^0.3.27",
     "es6-default-params": "^0.0.2",
     "es6-spread": "^0.0.5",
-    "es6-rest-params": "^0.1.0"
+    "es6-rest-params": "^0.1.0",
+    "es6-comprehensions": "^0.2.1"
   }
 }
