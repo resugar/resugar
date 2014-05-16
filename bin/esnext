@@ -1,0 +1,186 @@
+#!/usr/bin/env node
+
+/* jshint undef:true, unused:true, node:true */
+
+var Path = require('path');
+var fs = require('fs');
+var mkdirp = require('mkdirp');
+var assert = require('assert');
+
+var esnext = require('../lib');
+
+var exe = Path.basename(__filename);
+var puts = makePrintLine(process.stdout);
+var eputs = makePrintLine(process.stderr);
+
+var args = process.argv.slice(2);
+var options = {};
+var files = [];
+var output;
+var sourceMaps = false;
+
+for (var i = 0, length = args.length; i < length; i++) {
+  var arg = args[i];
+
+  switch (arg) {
+    case '-h': case '--help':
+      usage(puts);
+      process.exit(0);
+      break;
+
+    case '-v': case '--version':
+      puts(exe + ' v' + require(Path.join(__dirname, '../package.json')).version);
+      break;
+
+    case '--array-comprehensions': case '--no-array-comprehensions':
+      options.arrayComprehensions = (arg === '--array-comprehensions');
+      break;
+
+    case '--arrow-function': case '--no-arrow-function':
+      options.arrowFunction = (arg === '--arrow-function');
+      break;
+
+    case '--class': case '--no-class':
+      options['class'] = (arg === '--class');
+      break;
+
+    case '--default-params': case '--no-default-params':
+      options.defaultParams = (arg === '--default-params');
+      break;
+
+    case '--generator': case '--no-generator':
+      options.generator = (arg === '--generator');
+      break;
+
+    case '--rest': case '--no-rest':
+      options.rest = (arg === '--rest');
+      break;
+
+    case '--templates': case '--no-templates':
+      options.templates = (arg === '--templates');
+      break;
+
+    case '--source-maps': case '--no-source-maps':
+      sourceMaps = (arg === '--source-maps');
+      break;
+
+    case '--include-runtime': case '--no-include-runtime':
+      options.includeRuntime = (arg === '--include-runtime');
+      break;
+
+    case '-o': case '--output':
+      output = args[++i];
+      if (!output || output[0] === '-') {
+        eputs('error: ' + exe + ' - missing argument for `--output`');
+        process.exit(1);
+      }
+      break;
+
+    default:
+      if (arg[0] === '-') {
+        usage(eputs);
+        process.exit(1);
+      } else {
+        files.push(arg);
+      }
+      break;
+  }
+}
+
+switch (files.length) {
+  case 0:
+    eputs('error: ' + exe + ' - Please provide at least one file to transpile.');
+    process.exit(1);
+    break;
+
+  case 1:
+    if (sourceMaps && !output) {
+      eputs('error: ' + exe + ' - cannot enable source maps when outputting to stdout');
+      process.exit(1);
+    }
+    var target;
+
+    if (fs.existsSync(output) && fs.statSync(output).isDirectory()) {
+      target = Path.join(output, Path.basename(files[0]));
+    } else {
+      target = output;
+    }
+
+    if (target) {
+      transpileFile(files[0], target);
+    } else {
+      var result = esnext.compile(fs.readFileSync(files[0]).toString(), options);
+      process.stdout.write(result.code);
+    }
+    break;
+
+  default:
+    if (!output) {
+      eputs('error: ' + exe + ' - missing argument for `--output`');
+      process.exit(1);
+    }
+    files.forEach(function(file) {
+      transpileFile(file, Path.join(output, file.replace(/^(\.\.\/)+/, '')));
+    });
+    break;
+}
+
+function transpileFile(file, target) {
+  var sourceMapTarget;
+  var fileOptions = Object.create(options);
+  if (sourceMaps) {
+    sourceMapTarget = target + '.map';
+    fileOptions.sourceFileName = target;
+    fileOptions.sourceMapName = sourceMapTarget;
+  }
+  var result = esnext.compile(fs.readFileSync(file).toString(), fileOptions);
+  mkdirp.sync(Path.dirname(target));
+  fs.writeFileSync(target, result.code);
+  if (sourceMaps) {
+    assert.ok(
+      result.map,
+      'expected source map but got nothing for file: ' + file
+    );
+    fs.writeFileSync(sourceMapTarget, JSON.stringify(result.map, null, 2));
+  }
+}
+
+function bold(string) {
+  return '\x1b[01m' + string + '\x1b[0m';
+}
+
+function usage(puts) {
+  puts(exe + ' [<options>] <path> [<path> ...]');
+  puts();
+  puts(bold('Feature Options'));
+  puts();
+  puts('  All ES6 features are on by default. Use --no-[option] to turn one off.');
+  puts();
+  puts('  --array-comprehensions  Transpile array comprehensions.');
+  puts('  --arrow-function        Transpile arrow functions.');
+  puts('  --class                 Transpile classes.');
+  puts('  --default-params        Transpile default parameters.');
+  puts('  --generator             Transpile generator functions.');
+  puts('  --rest                  Transpile rest params.');
+  puts('  --templates             Transpile template strings.');
+  puts();
+  puts(bold('Output Options'));
+  puts();
+  puts('  -o, --output       File or directory to place output.');
+  puts('  --source-maps      Output source maps (off by default).');
+  puts('  --include-runtime  Include any required runtimes (off by default).');
+  puts();
+  puts(bold('Basic Options'));
+  puts();
+  puts('  -v, --version  Print the version.');
+  puts('  -h, --help     Show this help message.');
+}
+
+function makePrintLine(stream) {
+  return function(string) {
+    if (!string || string[string.length - 1] !== '\n') {
+      string = (string || '') + '\n';
+    }
+    stream.write(string);
+  };
+}

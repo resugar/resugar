@@ -34,6 +34,7 @@
     "es6-default-params": "^0.0.2",
     "es6-spread": "^0.0.5",
     "es6-rest-params": "^0.1.1",
-    "es6-comprehensions": "^0.2.2"
+    "es6-comprehensions": "^0.2.2",
+    "mkdirp": "^0.5.0"
   }
 }
