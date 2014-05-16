@@ -26,7 +26,7 @@
     "es6-class": "^0.4.3",
     "es6-arrow-function": "^0.3.1",
     "regenerator": "^0.4.7",
-    "esprima": "git://github.com/ariya/esprima.git#harmony",
+    "esprima": "git://github.com/thomasboyt/esprima#4be906f1abcbb",
     "recast": "^0.5.17",
     "through": "^2.3.4",
     "es6-templates": "^0.0.3",
