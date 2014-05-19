@@ -130,10 +130,12 @@ request, we'll make sure you're in the list of people who have signed a CLA.
 ## Acknowledgements
 
 Huge thanks to [Ben Newman][benjamn] for [recast][recast] and
-[regenerator][regenerator]. Thanks also to [Thomas Boyt][thomasboyt] for his
-work on the [es6-module-transpiler][es6-module-transpiler],
-[es6-class][es6-class], [es6-arrow-function][es6-arrow-function], and others.
+[regenerator][regenerator]. Thanks to [Ariya Hidayat][ariya] for
+[esprima][esprima]. Thanks also to [Thomas Boyt][thomasboyt] for his work on
+the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
+[es6-arrow-function][es6-arrow-function], and others.
 
+[ariya]: https://github.com/ariya
 [benjamn]: https://github.com/benjamn
 [broccoli-esnext]: https://github.com/shinnn/broccoli-esnext
 [broccoli]: https://github.com/joliss/broccoli
@@ -146,6 +148,7 @@ work on the [es6-module-transpiler][es6-module-transpiler],
 [es6-spread]: https://github.com/square/es6-spread
 [es6-templates]: https://github.com/square/es6-templates
 [es6features]: https://github.com/lukehoban/es6features
+[esprima]: https://github.com/ariya/esprima
 [features-arrows]: https://github.com/lukehoban/es6features#arrows
 [features-classes]: https://github.com/lukehoban/es6features#classes
 [features-comprehensions]: https://github.com/lukehoban/es6features#comprehensions
