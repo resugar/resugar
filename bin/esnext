@@ -30,6 +30,7 @@ for (var i = 0, length = args.length; i < length; i++) {
 
     case '-v': case '--version':
       puts(exe + ' v' + require(Path.join(__dirname, '../package.json')).version);
+      process.exit(0);
       break;
 
     case '--array-comprehensions': case '--no-array-comprehensions':
