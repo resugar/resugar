@@ -50,12 +50,41 @@ Any new APIs should be handled using polyfills. This may change in the future.
 
 ## Usage
 
+### As a CLI
+
+esnext ships with a command-line interface that can be used when installed
+globally (or from within your project at `node_modules/.bin/esnext` when
+installed locally). Here's how to compile a single file an print it to stdout:
+
+```
+$ esnext myfile.js
+```
+
+If you don't care about a certain feature, such as arrow functions, you can
+omit support for them like so:
+
+```
+$ esnext --no-arrow-function myfile.js
+```
+
+To compile many files at once, specify an output directory:
+
+```
+$ esnext -o build lib/**/*.js
+```
+
+To enable source maps for these files, add the `--source-maps` flag.
+
+### As a Library
+
 ```js
 var compile = require('esnext').compile;
 var result = compile(es6Source);
 fs.writeFileSync('result.js', result.code, 'utf8');
 fs.writeFileSync('result.js.map', JSON.stringify(result.map), 'utf8');
 ```
+
+### With other tools
 
 Or, use one of these libraries that integrate esnext with other tools:
 
