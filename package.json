@@ -6,6 +6,9 @@
   "scripts": {
     "test": "node test/runner.js"
   },
+  "bin": {
+    "esnext": "./bin/esnext"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/square/esnext"
