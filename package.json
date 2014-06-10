@@ -4,7 +4,7 @@
   "description": "Transform next-generation JavaScript to today's JavaScript.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "node test/runner.js"
+    "test": "make test"
   },
   "bin": {
     "esnext": "./bin/esnext"
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/square/esnext",
   "devDependencies": {
+    "browserify": "^4.1.9",
     "example-runner": "^0.1.0"
   },
   "dependencies": {
