@@ -16,7 +16,6 @@ $ npm install [--save-dev] esnext
 * Allow using future JavaScript syntax today.
 * Require as little runtime code as possible.
 * Generate human-readable code.
-* TODO: Integrate with build tools such as [broccoli][broccoli].
 
 ## Non-Goals
 
