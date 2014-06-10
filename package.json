@@ -9,6 +9,11 @@
   "bin": {
     "esnext": "./bin/esnext"
   },
+  "files": [
+    "lib/index.js",
+    "bin/esnext",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/square/esnext"
