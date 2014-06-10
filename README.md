@@ -1,6 +1,6 @@
 # esnext
 
-Use tomorrow's JavaScript syntax today.
+Use tomorrow's JavaScript syntax today. [Try it now in your browser](http://square.github.io/esnext/).
 
 **NOTE:** This project is early alpha. Use it in production at your own risk.
 For a more robust project with similar goals, see [Google's Traceur][traceur].
