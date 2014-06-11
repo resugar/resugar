@@ -69,8 +69,9 @@ $ esnext --no-arrow-function myfile.js
 To compile many files at once, specify an output directory:
 
 ```
-$ esnext -o build lib/**/*.js
+$ esnext -o build 'lib/**/*.js'
 ```
+Glob strings can be used, see the [node-glob](https://github.com/isaacs/node-glob) and [minimatch](https://github.com/isaacs/minimatch) documentation for more options.
 
 To enable source maps for these files, add the `--source-maps` flag.
 

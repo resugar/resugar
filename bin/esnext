@@ -6,6 +6,7 @@ var Path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var assert = require('assert');
+var glob = require("glob");
 
 var esnext = require('../lib');
 
@@ -88,42 +89,58 @@ for (var i = 0, length = args.length; i < length; i++) {
   }
 }
 
-switch (files.length) {
-  case 0:
-    eputs('error: ' + exe + ' - Please provide at least one file to transpile.');
-    process.exit(1);
-    break;
+prepareFiles();
 
-  case 1:
-    if (sourceMaps && !output) {
-      eputs('error: ' + exe + ' - cannot enable source maps when outputting to stdout');
+function prepareFiles() {
+  switch (files.length) {
+    case 0:
+      eputs('error: ' + exe + ' - Please provide at least one file to transpile.');
       process.exit(1);
-    }
-    var target;
+      break;
 
-    if (fs.existsSync(output) && fs.statSync(output).isDirectory()) {
-      target = Path.join(output, Path.basename(files[0]));
-    } else {
-      target = output;
-    }
+    case 1:
+      if (sourceMaps && !output) {
+        eputs('error: ' + exe + ' - cannot enable source maps when outputting to stdout');
+        process.exit(1);
+      }
+      var target;
 
-    if (target) {
-      transpileFile(files[0], target);
-    } else {
-      var result = esnext.compile(fs.readFileSync(files[0]).toString(), options);
-      process.stdout.write(result.code);
-    }
-    break;
+      if (files[0].indexOf('*') >= 0) {
+        glob(files[0], function(err, globFiles) {
+          if(err) {
+            eputs('error: ' + err);
+            process.exit(1);
+          }
+          files = globFiles;
+          prepareFiles();
+        });
+        return false;
+      }
 
-  default:
-    if (!output) {
-      eputs('error: ' + exe + ' - missing argument for `--output`');
-      process.exit(1);
-    }
-    files.forEach(function(file) {
-      transpileFile(file, Path.join(output, file.replace(/^(\.\.\/)+/, '')));
-    });
-    break;
+      if (fs.existsSync(output) && fs.statSync(output).isDirectory()) {
+        target = Path.join(output, Path.basename(files[0]));
+      } else {
+        target = output;
+      }
+
+      if (target) {
+        transpileFile(files[0], target);
+      } else {
+        var result = esnext.compile(fs.readFileSync(files[0]).toString(), options);
+        process.stdout.write(result.code);
+      }
+      break;
+
+    default:
+      if (!output) {
+        eputs('error: ' + exe + ' - missing argument for `--output`');
+        process.exit(1);
+      }
+      files.forEach(function(file) {
+        transpileFile(file, Path.join(output, file.replace(/^(\.\.\/)+/, '')));
+      });
+      break;
+  }
 }
 
 function transpileFile(file, target) {
