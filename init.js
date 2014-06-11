@@ -30,6 +30,7 @@
 //transpile();
 
 (function() {
+  var source = decodeURIComponent(location.hash.slice(1));
   [].forEach.call(document.querySelectorAll('.input-output'), function(pair) {
     var input = CodeMirror.fromTextArea(pair.querySelector('textarea:nth-of-type(1)'), {
       lineNumbers: true,
@@ -48,6 +49,10 @@
       theme: 'default'
     });
 
+    if (source) {
+      input.setValue(source);
+    }
+
     var errorContainer = pair.querySelector('.error-message');
     var convertTimeout;
     input.on('change', function() {
@@ -59,7 +64,9 @@
 
     function convert() {
       try {
-        output.setValue(esnext.compile(input.getValue()).code);
+        source = input.getValue();
+        location.hash = encodeURIComponent(source);
+        output.setValue(esnext.compile(source).code);
         hideError();
       } catch (ex) {
         console.log('conversion error: ', ex);
