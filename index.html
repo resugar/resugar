@@ -71,6 +71,10 @@
             height: 600px;
         }
 
+        .input-output .CodeMirror, .input-output .console {
+            outline: 1px solid #f7f7f7;
+        }
+
         .input-output .CodeMirror:nth-of-type(1) {
             position: absolute;
             left: 0;
@@ -78,15 +82,43 @@
             right: 50%;
             bottom: 0;
             height: 600px;
+
+            outline-right: none;
+        }
+
+        .input-output .CodeMirror:nth-of-type(2), .input-output .console {
+            position: absolute;
+            left: 50%;
+            right: 0;
+            height: 295px;
         }
 
         .input-output .CodeMirror:nth-of-type(2) {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            right: 0;
             bottom: 0;
-            height: 600px;
+            outline-left: none;
+        }
+
+        .input-output .console {
+            top: 0;
+            outline-bottom: none;
+            overflow: scroll;
+            font-family: Monospace;
+            background-color: white;
+            padding: 5px;
+        }
+
+        .input-output .console .group {
+            border-bottom: 1px solid #f7f7f7;
+            padding: 4px;
+            border-left: 10px solid #f7f7f7;
+        }
+
+        .input-output .console .line {
+            padding: 2px;
+        }
+
+        .input-output .console .group:last-child {
+            border-bottom: none;
         }
 
         .input-output .error-message {
@@ -108,7 +140,7 @@
 <body>
 <div id="body">
 
-    <a href="https://github.com/square"><img src="logotype.png" width="122" height="31"></a>
+    <a href="https://github.com/square"><img src="logotype.png" width="122" height="31" alt="Square"></a>
 
     <h1>esnext</h1>
 
@@ -125,11 +157,11 @@
     <div class="input-output">
         <textarea>/*
 On the left is code written with new JavaScript features,
-and on the right is the same code re-written so it can
-run in today's browsers.
+and on the right is the console output, plus the same code
+re-written so it can run in today's browsers.
 
-Edits made to the code on the left will re-generate the
-code on the right. Try it out!
+Edits made to the code on the left will re-generate and
+re-run the code on the right. Try it out!
 */
 
 // Classes
@@ -149,8 +181,13 @@ class Person {
   }
 }
 
+console.log(
+  'Full name is:',
+  new Person('Michael', 'Bluth')
+);
+
 // Arrow functions
-[1, 2, 3].map(x => x * x);
+console.log([1, 2, 3].map(x => x * x));
 
 // Rest params
 function join(delim, ...items) {
@@ -158,11 +195,11 @@ function join(delim, ...items) {
 }
 
 // Spread args
-join('-', ...[415, 555, 1212]);
+console.log(join('-', ...[415, 555, 1212]));
 </textarea>
 
         <textarea readonly></textarea>
-
+        <div class="console"></div>
         <div class="error-message"></div>
     </div>
 
