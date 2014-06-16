@@ -32,7 +32,7 @@
     "example-runner": "^0.1.0"
   },
   "dependencies": {
-    "es6-class": "^0.4.3",
+    "es6-class": "^0.5.0",
     "es6-arrow-function": "^0.3.1",
     "regenerator": "^0.4.7",
     "esprima": "git://github.com/thomasboyt/esprima#4be906f1abcbb",
