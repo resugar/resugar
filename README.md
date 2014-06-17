@@ -34,11 +34,11 @@ $ npm install [--save-dev] esnext
 * [default params][features-default-rest-spread] (via [es6-default-params][es6-default-params])
 * [spread][features-default-rest-spread] (via [es6-spread][es6-spread])
 * [comprehensions][features-comprehensions] (via [es6-comprehensions][es6-comprehensions])
+* [block scoping (`let/const`)][features-let-const] (via [defs][defs])
 
 ### TODO
 
 * [modules][features-modules] (i.e. integration with [es6-module-transpiler][es6-module-transpiler])
-* [block scoping (`let`)][features-let-const]
 * [destructuring][features-destructuring]
 
 Any omissions here are not intentional and we'd love to integrate support for
@@ -139,6 +139,7 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [benjamn]: https://github.com/benjamn
 [broccoli-esnext]: https://github.com/shinnn/broccoli-esnext
 [broccoli]: https://github.com/joliss/broccoli
+[defs]: https://github.com/olov/defs
 [es6-arrow-function]: https://github.com/square/es6-arrow-function
 [es6-class]: https://github.com/square/es6-class
 [es6-comprehensions]: https://github.com/dreame4/es6-comprehensions
