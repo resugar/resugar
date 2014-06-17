@@ -41,6 +41,10 @@ for (var i = 0, length = args.length; i < length; i++) {
       options.arrowFunction = (arg === '--arrow-function');
       break;
 
+    case '--block-scoping': case '--no-block-scoping':
+      options.blockScoping = (arg === '--block-scoping');
+      break;
+
     case '--class': case '--no-class':
       options['class'] = (arg === '--class');
       break;
@@ -159,6 +163,7 @@ function usage(puts) {
   puts();
   puts('  --array-comprehensions  Transpile array comprehensions.');
   puts('  --arrow-function        Transpile arrow functions.');
+  puts('  --block-scoping         Transpile const and let.');
   puts('  --class                 Transpile classes.');
   puts('  --default-params        Transpile default parameters.');
   puts('  --generator             Transpile generator functions.');
