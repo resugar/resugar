@@ -37,38 +37,3 @@ function example(x) {
   }
 }
 example(true);
-
-// Spec does not support defs says... ??
-// function funWithBlocks() {
-//   assert.throws(function() {
-//     tuce; // ReferenceError: tuce is not defined
-//   }, Error);
-
-//   for( let tuce = 0; tuce < 5; tuce++ ) {
-//     assert.doesNotThrow(function() {
-//       tuce;
-//     });
-//   };
-
-//   assert.throws(function() {
-//     tuce; // ReferenceError: tuce is not defined
-//   }, Error);
-// };
-
-// esprima errors on this Spec??
-// function cray() {
-//   assert.throws(function() {
-//     sNotGetCray; // ReferenceError: sNotGetCray is not defined
-//   }, Error);
-
-//   let( sNotGetCray = 'now' ) {
-//     assert.doesNotThrow(function() {
-//       sNotGetCray;
-//     });
-//   };
-
-//   assert.throws(function() {
-//     sNotGetCray; // ReferenceError: sNotGetCray is not defined
-//   }, Error);
-// };
-// cray();
