@@ -64,3 +64,9 @@ assert.deepEqual(
   [for (x of Counter.forCounts(1, 2, 3).map(counter => counter.count)) x*x],
   [1, 4, 9]
 );
+
+// this.count = count;
+assertMap('all-together', [5,5], [469,7], 'constructor');
+
+// return `[Counter count=${this.count}]`;
+assertMap('all-together', [21,5], [498,11], 'toString return');

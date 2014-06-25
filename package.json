@@ -29,7 +29,8 @@
   "homepage": "https://github.com/square/esnext",
   "devDependencies": {
     "browserify": "^4.1.9",
-    "example-runner": "^0.1.0"
+    "example-runner": "^0.1.0",
+    "source-map": "^0.1.34"
   },
   "dependencies": {
     "es6-class": "^0.5.1",
