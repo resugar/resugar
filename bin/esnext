@@ -61,6 +61,10 @@ for (var i = 0, length = args.length; i < length; i++) {
       options.templates = (arg === '--templates');
       break;
 
+    case '--computed-props': case '--no-computed-props':
+      options.computedProps = (arg === '--computed-props');
+      break;
+
     case '--source-maps': case '--no-source-maps':
       sourceMaps = (arg === '--source-maps');
       break;
@@ -164,6 +168,7 @@ function usage(puts) {
   puts('  --generator             Transpile generator functions.');
   puts('  --rest                  Transpile rest params.');
   puts('  --templates             Transpile template strings.');
+  puts('  --computed-props        Transpile Object Literal computed properties.');
   puts();
   puts(bold('Output Options'));
   puts();
