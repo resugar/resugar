@@ -65,8 +65,13 @@ assert.deepEqual(
   [1, 4, 9]
 );
 
-// this.count = count;
-assertMap('all-together', [5,5], [469,7], 'constructor');
+assertMap('all-together', [3,6], [468,4], 'Class Counter');
 
-// return `[Counter count=${this.count}]`;
-assertMap('all-together', [21,5], [498,11], 'toString return');
+assertMap('all-together', [4,15], [470,9], 'default param inside constructor');
+
+assertMap('all-together', [5,5], [471,5], 'this.count = count');
+
+assertMap('all-together', [21,5], [500,7], 'toString() return');
+
+assertMap('all-together', [24,23], [509,11], 'rest of forCounts()');
+

@@ -21,3 +21,6 @@ while (!(info = gen.next()).done) {
 
 assert.deepEqual(values, [0, 3, 6, 9, 12, 15, 18]);
 assert.equal(info.value, 7);
+
+assertMap('generators', [3,11], [436,5], 'wrappedGenerator range');
+assertMap('generators', [7,19], [446,12], 'for loop conditioinal');
