@@ -1,6 +1,6 @@
 # esnext
 
-Use tomorrow's JavaScript syntax today. [Try it now in your browser](http://square.github.io/esnext/).
+Use tomorrow's JavaScript syntax today. [Try it now in your browser](http://esnext.github.io/esnext/).
 
 **NOTE:** This project is early alpha. Use it in production at your own risk.
 For a more robust project with similar goals, see [Google's Traceur][traceur].
@@ -93,7 +93,7 @@ Or, use one of these libraries that integrate esnext with other tools:
 
 ## Contributing
 
-[![Build Status](https://travis-ci.org/square/esnext.png?branch=master)](https://travis-ci.org/square/esnext)
+[![Build Status](https://travis-ci.org/esnext/esnext.png?branch=master)](https://travis-ci.org/esnext/esnext)
 
 ### Setup
 
@@ -124,7 +124,7 @@ bases and makes sure you're eligible to contribute.
 [cla]: https://spreadsheets.google.com/spreadsheet/viewform?formkey=dDViT2xzUHAwRkI3X3k5Z0lQM091OGc6MQ&ndplr=1
 
 When you have a change you'd like to see in the master repository, [send a pull
-request](https://github.com/square/esnext/pulls). Before we merge your
+request](https://github.com/esnext/esnext/pulls). Before we merge your
 request, we'll make sure you're in the list of people who have signed a CLA.
 
 ## Acknowledgements
@@ -139,14 +139,14 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [benjamn]: https://github.com/benjamn
 [broccoli-esnext]: https://github.com/shinnn/broccoli-esnext
 [broccoli]: https://github.com/joliss/broccoli
-[es6-arrow-function]: https://github.com/square/es6-arrow-function
-[es6-class]: https://github.com/square/es6-class
+[es6-arrow-function]: https://github.com/esnext/es6-arrow-function
+[es6-class]: https://github.com/esnext/es6-class
 [es6-comprehensions]: https://github.com/dreame4/es6-comprehensions
-[es6-default-params]: https://github.com/square/es6-default-params
-[es6-module-transpiler]: https://github.com/square/es6-module-transpiler
+[es6-default-params]: https://github.com/esnext/es6-default-params
+[es6-module-transpiler]: https://github.com/esnext/es6-module-transpiler
 [es6-rest-params]: https://github.com/thomasboyt/es6-rest-params
-[es6-spread]: https://github.com/square/es6-spread
-[es6-templates]: https://github.com/square/es6-templates
+[es6-spread]: https://github.com/esnext/es6-spread
+[es6-templates]: https://github.com/esnext/es6-templates
 [es6features]: https://github.com/lukehoban/es6features
 [esprima]: https://github.com/ariya/esprima
 [features-arrows]: https://github.com/lukehoban/es6features#arrows
