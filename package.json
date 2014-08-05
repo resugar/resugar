@@ -14,19 +14,12 @@
     "bin/esnext",
     "LICENSE"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/square/esnext"
-  },
+  "repository": "esnext/esnext",
   "keywords": [
     "es6"
   ],
   "author": "Square, Inc.",
   "license": "Apache 2",
-  "bugs": {
-    "url": "https://github.com/square/esnext/issues"
-  },
-  "homepage": "https://github.com/square/esnext",
   "devDependencies": {
     "browserify": "^4.1.9",
     "example-runner": "^0.1.0"
