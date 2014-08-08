@@ -64,3 +64,14 @@ assert.deepEqual(
   [for (x of Counter.forCounts(1, 2, 3).map(counter => counter.count)) x*x],
   [1, 4, 9]
 );
+
+assertMap('all-together', [3,6], [468,4], 'Class Counter');
+
+assertMap('all-together', [4,15], [470,9], 'default param inside constructor');
+
+assertMap('all-together', [5,5], [471,5], 'this.count = count');
+
+assertMap('all-together', [21,5], [500,7], 'toString() return');
+
+assertMap('all-together', [24,23], [509,11], 'rest of forCounts()');
+
