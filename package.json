@@ -25,18 +25,19 @@
     "example-runner": "^0.1.0"
   },
   "dependencies": {
-    "es6-class": "^0.5.2",
-    "es6-arrow-function": "^0.3.1",
-    "regenerator": "^0.4.7",
-    "esprima": "git://github.com/esnext/esprima#harmony-esnext",
-    "recast": "^0.5.17",
-    "through": "^2.3.4",
-    "es6-templates": "^0.0.3",
     "ast-types": "^0.3.27",
-    "es6-default-params": "^0.0.2",
-    "es6-spread": "^0.0.5",
-    "es6-rest-params": "^0.1.1",
+    "es6-arrow-function": "^0.3.1",
+    "es6-class": "^0.5.2",
     "es6-comprehensions": "^0.2.2",
-    "mkdirp": "^0.5.0"
+    "es6-default-params": "^0.0.2",
+    "es6-destructuring": "^0.1.0",
+    "es6-rest-params": "^0.1.1",
+    "es6-spread": "^0.0.5",
+    "es6-templates": "^0.0.3",
+    "esprima": "git://github.com/esnext/esprima#harmony-esnext",
+    "mkdirp": "^0.5.0",
+    "recast": "^0.5.17",
+    "regenerator": "^0.4.7",
+    "through": "^2.3.4"
   }
 }

@@ -64,3 +64,8 @@ assert.deepEqual(
   [for (x of Counter.forCounts(1, 2, 3).map(counter => counter.count)) x*x],
   [1, 4, 9]
 );
+
+var [{count:x},{count:y},{count:z}] = Counter.forCounts(1, 2, 3);
+assert.equal(x, 1);
+assert.equal(y, 2);
+assert.equal(z, 3);
