@@ -1,4 +1,5 @@
 /* jshint esnext:true */
+/* esnext arrayComprehensions:true */
 
 class Counter {
   constructor(count=0) {

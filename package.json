@@ -22,7 +22,7 @@
   "license": "Apache 2",
   "devDependencies": {
     "browserify": "^4.1.9",
-    "example-runner": "^0.1.0"
+    "example-runner": "^0.2.0"
   },
   "dependencies": {
     "es6-class": "^0.5.2",
