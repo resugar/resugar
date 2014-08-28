@@ -34,12 +34,12 @@ $ npm install [--save-dev] esnext
 * [default params][features-default-rest-spread] (via [es6-default-params][es6-default-params])
 * [spread][features-default-rest-spread] (via [es6-spread][es6-spread])
 * [comprehensions][features-comprehensions] (via [es6-comprehensions][es6-comprehensions])
+* [destructuring][features-destructuring] (via [es6-destructuring][es6-destructuring])
 
 ### TODO
 
 * [modules][features-modules] (i.e. integration with [es6-module-transpiler][es6-module-transpiler])
 * [block scoping (`let`)][features-let-const]
-* [destructuring][features-destructuring]
 
 Any omissions here are not intentional and we'd love to integrate support for
 more future JavaScript syntax (see [es6features][es6features] for a more
@@ -143,6 +143,7 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [es6-class]: https://github.com/esnext/es6-class
 [es6-comprehensions]: https://github.com/dreame4/es6-comprehensions
 [es6-default-params]: https://github.com/esnext/es6-default-params
+[es6-destructuring]: https://github.com/fdecampredon/es6-destructuring
 [es6-module-transpiler]: https://github.com/esnext/es6-module-transpiler
 [es6-rest-params]: https://github.com/thomasboyt/es6-rest-params
 [es6-spread]: https://github.com/esnext/es6-spread
