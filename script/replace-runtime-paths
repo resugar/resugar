@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var path = require('path');
+var regenerator = require('regenerator');
+
+var filePath = process.argv[2];
+var fileBody = fs.readFileSync(filePath, 'utf8');
+
+fileBody = fileBody.replace(/regenerator\.runtime\.(\w+)/g, function(_, key) {
+  return JSON.stringify(path.relative(process.cwd(), regenerator.runtime[key]));
+});
+
+console.log(fileBody);

@@ -21,6 +21,7 @@
   "author": "Square, Inc.",
   "license": "Apache 2",
   "devDependencies": {
+    "brfs": "^1.2.0",
     "browserify": "^4.1.9",
     "example-runner": "^0.2.0"
   },

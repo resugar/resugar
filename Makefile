@@ -1,13 +1,12 @@
 BROWSERIFY=./node_modules/.bin/browserify
-RUNTIMES=./node_modules/regenerator/runtime/dev.js
 
 all: test dist
 
 dist/esnext.js: lib/*.js Makefile
 	@mkdir -p dist
+	@./script/replace-runtime-paths lib/index.js > tmp/index.js
 	./script/print-version-header > $@
-	cat $(RUNTIMES) >> $@
-	$(BROWSERIFY) -s esnext -e lib/index.js >> $@
+	$(BROWSERIFY) -t brfs -s esnext -e tmp/index.js >> $@
 
 dist: dist/esnext.js
 
