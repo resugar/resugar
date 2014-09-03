@@ -5,7 +5,8 @@ all: test dist
 
 dist/esnext.js: lib/*.js Makefile
 	@mkdir -p dist
-	cat $(RUNTIMES) > $@
+	./script/print-version-header > $@
+	cat $(RUNTIMES) >> $@
 	$(BROWSERIFY) -s esnext -e lib/index.js >> $@
 
 dist: dist/esnext.js
