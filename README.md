@@ -90,6 +90,7 @@ Or, use one of these libraries that integrate esnext with other tools:
 * [broccoli-esnext][broccoli-esnext]
 * [grunt-esnext][grunt-esnext]
 * [gulp-esnext][gulp-esnext]
+* [esnext-loader][esnext-loader]
 
 ## Contributing
 
@@ -149,6 +150,7 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [es6-spread]: https://github.com/esnext/es6-spread
 [es6-templates]: https://github.com/esnext/es6-templates
 [es6features]: https://github.com/lukehoban/es6features
+[esnext-loader]: https://github.com/conradz/esnext-loader
 [esprima]: https://github.com/ariya/esprima
 [features-arrows]: https://github.com/lukehoban/es6features#arrows
 [features-classes]: https://github.com/lukehoban/es6features#classes
