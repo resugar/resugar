@@ -35,7 +35,7 @@
     "es6-rest-params": "^0.1.1",
     "es6-spread": "^0.0.5",
     "es6-templates": "^0.0.3",
-    "esprima": "git://github.com/esnext/esprima#harmony-esnext",
+    "esprima-fb": "^6001.1001.0-dev-harmony-fb",
     "mkdirp": "^0.5.0",
     "recast": "^0.5.17",
     "regenerator": "^0.4.7",
