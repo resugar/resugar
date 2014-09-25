@@ -23,22 +23,23 @@ $ npm install [--save-dev] esnext
 
 ### Available
 
+* [arrow functions][features-arrows] (via [es6-arrow-function][es6-arrow-function])
 * [classes][features-classes] (via [es6-class][es6-class])
+* [comprehensions][features-comprehensions] (via [es6-comprehensions][es6-comprehensions])
+* [computed property keys][features-enhanced-object-literals] (via [es6-computed-property-keys][es6-computed-property-keys])
+* [default params][features-default-rest-spread] (via [es6-default-params][es6-default-params])
+* [destructuring][features-destructuring] (via [es6-destructuring][es6-destructuring])
 * [generators][features-generators] (via [regenerator][regenerator])
 * [iterators + for-of][features-iterators-for-of] (via [regenerator][regenerator])
-* [arrow functions][features-arrows] (via [es6-arrow-function][es6-arrow-function])
-* [template strings][features-template-strings] (via [es6-templates][es6-templates])
+* [object literal shorthand][features-enhanced-object-literals] (via [es6-object-short][es6-object-short])
 * [rest params][features-default-rest-spread] (via [es6-rest-params][es6-rest-params])
-* [default params][features-default-rest-spread] (via [es6-default-params][es6-default-params])
 * [spread][features-default-rest-spread] (via [es6-spread][es6-spread])
-* [comprehensions][features-comprehensions] (via [es6-comprehensions][es6-comprehensions])
-* [destructuring][features-destructuring] (via [es6-destructuring][es6-destructuring])
-* [computed property keys][features-enhanced-object-literals] (via [es6-computed-property-keys][es6-computed-property-keys])
+* [template strings][features-template-strings] (via [es6-templates][es6-templates])
 
 ### TODO
 
-* [modules][features-modules] (i.e. integration with [es6-module-transpiler][es6-module-transpiler])
 * [block scoping (`let`)][features-let-const]
+* [modules][features-modules] (i.e. integration with [es6-module-transpiler][es6-module-transpiler])
 
 Any omissions here are not intentional and we'd love to integrate support for
 more future JavaScript syntax (see [es6features][es6features] for a more
@@ -150,11 +151,12 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [es6-comprehensions]: https://github.com/dreame4/es6-comprehensions
 [es6-default-params]: https://github.com/esnext/es6-default-params
 [es6-destructuring]: https://github.com/fdecampredon/es6-destructuring
+[es6-computed-property-keys]: https://github.com/vslinko/es6-computed-property-keys
 [es6-module-transpiler]: https://github.com/esnext/es6-module-transpiler
+[es6-object-short]: https://github.com/vslinko/es6-object-short
 [es6-rest-params]: https://github.com/thomasboyt/es6-rest-params
 [es6-spread]: https://github.com/esnext/es6-spread
 [es6-templates]: https://github.com/esnext/es6-templates
-[es6-computed-property-keys]: https://github.com/vslinko/es6-computed-property-keys
 [es6features]: https://github.com/lukehoban/es6features
 [esnext-loader]: https://github.com/conradz/esnext-loader
 [esprima]: https://github.com/ariya/esprima
@@ -163,12 +165,12 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [features-comprehensions]: https://github.com/lukehoban/es6features#comprehensions
 [features-default-rest-spread]: https://github.com/lukehoban/es6features#default--rest--spread
 [features-destructuring]: https://github.com/lukehoban/es6features#destructuring
-[features-iterators-for-of]: https://github.com/lukehoban/es6features#iterators--forof
+[features-enhanced-object-literals]: https://github.com/lukehoban/es6features#enhanced-object-literals
 [features-generators]: https://github.com/lukehoban/es6features#generators
+[features-iterators-for-of]: https://github.com/lukehoban/es6features#iterators--forof
 [features-let-const]: https://github.com/lukehoban/es6features#let--const
 [features-modules]: https://github.com/lukehoban/es6features#modules
 [features-template-strings]: https://github.com/lukehoban/es6features#template-strings
-[features-enhanced-object-literals]: https://github.com/lukehoban/es6features#enhanced-object-literals
 [grunt-esnext]: https://github.com/shinnn/grunt-esnext
 [gulp-esnext]: https://github.com/sindresorhus/gulp-esnext
 [recast]: https://github.com/benjamn/recast
