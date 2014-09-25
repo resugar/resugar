@@ -172,4 +172,3 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [recast]: https://github.com/benjamn/recast
 [regenerator]: http://facebook.github.io/regenerator/
 [thomasboyt]: http://www.thomasboyt.com/
-[traceur]: https://github.com/google/traceur-compiler
