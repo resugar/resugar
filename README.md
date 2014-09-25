@@ -25,6 +25,7 @@ $ npm install [--save-dev] esnext
 
 * [classes][features-classes] (via [es6-class][es6-class])
 * [generators][features-generators] (via [regenerator][regenerator])
+* [iterators + for-of][features-iterators-for-of] (via [regenerator][regenerator])
 * [arrow functions][features-arrows] (via [es6-arrow-function][es6-arrow-function])
 * [template strings][features-template-strings] (via [es6-templates][es6-templates])
 * [rest params][features-default-rest-spread] (via [es6-rest-params][es6-rest-params])
@@ -162,6 +163,7 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [features-comprehensions]: https://github.com/lukehoban/es6features#comprehensions
 [features-default-rest-spread]: https://github.com/lukehoban/es6features#default--rest--spread
 [features-destructuring]: https://github.com/lukehoban/es6features#destructuring
+[features-iterators-for-of]: https://github.com/lukehoban/es6features#iterators--forof
 [features-generators]: https://github.com/lukehoban/es6features#generators
 [features-let-const]: https://github.com/lukehoban/es6features#let--const
 [features-modules]: https://github.com/lukehoban/es6features#modules
