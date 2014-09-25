@@ -28,7 +28,7 @@
   "dependencies": {
     "ast-types": "^0.3.27",
     "es6-arrow-function": "^0.3.1",
-    "es6-class": "^0.5.2",
+    "es6-class": "^0.7.0",
     "es6-comprehensions": "^0.2.2",
     "es6-computed-property-keys": "^0.1.2",
     "es6-default-params": "^0.1.0",
