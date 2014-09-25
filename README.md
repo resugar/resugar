@@ -86,6 +86,12 @@ fs.writeFileSync('result.js.map', JSON.stringify(result.map), 'utf8');
 
 ### With other tools
 
+esnext can be used out of the box as a [Browserify](http://browserify.org)
+transform (use of [watchify](https://github.com/substack/watchify) is highly
+recommended for efficiency). For example:
+
+    $ browserify -t esnext main.js
+
 Or, use one of these libraries that integrate esnext with other tools:
 
 * [broccoli-esnext][broccoli-esnext]
