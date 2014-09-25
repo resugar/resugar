@@ -35,6 +35,7 @@ $ npm install [--save-dev] esnext
 * [spread][features-default-rest-spread] (via [es6-spread][es6-spread])
 * [comprehensions][features-comprehensions] (via [es6-comprehensions][es6-comprehensions])
 * [destructuring][features-destructuring] (via [es6-destructuring][es6-destructuring])
+* [computed property keys][features-enhanced-object-literals] (via [es6-computed-property-keys][es6-computed-property-keys])
 
 ### TODO
 
@@ -148,6 +149,7 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [es6-rest-params]: https://github.com/thomasboyt/es6-rest-params
 [es6-spread]: https://github.com/esnext/es6-spread
 [es6-templates]: https://github.com/esnext/es6-templates
+[es6-computed-property-keys]: https://github.com/vslinko/es6-computed-property-keys
 [es6features]: https://github.com/lukehoban/es6features
 [esprima]: https://github.com/ariya/esprima
 [features-arrows]: https://github.com/lukehoban/es6features#arrows
@@ -159,6 +161,7 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [features-let-const]: https://github.com/lukehoban/es6features#let--const
 [features-modules]: https://github.com/lukehoban/es6features#modules
 [features-template-strings]: https://github.com/lukehoban/es6features#template-strings
+[features-enhanced-object-literals]: https://github.com/lukehoban/es6features#enhanced-object-literals
 [grunt-esnext]: https://github.com/shinnn/grunt-esnext
 [gulp-esnext]: https://github.com/sindresorhus/gulp-esnext
 [recast]: https://github.com/benjamn/recast

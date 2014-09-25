@@ -66,7 +66,17 @@ assert.deepEqual(
   [1, 4, 9]
 );
 
-var [{count:x},{count:y},{count:z}] = Counter.forCounts(1, 2, 3);
+var counters = Counter.forCounts(1, 2, 3);
+var [{count:x},{count:y},{count:z}] = counters;
 assert.equal(x, 1);
 assert.equal(y, 2);
 assert.equal(z, 3);
+
+var countersHash = {
+  [counters[0].count]: x,
+  [counters[1].count]: y,
+  [counters[2].count]: z,
+};
+assert.equal(countersHash["1"], x);
+assert.equal(countersHash["2"], y);
+assert.equal(countersHash["3"], z);
