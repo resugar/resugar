@@ -73,11 +73,15 @@ assert.equal(z, 3);
 var counterIteration = 1;
 for (var currentCounter of counters) assert.equal(currentCounter.count, counterIteration++);
 
+var three = [counters[2].count];
+
 var countersHash = {
   [counters[0].count]: x,
   [counters[1].count]: y,
   [counters[2].count]: z,
+  three
 };
 assert.equal(countersHash["1"], x);
 assert.equal(countersHash["2"], y);
 assert.equal(countersHash["3"], z);
+assert.equal(countersHash["three"], z);

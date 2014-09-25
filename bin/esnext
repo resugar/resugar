@@ -61,6 +61,10 @@ for (var i = 0, length = args.length; i < length; i++) {
       options.generator = (arg === '--generator');
       break;
 
+    case '--object-shorthand': case '--no-object-shorthand':
+      options.objectShorthand = (arg === '--object-shorthand');
+      break;
+
     case '--rest': case '--no-rest':
       options.rest = (arg === '--rest');
       break;
@@ -176,6 +180,7 @@ function usage(puts) {
   puts('  --default-params         Transpile default parameters.');
   puts('  --destructuring          Transpile destructuring.');
   puts('  --generator              Transpile generator functions.');
+  puts('  --object-shorthand       Transpile object literal shorthand assignment.');
   puts('  --rest                   Transpile rest params.');
   puts('  --spread                 Transpile spread operator.');
   puts('  --templates              Transpile template strings.');
