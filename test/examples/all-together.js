@@ -11,10 +11,8 @@ class Counter {
   }
 
   consume(generator) {
-    var info;
-
-    while (!(info = generator.next()).done) {
-      this.count += info.value;
+    for (var value of generator) {
+      this.count += value;
     }
   }
 
@@ -71,6 +69,9 @@ var [{count:x},{count:y},{count:z}] = counters;
 assert.equal(x, 1);
 assert.equal(y, 2);
 assert.equal(z, 3);
+
+var counterIteration = 1;
+for (var currentCounter of counters) assert.equal(currentCounter.count, counterIteration++);
 
 var countersHash = {
   [counters[0].count]: x,
