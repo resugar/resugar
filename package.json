@@ -31,7 +31,7 @@
     "es6-class": "^0.5.2",
     "es6-comprehensions": "^0.2.2",
     "es6-computed-property-keys": "^0.1.2",
-    "es6-default-params": "^0.0.2",
+    "es6-default-params": "^0.1.0",
     "es6-destructuring": "^0.2.0",
     "es6-object-concise": "^0.1.1",
     "es6-object-short": "^0.1.1",
