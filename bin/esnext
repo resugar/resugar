@@ -180,7 +180,7 @@ function usage(puts) {
   puts('  --default-params         Transpile default parameters.');
   puts('  --destructuring          Transpile destructuring.');
   puts('  --generator              Transpile generator functions.');
-  puts('  --object-shorthand       Transpile object literal shorthand assignment.');
+  puts('  --object-shorthand       Transpile object literal shorthand.');
   puts('  --rest                   Transpile rest params.');
   puts('  --spread                 Transpile spread operator.');
   puts('  --templates              Transpile template strings.');
