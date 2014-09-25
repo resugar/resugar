@@ -45,8 +45,16 @@ for (var i = 0, length = args.length; i < length; i++) {
       options['class'] = (arg === '--class');
       break;
 
+    case '--computed-property-keys': case '--no-computed-property-keys':
+      options.computedPropertyKeys = (arg === '--computed-property-keys');
+      break;
+
     case '--default-params': case '--no-default-params':
       options.defaultParams = (arg === '--default-params');
+      break;
+
+    case '--destructuring': case '--no-destructuring':
+      options.destructuring = (arg === '--destructuring');
       break;
 
     case '--generator': case '--no-generator':
@@ -55,6 +63,10 @@ for (var i = 0, length = args.length; i < length; i++) {
 
     case '--rest': case '--no-rest':
       options.rest = (arg === '--rest');
+      break;
+
+    case '--spread': case '--no-spread':
+      options.spread = (arg === '--spread');
       break;
 
     case '--templates': case '--no-templates':
@@ -157,13 +169,16 @@ function usage(puts) {
   puts();
   puts('  All ES6 features are on by default. Use --no-[option] to turn one off.');
   puts();
-  puts('  --array-comprehensions  Transpile array comprehensions.');
-  puts('  --arrow-function        Transpile arrow functions.');
-  puts('  --class                 Transpile classes.');
-  puts('  --default-params        Transpile default parameters.');
-  puts('  --generator             Transpile generator functions.');
-  puts('  --rest                  Transpile rest params.');
-  puts('  --templates             Transpile template strings.');
+  puts('  --array-comprehensions   Transpile array comprehensions.');
+  puts('  --arrow-function         Transpile arrow functions.');
+  puts('  --class                  Transpile classes.');
+  puts('  --computed-property-keys Transpile computed property keys.');
+  puts('  --default-params         Transpile default parameters.');
+  puts('  --destructuring          Transpile destructuring.');
+  puts('  --generator              Transpile generator functions.');
+  puts('  --rest                   Transpile rest params.');
+  puts('  --spread                 Transpile spread operator.');
+  puts('  --templates              Transpile template strings.');
   puts();
   puts(bold('Output Options'));
   puts();
