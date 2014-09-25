@@ -27,11 +27,11 @@
   },
   "dependencies": {
     "ast-types": "^0.3.27",
-    "es6-arrow-function": "^0.3.1",
+    "es6-arrow-function": "^0.5.1",
     "es6-class": "^0.7.0",
     "es6-comprehensions": "^0.2.2",
     "es6-computed-property-keys": "^0.1.2",
-    "es6-default-params": "^0.1.0",
+    "es6-default-params": "^0.2.0",
     "es6-destructuring": "^0.2.0",
     "es6-object-concise": "^0.1.1",
     "es6-object-short": "^0.1.1",
