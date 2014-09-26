@@ -31,6 +31,7 @@ $ npm install [--save-dev] esnext
 * [destructuring][features-destructuring] (via [es6-destructuring][es6-destructuring])
 * [generators][features-generators] (via [regenerator][regenerator])
 * [iterators + for-of][features-iterators-for-of] (via [regenerator][regenerator])
+* [object literal concise definitions][features-enhanced-object-literals] (via [es6-object-concise][es6-object-concise])
 * [object literal shorthand][features-enhanced-object-literals] (via [es6-object-short][es6-object-short])
 * [rest params][features-default-rest-spread] (via [es6-rest-params][es6-rest-params])
 * [spread][features-default-rest-spread] (via [es6-spread][es6-spread])
@@ -153,6 +154,7 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [es6-destructuring]: https://github.com/fdecampredon/es6-destructuring
 [es6-computed-property-keys]: https://github.com/vslinko/es6-computed-property-keys
 [es6-module-transpiler]: https://github.com/esnext/es6-module-transpiler
+[es6-object-concise]: https://github.com/vslinko/es6-object-concise
 [es6-object-short]: https://github.com/vslinko/es6-object-short
 [es6-rest-params]: https://github.com/thomasboyt/es6-rest-params
 [es6-spread]: https://github.com/esnext/es6-spread
