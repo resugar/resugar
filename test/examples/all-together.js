@@ -79,9 +79,13 @@ var countersHash = {
   [counters[0].count]: x,
   [counters[1].count]: y,
   [counters[2].count]: z,
-  three
+  three,
+  toString() {
+    return "[CounterHash]";
+  }
 };
 assert.equal(countersHash["1"], x);
 assert.equal(countersHash["2"], y);
 assert.equal(countersHash["3"], z);
 assert.equal(countersHash["three"], z);
+assert.equal(countersHash.toString(), "[CounterHash]");
