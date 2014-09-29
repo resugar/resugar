@@ -26,7 +26,7 @@ $ npm install [--save-dev] esnext
 * [arrow functions][features-arrows] (via [es6-arrow-function][es6-arrow-function])
 * [classes][features-classes] (via [es6-class][es6-class])
 * [comprehensions][features-comprehensions] (via [es6-comprehensions][es6-comprehensions])
-* [computed property keys][features-enhanced-object-literals] (via [es6-computed-property-keys][es6-computed-property-keys])
+* [computed property keys][features-enhanced-object-literals] (via [es6-computed-properties][es6-computed-properties])
 * [default params][features-default-rest-spread] (via [es6-default-params][es6-default-params])
 * [destructuring][features-destructuring] (via [es6-destructuring][es6-destructuring])
 * [generators][features-generators] (via [regenerator][regenerator])
@@ -152,7 +152,7 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [es6-comprehensions]: https://github.com/dreame4/es6-comprehensions
 [es6-default-params]: https://github.com/esnext/es6-default-params
 [es6-destructuring]: https://github.com/fdecampredon/es6-destructuring
-[es6-computed-property-keys]: https://github.com/vslinko/es6-computed-property-keys
+[es6-computed-properties]: https://github.com/DmitrySoshnikov/es6-computed-properties
 [es6-module-transpiler]: https://github.com/esnext/es6-module-transpiler
 [es6-object-concise]: https://github.com/vslinko/es6-object-concise
 [es6-object-short]: https://github.com/vslinko/es6-object-short

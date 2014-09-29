@@ -30,7 +30,7 @@
     "es6-arrow-function": "^0.5.1",
     "es6-class": "^0.8.0",
     "es6-comprehensions": "^0.2.2",
-    "es6-computed-property-keys": "^0.1.2",
+    "es6-computed-properties": "0.0.1",
     "es6-default-params": "^0.3.0",
     "es6-destructuring": "^0.3.0",
     "es6-object-concise": "^0.1.1",
