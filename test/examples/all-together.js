@@ -89,3 +89,7 @@ assert.equal(countersHash["2"], y);
 assert.equal(countersHash["3"], z);
 assert.equal(countersHash["three"], z);
 assert.equal(countersHash.toString(), "[CounterHash]");
+
+var string = 'foo\uD834\uDF06bar';
+var match = string.match(/foo(.)bar/u);
+assert.equal(match[1], '\uD834\uDF06');
