@@ -33,10 +33,6 @@ for (var i = 0, length = args.length; i < length; i++) {
       process.exit(0);
       break;
 
-    case '--array-comprehensions': case '--no-array-comprehensions':
-      options.arrayComprehensions = (arg === '--array-comprehensions');
-      break;
-
     case '--arrow-function': case '--no-arrow-function':
       options.arrowFunction = (arg === '--arrow-function');
       break;
