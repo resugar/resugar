@@ -1,6 +1,6 @@
 # esnext
 
-Use tomorrow's JavaScript syntax today. [Try it now in your browser](http://esnext.github.io/esnext/).
+Use tomorrow's JavaScript syntax today. [Try it now in your browser](https://esnext.github.io/esnext/).
 
 ## Install
 
