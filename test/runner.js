@@ -10,7 +10,6 @@ Error.stackTraceLimit = 20;
 
 var esnext = require('../lib');
 var recast = require('recast');
-var esprima = require('esprima-fb');
 
 var fs = require('fs');
 var path = require('path');
@@ -48,7 +47,7 @@ require('example-runner').runCLI(process.argv.slice(2), {
 
     normalize: function(source) {
       return recast.prettyPrint(
-        recast.parse(source, { esprima: esprima })
+        recast.parse(source)
       ).code;
     }
   }
