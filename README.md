@@ -25,7 +25,7 @@ $ npm install [--save-dev] esnext
 
 * [arrow functions][features-arrows] (via [es6-arrow-function][es6-arrow-function])
 * [classes][features-classes] (via [es6-class][es6-class])
-* [computed property keys][features-enhanced-object-literals] (via [es6-computed-property-keys][es6-computed-property-keys])
+* [computed property keys][features-enhanced-object-literals] (via es6-computed-properties][es6-computed-properties])
 * [computed property keys][features-enhanced-object-literals] (via [es6-computed-properties][es6-computed-properties])
 * [default params][features-default-rest-spread] (via [es6-default-params][es6-default-params])
 * [destructuring][features-destructuring] (via [es6-destructuring][es6-destructuring])
@@ -36,6 +36,7 @@ $ npm install [--save-dev] esnext
 * [rest params][features-default-rest-spread] (via [es6-rest-params][es6-rest-params])
 * [spread][features-default-rest-spread] (via [es6-spread][es6-spread])
 * [template strings][features-template-strings] (via [es6-templates][es6-templates])
+* [Unicode regular expressions][features-unicode-regexp] (via [regexpu][regexpu])
 
 ### TODO
 
@@ -171,8 +172,10 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [features-let-const]: https://github.com/lukehoban/es6features#let--const
 [features-modules]: https://github.com/lukehoban/es6features#modules
 [features-template-strings]: https://github.com/lukehoban/es6features#template-strings
+[features-unicode-regexp]: https://github.com/lukehoban/es6features#unicode
 [grunt-esnext]: https://github.com/shinnn/grunt-esnext
 [gulp-esnext]: https://github.com/sindresorhus/gulp-esnext
 [recast]: https://github.com/benjamn/recast
 [regenerator]: http://facebook.github.io/regenerator/
+[regexpu]: https://github.com/mathiasbynens/regexpu/
 [thomasboyt]: http://www.thomasboyt.com/
