@@ -25,7 +25,7 @@ $ npm install [--save-dev] esnext
 
 * [arrow functions][features-arrows] (via [es6-arrow-function][es6-arrow-function])
 * [classes][features-classes] (via [es6-class][es6-class])
-* [computed property keys][features-enhanced-object-literals] (via [es6-computed-property-keys][es6-computed-property-keys])
+* [computed property keys][features-enhanced-object-literals] (via es6-computed-properties][es6-computed-properties])
 * [computed property keys][features-enhanced-object-literals] (via [es6-computed-properties][es6-computed-properties])
 * [default params][features-default-rest-spread] (via [es6-default-params][es6-default-params])
 * [destructuring][features-destructuring] (via [es6-destructuring][es6-destructuring])
