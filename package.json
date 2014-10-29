@@ -21,8 +21,7 @@
   "author": "Square, Inc.",
   "license": "Apache 2",
   "browser": {
-    "./tmp/index.js": "./lib/browser/index.js",
-    "./lib/index.js": "./lib/browser/index.js"
+    "./tmp/index.js": "./lib/browser/index.js"
   },
   "devDependencies": {
     "brfs": "^1.2.0",
