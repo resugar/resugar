@@ -2,7 +2,7 @@ BROWSERIFY=./node_modules/.bin/browserify
 
 all: test dist
 
-dist/esnext.js: lib/*.js Makefile
+dist/esnext.js: lib/*.js Makefile package.json
 	@mkdir -p dist tmp
 	@./script/replace-runtime-paths lib/index.js > tmp/index.js
 	./script/print-version-header > $@
