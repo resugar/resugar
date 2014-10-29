@@ -36,6 +36,7 @@ $ npm install [--save-dev] esnext
 * [rest params][features-default-rest-spread] (via [es6-rest-params][es6-rest-params])
 * [spread][features-default-rest-spread] (via [es6-spread][es6-spread])
 * [template strings][features-template-strings] (via [es6-templates][es6-templates])
+* [unicode regexes][features-unicode] (via [regexpu][regexpu])
 
 ### TODO
 
@@ -171,8 +172,10 @@ the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [features-let-const]: https://github.com/lukehoban/es6features#let--const
 [features-modules]: https://github.com/lukehoban/es6features#modules
 [features-template-strings]: https://github.com/lukehoban/es6features#template-strings
+[features-unicode]: https://github.com/lukehoban/es6features#unicode
 [grunt-esnext]: https://github.com/shinnn/grunt-esnext
 [gulp-esnext]: https://github.com/sindresorhus/gulp-esnext
 [recast]: https://github.com/benjamn/recast
+[regexpu]: https://github.com/mathiasbynens/regexpu
 [regenerator]: http://facebook.github.io/regenerator/
 [thomasboyt]: http://www.thomasboyt.com/
