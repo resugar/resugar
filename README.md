@@ -30,6 +30,7 @@ $ npm install [--save-dev] esnext
 * [default params][features-default-rest-spread] (via [es6-default-params][es6-default-params])
 * [destructuring][features-destructuring] (via [es6-destructuring][es6-destructuring])
 * [generators][features-generators] (via [regenerator][regenerator])
+* [async-await](https://github.com/lukehoban/ecmascript-asyncawait) (via [regenerator][regenerator])
 * [iterators + for-of][features-iterators-for-of] (via [regenerator][regenerator])
 * [object literal concise definitions][features-enhanced-object-literals] (via [es6-object-concise][es6-object-concise])
 * [object literal shorthand][features-enhanced-object-literals] (via [es6-object-short][es6-object-short])
