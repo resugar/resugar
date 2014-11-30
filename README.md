@@ -62,6 +62,12 @@ installed locally). Here's how to compile a single file an print it to stdout:
 $ esnext myfile.js
 ```
 
+To execute compiled code:
+
+```
+$ esnext -e myfile.js
+```
+
 If you don't care about a certain feature, such as arrow functions, you can
 omit support for them like so:
 
