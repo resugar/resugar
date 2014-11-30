@@ -133,7 +133,15 @@ switch (files.length) {
     if (target) {
       transpileFile(files[0], target);
     } else {
-      var result = esnext.compile(fs.readFileSync(files[0]).toString(), options);
+      var contents = fs.readFileSync(files[0]).toString();
+
+      // strip out shebang if present, and assume code is to be executed
+      if (contents.slice(0, 2) === '#!') {
+        runCode = true;
+        contents = contents.replace(/^#![^\n]+\n/, '');
+      }
+
+      var result = esnext.compile(contents, options);
 
       if (runCode) {
         // create a node child process
