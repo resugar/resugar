@@ -41,7 +41,7 @@
     "es6-templates": "^0.2.0",
     "mkdirp": "^0.5.0",
     "recast": "^0.8.0",
-    "regenerator": "^0.6.7",
+    "regenerator": "^0.8.0",
     "regexpu": "^0.3.0",
     "through": "^2.3.6"
   }
