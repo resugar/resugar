@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "brfs": "^1.2.0",
-    "browserify": "^6.2.0",
+    "browserify": "^7.0.2",
     "example-runner": "^0.2.0"
   },
   "dependencies": {
@@ -34,14 +34,14 @@
     "es6-computed-properties": "^0.0.2",
     "es6-default-params": "^0.4.0",
     "es6-destructuring": "^0.4.0",
-    "es6-object-concise": "^0.1.1",
-    "es6-object-short": "^0.1.1",
+    "es6-object-concise": "^0.1.2",
+    "es6-object-short": "^0.1.2",
     "es6-rest-params": "^0.3.0",
     "es6-spread": "^0.2.0",
     "es6-templates": "^0.2.0",
     "mkdirp": "^0.5.0",
-    "recast": "^0.8.0",
-    "regenerator": "^0.8.0",
+    "recast": "^0.9.11",
+    "regenerator": "^0.8.1",
     "regexpu": "^0.3.0",
     "through": "^2.3.6"
   }
