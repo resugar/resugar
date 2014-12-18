@@ -1,5 +1,7 @@
 # esnext
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/esnext/esnext?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Use tomorrow's JavaScript syntax today. [Try it now in your browser](https://esnext.github.io/esnext/).
 
 ## Install
