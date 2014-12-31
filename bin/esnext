@@ -93,6 +93,7 @@ for (var i = 0, length = args.length; i < length; i++) {
 
     case '-e': case '--exec':
       runCode = true;
+      options.includeRuntime = true;
       break;
 
     default:
