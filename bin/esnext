@@ -257,6 +257,7 @@ function usage(puts) {
   puts(bold('Output Options'));
   puts();
   puts('  -o, --output       File or directory to place output.');
+  puts('  -e, --exec         Execute compiled code rather than writing it.');
   puts('  --source-maps      Output source maps (off by default).');
   puts('  --include-runtime  Include any required runtimes (off by default).');
   puts();
