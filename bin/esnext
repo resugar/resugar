@@ -4,12 +4,7 @@
 
 var Path = require('path');
 var fs = require('fs');
-var stream = require('stream');
-var spawn = require('child_process').spawn;
-var mkdirp = require('mkdirp');
 var assert = require('assert');
-
-var esnext = require('../lib');
 
 var exe = Path.basename(__filename);
 var puts = makePrintLine(process.stdout);
@@ -113,8 +108,11 @@ for (var i = 0, length = args.length; i < length; i++) {
 
 switch (files.length) {
   case 0:
-    eputs('error: ' + exe + ' - Please provide at least one file to transpile.');
-    process.exit(1);
+    if (runCode) {
+      runInput(process.stdin, options);
+    } else {
+      transpileIO(process.stdin, process.stdout, null, options);
+    }
     break;
 
   case 1:
@@ -132,23 +130,10 @@ switch (files.length) {
 
     if (target) {
       transpileFile(files[0], target);
+    } else if (runCode) {
+      runInput(fs.createReadStream(files[0]), options);
     } else {
-      var contents = fs.readFileSync(files[0]).toString();
-      var result = esnext.compile(contents, options);
-
-      if (runCode) {
-        // create a node child process
-        nodeInstance = spawn('node');
-
-        // pipe the compiled code to the node child process
-        nodeInstance.stdin.end(result.code);
-
-        // make any stdout data visible to the main process
-        nodeInstance.stdout.pipe(process.stdout);
-        nodeInstance.stderr.pipe(process.stderr);
-      } else {
-        process.stdout.write(result.code);
-      }
+      transpileIO(fs.createReadStream(files[0]), process.stdout, null, options);
     }
     break;
 
@@ -163,24 +148,85 @@ switch (files.length) {
     break;
 }
 
+function runInput(input, options) {
+  var spawn = require('child_process').spawn;
+  var esnext = require('../lib');
+
+  readInput(input, function(string) {
+    var result = esnext.compile(string, options);
+
+    // create a node child process
+    nodeInstance = spawn('node');
+
+    // pipe the compiled code to the node child process
+    nodeInstance.stdin.end(result.code);
+
+    // make any stdout data visible to the main process
+    nodeInstance.stdout.pipe(process.stdout);
+    nodeInstance.stderr.pipe(process.stderr);
+  });
+}
+
+function transpileIO(input, output, sourceMapOutput, options) {
+  var esnext = require('../lib');
+
+  readInput(input, function(inputString) {
+    var result = esnext.compile(inputString, options);
+    output.write(result.code);
+    if (sourceMapOutput) {
+      if (sourceMaps) {
+        assert.ok(
+          result.map,
+          'expected source map but got nothing for file: ' + file
+        );
+        sourceMapOutput.write(JSON.stringify(result.map, null, 2));
+      }
+    }
+  });
+}
+
+function readInput(input, callback) {
+  readStream(input, function(err, string) {
+    if (err) {
+      eputs('error: ' + err.message);
+    } else {
+      callback(string);
+    }
+  });
+}
+
+function readStream(input, callback) {
+  var inputString = '';
+
+  input.on('data', function(chunk) {
+    inputString += chunk;
+  });
+
+  input.on('end', function() {
+    callback(null, inputString);
+  });
+
+  input.on('error', function(err) {
+    callback(err);
+  });
+}
+
 function transpileFile(file, target) {
-  var sourceMapTarget;
+  var mkdirp = require('mkdirp');
   var fileOptions = Object.create(options);
+  var sourceMapTarget;
+  var sourceMapOutput;
+
   if (sourceMaps) {
     sourceMapTarget = target + '.map';
     fileOptions.sourceFileName = target;
     fileOptions.sourceMapName = sourceMapTarget;
+    sourceMapOutput = fs.createWriteStream(sourceMapTarget);
   }
-  var result = esnext.compile(fs.readFileSync(file).toString(), fileOptions);
+
+  var input = fs.createReadStream(file);
   mkdirp.sync(Path.dirname(target));
-  fs.writeFileSync(target, result.code);
-  if (sourceMaps) {
-    assert.ok(
-      result.map,
-      'expected source map but got nothing for file: ' + file
-    );
-    fs.writeFileSync(sourceMapTarget, JSON.stringify(result.map, null, 2));
-  }
+  transpileIO(input, fs.createWriteStream(target), sourceMapOutput, fileOptions);
 }
 
 function bold(string) {
