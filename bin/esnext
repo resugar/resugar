@@ -134,13 +134,6 @@ switch (files.length) {
       transpileFile(files[0], target);
     } else {
       var contents = fs.readFileSync(files[0]).toString();
-
-      // strip out shebang if present, and assume code is to be executed
-      if (contents.slice(0, 2) === '#!') {
-        runCode = true;
-        contents = contents.replace(/^#![^\n]+\n/, '');
-      }
-
       var result = esnext.compile(contents, options);
 
       if (runCode) {
