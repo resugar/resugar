@@ -122,7 +122,7 @@ switch (files.length) {
       eputs('error: ' + exe + ' - cannot enable source maps when outputting to stdout');
       process.exit(1);
     }
-    var target, resultStream, nodeInstance;
+    var target, nodeInstance;
 
     if (fs.existsSync(output) && fs.statSync(output).isDirectory()) {
       target = Path.join(output, Path.basename(files[0]));
@@ -147,13 +147,8 @@ switch (files.length) {
         // create a node child process
         nodeInstance = spawn('node');
 
-        // create a stream from the compiled code
-        resultStream = new stream.Readable();
-        resultStream.push(result.code);
-        resultStream.push(null);
-
         // pipe the compiled code to the node child process
-        resultStream.pipe(nodeInstance.stdin);
+        nodeInstance.stdin.end(result.code);
 
         // make any stdout data visible to the main process
         nodeInstance.stdout.pipe(process.stdout);
