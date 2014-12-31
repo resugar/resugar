@@ -157,6 +157,7 @@ switch (files.length) {
 
         // make any stdout data visible to the main process
         nodeInstance.stdout.pipe(process.stdout);
+        nodeInstance.stderr.pipe(process.stderr);
       } else {
         process.stdout.write(result.code);
       }
