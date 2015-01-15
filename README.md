@@ -6,19 +6,38 @@ Use tomorrow's JavaScript syntax today. [Try it now in your browser](https://esn
 
 ## NOTE: This project has merged with 6to5.
 
-[6to5] has incorporated all the tests from esnext, so all your code should
-continue to behave the same as when using esnext. The one exception is modules,
-since esnext never handled modules, but 6to5 does. To continue using whatever
-tool you were using for modules, tell 6to5 to blacklist the `modules`
-transform.
+esnext has merged with [6to5]. All the features of esnext are supported by
+6to5, and more. All the tests from esnext have been ported over to 6to5 to
+ensure that switchers will have minimal code changes to make. The maintainers
+of esnext will continue working on 6to5 to bring better spec compliance, ES6
+feature support, and performance.
 
-If you were using esnext as a command-line utility, everything you could do
-should be doable with 6to5 with different arguments. If you were using a build
-system such as broccoli or gulp, see the [6to5 build system integration
-info][6to5-build].
+### Transition Notes
 
-If you're using esnext as part of Ember CLI, a future update to Ember CLI will
-switch you from using esnext to 6to5 (written January 2015).
+When transitioning your project from esnext to 6to5, you'll need to do
+different things depending on how you brought esnext into your project.
+
+#### I have a direct dependency on the esnext npm package.
+
+You'll need to remove the esnext entry from your package.json and add 6to5 in
+its place, using the 6to5 API or CLI instead of esnext's.
+
+#### I'm using esnext with broccoli/grunt/gulp/etc.
+
+Check the [6to5 build system integration page][6to5-build]. Chances are good
+there's already a plugin ready to use in your project.
+
+#### I'm using esnext via Ember CLI.
+
+A future update to Ember CLI will switch you from using esnext to 6to5 (written
+January 2015).
+
+#### A note on ES6 modules.
+
+Since esnext never handled modules, but 6to5 does, you may need to adjust your
+build pipeline. You can either start using 6to5's built-in module transforms,
+or continue using whatever tool you were using for modules. To prevent 6to5
+from handling modules, blacklist the `modules` transform.
 
 ## Install
 
