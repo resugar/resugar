@@ -29,8 +29,8 @@ there's already a plugin ready to use in your project.
 
 #### I'm using esnext via Ember CLI.
 
-A future update to Ember CLI will switch you from using esnext to 6to5 (written
-January 2015).
+ember-cli v0.1.7 uses 6to5 instead of esnext by default, so update your Ember
+app to use that version or later.
 
 #### A note on ES6 modules.
 
