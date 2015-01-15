@@ -4,6 +4,22 @@
 
 Use tomorrow's JavaScript syntax today. [Try it now in your browser](https://esnext.github.io/esnext/).
 
+## NOTE: This project has merged with 6to5.
+
+[6to5] has incorporated all the tests from esnext, so all your code should
+continue to behave the same as when using esnext. The one exception is modules,
+since esnext never handled modules, but 6to5 does. To continue using whatever
+tool you were using for modules, tell 6to5 to blacklist the `modules`
+transform.
+
+If you were using esnext as a command-line utility, everything you could do
+should be doable with 6to5 with different arguments. If you were using a build
+system such as broccoli or gulp, see the [6to5 build system integration
+info][6to5-build].
+
+If you're using esnext as part of Ember CLI, a future update to Ember CLI will
+switch you from using esnext to 6to5 (written January 2015).
+
 ## Install
 
 ```
@@ -152,6 +168,8 @@ Huge thanks to [Ben Newman][benjamn] for [recast][recast] and
 the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [es6-arrow-function][es6-arrow-function], and others.
 
+[6to5]: https://6to5.org/
+[6to5-build]: https://6to5.org/docs/setup/#build-systems
 [ariya]: https://github.com/ariya
 [benjamn]: https://github.com/benjamn
 [broccoli-esnext]: https://github.com/shinnn/broccoli-esnext
