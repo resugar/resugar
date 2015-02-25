@@ -4,39 +4,39 @@
 
 Use tomorrow's JavaScript syntax today. [Try it now in your browser](https://esnext.github.io/esnext/).
 
-## NOTE: This project has merged with 6to5.
+## NOTE: This project has merged with Babel.
 
-esnext has merged with [6to5]. All the features of esnext are supported by
-6to5, and more. All the tests from esnext have been ported over to 6to5 to
+esnext has merged with [Babel]. All the features of esnext are supported by
+Babel, and more. All the tests from esnext have been ported over to Babel to
 ensure that switchers will have minimal code changes to make. The maintainers
-of esnext will continue working on 6to5 to bring better spec compliance, ES6
+of esnext will continue working on Babel to bring better spec compliance, ES6
 feature support, and performance.
 
 ### Transition Notes
 
-When transitioning your project from esnext to 6to5, you'll need to do
+When transitioning your project from esnext to Babel, you'll need to do
 different things depending on how you brought esnext into your project.
 
 #### I have a direct dependency on the esnext npm package.
 
-You'll need to remove the esnext entry from your package.json and add 6to5 in
-its place, using the 6to5 API or CLI instead of esnext's.
+You'll need to remove the esnext entry from your package.json and add Babel in
+its place, using the Babel API or CLI instead of esnext's.
 
 #### I'm using esnext with broccoli/grunt/gulp/etc.
 
-Check the [6to5 build system integration page][6to5-build]. Chances are good
+Check the [Babel build system integration page][babel-build]. Chances are good
 there's already a plugin ready to use in your project.
 
 #### I'm using esnext via Ember CLI.
 
-ember-cli v0.1.7 uses 6to5 instead of esnext by default, so update your Ember
+ember-cli v0.1.7 uses Babel instead of esnext by default, so update your Ember
 app to use that version or later.
 
 #### A note on ES6 modules.
 
-Since esnext never handled modules, but 6to5 does, you may need to adjust your
-build pipeline. You can either start using 6to5's built-in module transforms,
-or continue using whatever tool you were using for modules. To prevent 6to5
+Since esnext never handled modules, but Babel does, you may need to adjust your
+build pipeline. You can either start using Babel's built-in module transforms,
+or continue using whatever tool you were using for modules. To prevent Babel
 from handling modules, blacklist the `modules` transform.
 
 ## Install
@@ -187,8 +187,8 @@ Huge thanks to [Ben Newman][benjamn] for [recast][recast] and
 the [es6-module-transpiler][es6-module-transpiler], [es6-class][es6-class],
 [es6-arrow-function][es6-arrow-function], and others.
 
-[6to5]: https://6to5.org/
-[6to5-build]: https://6to5.org/docs/setup/#build-systems
+[babel]: https://babeljs.io/
+[babel-build]: http://babeljs.io/docs/using-babel/#build-systems
 [ariya]: https://github.com/ariya
 [benjamn]: https://github.com/benjamn
 [broccoli-esnext]: https://github.com/shinnn/broccoli-esnext
