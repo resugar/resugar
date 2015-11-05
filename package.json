@@ -1,48 +1,42 @@
 {
   "name": "esnext",
-  "version": "0.14.0",
-  "description": "Transform next-generation JavaScript to today's JavaScript.",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "make test"
-  },
+  "version": "1.0.0",
+  "description": "Update your project to the latest ECMAScript syntax.",
+  "main": "lib/esnext.js",
+  "jsnext:main": "src/esnext.js",
   "bin": {
-    "esnext": "./bin/esnext"
+    "esnext": "./bin/index.js"
   },
-  "files": [
-    "lib/index.js",
-    "bin/esnext",
-    "LICENSE"
-  ],
-  "repository": "esnext/esnext",
+  "scripts": {
+    "test": "mocha --compilers js:babel/register",
+    "prepublish": "rm -rf lib && babel -b es6.classes -d lib src"
+  },
   "keywords": [
-    "es6"
+    "es6",
+    "es7",
+    "ast"
   ],
-  "author": "Square, Inc.",
-  "license": "Apache 2",
-  "browser": {
-    "./tmp/index.js": "./lib/browser/index.js"
+  "files": [
+    "lib",
+    "src",
+    "bin"
+  ],
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "author": "Brian Donovan",
+  "license": "MIT",
+  "dependencies": {
+    "escope": "^3.2.0",
+    "espree": "^2.2.5",
+    "estraverse": "^4.1.1",
+    "magic-string": "^0.8.0",
+    "mkdirp": "^0.5.1",
+    "shebang-regex": "^1.0.0",
+    "strip-indent": "^1.0.1"
   },
   "devDependencies": {
-    "brfs": "^1.2.0",
-    "browserify": "^7.0.2",
-    "example-runner": "^0.2.0"
-  },
-  "dependencies": {
-    "es6-arrow-function": "^0.6.0",
-    "es6-class": "^0.9.0",
-    "es6-computed-properties": "^0.0.2",
-    "es6-default-params": "^0.4.0",
-    "es6-destructuring": "^0.4.0",
-    "es6-object-concise": "^0.1.2",
-    "es6-object-short": "^0.1.2",
-    "es6-rest-params": "^0.3.0",
-    "es6-spread": "^0.2.0",
-    "es6-templates": "^0.2.0",
-    "mkdirp": "^0.5.0",
-    "recast": "^0.9.11",
-    "regenerator": "^0.8.1",
-    "regexpu": "^0.3.0",
-    "through": "^2.3.6"
+    "babel": "^5.8.29",
+    "mocha": "^2.3.3"
   }
 }

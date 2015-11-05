@@ -1,4 +1,1 @@
-test/results
-node_modules
-dist
-tmp
+lib

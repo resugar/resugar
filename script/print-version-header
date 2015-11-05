@@ -1,4 +1,0 @@
-#!/usr/bin/env node
-
-var info = require('../package');
-console.log('/**\n * ' + info.name + ' v' + info.version + '\n */');
