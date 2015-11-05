@@ -482,7 +482,7 @@ function extractSingleDeclaration(node: Object): ?Object {
   return node.declarations[0];
 }
 
-function extractRequirePathNode(node: Object): Object {
+function extractRequirePathNode(node: Object): ?Object {
   if (!node || node.type !== Syntax.CallExpression) {
     return null;
   }
