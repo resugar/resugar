@@ -18,6 +18,29 @@ class OptionError extends Error {
   }
 }
 
+class DelayedWritableFileStream {
+  constructor(path, options) {
+    this.path = path;
+    this.options = options;
+  }
+
+  write(chunk) {
+    return this.stream.write(chunk);
+  }
+
+  end() {
+    return this.stream.end();
+  }
+
+  get stream() {
+    if (!this._stream) {
+      mkdirp.sync(dirname(this.path));
+      this._stream = createWriteStream(this.path, this.options);
+    }
+    return this._stream;
+  }
+}
+
 run(process.argv.slice(2));
 
 function run(args) {
@@ -34,12 +57,8 @@ function run(args) {
       createReadStream(options.input, { encoding: 'utf8' }) :
       process.stdin;
     const output = options.output ?
-      createWriteStream(options.output, { encoding: 'utf8' }) :
+      new DelayedWritableFileStream(options.output, { encoding: 'utf8' }) :
       process.stdout;
-
-    if (options.output) {
-      mkdirp.sync(dirname(options.output));
-    }
 
     const plugins = getDefaultPlugins()
       .filter(plugin => {
