@@ -3,6 +3,7 @@ import { analyze } from 'escope';
 import { parse } from 'espree';
 
 const PARSE_OPTIONS = {
+  loc: true,
   range: true,
   ecmaFeatures: {
     // enable parsing of arrow functions

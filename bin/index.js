@@ -73,12 +73,28 @@ function run(args) {
 
     readStream(input)
       .then(source => convert(source, plugins))
-      .then(result => output.write(result.source))
+      .then(result => {
+        printWarnings(input.path || '[stdin]', result.warnings);
+        output.write(result.source);
+      })
       .catch(error => {
         console.error(error.stack);
         process.exit(1);
       });
   }
+}
+
+function printWarnings(path, warnings) {
+  for (const warning of warnings) {
+    printWarning(path, warning);
+  }
+}
+
+function printWarning(path, warning) {
+  const loc = warning.node.loc;
+  process.stderr.write(
+    `WARNING: ${path}:${loc.start.line}:${loc.start.column + 1}  ${warning.type}  ${warning.message}\n`
+  );
 }
 
 function readStream(stream) {
