@@ -24,13 +24,13 @@ describe('CommonJS module plugin', () => {
                 ],
                 node: {
                   type: Syntax.VariableDeclaration,
+                  kind: 'var',
                   declarations: [
                     {
                       type: Syntax.VariableDeclarator,
                       id: {
                         type: Syntax.Identifier,
-                        name: 'foo',
-                        range: [ 5, 8 ]
+                        name: 'foo'
                       },
                       init: {
                         type: Syntax.CallExpression,
@@ -38,22 +38,16 @@ describe('CommonJS module plugin', () => {
                           {
                             type: Syntax.Literal,
                             value: 'foo',
-                            raw: `'foo'`,
-                            range: [ 19, 24 ]
+                            raw: `'foo'`
                           }
                         ],
                         callee: {
                           type: Syntax.Identifier,
-                          name: 'require',
-                          range: [ 11, 18 ]
-                        },
-                        range: [ 11, 25 ]
-                      },
-                      range: [ 5, 25 ]
+                          name: 'require'
+                        }
+                      }
                     }
-                  ],
-                  kind: 'var',
-                  range: [ 1, 26 ]
+                  ]
                 }
               }
             ],
@@ -86,13 +80,13 @@ describe('CommonJS module plugin', () => {
                 ],
                 node: {
                   type: 'VariableDeclaration',
+                  kind: 'var',
                   declarations: [
                     {
                       type: 'VariableDeclarator',
                       id: {
                         'type': 'Identifier',
-                        name: 'parse',
-                        range: [ 5, 10 ]
+                        name: 'parse'
                       },
                       init: {
                         type: 'MemberExpression',
@@ -102,30 +96,22 @@ describe('CommonJS module plugin', () => {
                           arguments: [
                             {
                               type: 'Literal',
-                              range: [ 21, 29 ],
                               value: 'espree',
                               raw: `'espree'`
                             }
                           ],
                           callee: {
                             type: 'Identifier',
-                            name: 'require',
-                            range: [ 13, 20 ]
-                          },
-                          range: [ 13, 30 ]
+                            name: 'require'
+                          }
                         },
                         property: {
                           type: 'Identifier',
-                          name: 'parse',
-                          range: [ 31, 36 ]
-                        },
-                        range: [ 13, 36 ]
-                      },
-                      range: [ 5, 36 ]
+                          name: 'parse'
+                        }
+                      }
                     }
-                  ],
-                  kind: 'var',
-                  range: [ 1, 37 ]
+                  ]
                 }
               }
             ],
@@ -177,58 +163,48 @@ describe('CommonJS module plugin', () => {
                             type: 'Property',
                             key: {
                               type: 'Identifier',
-                              name: 'pow',
-                              range: [ 7, 10 ]
+                              name: 'pow'
                             },
                             value: {
                               type: 'Identifier',
-                              name: 'pow',
-                              range: [ 7, 10 ]
+                              name: 'pow'
                             },
                             kind: 'init',
                             computed: false,
                             method: false,
-                            shorthand: true,
-                            range: [ 7, 10 ]
+                            shorthand: true
                           },
                           {
                             type: 'Property',
                             key: {
                               type: 'Identifier',
-                              name: 'sin',
-                              range: [ 12, 15 ]
+                              name: 'sin'
                             },
                             value: {
                               type: 'Identifier',
-                              name: 'sin',
-                              range: [ 12, 15 ]
+                              name: 'sin'
                             },
                             kind: 'init',
                             computed: false,
                             method: false,
-                            shorthand: true,
-                            range: [ 12, 15 ]
+                            shorthand: true
                           },
                           {
                             type: 'Property',
                             key: {
                               type: 'Identifier',
-                              name: 'cos',
-                              range: [ 17, 20 ]
+                              name: 'cos'
                             },
                             value: {
                               type: 'Identifier',
-                              name: 'cosine',
-                              range: [ 22, 28 ]
+                              name: 'cosine'
                             },
                             kind: 'init',
                             computed: false,
                             method: false,
-                            shorthand: false,
-                            range: [ 17, 28 ]
+                            shorthand: false
                           }
-                        ],
-                        range: [ 5, 30 ]
+                        ]
                       },
                       init: {
                         type: 'CallExpression',
@@ -236,21 +212,16 @@ describe('CommonJS module plugin', () => {
                           {
                             type: 'Literal',
                             value: 'math',
-                            raw: `'math'`,
-                            range: [ 41, 47 ]
+                            raw: `'math'`
                           }
                         ],
                         callee: {
                           type: 'Identifier',
-                          name: 'require',
-                          range: [ 33, 40 ]
-                        },
-                        range: [ 33, 48 ]
-                      },
-                      range: [ 5, 48 ]
+                          name: 'require'
+                        }
+                      }
                     }
-                  ],
-                  range: [ 1, 49 ]
+                  ]
                 }
               }
             ],
@@ -284,18 +255,14 @@ describe('CommonJS module plugin', () => {
                       {
                         type: 'Literal',
                         value: 'foo',
-                        raw: `'foo'`,
-                        range: [ 9, 14 ]
+                        raw: `'foo'`
                       }
                     ],
                     callee: {
                       type: 'Identifier',
-                      name: 'require',
-                      range: [ 1, 8 ]
-                    },
-                    range: [ 1, 15 ]
-                  },
-                  range: [ 1, 16 ]
+                      name: 'require'
+                    }
+                  }
                 }
               }
             ],
@@ -326,16 +293,14 @@ describe('CommonJS module plugin', () => {
             message: `Unsupported 'require' call cannot be transformed to an import`,
             node: {
               type: 'CallExpression',
-              callee: { type: 'Identifier', name: 'require', range: [ 1, 8 ] },
+              callee: { type: 'Identifier', name: 'require' },
               arguments: [
                 {
                   type: 'Literal',
                   value: 'debug',
-                  raw: `'debug'`,
-                  range: [ 9, 16 ]
+                  raw: `'debug'`
                 }
-              ],
-              range: [ 1, 17 ]
+              ]
             }
           }
         ]
@@ -418,15 +383,12 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 1, 8 ]
+                        name: 'exports'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'add',
-                        range: [ 9, 12 ]
-                      },
-                      range: [ 1, 12 ]
+                        name: 'add'
+                      }
                     },
                     operator: '=',
                     right: {
@@ -441,20 +403,15 @@ describe('CommonJS module plugin', () => {
                               operator: '+',
                               left: {
                                 type: 'Identifier',
-                                name: 'a',
-                                range: [ 41, 42 ]
+                                name: 'a'
                               },
                               right: {
                                 type: 'Identifier',
-                                name: 'b',
-                                range: [ 45, 46 ]
-                              },
-                              range: [ 41, 46 ]
-                            },
-                            range: [ 34, 47 ]
+                                name: 'b'
+                              }
+                            }
                           }
-                        ],
-                        range: [ 30, 49 ]
+                        ]
                       },
                       expression: false,
                       generator: false,
@@ -462,20 +419,15 @@ describe('CommonJS module plugin', () => {
                       params: [
                         {
                           type: 'Identifier',
-                          name: 'a',
-                          range: [ 24, 25 ]
+                          name: 'a'
                         },
                         {
                           type: 'Identifier',
-                          name: 'b',
-                          range: [ 27, 28 ]
+                          name: 'b'
                         }
-                      ],
-                      range: [ 15, 49 ]
-                    },
-                    range: [ 1, 49 ]
-                  },
-                  range: [ 1, 50 ]
+                      ]
+                    }
+                  }
                 }
               }
             ],
@@ -518,15 +470,12 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 1, 8 ]
+                        name: 'exports'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'add',
-                        range: [ 9, 12 ]
-                      },
-                      range: [ 1, 12 ]
+                        name: 'add'
+                      }
                     },
                     right: {
                       type: 'FunctionExpression',
@@ -540,45 +489,34 @@ describe('CommonJS module plugin', () => {
                               operator: '+',
                               left: {
                                 type: 'Identifier',
-                                name: 'a',
-                                range: [ 45, 46 ]
+                                name: 'a'
                               },
                               right: {
                                 type: 'Identifier',
-                                name: 'b',
-                                range: [ 49, 50 ]
-                              },
-                              range: [ 45, 50 ]
-                            },
-                            range: [ 38, 51 ]
+                                name: 'b'
+                              }
+                            }
                           }
-                        ],
-                        range: [ 34, 53 ]
+                        ]
                       },
                       expression: false,
                       generator: false,
                       id: {
                         type: 'Identifier',
-                        name: 'add',
-                        range: [ 24, 27 ]
+                        name: 'add'
                       },
                       params: [
                         {
                           type: 'Identifier',
-                          name: 'a',
-                          range: [ 28, 29 ]
+                          name: 'a'
                         },
                         {
                           type: 'Identifier',
-                          name: 'b',
-                          range: [ 31, 32 ]
+                          name: 'b'
                         }
-                      ],
-                      range: [ 15, 53 ]
-                    },
-                    range: [ 1, 53 ]
-                  },
-                  range: [ 1, 54 ]
+                      ]
+                    }
+                  }
                 }
               }
             ],
@@ -606,8 +544,7 @@ describe('CommonJS module plugin', () => {
             message: `Exported function 'doSomething' does not match export name 'add'`,
             node: {
               type: 'Identifier',
-              name: 'doSomething',
-              range: [ 24, 35 ]
+              name: 'doSomething'
             }
           }
         ],
@@ -632,15 +569,12 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 1, 8 ]
+                        name: 'exports'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'add',
-                        range: [ 9, 12 ]
-                      },
-                      range: [ 1, 12 ]
+                        name: 'add'
+                      }
                     },
                     right: {
                       type: 'FunctionExpression',
@@ -654,45 +588,34 @@ describe('CommonJS module plugin', () => {
                               operator: '+',
                               left: {
                                 type: 'Identifier',
-                                name: 'a',
-                                range: [ 53, 54 ]
+                                name: 'a'
                               },
                               right: {
                                 type: 'Identifier',
-                                name: 'b',
-                                range: [ 57, 58 ]
-                              },
-                              range: [ 53, 58 ]
-                            },
-                            range: [ 46, 59 ]
+                                name: 'b'
+                              }
+                            }
                           }
-                        ],
-                        range: [ 42, 61 ]
+                        ]
                       },
                       expression: false,
                       generator: false,
                       id: {
                         type: 'Identifier',
-                        name: 'doSomething',
-                        range: [ 24, 35 ]
+                        name: 'doSomething'
                       },
                       params: [
                         {
                           type: 'Identifier',
-                          name: 'a',
-                          range: [ 36, 37 ]
+                          name: 'a'
                         },
                         {
                           type: 'Identifier',
-                          name: 'b',
-                          range: [ 39, 40 ]
+                          name: 'b'
                         }
-                      ],
-                      range: [ 15, 61 ]
-                    },
-                    range: [ 1, 61 ]
-                  },
-                  range: [ 1, 62 ]
+                      ]
+                    }
+                  }
                 }
               }
             ],
@@ -731,32 +654,25 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 1, 8 ]
+                        name: 'exports'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'foo',
-                        range: [ 9, 12 ]
-                      },
-                      range: [ 1, 12 ]
+                        name: 'foo'
+                      }
                     },
                     right: {
                       type: 'FunctionExpression',
                       body: {
                         type: 'BlockStatement',
-                        body: [],
-                        range: [ 26, 28 ]
+                        body: []
                       },
                       expression: false,
                       generator: false,
                       id: null,
-                      params: [],
-                      range: [ 15, 28 ]
-                    },
-                    range: [ 1, 28 ]
-                  },
-                  range: [ 1, 29 ]
+                      params: []
+                    }
+                  }
                 }
               }
             ],
@@ -795,32 +711,25 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 1, 8 ]
+                        name: 'exports'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'foo',
-                        range: [ 9, 12 ]
-                      },
-                      range: [ 1, 12 ]
+                        name: 'foo'
+                      }
                     },
                     right: {
                       type: 'FunctionExpression',
                       body: {
                         type: 'BlockStatement',
-                        body: [],
-                        range: [ 26, 28 ]
+                        body: []
                       },
                       expression: false,
                       generator: false,
                       id: null,
-                      params: [],
-                      range: [ 15, 28 ]
-                    },
-                    range: [ 1, 28 ]
-                  },
-                  range: [ 1, 33 ]
+                      params: []
+                    }
+                  }
                 }
               }
             ],
@@ -860,25 +769,19 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 1, 8 ]
+                        name: 'exports'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'PI',
-                        range: [ 9, 11 ]
-                      },
-                      range: [ 1, 11 ]
+                        name: 'PI'
+                      }
                     },
                     right: {
                       type: 'Literal',
                       value: 3.14,
-                      raw: '3.14',
-                      range: [ 14, 18 ]
-                    },
-                    range: [ 1, 18 ]
-                  },
-                  range: [ 1, 19 ]
+                      raw: '3.14'
+                    }
+                  }
                 }
               }
             ],
@@ -912,24 +815,18 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'module',
-                        range: [ 1, 7 ]
+                        name: 'module'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 8, 15 ]
-                      },
-                      range: [ 1, 15 ]
+                        name: 'exports'
+                      }
                     },
                     right: {
                       type: 'Identifier',
-                      name: 'Foo',
-                      range: [ 18, 21 ]
-                    },
-                    range: [ 1, 21 ]
-                  },
-                  range: [ 1, 22 ]
+                      name: 'Foo'
+                    }
+                  }
                 }
               }
             ],
@@ -955,8 +852,7 @@ describe('CommonJS module plugin', () => {
             message: `Named export 'a' conflicts with existing local binding`,
             node: {
               type: 'Identifier',
-              name: 'a',
-              range: [ 16, 17 ]
+              name: 'a'
             }
           }
         ],
@@ -982,25 +878,19 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 8, 15 ]
+                        name: 'exports'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'a',
-                        range: [ 16, 17 ]
-                      },
-                      range: [ 8, 17 ]
+                        name: 'a'
+                      }
                     },
                     right: {
                       type: 'Literal',
                       value: 1,
-                      raw: '1',
-                      range: [ 20, 21 ]
-                    },
-                    range: [ 8, 21 ]
-                  },
-                  range: [ 8, 22 ]
+                      raw: '1'
+                    }
+                  }
                 }
               }
             ],
@@ -1042,24 +932,18 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 12, 19 ]
+                        name: 'exports'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'a',
-                        range: [ 20, 21 ]
-                      },
-                      range: [ 12, 21 ]
+                        name: 'a'
+                      }
                     },
                     right: {
                       type: 'Identifier',
-                      name: 'a',
-                      range: [ 24, 25 ]
-                    },
-                    range: [ 12, 25 ]
-                  },
-                  range: [ 12, 26 ]
+                      name: 'a'
+                    }
+                  }
                 }
               }
             ],
@@ -1101,24 +985,18 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 12, 19 ]
+                        name: 'exports'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'b',
-                        range: [ 20, 21 ]
-                      },
-                      range: [ 12, 21 ]
+                        name: 'b'
+                      }
                     },
                     right: {
                       type: 'Identifier',
-                      name: 'a',
-                      range: [ 24, 25 ]
-                    },
-                    range: [ 12, 25 ]
-                  },
-                  range: [ 12, 26 ]
+                      name: 'a'
+                    }
+                  }
                 }
               }
             ],
@@ -1162,15 +1040,12 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'module',
-                        range: [ 1, 7 ]
+                        name: 'module'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 8, 15 ]
-                      },
-                      range: [ 1, 15 ]
+                        name: 'exports'
+                      }
                     },
                     right: {
                       type: 'ObjectExpression',
@@ -1183,15 +1058,12 @@ describe('CommonJS module plugin', () => {
                           shorthand: true,
                           key: {
                             type: 'Identifier',
-                            name: 'a',
-                            range: [ 20, 21 ]
+                            name: 'a'
                           },
                           value: {
                             type: 'Identifier',
-                            name: 'a',
-                            range: [ 20, 21 ]
-                          },
-                          range: [ 20, 21 ]
+                            name: 'a'
+                          }
                         },
                         {
                           type: 'Property',
@@ -1201,22 +1073,16 @@ describe('CommonJS module plugin', () => {
                           shorthand: true,
                           key: {
                             type: 'Identifier',
-                            name: 'b',
-                            range: [ 23, 24 ]
+                            name: 'b'
                           },
                           value: {
                             type: 'Identifier',
-                            name: 'b',
-                            range: [ 23, 24 ]
-                          },
-                          range: [ 23, 24 ]
+                            name: 'b'
+                          }
                         }
-                      ],
-                      range: [ 18, 26 ]
-                    },
-                    range: [ 1, 26 ]
-                  },
-                  range: [ 1, 27 ]
+                      ]
+                    }
+                  }
                 }
               }
             ],
@@ -1260,15 +1126,12 @@ describe('CommonJS module plugin', () => {
                       computed: false,
                       object: {
                         type: 'Identifier',
-                        name: 'module',
-                        range: [ 1, 7 ]
+                        name: 'module'
                       },
                       property: {
                         type: 'Identifier',
-                        name: 'exports',
-                        range: [ 8, 15 ]
-                      },
-                      range: [ 1, 15 ]
+                        name: 'exports'
+                      }
                     },
                     right: {
                       type: 'ObjectExpression',
@@ -1281,15 +1144,12 @@ describe('CommonJS module plugin', () => {
                           shorthand: false,
                           key: {
                             type: 'Identifier',
-                            name: 'a',
-                            range: [ 20, 21 ]
+                            name: 'a'
                           },
                           value: {
                             type: 'Identifier',
-                            name: 'b',
-                            range: [ 23, 24 ]
-                          },
-                          range: [ 20, 24 ]
+                            name: 'b'
+                          }
                         },
                         {
                           type: 'Property',
@@ -1299,22 +1159,16 @@ describe('CommonJS module plugin', () => {
                           shorthand: false,
                           key: {
                             type: 'Identifier',
-                            name: 'c',
-                            range: [ 26, 27 ]
+                            name: 'c'
                           },
                           value: {
                             type: 'Identifier',
-                            name: 'd',
-                            range: [ 29, 30 ]
-                          },
-                          range: [ 26, 30 ]
+                            name: 'd'
+                          }
                         }
-                      ],
-                      range: [ 18, 32 ]
-                    },
-                    range: [ 1, 32 ]
-                  },
-                  range: [ 1, 33 ]
+                      ]
+                    }
+                  }
                 }
               }
             ],
@@ -1345,10 +1199,8 @@ describe('CommonJS module plugin', () => {
                   expression: {
                     type: 'Literal',
                     value: 'use strict',
-                    raw: '"use strict"',
-                    range: [ 1, 13 ]
-                  },
-                  range: [ 1, 14 ]
+                    raw: '"use strict"'
+                  }
                 }
               }
             ]
