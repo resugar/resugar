@@ -90,7 +90,7 @@ type Warning = {
 };
 
 export type RenderedModule = {
-  source: string,
+  code: string,
   map: Object,
   warnings: Array<Warning>,
   metadata: Object
@@ -119,7 +119,7 @@ export default class Module {
 
   render(): RenderedModule {
     return {
-      source: this.magicString.toString(),
+      code: this.magicString.toString(),
       map: this.magicString.generateMap(),
       warnings: this.warnings,
       metadata: this.metadata

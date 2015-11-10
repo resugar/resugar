@@ -59,7 +59,7 @@ export function convert(source: string, plugins: Array<Plugin>=getDefaultPlugins
   let result: RenderedModule = module.render();
 
   if (shebangMatch) {
-    result.source = shebangMatch[0] + result.source;
+    result.code = shebangMatch[0] + result.code;
   }
 
   return result;

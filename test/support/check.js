@@ -4,7 +4,7 @@ import { deepEqual, strictEqual } from 'assert';
 
 export default function check(input, output, options={}) {
   const result = convert(stripIndent(input));
-  strictEqual(result.source, stripIndent(output));
+  strictEqual(result.code, stripIndent(output));
 
   stripLocationInformation(result);
 

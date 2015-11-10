@@ -75,7 +75,7 @@ function run(args) {
       .then(source => convert(source, plugins))
       .then(result => {
         printWarnings(input.path || '[stdin]', result.warnings);
-        output.write(result.source);
+        output.write(result.code);
       })
       .catch(error => {
         console.error(error.stack);
