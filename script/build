@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+const rollup = require('rollup').rollup;
+const babel = require('rollup-plugin-babel');
+const npm = require('rollup-plugin-npm');
+const commonjs = require('rollup-plugin-commonjs');
+const json = require('rollup-plugin-json');
+
+rollup(
+  {
+    entry: 'src/esnext.js',
+    plugins: [
+      json(),
+      babel(),
+      commonjs({
+        include: 'node_modules/**'
+      }),
+      npm({
+        jsnext: true,
+        main: true
+      })
+    ]
+  }
+).then(
+  bundle => bundle.write({ dest: 'esnext.js', format: 'umd', moduleName: 'esnext' })
+).catch(
+  err => console.error(err.stack)
+);

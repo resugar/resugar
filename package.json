@@ -37,6 +37,11 @@
   },
   "devDependencies": {
     "babel": "^5.8.29",
-    "mocha": "^2.3.3"
+    "mocha": "^2.3.3",
+    "rollup": "^0.20.5",
+    "rollup-plugin-babel": "^1.0.0",
+    "rollup-plugin-commonjs": "^1.2.0",
+    "rollup-plugin-json": "^2.0.0",
+    "rollup-plugin-npm": "^1.0.0"
   }
 }

@@ -1,6 +1,9 @@
+import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
 import type Module from '../module';
 import { Binding, ExportSpecifierListStringBuilder, ImportSpecifierListStringBuilder } from '../bindings';
-import { Syntax, VisitorOption } from 'estraverse';
+
+const Syntax = estraverse.Syntax;
+const VisitorOption = estraverse.VisitorOption;
 
 export const name = 'modules.commonjs';
 export const description = 'Transform CommonJS modules into ES6 modules.';
