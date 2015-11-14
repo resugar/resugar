@@ -37,3 +37,15 @@ export function doSomething() {
   ok(1);
 }
 ```
+
+### Functions
+
+Translate some regular functions to arrow functions:
+
+```js
+list.map(function(item) { return item.name; });
+
+// ↑ becomes ↓
+
+list.map(item => item.name);
+```
