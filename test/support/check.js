@@ -9,7 +9,12 @@ export default function check(input, output, options={}) {
   stripLocationInformation(result);
 
   deepEqual(result.warnings, options.warnings || []);
-  deepEqual(result.metadata, options.metadata || {});
+
+  if (options.metadata) {
+    for (const key in options.metadata) {
+      deepEqual(result.metadata[key], options.metadata[key]);
+    }
+  }
 }
 
 function stripLocationInformation(node, seen=[]) {

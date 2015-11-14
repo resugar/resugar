@@ -1,3 +1,4 @@
+import * as ArrowFunctionPlugin from './plugins/functions.arrow';
 import * as CommonJSPlugin from './plugins/modules.commonjs';
 import MagicString from 'magic-string';
 import Module from './module';
@@ -26,35 +27,29 @@ export function convert(source: string, plugins: Array<Plugin>=getDefaultPlugins
   }
 
   const module = new Module(null, source);
-  const pluginContexts = plugins.map(({ begin }) => begin && begin(module));
 
-  estraverse.traverse(module.ast, {
-    enter(node, parent) {
-      let index = 0;
-      for (let { enter } of plugins) {
+  plugins.forEach(plugin => {
+    const { begin, end, enter, leave } = plugin;
+    const context = begin ? begin(module) : null;
+
+    estraverse.traverse(module.ast, {
+      enter(node, parent) {
         if (enter) {
-          const result = enter(node, parent, module, pluginContexts[index++]);
-          if (result) {
-            return result;
-          }
+          return enter(node, parent, module, context);
         }
-      }
-    },
+      },
 
-    leave(node, parent) {
-      let index = 0;
-      for (let { leave } of plugins) {
+      leave(node, parent) {
         if (leave) {
-          const result = leave(node, parent, module, pluginContexts[index++]);
-          if (result) {
-            return result;
-          }
+          return leave(node, parent, module, context);
         }
       }
+    });
+
+    if (end) {
+      end(module, context);
     }
   });
-
-  plugins.forEach(({ end }, i) => end && end(module, pluginContexts[i]));
 
   let result: RenderedModule = module.render();
 
@@ -66,5 +61,5 @@ export function convert(source: string, plugins: Array<Plugin>=getDefaultPlugins
 }
 
 export function getDefaultPlugins(): Array<Plugin> {
-  return [CommonJSPlugin];
+  return [CommonJSPlugin, ArrowFunctionPlugin];
 }

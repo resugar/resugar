@@ -1,62 +1,11 @@
-import BaseContext from '../context';
-import clone from '../utils/clone';
-import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
-import type Module from '../module';
-import { Binding, ExportSpecifierListStringBuilder, ImportSpecifierListStringBuilder } from '../bindings';
-
-const Syntax = estraverse.Syntax;
-const VisitorOption = estraverse.VisitorOption;
-
-export const name = 'modules.commonjs';
-export const description = 'Transform CommonJS modules into ES6 modules.';
-
-export function begin(module: Module): Context {
-  module.metadata[name] = {
-    imports: [],
-    exports: [],
-    directives: []
-  };
-  return new Context(module);
-}
-
-type ImportMetadata = {
-  type: string,
-  node: Object,
-  bindings: Array<Binding>,
-  path: string
-};
-
-type ExportMetadata = {
-  type: string,
-  node: Object,
-  bindings: Array<Binding>
-};
-
-type DirectiveMetadata = {
-  type: string,
-  node: Object
-};
-
-type Metadata = {
-  imports: Array<ImportMetadata>,
-  exports: Array<ExportMetadata>,
-  directives: Array<DirectiveMetadata>
-};
-
-export function enter(node: Object, parent: Object, module: Module, context: Context): ?VisitorOption {
-  if (/Function/.test(node.type) || context.rewrite(node, parent)) {
-    return VisitorOption.Skip;
+export default class Context {
+  constructor(pluginName: string, module: Module) {
+    this.pluginName = pluginName;
+    this.module = module;
   }
-}
 
-class Context extends BaseContext {
-  constructor(module: Module) {
-    super(name, module);
-    module.metadata[name] = {
-      imports: [],
-      exports: [],
-      directives: []
-    };
+  get metadata(): Object {
+    return this.module.metadata[this.pluginName];
   }
 
   rewrite(node: Object, parent: Object): boolean {
@@ -299,7 +248,7 @@ class Context extends BaseContext {
 
       if (!id) {
         this.insert(right.range[0] + 'function'.length, ` ${exportName}`);
-        right.id = { type: Syntax.Identifier, name: exportName };
+        right.id = { type: 'Identifier', name: exportName };
       } else if (id.name !== property.name) {
         this.overwrite(id.range[0], id.range[1], property.name);
         this.module.warn(
@@ -442,38 +391,39 @@ class Context extends BaseContext {
     this.remove(start, end);
     return true;
   }
-}
 
-function extractSingleDeclaration(node: Object): ?Object {
-  if (node.type !== Syntax.VariableDeclaration) {
-    return null;
+  /**
+   * @private
+   */
+  charAt(index: number): string {
+    return this.module.magicString.original[index];
   }
 
-  if (node.declarations.length !== 1) {
-    return null;
+  /**
+   * @private
+   */
+  slice(start: number, end: number): string {
+    return this.module.magicString.original.slice(start, end);
   }
 
-  return node.declarations[0];
-}
-
-function extractRequirePathNode(node: Object): ?Object {
-  if (!node || node.type !== Syntax.CallExpression) {
-    return null;
+  /**
+   * @private
+   */
+  remove(start: number, end: number) {
+    this.module.magicString.remove(start, end);
   }
 
-  if (node.callee.type !== Syntax.Identifier || node.callee.name !== 'require') {
-    return null;
+  /**
+   * @private
+   */
+  overwrite(start: number, end: number, content: string) {
+    this.module.magicString.overwrite(start, end, content);
   }
 
-  if (node.arguments.length !== 1) {
-    return null;
+  /**
+   * @private
+   */
+  insert(index: number, content: string) {
+    return this.module.magicString.insert(index, content);
   }
-
-  const arg = node.arguments[0];
-
-  if (arg.type !== Syntax.Literal || typeof arg.value !== 'string') {
-    return null;
-  }
-
-  return arg;
 }
