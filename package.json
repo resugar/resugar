@@ -2,14 +2,18 @@
   "name": "esnext",
   "version": "1.0.0",
   "description": "Update your project to the latest ECMAScript syntax.",
-  "main": "lib/esnext.js",
-  "jsnext:main": "src/esnext.js",
+  "main": "dist/esnext.umd.js",
+  "jsnext:main": "dist/esnext.es6.js",
   "bin": {
     "esnext": "./bin/index.js"
   },
   "scripts": {
-    "test": "mocha --compilers js:babel/register",
-    "prepublish": "rm -rf lib && babel -b es6.classes -d lib src"
+    "lint": "eslint src test",
+    "pretest": "rollup -c rollup.test.config.js",
+    "test": "mocha build/test-bundle.js",
+    "prebuild": "npm run lint && rm -rf dist",
+    "build": "rollup -c rollup.umd.config.js && rollup -c rollup.es6.config.js",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "es6",
@@ -17,7 +21,7 @@
     "ast"
   ],
   "files": [
-    "lib",
+    "dist",
     "src",
     "bin"
   ],
@@ -27,22 +31,29 @@
   "author": "Brian Donovan",
   "license": "MIT",
   "dependencies": {
-    "escope": "^3.2.0",
+    "escope": "^3.3.0",
     "espree": "^2.2.5",
     "estraverse": "^4.1.1",
     "magic-string": "^0.8.0",
     "mkdirp": "^0.5.1",
-    "shebang-regex": "^1.0.0",
+    "shebang-regex": "^2.0.0",
     "strip-indent": "^1.0.1"
   },
   "devDependencies": {
     "assert-jsnext": "^1.3.0",
-    "babel": "^5.8.29",
-    "mocha": "^2.3.3",
-    "rollup": "^0.20.5",
-    "rollup-plugin-babel": "^1.0.0",
-    "rollup-plugin-commonjs": "^1.2.0",
+    "babel": "^6.3.13",
+    "babel-eslint": "^4.1.6",
+    "babel-plugin-syntax-flow": "^6.3.13",
+    "babel-plugin-transform-flow-strip-types": "^6.3.15",
+    "babel-preset-es2015-rollup": "^1.0.0",
+    "eslint": "^1.10.3",
+    "eslint-plugin-babel": "^3.0.0",
+    "mocha": "^2.3.4",
+    "rollup": "^0.21.2",
+    "rollup-plugin-babel": "^2.2.0",
+    "rollup-plugin-commonjs": "^1.4.0",
     "rollup-plugin-json": "^2.0.0",
-    "rollup-plugin-npm": "^1.0.0"
+    "rollup-plugin-multi-entry": "^1.0.1",
+    "rollup-plugin-npm": "^1.1.0"
   }
 }

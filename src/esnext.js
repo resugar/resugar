@@ -1,13 +1,10 @@
 import * as ArrowFunctionPlugin from './plugins/functions.arrow';
 import * as CommonJSPlugin from './plugins/modules.commonjs';
-import MagicString from 'magic-string';
 import Module from './module';
 import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
 import shebangRegex from 'shebang-regex';
 import type { RenderedModule } from './module';
 import type { VisitorOption } from 'estraverse';
-import { analyze } from 'escope';
-import { parse } from 'espree';
 
 type PluginBookendCallback = (m: Module) => ?Object;
 type PluginTraversalCallback = (node: Object, parent: Object, module: Module, context: ?Object) => ?VisitorOption;

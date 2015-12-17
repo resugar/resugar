@@ -1,3 +1,5 @@
+import type Module from './module';
+
 export default class Context {
   constructor(pluginName: string, module: Module) {
     this.pluginName = pluginName;

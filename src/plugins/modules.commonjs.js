@@ -10,15 +10,6 @@ const VisitorOption = estraverse.VisitorOption;
 export const name = 'modules.commonjs';
 export const description = 'Transform CommonJS modules into ES6 modules.';
 
-export function begin(module: Module): Context {
-  module.metadata[name] = {
-    imports: [],
-    exports: [],
-    directives: []
-  };
-  return new Context(module);
-}
-
 type ImportMetadata = {
   type: string,
   node: Object,
@@ -43,20 +34,14 @@ type Metadata = {
   directives: Array<DirectiveMetadata>
 };
 
-export function enter(node: Object, parent: Object, module: Module, context: Context): ?VisitorOption {
-  if (/Function/.test(node.type) || context.rewrite(node, parent)) {
-    return VisitorOption.Skip;
-  }
-}
-
 class Context extends BaseContext {
   constructor(module: Module) {
     super(name, module);
-    module.metadata[name] = {
+    module.metadata[name] = ({
       imports: [],
       exports: [],
       directives: []
-    };
+    }: Metadata);
   }
 
   rewrite(node: Object, parent: Object): boolean {
@@ -83,7 +68,7 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteSingleExportRequire(node: Object, parent: Object): boolean {
+  rewriteSingleExportRequire(node: Object): boolean {
     const declaration = extractSingleDeclaration(node);
 
     if (!declaration) {
@@ -115,7 +100,7 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteNamedExportRequire(node: Object, parent: Object): boolean {
+  rewriteNamedExportRequire(node: Object): boolean {
     const declaration = extractSingleDeclaration(node);
 
     if (!declaration) {
@@ -147,7 +132,7 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteDeconstructedImportRequire(node: Object, parent: Object): boolean {
+  rewriteDeconstructedImportRequire(node: Object): boolean {
     const declaration = extractSingleDeclaration(node);
 
     if (!declaration) {
@@ -183,7 +168,7 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteSideEffectRequire(node: Object, parent: Object): boolean {
+  rewriteSideEffectRequire(node: Object): boolean {
     if (node.type !== Syntax.ExpressionStatement) {
       return false;
     }
@@ -202,7 +187,7 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  warnAboutUnsupportedRequire(node: Object, parent: Object): boolean {
+  warnAboutUnsupportedRequire(node: Object): boolean {
     const pathNode = extractRequirePathNode(node);
 
     if (!pathNode) {
@@ -258,7 +243,7 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteNamedExport(node: Object, parent: Object): boolean {
+  rewriteNamedExport(node: Object): boolean {
     if (node.type !== Syntax.ExpressionStatement) {
       return false;
     }
@@ -360,7 +345,7 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteSingleExportAsDefaultExport(node: Object, parent: Object): boolean {
+  rewriteSingleExportAsDefaultExport(node: Object): boolean {
     if (node.type !== Syntax.ExpressionStatement) {
       return false;
     }
@@ -394,7 +379,7 @@ class Context extends BaseContext {
       }
       this.metadata.exports.push({
         type: 'named-export',
-        bindings: bindings,
+        bindings,
         node
       });
       this.overwrite(node.range[0], node.range[1], `export ${ExportSpecifierListStringBuilder.build(bindings)};`);
@@ -441,6 +426,16 @@ class Context extends BaseContext {
 
     this.remove(start, end);
     return true;
+  }
+}
+
+export function begin(module: Module): Context {
+  return new Context(module);
+}
+
+export function enter(node: Object, parent: Object, module: Module, context: Context): ?VisitorOption {
+  if (/Function/.test(node.type) || context.rewrite(node, parent)) {
+    return VisitorOption.Skip;
   }
 }
 

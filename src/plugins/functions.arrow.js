@@ -8,6 +8,22 @@ const { Syntax, VisitorOption } = estraverse;
 export const name = 'functions.arrow';
 export const description = 'Transform regular functions to arrow functions as appropriate.';
 
+class Context extends BaseContext {
+  constructor(module: Module) {
+    super(name, module);
+    module.metadata[name] = {
+      functions: []
+    };
+  }
+
+  get metadata() {
+    if (!this.module.metadata[name]) {
+      this.module.metadata[name] = {};
+    }
+    return this.module.metadata[name];
+  }
+}
+
 export function begin(module: Module): Context {
   return new Context(module);
 }
@@ -69,22 +85,6 @@ export function enter(node: Object, parent: Object, module: Module, context: Con
 
   node.type = Syntax.ArrowFunctionExpression;
   node.body = statement.argument;
-}
-
-class Context extends BaseContext {
-  constructor(module: Module) {
-    super(name, module);
-    module.metadata[name] = {
-      functions: []
-    };
-  }
-
-  get metadata() {
-    if (!this.module.metadata[name]) {
-      this.module.metadata[name] = {};
-    }
-    return this.module.metadata[name];
-  }
 }
 
 function referencesThis(node: Object): boolean {
