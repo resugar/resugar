@@ -1,10 +1,11 @@
-import * as ArrowFunctionPlugin from './plugins/functions.arrow';
-import * as CommonJSPlugin from './plugins/modules.commonjs';
+import allPlugins from './plugins/index';
 import Module from './module';
 import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
 import shebangRegex from 'shebang-regex';
 import type { RenderedModule } from './module';
 import type { VisitorOption } from 'estraverse';
+
+export { default as run } from './cli';
 
 type PluginBookendCallback = (m: Module) => ?Object;
 type PluginTraversalCallback = (node: Object, parent: Object, module: Module, context: ?Object) => ?VisitorOption;
@@ -16,7 +17,7 @@ type Plugin = {
   end: ?PluginBookendCallback
 };
 
-export function convert(source: string, plugins: Array<Plugin>=getDefaultPlugins()): RenderedModule {
+export function convert(source: string, plugins: Array<Plugin>=allPlugins): RenderedModule {
   const shebangMatch = source.match(shebangRegex);
 
   if (shebangMatch) {
@@ -55,8 +56,4 @@ export function convert(source: string, plugins: Array<Plugin>=getDefaultPlugins
   }
 
   return result;
-}
-
-export function getDefaultPlugins(): Array<Plugin> {
-  return [CommonJSPlugin, ArrowFunctionPlugin];
 }

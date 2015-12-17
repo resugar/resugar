@@ -1,4 +1,5 @@
 import babel from 'rollup-plugin-babel';
+import npm from 'rollup-plugin-npm';
 import multiEntry, { entry } from 'rollup-plugin-multi-entry';
 
 export default {
