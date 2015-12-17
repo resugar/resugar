@@ -55,5 +55,8 @@
     "rollup-plugin-json": "^2.0.0",
     "rollup-plugin-multi-entry": "^1.0.1",
     "rollup-plugin-npm": "^1.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
