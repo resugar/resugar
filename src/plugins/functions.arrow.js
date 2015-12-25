@@ -53,7 +53,7 @@ export function enter(node: Object, parent: Object, module: Module, context: Con
 
   context.metadata.functions.push(clone(node));
 
-  const magicString = module.magicString;
+  const { magicString } = module;
 
   if (node.params.length === 0) {
     magicString.overwrite(
