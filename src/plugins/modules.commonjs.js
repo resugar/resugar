@@ -1,6 +1,7 @@
 import BaseContext from '../context';
 import clone from '../utils/clone';
 import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
+import replace from '../utils/replace';
 import type Module from '../module';
 import { Binding, ExportSpecifierListStringBuilder, ImportSpecifierListStringBuilder } from '../bindings';
 
@@ -94,6 +95,15 @@ class Context extends BaseContext {
       pathNode
     );
 
+    replace(node, {
+      type: Syntax.ImportDeclaration,
+      specifiers: [{
+        type: Syntax.ImportDefaultSpecifier,
+        local: id
+      }],
+      source: pathNode
+    });
+
     return true;
   }
 
@@ -125,6 +135,16 @@ class Context extends BaseContext {
       [new Binding(id.name, init.property.name)],
       pathNode
     );
+
+    replace(node, {
+      type: Syntax.ImportDeclaration,
+      specifiers: [{
+        type: Syntax.ImportSpecifier,
+        local: id,
+        imported: init.property
+      }],
+      source: pathNode
+    });
 
     return true;
   }
@@ -161,6 +181,22 @@ class Context extends BaseContext {
     }
 
     this.rewriteRequireAsImport('named-import', node, bindings, pathNode);
+
+    replace(node, {
+      type: Syntax.ImportDeclaration,
+      specifiers: bindings.map(binding => ({
+        type: Syntax.ImportBinding,
+        local: {
+          type: Syntax.Identifier,
+          name: binding.localName
+        },
+        imported: {
+          type: Syntax.Identifier,
+          name: binding.exportName
+        }
+      })),
+      source: pathNode
+    });
 
     return true;
   }
@@ -209,7 +245,7 @@ class Context extends BaseContext {
   rewriteRequireAsImport(type: string, node: Object, bindings: Array<Binding>, pathNode: Object) {
     this.metadata.imports.push({
       type,
-      node,
+      node: clone(node),
       bindings,
       path: pathNode.value
     });
