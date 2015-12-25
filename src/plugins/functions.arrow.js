@@ -15,13 +15,6 @@ class Context extends BaseContext {
       functions: []
     };
   }
-
-  get metadata() {
-    if (!this.module.metadata[name]) {
-      this.module.metadata[name] = {};
-    }
-    return this.module.metadata[name];
-  }
 }
 
 export function begin(module: Module): Context {
