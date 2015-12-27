@@ -332,11 +332,11 @@ describe('CommonJS module plugin', () => {
 
   it('ignores `require` calls in function expressions', () => {
     check(`
-      var foo = function() {
+      let foo = function() {
         require('foo');
       };
     `, `
-      var foo = function() {
+      let foo = function() {
         require('foo');
       };
     `,
@@ -839,10 +839,10 @@ describe('CommonJS module plugin', () => {
 
   it('issues a warning when rewriting a non-function export would duplicate a local binding', () => {
     check(`
-      var a;
+      let a;
       exports.a = 1;
     `, `
-      var a;
+      let a;
       export let a = 1;
     `,
       {
@@ -903,10 +903,10 @@ describe('CommonJS module plugin', () => {
 
   it('uses shorthand export when the exported value is an identifier matching the export name', () => {
     check(`
-      var a = 1;
+      let a = 1;
       exports.a = a;
     `, `
-      var a = 1;
+      let a = 1;
       export { a };
     `,
       {
@@ -956,10 +956,10 @@ describe('CommonJS module plugin', () => {
 
   it('uses shorthand export with an alias when the exported value is an identifier not matching the export name', () => {
     check(`
-      var a = 1;
+      let a = 1;
       exports.b = a;
     `, `
-      var a = 1;
+      let a = 1;
       export { a as b };
     `,
       {

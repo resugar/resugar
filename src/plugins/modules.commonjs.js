@@ -353,7 +353,7 @@ class Context extends BaseContext {
         this.overwrite(node.range[0], node.range[1], `export { ${right.name} as ${property.name} };`);
       }
     } else {
-      if (this.module.scope.globalScope.isUsedName(property.name)) {
+      if (this.module.moduleScope.isUsedName(property.name)) {
         this.module.warn(
           clone(property),
           'named-export-conflicts-with-local-binding',

@@ -1,4 +1,5 @@
 import MagicString from 'magic-string';
+import type { Scope } from 'escope';
 import { analyze } from 'escope';
 import { parse } from 'espree';
 
@@ -102,7 +103,7 @@ export default class Module {
     this.metadata = ({}: Object);
     this.source = source;
     this.ast = parse(source, PARSE_OPTIONS);
-    this.scope = analyze(this.ast);
+    this.scopeManager = analyze(this.ast, { ecmaVersion: 6, sourceType: 'module' });
     this.magicString = new MagicString(source, {
       filename: id
     });
@@ -124,5 +125,14 @@ export default class Module {
       warnings: this.warnings,
       metadata: this.metadata
     };
+  }
+
+  get moduleScope(): Scope {
+    for (let i = 0; i < this.scopeManager.scopes.length; i++) {
+      if (this.scopeManager.scopes[i].type === 'module') {
+        return this.scopeManager.scopes[i];
+      }
+    }
+    return this.scopeManager.globalScope;
   }
 }
