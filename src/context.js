@@ -20,13 +20,16 @@ export default class Context {
 
   remove(start: number, end: number) {
     this.module.magicString.remove(start, end);
+    return this;
   }
 
   overwrite(start: number, end: number, content: string) {
     this.module.magicString.overwrite(start, end, content);
+    return this;
   }
 
   insert(index: number, content: string) {
-    return this.module.magicString.insert(index, content);
+    this.module.magicString.insert(index, content);
+    return this;
   }
 }
