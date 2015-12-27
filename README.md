@@ -44,6 +44,20 @@ for (let i = 0; i < 5; i++) {
 }
 ```
 
+### Destructuring
+
+Convert assignments and declarations to use object destructuring syntax:
+
+```js
+let a = obj.a, b = obj.b;
+a = obj2.a, b = obj2.b;
+
+// ↑ becomes ↓
+
+let { a, b } = obj;
+({ a, b } = obj2);
+```
+
 ### Modules
 
 Translate CommonJS modules into ES6 modules:

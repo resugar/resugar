@@ -135,4 +135,8 @@ export default class Module {
     }
     return this.scopeManager.globalScope;
   }
+
+  sourceOf(node): string {
+    return this.source.slice(...node.range);
+  }
 }
