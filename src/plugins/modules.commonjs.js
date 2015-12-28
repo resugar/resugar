@@ -69,7 +69,11 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteSingleExportRequire(node: Object): boolean {
+  rewriteSingleExportRequire(node: Object, parent: Object): boolean {
+    if (!parent || parent.type !== Syntax.Program) {
+      return false;
+    }
+
     const declaration = extractSingleDeclaration(node);
 
     if (!declaration) {
@@ -110,7 +114,11 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteNamedExportRequire(node: Object): boolean {
+  rewriteNamedExportRequire(node: Object, parent: Object): boolean {
+    if (!parent || parent.type !== Syntax.Program) {
+      return false;
+    }
+
     const declaration = extractSingleDeclaration(node);
 
     if (!declaration) {
@@ -152,7 +160,11 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteDeconstructedImportRequire(node: Object): boolean {
+  rewriteDeconstructedImportRequire(node: Object, parent: Object): boolean {
+    if (!parent || parent.type !== Syntax.Program) {
+      return false;
+    }
+
     const declaration = extractSingleDeclaration(node);
 
     if (!declaration) {
@@ -204,7 +216,11 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteSideEffectRequire(node: Object): boolean {
+  rewriteSideEffectRequire(node: Object, parent: Object): boolean {
+    if (!parent || parent.type !== Syntax.Program) {
+      return false;
+    }
+
     if (node.type !== Syntax.ExpressionStatement) {
       return false;
     }
@@ -232,7 +248,7 @@ class Context extends BaseContext {
 
     this.module.warn(
       node,
-      'unsupported-require',
+      'unsupported-import',
       `Unsupported 'require' call cannot be transformed to an import`
     );
 
@@ -279,7 +295,7 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteNamedExport(node: Object): boolean {
+  rewriteNamedExport(node: Object, parent: Object): boolean {
     if (node.type !== Syntax.ExpressionStatement) {
       return false;
     }
@@ -299,6 +315,15 @@ class Context extends BaseContext {
     const { object, property } = left;
 
     if (object.type !== Syntax.Identifier || object.name !== 'exports') {
+      return false;
+    }
+
+    if (parent.type !== Syntax.Program) {
+      this.module.warn(
+        node,
+        'unsupported-export',
+        `Unsupported export cannot be turned into an 'export' statement`
+      );
       return false;
     }
 

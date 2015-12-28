@@ -289,7 +289,7 @@ describe('CommonJS module plugin', () => {
         },
         warnings: [
           {
-            type: 'unsupported-require',
+            type: 'unsupported-import',
             message: `Unsupported 'require' call cannot be transformed to an import`,
             node: {
               type: 'CallExpression',
@@ -1206,6 +1206,85 @@ describe('CommonJS module plugin', () => {
             ]
           }
         }
+      }
+    );
+  });
+
+  it('warns when export statements are not at the top level', () => {
+    check(`
+      if (a === b) {
+        exports.a = a;
+      }
+    `, `
+      if (a === b) {
+        exports.a = a;
+      }
+    `,
+      {
+        warnings: [
+          {
+            type: 'unsupported-export',
+            message: `Unsupported export cannot be turned into an 'export' statement`,
+            node: {
+              type: Syntax.ExpressionStatement,
+              expression: {
+                type: Syntax.AssignmentExpression,
+                operator: '=',
+                left: {
+                  type: Syntax.MemberExpression,
+                  computed: false,
+                  object: {
+                    type: Syntax.Identifier,
+                    name: 'exports'
+                  },
+                  property: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  }
+                },
+                right: {
+                  type: Syntax.Identifier,
+                  name: 'a'
+                }
+              }
+            }
+          }
+        ]
+      }
+    );
+  });
+
+  it('warns when would-be import statements are not at the top level', () => {
+    check(`
+      if (a === b) {
+        require('assert');
+      }
+    `, `
+      if (a === b) {
+        require('assert');
+      }
+    `,
+      {
+        warnings: [
+          {
+            type: 'unsupported-import',
+            message: `Unsupported 'require' call cannot be transformed to an import`,
+            node: {
+              type: Syntax.CallExpression,
+              callee: {
+                type: Syntax.Identifier,
+                name: 'require'
+              },
+              arguments: [
+                {
+                  type: Syntax.Literal,
+                  value: 'assert',
+                  raw: `'assert'`
+                }
+              ]
+            }
+          }
+        ]
       }
     );
   });
