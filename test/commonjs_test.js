@@ -1179,6 +1179,14 @@ describe('CommonJS module plugin', () => {
     );
   });
 
+  it('rewrites assignment to a static property of `module.exports` as a named export', () => {
+    check(`
+      module.exports.a = a;
+    `, `
+      export { a };
+    `);
+  });
+
   it('removes a "use strict" directive from the top of the global scope', () => {
     check(`
       "use strict";

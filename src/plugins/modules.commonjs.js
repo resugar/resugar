@@ -1,6 +1,7 @@
 import BaseContext from '../context';
 import clone from '../utils/clone';
 import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
+import isMemberExpression from '../utils/isMemberExpression';
 import replace from '../utils/replace';
 import type Module from '../module';
 import { Binding, ExportSpecifierListStringBuilder, ImportSpecifierListStringBuilder } from '../bindings';
@@ -308,15 +309,11 @@ class Context extends BaseContext {
 
     const { left, right } = expression;
 
-    if (left.type !== Syntax.MemberExpression || left.computed) {
+    if (!isMemberExpression(left, /^(module\.)?exports\.\w+$/) || left.computed) {
       return false;
     }
 
-    const { object, property } = left;
-
-    if (object.type !== Syntax.Identifier || object.name !== 'exports') {
-      return false;
-    }
+    const { property } = left;
 
     if (parent.type !== Syntax.Program) {
       this.module.warn(
