@@ -25,6 +25,26 @@ describe('Block Scope plugin', () => {
               }
             ]
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'let',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  },
+                  init: null
+                }
+              ]
+            }
+          ]
         }
       }
     );
@@ -53,6 +73,23 @@ describe('Block Scope plugin', () => {
               }
             ]
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'const',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: { type: Syntax.Identifier, name: 'a' },
+                  init: { type: Syntax.Literal, value: 1, raw: '1' }
+                }
+              ]
+            }
+          ]
         }
       }
     );
@@ -83,6 +120,39 @@ describe('Block Scope plugin', () => {
               }
             ]
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'let',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: { type: Syntax.Identifier, name: 'a' },
+                  init: { type: Syntax.Literal, value: 1, raw: '1' }
+                }
+              ]
+            },
+            {
+              type: Syntax.ExpressionStatement,
+              expression: {
+                type: Syntax.AssignmentExpression,
+                operator: '+=',
+                left: {
+                  type: Syntax.Identifier,
+                  name: 'a'
+                },
+                right: {
+                  type: Syntax.Literal,
+                  value: 2,
+                  raw: '2'
+                }
+              }
+            }
+          ]
         }
       }
     );
@@ -118,6 +188,40 @@ describe('Block Scope plugin', () => {
               }
             ]
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'let',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: { type: Syntax.Identifier, name: 'a' },
+                  init: { type: Syntax.Literal, value: 1, raw: '1' }
+                },
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: { type: Syntax.Identifier, name: 'b' },
+                  init: { type: Syntax.Literal, value: 2, raw: '2' }
+                }
+              ]
+            },
+            {
+              type: Syntax.ExpressionStatement,
+              expression: {
+                type: Syntax.UpdateExpression,
+                operator: '++',
+                prefix: false,
+                argument: {
+                  type: Syntax.Identifier,
+                  name: 'a'
+                }
+              }
+            }
+          ]
         }
       }
     );
@@ -180,6 +284,57 @@ describe('Block Scope plugin', () => {
               }
             ]
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'const',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.ObjectPattern,
+                    properties: [
+                      {
+                        type: Syntax.Property,
+                        kind: 'init',
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        },
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        }
+                      },
+                      {
+                        type: Syntax.Property,
+                        kind: 'init',
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        },
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        }
+                      }
+                    ]
+                  },
+                  init: { type: Syntax.Identifier, name: 'obj' }
+                }
+              ]
+            }
+          ]
         }
       }
     );

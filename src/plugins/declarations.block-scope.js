@@ -37,6 +37,7 @@ export function enter(node: Object, parent: Object, module: Module, context: Con
   if (kind !== 'var') {
     magicString.overwrite(node.range[0], node.range[0] + 'var'.length, kind);
     context.metadata.declarations.push(clone(node));
+    node.kind = kind;
   } else {
     module.warn(
       node,
