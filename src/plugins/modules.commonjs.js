@@ -197,7 +197,7 @@ class Context extends BaseContext {
     replace(node, {
       type: Syntax.ImportDeclaration,
       specifiers: bindings.map(binding => ({
-        type: Syntax.ImportBinding,
+        type: Syntax.ImportSpecifier,
         local: {
           type: Syntax.Identifier,
           name: binding.localName
@@ -232,6 +232,12 @@ class Context extends BaseContext {
     }
 
     this.rewriteRequireAsImport('bare-import', node, [], pathNode);
+
+    replace(node, {
+      type: Syntax.ImportDeclaration,
+      specifiers: [],
+      source: pathNode
+    });
 
     return true;
   }
@@ -356,6 +362,21 @@ class Context extends BaseContext {
       if (this.charAt(lastCharacterPosition) === ';') {
         this.remove(lastCharacterPosition, node.range[1]);
       }
+
+      right.type = Syntax.FunctionDeclaration;
+      right.expression = false;
+      right.id = {
+        type: Syntax.Identifier,
+        name: exportName
+      };
+      delete right.range;
+
+      replace(node, {
+        type: Syntax.ExportNamedDeclaration,
+        source: null,
+        specifiers: [],
+        declaration: right
+      });
     } else if (right.type === Syntax.Identifier) {
       this.metadata.exports.push({
         type: 'named-export',
@@ -373,6 +394,19 @@ class Context extends BaseContext {
       } else {
         this.overwrite(node.range[0], node.range[1], `export { ${right.name} as ${property.name} };`);
       }
+
+      replace(node, {
+        type: Syntax.ExportNamedDeclaration,
+        source: null,
+        declaration: null,
+        specifiers: [
+          {
+            type: Syntax.ExportSpecifier,
+            local: right,
+            exported: property
+          }
+        ]
+      });
     } else {
       if (this.module.moduleScope.isUsedName(property.name)) {
         this.module.warn(
@@ -394,6 +428,26 @@ class Context extends BaseContext {
       });
 
       this.overwrite(node.range[0], property.range[0], 'export let ');
+
+      replace(node, {
+        type: Syntax.ExportNamedDeclaration,
+        source: null,
+        specifiers: [],
+        declaration: {
+          type: Syntax.VariableDeclaration,
+          kind: 'let',
+          declarations: [
+            {
+              type: Syntax.VariableDeclarator,
+              id: {
+                type: Syntax.Identifier,
+                name: property.name
+              },
+              init: right
+            }
+          ]
+        }
+      });
     }
 
     return true;
@@ -429,7 +483,7 @@ class Context extends BaseContext {
       return false;
     }
 
-    if (right.type === 'ObjectExpression') {
+    if (right.type === Syntax.ObjectExpression) {
       const bindings = [];
       for (let { key, value } of right.properties) {
         bindings.push(new Binding(value.name, key.name));
@@ -437,12 +491,34 @@ class Context extends BaseContext {
       this.metadata.exports.push({
         type: 'named-export',
         bindings,
-        node
+        node: clone(node)
       });
       this.overwrite(node.range[0], node.range[1], `export ${ExportSpecifierListStringBuilder.build(bindings)};`);
+
+      replace(node, {
+        type: Syntax.ExportNamedDeclaration,
+        source: null,
+        declaration: null,
+        specifiers: bindings.map(binding => ({
+          type: Syntax.ExportSpecifier,
+          local: {
+            type: Syntax.Identifier,
+            name: binding.localName
+          },
+          exported: {
+            type: Syntax.Identifier,
+            name: binding.exportName
+          }
+        }))
+      });
     } else {
-      this.metadata.exports.push({ type: 'default-export', node });
+      this.metadata.exports.push({ type: 'default-export', node: clone(node) });
       this.overwrite(node.range[0], right.range[0], 'export default ');
+
+      replace(node, {
+        type: Syntax.ExportDefaultDeclaration,
+        declaration: right
+      });
     }
 
     return true;
@@ -480,6 +556,8 @@ class Context extends BaseContext {
       type: 'removed-strict-mode',
       node
     });
+
+    parent.body.splice(0, 1);
 
     this.remove(start, end);
     return true;

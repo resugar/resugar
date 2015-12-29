@@ -53,6 +53,29 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ImportDeclaration,
+              specifiers: [
+                {
+                  type: Syntax.ImportDefaultSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'foo'
+                  }
+                }
+              ],
+              source: {
+                type: Syntax.Literal,
+                value: 'foo',
+                raw: `'foo'`
+              }
+            }
+          ]
         }
       }
     );
@@ -117,6 +140,33 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ImportDeclaration,
+              specifiers: [
+                {
+                  type: Syntax.ImportSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'parse'
+                  },
+                  imported: {
+                    type: Syntax.Identifier,
+                    name: 'parse'
+                  }
+                }
+              ],
+              source: {
+                type: Syntax.Literal,
+                value: 'espree',
+                raw: `'espree'`
+              }
+            }
+          ]
         }
       }
     );
@@ -227,6 +277,55 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ImportDeclaration,
+              specifiers: [
+                {
+                  type: Syntax.ImportSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'pow'
+                  },
+                  imported: {
+                    type: Syntax.Identifier,
+                    name: 'pow'
+                  }
+                },
+                {
+                  type: Syntax.ImportSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'sin'
+                  },
+                  imported: {
+                    type: Syntax.Identifier,
+                    name: 'sin'
+                  }
+                },
+                {
+                  type: Syntax.ImportSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'cosine'
+                  },
+                  imported: {
+                    type: Syntax.Identifier,
+                    name: 'cos'
+                  }
+                }
+              ],
+              source: {
+                type: Syntax.Literal,
+                value: 'math',
+                raw: `'math'`
+              }
+            }
+          ]
         }
       }
     );
@@ -268,6 +367,21 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ImportDeclaration,
+              specifiers: [],
+              source: {
+                type: Syntax.Literal,
+                value: 'foo',
+                raw: `'foo'`
+              }
+            }
+          ]
         }
       }
     );
@@ -433,6 +547,56 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              specifiers: [],
+              declaration: {
+                type: Syntax.FunctionDeclaration,
+                generator: false,
+                expression: false,
+                id: {
+                  type: Syntax.Identifier,
+                  name: 'add'
+                },
+                params: [
+                  {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  },
+                  {
+                    type: Syntax.Identifier,
+                    name: 'b'
+                  }
+                ],
+                body: {
+                  type: Syntax.BlockStatement,
+                  body: [
+                    {
+                      type: Syntax.ReturnStatement,
+                      argument: {
+                        type: Syntax.BinaryExpression,
+                        operator: '+',
+                        left: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        },
+                        right: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
       }
     );
@@ -522,6 +686,56 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              specifiers: [],
+              declaration: {
+                type: Syntax.FunctionDeclaration,
+                generator: false,
+                expression: false,
+                id: {
+                  type: Syntax.Identifier,
+                  name: 'add'
+                },
+                params: [
+                  {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  },
+                  {
+                    type: Syntax.Identifier,
+                    name: 'b'
+                  }
+                ],
+                body: {
+                  type: Syntax.BlockStatement,
+                  body: [
+                    {
+                      type: Syntax.ReturnStatement,
+                      argument: {
+                        type: Syntax.BinaryExpression,
+                        operator: '+',
+                        left: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        },
+                        right: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
       }
     );
@@ -621,6 +835,56 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              specifiers: [],
+              declaration: {
+                type: Syntax.FunctionDeclaration,
+                generator: false,
+                expression: false,
+                id: {
+                  type: Syntax.Identifier,
+                  name: 'add'
+                },
+                params: [
+                  {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  },
+                  {
+                    type: Syntax.Identifier,
+                    name: 'b'
+                  }
+                ],
+                body: {
+                  type: Syntax.BlockStatement,
+                  body: [
+                    {
+                      type: Syntax.ReturnStatement,
+                      argument: {
+                        type: Syntax.BinaryExpression,
+                        operator: '+',
+                        left: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        },
+                        right: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
       }
     );
@@ -678,6 +942,31 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              specifiers: [],
+              declaration: {
+                type: Syntax.FunctionDeclaration,
+                generator: false,
+                expression: false,
+                id: {
+                  type: Syntax.Identifier,
+                  name: 'foo'
+                },
+                params: [],
+                body: {
+                  type: Syntax.BlockStatement,
+                  body: []
+                }
+              }
+            }
+          ]
         }
       }
     );
@@ -735,6 +1024,31 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              specifiers: [],
+              declaration: {
+                type: Syntax.FunctionDeclaration,
+                generator: false,
+                expression: false,
+                id: {
+                  type: Syntax.Identifier,
+                  name: 'foo'
+                },
+                params: [],
+                body: {
+                  type: Syntax.BlockStatement,
+                  body: []
+                }
+              }
+            }
+          ]
         }
       }
     );
@@ -787,6 +1101,35 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              specifiers: [],
+              declaration: {
+                type: Syntax.VariableDeclaration,
+                kind: 'let',
+                declarations: [
+                  {
+                    type: Syntax.VariableDeclarator,
+                    id: {
+                      type: Syntax.Identifier,
+                      name: 'PI'
+                    },
+                    init: {
+                      type: Syntax.Literal,
+                      value: 3.14,
+                      raw: '3.14'
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     );
@@ -832,6 +1175,19 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExportDefaultDeclaration,
+              declaration: {
+                type: Syntax.Identifier,
+                name: 'Foo'
+              }
+            }
+          ]
         }
       }
     );
@@ -896,6 +1252,49 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'let',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  },
+                  init: null
+                }
+              ]
+            },
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              specifiers: [],
+              declaration: {
+                type: Syntax.VariableDeclaration,
+                kind: 'let',
+                declarations: [
+                  {
+                    type: Syntax.VariableDeclarator,
+                    id: {
+                      type: Syntax.Identifier,
+                      name: 'a'
+                    },
+                    init: {
+                      type: Syntax.Literal,
+                      value: 1,
+                      raw: '1'
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     );
@@ -949,6 +1348,48 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'let',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  },
+                  init: {
+                    type: Syntax.Literal,
+                    value: 1,
+                    raw: '1'
+                  }
+                }
+              ]
+            },
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              declaration: null,
+              specifiers: [
+                {
+                  type: Syntax.ExportSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  },
+                  exported: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  }
+                }
+              ]
+            }
+          ]
         }
       }
     );
@@ -1002,6 +1443,48 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'let',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  },
+                  init: {
+                    type: Syntax.Literal,
+                    value: 1,
+                    raw: '1'
+                  }
+                }
+              ]
+            },
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              declaration: null,
+              specifiers: [
+                {
+                  type: Syntax.ExportSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  },
+                  exported: {
+                    type: Syntax.Identifier,
+                    name: 'b'
+                  }
+                }
+              ]
+            }
+          ]
         }
       }
     );
@@ -1088,6 +1571,41 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              declaration: null,
+              specifiers: [
+                {
+                  type: Syntax.ExportSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  },
+                  exported: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  }
+                },
+                {
+                  type: Syntax.ExportSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'b'
+                  },
+                  exported: {
+                    type: Syntax.Identifier,
+                    name: 'b'
+                  }
+                }
+              ]
+            }
+          ]
         }
       }
     );
@@ -1174,6 +1692,41 @@ describe('CommonJS module plugin', () => {
             ],
             directives: []
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              declaration: null,
+              specifiers: [
+                {
+                  type: Syntax.ExportSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'b'
+                  },
+                  exported: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  }
+                },
+                {
+                  type: Syntax.ExportSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'd'
+                  },
+                  exported: {
+                    type: Syntax.Identifier,
+                    name: 'c'
+                  }
+                }
+              ]
+            }
+          ]
         }
       }
     );
@@ -1184,7 +1737,82 @@ describe('CommonJS module plugin', () => {
       module.exports.a = a;
     `, `
       export { a };
-    `);
+    `,
+      {
+        metadata: {
+          'modules.commonjs': {
+            imports: [],
+            exports: [
+              {
+                type: 'named-export',
+                bindings: [
+                  {
+                    exportName: 'a',
+                    localName: 'a'
+                  }
+                ],
+                node: {
+                  type: Syntax.ExpressionStatement,
+                  expression: {
+                    type: Syntax.AssignmentExpression,
+                    operator: '=',
+                    left: {
+                      type: Syntax.MemberExpression,
+                      computed: false,
+                      object: {
+                        type: Syntax.MemberExpression,
+                        computed: false,
+                        object: {
+                          type: Syntax.Identifier,
+                          name: 'module'
+                        },
+                        property: {
+                          type: Syntax.Identifier,
+                          name: 'exports'
+                        }
+                      },
+                      property: {
+                        type: Syntax.Identifier,
+                        name: 'a'
+                      }
+                    },
+                    right: {
+                      type: Syntax.Identifier,
+                      name: 'a'
+                    }
+                  }
+                }
+              }
+            ],
+            directives: []
+          }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExportNamedDeclaration,
+              source: null,
+              declaration: null,
+              specifiers: [
+                {
+                  type: Syntax.ExportSpecifier,
+                  local: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  },
+                  exported: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    );
   });
 
   it('removes a "use strict" directive from the top of the global scope', () => {
@@ -1213,6 +1841,23 @@ describe('CommonJS module plugin', () => {
               }
             ]
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExpressionStatement,
+              expression: {
+                type: Syntax.CallExpression,
+                callee: {
+                  type: Syntax.Identifier,
+                  name: 'foo'
+                },
+                arguments: []
+              }
+            }
+          ]
         }
       }
     );
