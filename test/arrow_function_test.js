@@ -49,6 +49,69 @@ describe('Arrow Function plugin', () => {
               }
             ]
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExpressionStatement,
+              expression: {
+                type: Syntax.CallExpression,
+                callee: {
+                  type: Syntax.Identifier,
+                  name: 'map'
+                },
+                arguments: [
+                  {
+                    type: Syntax.ArrayExpression,
+                    elements: [
+                      {
+                        type: Syntax.Literal,
+                        value: 1,
+                        raw: '1'
+                      },
+                      {
+                        type: Syntax.Literal,
+                        value: 2,
+                        raw: '2'
+                      },
+                      {
+                        type: Syntax.Literal,
+                        value: 3,
+                        raw: '3'
+                      }
+                    ]
+                  },
+                  {
+                    type: Syntax.ArrowFunctionExpression,
+                    generator: false,
+                    expression: false,
+                    id: null,
+                    params: [
+                      {
+                        type: Syntax.Identifier,
+                        name: 'n'
+                      }
+                    ],
+                    body: {
+                      type: Syntax.BinaryExpression,
+                      operator: '*',
+                      left: {
+                        type: Syntax.Identifier,
+                        name: 'n'
+                      },
+                      right: {
+                        type: Syntax.Literal,
+                        value: 2,
+                        raw: '2'
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     );
@@ -104,6 +167,72 @@ describe('Arrow Function plugin', () => {
               }
             ]
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExpressionStatement,
+              expression: {
+                type: Syntax.CallExpression,
+                callee: {
+                  type: Syntax.Identifier,
+                  name: 'map'
+                },
+                arguments: [
+                  {
+                    type: Syntax.ArrayExpression,
+                    elements: [
+                      {
+                        type: Syntax.Literal,
+                        value: 1,
+                        raw: '1'
+                      },
+                      {
+                        type: Syntax.Literal,
+                        value: 2,
+                        raw: '2'
+                      },
+                      {
+                        type: Syntax.Literal,
+                        value: 3,
+                        raw: '3'
+                      }
+                    ]
+                  },
+                  {
+                    type: Syntax.ArrowFunctionExpression,
+                    generator: false,
+                    expression: false,
+                    id: null,
+                    params: [
+                      {
+                        type: Syntax.Identifier,
+                        name: 'n'
+                      },
+                      {
+                        type: Syntax.Identifier,
+                        name: 'i'
+                      }
+                    ],
+                    body: {
+                      type: Syntax.BinaryExpression,
+                      operator: '*',
+                      left: {
+                        type: Syntax.Identifier,
+                        name: 'n'
+                      },
+                      right: {
+                        type: Syntax.Identifier,
+                        name: 'i'
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     );
@@ -195,6 +324,52 @@ describe('Arrow Function plugin', () => {
               }
             ]
           }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExpressionStatement,
+              expression: {
+                type: Syntax.CallExpression,
+                callee: {
+                  type: Syntax.Identifier,
+                  name: 'a'
+                },
+                arguments: [
+                  {
+                    type: Syntax.ArrowFunctionExpression,
+                    generator: false,
+                    expression: false,
+                    id: null,
+                    params: [],
+                    body: {
+                      type: Syntax.FunctionExpression,
+                      generator: false,
+                      expression: false,
+                      id: {
+                        type: Syntax.Identifier,
+                        name: 'getThis'
+                      },
+                      params: [],
+                      body: {
+                        type: Syntax.BlockStatement,
+                        body: [
+                          {
+                            type: Syntax.ReturnStatement,
+                            argument: {
+                              type: Syntax.ThisExpression
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     );
