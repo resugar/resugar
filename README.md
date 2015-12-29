@@ -44,6 +44,20 @@ for (let i = 0; i < 5; i++) {
 }
 ```
 
+### Strings
+
+Convert string concatenation to string or template literals:
+
+```js
+let name = 'Brian' + ' ' + 'Donovan';
+let greeting = 'Hello, ' + name;
+
+// ↑ becomes ↓
+
+let name = 'Brian Donovan';
+let greeting = `Hello, ${name}`;
+```
+
 ### Destructuring
 
 Convert assignments and declarations to use object destructuring syntax:
