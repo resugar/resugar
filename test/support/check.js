@@ -15,6 +15,10 @@ export default function check(input, output, options={}) {
       deepEqual(result.metadata[key], options.metadata[key]);
     }
   }
+
+  if (options.ast) {
+    deepEqual(result.ast, options.ast);
+  }
 }
 
 function stripLocationInformation(node, seen=[]) {

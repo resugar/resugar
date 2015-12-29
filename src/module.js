@@ -122,6 +122,7 @@ export default class Module {
     return {
       code: this.magicString.toString(),
       map: this.magicString.generateMap(),
+      ast: this.ast,
       warnings: this.warnings,
       metadata: this.metadata
     };
