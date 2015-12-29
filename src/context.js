@@ -32,4 +32,13 @@ export default class Context {
     this.module.magicString.insert(index, content);
     return this;
   }
+
+  escape(char: string, start: number, end: number): Context {
+    for (let i = start; i < end; i++) {
+      if (this.charAt(i) === char) {
+        this.insert(i, '\\');
+      }
+    }
+    return this;
+  }
 }

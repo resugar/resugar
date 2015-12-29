@@ -56,16 +56,22 @@ class Context extends BaseContext {
     let { value } = parts[0];
     let raw = parts[0].raw.slice(1, -1);
 
-    for (let i = 0; i < parts.length - 1; i++) {
-      this.remove(parts[i].range[1] - 1, parts[i + 1].range[0] + 1);
-      value += parts[i + 1].value;
-      raw += parts[i + 1].raw.slice(1, -1);
+    for (let i = 0; i < parts.length; i++) {
+      const thisPart = parts[i];
+      const nextPart = parts[i + 1];
+      if (nextPart) {
+        // Remove the space between the strings.
+        this.remove(thisPart.range[1] - 1, nextPart.range[0] + 1);
+        value += nextPart.value;
+        raw += nextPart.raw.slice(1, -1);
+      }
+      this.escape(quote, thisPart.range[0] + 1, thisPart.range[1] - 1);
     }
 
     const lastPart = parts[parts.length - 1];
     this.overwrite(lastPart.range[1] - 1, lastPart.range[1], quote);
 
-    raw = quote + raw + quote;
+    raw = quote + raw.replace(new RegExp(quote, 'g'), `\\${quote}`) + quote;
     return { type: Syntax.Literal, value, raw };
   }
 
@@ -78,6 +84,8 @@ class Context extends BaseContext {
     let raw = firstPart.raw.slice(1, -1);
     this.overwrite(firstPart.range[0], firstPart.range[0] + 1, '`');
 
+    parts.forEach(part => this.escape('`', part.range[0] + 1, part.range[1] - 1));
+
     for (let i = 0; i < parts.length - 1; i++) {
       const thisPart = parts[i];
       const nextPart = parts[i + 1];
@@ -89,7 +97,7 @@ class Context extends BaseContext {
         quasis.push({
           type: Syntax.TemplateElement,
           tail: false,
-          value: { cooked, raw }
+          value: { cooked, raw: raw.replace(/`/g, '\\`') }
         });
         cooked = '';
         raw = '';
@@ -151,4 +159,3 @@ function isString(node: Object): boolean {
   }
   return node.type === Syntax.Literal && typeof node.value === 'string';
 }
-

@@ -75,6 +75,164 @@ describe('String template plugin', () => {
     );
   });
 
+  it('combines concatenated string literals handling escaping properly', () => {
+    check(`
+      let a = '"' + "'";
+      let b = "'" + '"';
+    `, `
+      let a = '"\\'';
+      let b = "'\\"";
+    `,
+      {
+        metadata: {
+          'strings.template': {
+            concatenations: [
+              {
+                node: {
+                  type: Syntax.BinaryExpression,
+                  operator: '+',
+                  left: {
+                    type: Syntax.Literal,
+                    value: '"',
+                    raw: `'"'`
+                  },
+                  right: {
+                    type: Syntax.Literal,
+                    value: `'`,
+                    raw: `"'"`
+                  }
+                },
+                parts: [
+                  {
+                    type: Syntax.Literal,
+                    value: '"',
+                    raw: `'"'`
+                  },
+                  {
+                    type: Syntax.Literal,
+                    value: `'`,
+                    raw: `"'"`
+                  }
+                ]
+              },
+              {
+                node: {
+                  type: Syntax.BinaryExpression,
+                  operator: '+',
+                  left: {
+                    type: Syntax.Literal,
+                    value: `'`,
+                    raw: `"'"`
+                  },
+                  right: {
+                    type: Syntax.Literal,
+                    value: '"',
+                    raw: `'"'`
+                  }
+                },
+                parts: [
+                  {
+                    type: Syntax.Literal,
+                    value: `'`,
+                    raw: `"'"`
+                  },
+                  {
+                    type: Syntax.Literal,
+                    value: '"',
+                    raw: `'"'`
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    );
+  });
+
+  it('escapes backticks in generated template strings', () => {
+    check(`
+      let s = "\`" + a;
+    `, `
+      let s = \`\\\`\${a}\`;
+    `,
+      {
+        metadata: {
+          'strings.template': {
+            concatenations: [
+              {
+                node: {
+                  type: Syntax.BinaryExpression,
+                  operator: '+',
+                  left: {
+                    type: Syntax.Literal,
+                    value: '`',
+                    raw: '"`"'
+                  },
+                  right: {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  }
+                },
+                parts: [
+                  {
+                    type: Syntax.Literal,
+                    value: '`',
+                    raw: '"`"'
+                  },
+                  {
+                    type: Syntax.Identifier,
+                    name: 'a'
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'let',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.Identifier,
+                    name: 's'
+                  },
+                  init: {
+                    type: Syntax.TemplateLiteral,
+                    quasis: [
+                      {
+                        type: Syntax.TemplateElement,
+                        tail: false,
+                        value: { cooked: '`', raw: '\\`' }
+                      },
+                      {
+                        type: Syntax.TemplateElement,
+                        tail: true,
+                        value: { cooked: '', raw: '' }
+                      }
+                    ],
+                    expressions: [
+                      {
+                        type: Syntax.Identifier,
+                        name: 'a'
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    );
+  });
+
   it('combines a string literal and a non-string expression into a template string', () => {
     check(`
       let s = "foo" + bar;
