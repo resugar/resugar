@@ -6,8 +6,7 @@ import replace from '../utils/replace';
 import type Module from '../module';
 import { Binding, ExportSpecifierListStringBuilder, ImportSpecifierListStringBuilder } from '../bindings';
 
-const Syntax = estraverse.Syntax;
-const VisitorOption = estraverse.VisitorOption;
+const { Syntax, VisitorOption } = estraverse;
 
 export const name = 'modules.commonjs';
 export const description = 'Transform CommonJS modules into ES6 modules.';
