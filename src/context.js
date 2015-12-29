@@ -18,17 +18,17 @@ export default class Context {
     return this.module.magicString.original.slice(start, end);
   }
 
-  remove(start: number, end: number) {
+  remove(start: number, end: number): Context {
     this.module.magicString.remove(start, end);
     return this;
   }
 
-  overwrite(start: number, end: number, content: string) {
+  overwrite(start: number, end: number, content: string): Context {
     this.module.magicString.overwrite(start, end, content);
     return this;
   }
 
-  insert(index: number, content: string) {
+  insert(index: number, content: string): Context {
     this.module.magicString.insert(index, content);
     return this;
   }
