@@ -443,4 +443,20 @@ describe('Object Destructuring Plugin test', () => {
       }
     );
   });
+
+  it('does not rewrite assignments with a LHS member expression', () => {
+    check(`
+      opts.path = opts.pathname;
+    `, `
+      opts.path = opts.pathname;
+    `);
+  });
+
+  it('does not rewrite assignments whose binding does not match the property name', () => {
+    check(`
+      opts = config.options;
+    `, `
+      opts = config.options;
+    `);
+  });
 });

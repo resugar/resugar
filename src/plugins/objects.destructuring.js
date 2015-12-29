@@ -159,13 +159,21 @@ class Context extends BaseContext {
 
     for (let i = start; i < elements.length; i++) {
       const element = elements[i];
-      const { right } = leftRightOfAssignment(element) || {};
+      const { left, right } = leftRightOfAssignment(element) || {};
+
+      if (!left || left.type !== Syntax.Identifier) {
+        break;
+      }
 
       if (!right || right.type !== Syntax.MemberExpression) {
         break;
       }
 
       if (right.computed) {
+        break;
+      }
+
+      if (left.name !== right.property.name) {
         break;
       }
 
