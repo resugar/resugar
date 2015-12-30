@@ -4,8 +4,7 @@ import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraver
 import replace from '../utils/replace';
 import type Module from '../module';
 
-const Syntax = estraverse.Syntax;
-const VisitorOption = estraverse.VisitorOption;
+const { Syntax, VisitorOption  } = estraverse;
 
 export const name = 'objects.destructuring';
 export const description = 'Transform some declarations and assignments to the more compact destructuring form.';

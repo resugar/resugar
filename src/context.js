@@ -33,6 +33,18 @@ export default class Context {
     return this;
   }
 
+  indexOf(string: string, start: number=0): number {
+    return this.module.magicString.original.indexOf(string, start);
+  }
+
+  endIndexOf(string: string, start: number=0): number {
+    const startIndexOf = this.indexOf(string, start);
+    if (startIndexOf < 0) {
+      return startIndexOf;
+    }
+    return startIndexOf + string.length;
+  }
+
   escape(char: string, start: number, end: number): Context {
     for (let i = start; i < end; i++) {
       if (this.charAt(i) === char) {
