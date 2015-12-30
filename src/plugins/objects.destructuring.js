@@ -1,6 +1,7 @@
 import BaseContext from '../context';
 import clone from '../utils/clone';
 import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
+import replace from '../utils/replace';
 import type Module from '../module';
 
 const Syntax = estraverse.Syntax;
@@ -99,6 +100,7 @@ class Context extends BaseContext {
 
     if (parent.type === Syntax.ExpressionStatement) {
       // `a = obj.a;` -> `(a = obj.a);`
+      //                  ^         ^
       this.insert(assignments[0].range[0], '(');
       this.insert(assignments[assignments.length - 1].range[1], ')');
     }
@@ -109,6 +111,29 @@ class Context extends BaseContext {
     this.metadata.push({
       ids: assignments.map(assignment => assignment.left),
       inits: assignments.map(assignment => assignment.right)
+    });
+
+    replace(node, {
+      type: Syntax.AssignmentExpression,
+      operator: '=',
+      left: {
+        type: Syntax.ObjectPattern,
+        properties: assignments.map(assignment => ({
+          type: Syntax.Property,
+          computed: false,
+          shorthand: true,
+          method: false,
+          key: {
+            type: Syntax.Identifier,
+            name: assignment.left.name
+          },
+          value: {
+            type: Syntax.Identifier,
+            name: assignment.left.name
+          }
+        }))
+      },
+      right: node.right.object
     });
 
     return true;
@@ -143,11 +168,22 @@ class Context extends BaseContext {
           operator: '=',
           left: {
             type: Syntax.ObjectPattern,
-            properties: assignments.map(({ left }) => left)
+            properties: assignments.map(({ left }) => ({
+              type: Syntax.Property,
+              computed: false,
+              method: false,
+              shorthand: true,
+              key: left,
+              value: left
+            }))
           },
           right: assignments[0].right.object
         });
       }
+    }
+
+    if (expressions.length === 1) {
+      replace(node, expressions[0]);
     }
 
     return true;

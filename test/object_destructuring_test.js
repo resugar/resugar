@@ -34,6 +34,44 @@ describe('Object Destructuring Plugin test', () => {
               ]
             }
           ]
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'const',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.ObjectPattern,
+                    properties: [
+                      {
+                        type: Syntax.Property,
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        },
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        }
+                      }
+                    ]
+                  },
+                  init: {
+                    type: Syntax.Identifier,
+                    name: 'obj'
+                  }
+                }
+              ]
+            }
+          ]
         }
       }
     );
@@ -82,6 +120,58 @@ describe('Object Destructuring Plugin test', () => {
                   property: {
                     type: Syntax.Identifier,
                     name: 'b'
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'const',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.ObjectPattern,
+                    properties: [
+                      {
+                        type: Syntax.Property,
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        },
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        }
+                      },
+                      {
+                        type: Syntax.Property,
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        },
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        }
+                      }
+                    ]
+                  },
+                  init: {
+                    type: Syntax.Identifier,
+                    name: 'obj'
                   }
                 }
               ]
@@ -141,6 +231,70 @@ describe('Object Destructuring Plugin test', () => {
                   property: {
                     type: Syntax.Identifier,
                     name: 'b'
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'const',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.ObjectPattern,
+                    properties: [
+                      {
+                        type: Syntax.Property,
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        },
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        }
+                      }
+                    ]
+                  },
+                  init: {
+                    type: Syntax.Identifier,
+                    name: 'foo'
+                  }
+                },
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.ObjectPattern,
+                    properties: [
+                      {
+                        type: Syntax.Property,
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        },
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        }
+                      }
+                    ]
+                  },
+                  init: {
+                    type: Syntax.Identifier,
+                    name: 'bar'
                   }
                 }
               ]
@@ -216,6 +370,78 @@ describe('Object Destructuring Plugin test', () => {
                   property: {
                     type: Syntax.Identifier,
                     name: 'b'
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'const',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.ObjectPattern,
+                    properties: [
+                      {
+                        type: Syntax.Property,
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        },
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        }
+                      }
+                    ]
+                  },
+                  init: {
+                    type: Syntax.CallExpression,
+                    callee: {
+                      type: Syntax.Identifier,
+                      name: 'foo'
+                    },
+                    arguments: []
+                  }
+                },
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.ObjectPattern,
+                    properties: [
+                      {
+                        type: Syntax.Property,
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        },
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        }
+                      }
+                    ]
+                  },
+                  init: {
+                    type: Syntax.CallExpression,
+                    callee: {
+                      type: Syntax.Identifier,
+                      name: 'foo'
+                    },
+                    arguments: []
                   }
                 }
               ]
@@ -312,6 +538,98 @@ describe('Object Destructuring Plugin test', () => {
               ]
             }
           ]
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.VariableDeclaration,
+              kind: 'const',
+              declarations: [
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.ObjectPattern,
+                    properties: [
+                      {
+                        type: Syntax.Property,
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        },
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'a'
+                        }
+                      },
+                      {
+                        type: Syntax.Property,
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        },
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'b'
+                        }
+                      }
+                    ]
+                  },
+                  init: {
+                    type: Syntax.Identifier,
+                    name: 'obj'
+                  }
+                },
+                {
+                  type: Syntax.VariableDeclarator,
+                  id: {
+                    type: Syntax.ObjectPattern,
+                    properties: [
+                      {
+                        type: Syntax.Property,
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'c'
+                        },
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'c'
+                        }
+                      },
+                      {
+                        type: Syntax.Property,
+                        computed: false,
+                        shorthand: true,
+                        method: false,
+                        key: {
+                          type: Syntax.Identifier,
+                          name: 'd'
+                        },
+                        value: {
+                          type: Syntax.Identifier,
+                          name: 'd'
+                        }
+                      }
+                    ]
+                  },
+                  init: {
+                    type: Syntax.Identifier,
+                    name: 'obj2'
+                  }
+                }
+              ]
+            }
+          ]
         }
       }
     );
@@ -347,6 +665,42 @@ describe('Object Destructuring Plugin test', () => {
                   }
                 }
               ]
+            }
+          ]
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExpressionStatement,
+              expression: {
+                type: Syntax.AssignmentExpression,
+                operator: '=',
+                left: {
+                  type: Syntax.ObjectPattern,
+                  properties: [
+                    {
+                      type: Syntax.Property,
+                      computed: false,
+                      shorthand: true,
+                      method: false,
+                      key: {
+                        type: Syntax.Identifier,
+                        name: 'a'
+                      },
+                      value: {
+                        type: Syntax.Identifier,
+                        name: 'a'
+                      }
+                    }
+                  ]
+                },
+                right: {
+                  type: Syntax.Identifier,
+                  name: 'obj'
+                }
+              }
             }
           ]
         }
@@ -402,6 +756,56 @@ describe('Object Destructuring Plugin test', () => {
               ]
             }
           ]
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExpressionStatement,
+              expression: {
+                type: Syntax.AssignmentExpression,
+                operator: '=',
+                left: {
+                  type: Syntax.ObjectPattern,
+                  properties: [
+                    {
+                      type: Syntax.Property,
+                      computed: false,
+                      shorthand: true,
+                      method: false,
+                      key: {
+                        type: Syntax.Identifier,
+                        name: 'a'
+                      },
+                      value: {
+                        type: Syntax.Identifier,
+                        name: 'a'
+                      }
+                    },
+                    {
+                      type: Syntax.Property,
+                      computed: false,
+                      shorthand: true,
+                      method: false,
+                      key: {
+                        type: Syntax.Identifier,
+                        name: 'b'
+                      },
+                      value: {
+                        type: Syntax.Identifier,
+                        name: 'b'
+                      }
+                    }
+                  ]
+                },
+                right: {
+                  type: Syntax.Identifier,
+                  name: 'obj'
+                }
+              }
+            }
+          ]
         }
       }
     );
@@ -437,6 +841,51 @@ describe('Object Destructuring Plugin test', () => {
                   }
                 }
               ]
+            }
+          ]
+        },
+        ast: {
+          type: Syntax.Program,
+          sourceType: 'module',
+          body: [
+            {
+              type: Syntax.ExpressionStatement,
+              expression: {
+                type: Syntax.CallExpression,
+                callee: {
+                  type: Syntax.Identifier,
+                  name: 'a'
+                },
+                arguments: [
+                  {
+                    type: Syntax.AssignmentExpression,
+                    operator: '=',
+                    left: {
+                      type: Syntax.ObjectPattern,
+                      properties: [
+                        {
+                          type: Syntax.Property,
+                          computed: false,
+                          method: false,
+                          shorthand: true,
+                          key: {
+                            type: Syntax.Identifier,
+                            name: 'b'
+                          },
+                          value: {
+                            type: Syntax.Identifier,
+                            name: 'b'
+                          }
+                        }
+                      ]
+                    },
+                    right: {
+                      type: Syntax.Identifier,
+                      name: 'obj'
+                    }
+                  }
+                ]
+              }
             }
           ]
         }
