@@ -1,4 +1,4 @@
-# esnext
+# esnext [![Build Status](https://api.travis-ci.org/esnext/esnext.svg?branch=master)](https://travis-ci.org/esnext/esnext)
 
 Bring your JavaScript into the future.
 
