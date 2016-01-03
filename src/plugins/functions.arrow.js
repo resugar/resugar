@@ -46,10 +46,8 @@ export function enter(node: Object, parent: Object, module: Module, context: Con
 
   context.metadata.functions.push(clone(node));
 
-  const { magicString } = module;
-
   if (node.params.length === 0) {
-    magicString.overwrite(
+    context.overwrite(
       node.range[0],
       statement.argument.range[0],
       '() => '
@@ -59,19 +57,19 @@ export function enter(node: Object, parent: Object, module: Module, context: Con
     const lastParam = node.params[node.params.length - 1];
     const needsParens = firstParam !== lastParam;
 
-    magicString.overwrite(
+    context.overwrite(
       node.range[0],
       firstParam.range[0],
       needsParens ? '(' : ''
     );
-    magicString.overwrite(
+    context.overwrite(
       lastParam.range[1],
       statement.argument.range[0],
       needsParens ? ') => ' : ' => '
     );
   }
 
-  magicString.remove(
+  context.remove(
     statement.argument.range[1],
     node.range[1]
   );
