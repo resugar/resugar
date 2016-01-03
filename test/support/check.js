@@ -3,8 +3,8 @@ import { convert } from '../../src/esnext';
 import { deepEqual, strictEqual } from 'assert';
 
 export default function check(input, output, options={}) {
-  const result = convert(stripIndent(input));
-  strictEqual(result.code, stripIndent(output));
+  const result = convert(stripIndent(input).trim());
+  strictEqual(result.code, stripIndent(output).trim());
 
   stripLocationInformation(result);
 
