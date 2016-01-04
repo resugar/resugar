@@ -1,0 +1,32 @@
+[
+  {
+    "type":  "unsupported-declaration",
+    "message":  "'var' declaration cannot be converted to block scope",
+    "node":  {
+      "type":  "VariableDeclaration",
+      "kind":  "var",
+      "declarations":  [
+        {
+          "type":  "VariableDeclarator",
+          "id":  { "type":  "Identifier", "name":  "a" },
+          "init":  { "type":  "Literal", "value":  1, "raw":  "1" }
+        }
+      ]
+    }
+  },
+  {
+    "type":  "unsupported-declaration",
+    "message":  "'var' declaration cannot be converted to block scope",
+    "node":  {
+      "type":  "VariableDeclaration",
+      "kind":  "var",
+      "declarations":  [
+        {
+          "type":  "VariableDeclarator",
+          "id":  { "type":  "Identifier", "name":  "a" },
+          "init":  { "type":  "Literal", "value":  2, "raw":  "2" }
+        }
+      ]
+    }
+  }
+]

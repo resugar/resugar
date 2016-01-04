@@ -1,0 +1,42 @@
+{
+  "functions.arrow": {
+    "functions": [
+      {
+        "type": "FunctionExpression",
+        "id": null,
+        "generator": false,
+        "expression": false,
+        "params": [],
+        "body": {
+          "type": "BlockStatement",
+          "body": [
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "FunctionExpression",
+                "id": {
+                  "type": "Identifier",
+                  "name": "getThis"
+                },
+                "params": [],
+                "generator": false,
+                "expression": false,
+                "body": {
+                  "type": "BlockStatement",
+                  "body": [
+                    {
+                      "type": "ReturnStatement",
+                      "argument": {
+                        "type": "ThisExpression"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

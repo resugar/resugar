@@ -1,0 +1,22 @@
+{
+  "declarations.block-scope": {
+    "declarations":  [
+      {
+        "type":  "VariableDeclaration",
+        "kind":  "var",
+        "declarations":  [
+          {
+            "type":  "VariableDeclarator",
+            "id":  { "type":  "Identifier", "name":  "a" },
+            "init":  { "type":  "Literal", "value":  1, "raw":  "1" }
+          },
+          {
+            "type":  "VariableDeclarator",
+            "id":  { "type":  "Identifier", "name":  "b" },
+            "init":  { "type":  "Literal", "value":  2, "raw":  "2" }
+          }
+        ]
+      }
+    ]
+  }
+}

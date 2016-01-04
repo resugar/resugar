@@ -1,0 +1,42 @@
+{
+  "functions.arrow": {
+    "functions": [
+      {
+        "type": "FunctionExpression",
+        "id": null,
+        "generator": false,
+        "expression": false,
+        "params": [
+          {
+            "type": "Identifier",
+            "name": "n"
+          },
+          {
+            "type": "Identifier",
+            "name": "i"
+          }
+        ],
+        "body": {
+          "type": "BlockStatement",
+          "body": [
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "BinaryExpression",
+                "operator": "*",
+                "left": {
+                  "type": "Identifier",
+                  "name": "n"
+                },
+                "right": {
+                  "type": "Identifier",
+                  "name": "i"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
