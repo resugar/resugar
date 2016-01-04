@@ -2,7 +2,7 @@ import stripIndent from 'strip-indent';
 import { convert } from '../../src/esnext';
 import { deepEqual, strictEqual } from 'assert';
 import { join } from 'path';
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
 
 type CheckOptions = {
   metadata: ?Object,
@@ -33,6 +33,17 @@ export default function check(input: string, output: string, options: CheckOptio
   if (options.ast) {
     deepEqual(result.ast, options.ast);
   }
+}
+
+export function checkExamples(name: string) {
+  const directory = join('test/form', name);
+  describe(name, () => {
+    readdirSync(directory).forEach(example => {
+      const config = readOptionalJSON(join(directory, example, 'config.json')) || {};
+      const description = config.description || example;
+      it(description, () => checkExample(join(name, example)));
+    });
+  });
 }
 
 export function checkExample(name: string) {
