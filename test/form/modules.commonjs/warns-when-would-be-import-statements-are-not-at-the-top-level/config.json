@@ -1,0 +1,3 @@
+{
+  "description": "warns when would-be import statements are not at the top level"
+}

@@ -1,0 +1,3 @@
+{
+  "description": "issues a warning when the exported name and the function name do not match"
+}

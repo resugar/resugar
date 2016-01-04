@@ -1,0 +1,29 @@
+{
+  "type": "Program",
+  "sourceType": "module",
+  "body": [
+    {
+      "type": "ExportNamedDeclaration",
+      "source": null,
+      "specifiers": [],
+      "declaration": {
+        "type": "VariableDeclaration",
+        "kind": "let",
+        "declarations": [
+          {
+            "type": "VariableDeclarator",
+            "id": {
+              "type": "Identifier",
+              "name": "PI"
+            },
+            "init": {
+              "type": "Literal",
+              "value": 3.14,
+              "raw": "3.14"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [
+      {
+        "bindings": [
+          {
+            "exportName": "foo",
+            "localName": "foo"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "computed": false,
+              "object": {
+                "type": "Identifier",
+                "name": "exports"
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "foo"
+              }
+            },
+            "right": {
+              "type": "FunctionExpression",
+              "body": {
+                "type": "BlockStatement",
+                "body": []
+              },
+              "expression": false,
+              "generator": false,
+              "id": null,
+              "params": []
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  }
+}

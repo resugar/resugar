@@ -1,0 +1,19 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [],
+    "directives": [
+      {
+        "type": "removed-strict-mode",
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "Literal",
+            "value": "use strict",
+            "raw": "\"use strict\""
+          }
+        }
+      }
+    ]
+  }
+}

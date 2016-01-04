@@ -8,7 +8,7 @@
     "esnext": "./bin/index.js"
   },
   "scripts": {
-    "lint": "eslint src test/*_test.js test/support",
+    "lint": "eslint src test/test.js test/support",
     "pretest": "rollup -c rollup.test.config.js",
     "test": "mocha build/test-bundle.js",
     "prebuild": "npm run lint && rm -rf dist",
@@ -54,7 +54,6 @@
     "rollup-plugin-babel": "^2.2.0",
     "rollup-plugin-commonjs": "^2.1.0",
     "rollup-plugin-json": "^2.0.0",
-    "rollup-plugin-multi-entry": "^1.0.1",
     "rollup-plugin-npm": "^1.1.0"
   },
   "publishConfig": {

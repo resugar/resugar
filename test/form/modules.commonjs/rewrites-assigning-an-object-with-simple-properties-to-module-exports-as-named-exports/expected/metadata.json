@@ -1,0 +1,75 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "a",
+            "localName": "b"
+          },
+          {
+            "exportName": "c",
+            "localName": "d"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "computed": false,
+              "object": {
+                "type": "Identifier",
+                "name": "module"
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "exports"
+              }
+            },
+            "right": {
+              "type": "ObjectExpression",
+              "properties": [
+                {
+                  "type": "Property",
+                  "computed": false,
+                  "kind": "init",
+                  "method": false,
+                  "shorthand": false,
+                  "key": {
+                    "type": "Identifier",
+                    "name": "a"
+                  },
+                  "value": {
+                    "type": "Identifier",
+                    "name": "b"
+                  }
+                },
+                {
+                  "type": "Property",
+                  "computed": false,
+                  "kind": "init",
+                  "method": false,
+                  "shorthand": false,
+                  "key": {
+                    "type": "Identifier",
+                    "name": "c"
+                  },
+                  "value": {
+                    "type": "Identifier",
+                    "name": "d"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  }
+}

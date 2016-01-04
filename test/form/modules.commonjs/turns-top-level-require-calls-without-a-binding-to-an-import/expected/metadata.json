@@ -1,0 +1,30 @@
+{
+  "modules.commonjs": {
+    "exports": [],
+    "imports": [
+      {
+        "type": "bare-import",
+        "path": "foo",
+        "bindings": [],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "CallExpression",
+            "arguments": [
+              {
+                "type": "Literal",
+                "value": "foo",
+                "raw": "'foo'"
+              }
+            ],
+            "callee": {
+              "type": "Identifier",
+              "name": "require"
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  }
+}

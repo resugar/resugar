@@ -1,0 +1,46 @@
+{
+  "type": "Program",
+  "sourceType": "module",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "kind": "let",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "s"
+          },
+          "init": {
+            "type": "TemplateLiteral",
+            "quasis": [
+              {
+                "type": "TemplateElement",
+                "tail": false,
+                "value": {
+                  "cooked": "foo",
+                  "raw": "foo"
+                }
+              },
+              {
+                "type": "TemplateElement",
+                "tail": true,
+                "value": {
+                  "cooked": "",
+                  "raw": ""
+                }
+              }
+            ],
+            "expressions": [
+              {
+                "type": "Identifier",
+                "name": "bar"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

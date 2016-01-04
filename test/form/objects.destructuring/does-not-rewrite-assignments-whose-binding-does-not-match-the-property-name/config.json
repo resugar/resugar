@@ -1,0 +1,3 @@
+{
+  "description": "does not rewrite assignments whose binding does not match the property name"
+}

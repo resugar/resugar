@@ -1,0 +1,80 @@
+{
+  "objects.destructuring": [
+    {
+      "ids": [
+        {
+          "type": "Identifier",
+          "name": "a"
+        },
+        {
+          "type": "Identifier",
+          "name": "b"
+        }
+      ],
+      "inits": [
+        {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "Identifier",
+            "name": "obj"
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "a"
+          }
+        },
+        {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "Identifier",
+            "name": "obj"
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "b"
+          }
+        }
+      ]
+    },
+    {
+      "ids": [
+        {
+          "type": "Identifier",
+          "name": "c"
+        },
+        {
+          "type": "Identifier",
+          "name": "d"
+        }
+      ],
+      "inits": [
+        {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "Identifier",
+            "name": "obj2"
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "c"
+          }
+        },
+        {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "Identifier",
+            "name": "obj2"
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "d"
+          }
+        }
+      ]
+    }
+  ]
+}

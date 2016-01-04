@@ -1,0 +1,3 @@
+{
+  "description": "uses shorthand export when the exported value is an identifier matching the export name"
+}

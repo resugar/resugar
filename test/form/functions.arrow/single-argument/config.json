@@ -1,0 +1,3 @@
+{
+  "description": "rewrites functions that are just a return statement as an arrow function"
+}

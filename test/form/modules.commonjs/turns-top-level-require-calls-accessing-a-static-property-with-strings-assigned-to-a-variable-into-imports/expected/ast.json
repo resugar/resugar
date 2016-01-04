@@ -1,0 +1,27 @@
+{
+  "type": "Program",
+  "sourceType": "module",
+  "body": [
+    {
+      "type": "ImportDeclaration",
+      "specifiers": [
+        {
+          "type": "ImportSpecifier",
+          "local": {
+            "type": "Identifier",
+            "name": "parse"
+          },
+          "imported": {
+            "type": "Identifier",
+            "name": "parse"
+          }
+        }
+      ],
+      "source": {
+        "type": "Literal",
+        "value": "espree",
+        "raw": "'espree'"
+      }
+    }
+  ]
+}

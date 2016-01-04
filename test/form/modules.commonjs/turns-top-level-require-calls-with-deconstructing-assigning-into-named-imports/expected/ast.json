@@ -1,0 +1,49 @@
+{
+  "type": "Program",
+  "sourceType": "module",
+  "body": [
+    {
+      "type": "ImportDeclaration",
+      "specifiers": [
+        {
+          "type": "ImportSpecifier",
+          "local": {
+            "type": "Identifier",
+            "name": "pow"
+          },
+          "imported": {
+            "type": "Identifier",
+            "name": "pow"
+          }
+        },
+        {
+          "type": "ImportSpecifier",
+          "local": {
+            "type": "Identifier",
+            "name": "sin"
+          },
+          "imported": {
+            "type": "Identifier",
+            "name": "sin"
+          }
+        },
+        {
+          "type": "ImportSpecifier",
+          "local": {
+            "type": "Identifier",
+            "name": "cosine"
+          },
+          "imported": {
+            "type": "Identifier",
+            "name": "cos"
+          }
+        }
+      ],
+      "source": {
+        "type": "Literal",
+        "value": "math",
+        "raw": "'math'"
+      }
+    }
+  ]
+}

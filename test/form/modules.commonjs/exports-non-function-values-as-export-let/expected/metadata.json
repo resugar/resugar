@@ -1,0 +1,41 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "PI",
+            "localName": "PI"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "computed": false,
+              "object": {
+                "type": "Identifier",
+                "name": "exports"
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "PI"
+              }
+            },
+            "right": {
+              "type": "Literal",
+              "value": 3.14,
+              "raw": "3.14"
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  }
+}

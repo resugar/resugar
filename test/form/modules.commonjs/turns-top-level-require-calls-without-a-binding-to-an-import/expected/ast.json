@@ -1,0 +1,15 @@
+{
+  "type": "Program",
+  "sourceType": "module",
+  "body": [
+    {
+      "type": "ImportDeclaration",
+      "specifiers": [],
+      "source": {
+        "type": "Literal",
+        "value": "foo",
+        "raw": "'foo'"
+      }
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+{
+  "description": "removes the semi-colon when changing an export from an assignment to `export function`"
+}

@@ -1,0 +1,21 @@
+{
+  "objects.shorthand": {
+    "properties": [
+      {
+        "type": "Property",
+        "kind": "init",
+        "computed": false,
+        "shorthand": false,
+        "method": false,
+        "key": {
+          "type": "Identifier",
+          "name": "a"
+        },
+        "value": {
+          "type": "Identifier",
+          "name": "a"
+        }
+      }
+    ]
+  }
+}

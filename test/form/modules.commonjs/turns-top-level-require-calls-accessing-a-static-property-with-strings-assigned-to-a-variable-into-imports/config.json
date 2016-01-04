@@ -1,0 +1,3 @@
+{
+  "description": "turns top-level `require` calls accessing a static property with strings assigned to a variable into imports"
+}

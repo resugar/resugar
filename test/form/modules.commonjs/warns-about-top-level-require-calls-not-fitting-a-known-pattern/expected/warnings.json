@@ -1,0 +1,20 @@
+[
+  {
+    "type": "unsupported-import",
+    "message": "Unsupported 'require' call cannot be transformed to an import",
+    "node": {
+      "type": "CallExpression",
+      "callee": {
+        "type": "Identifier",
+        "name": "require"
+      },
+      "arguments": [
+        {
+          "type": "Literal",
+          "value": "debug",
+          "raw": "'debug'"
+        }
+      ]
+    }
+  }
+]

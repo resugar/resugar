@@ -1,0 +1,98 @@
+{
+  "strings.template": {
+    "concatenations": [
+      {
+        "node": {
+          "type": "BinaryExpression",
+          "operator": "+",
+          "left": {
+            "type": "BinaryExpression",
+            "operator": "+",
+            "left": {
+              "type": "BinaryExpression",
+              "operator": "+",
+              "left": {
+                "type": "BinaryExpression",
+                "operator": "+",
+                "left": {
+                  "type": "BinaryExpression",
+                  "operator": "+",
+                  "left": {
+                    "type": "BinaryExpression",
+                    "operator": "+",
+                    "left": {
+                      "type": "Literal",
+                      "value": "a",
+                      "raw": "\"a\""
+                    },
+                    "right": {
+                      "type": "Literal",
+                      "value": "b",
+                      "raw": "\"b\""
+                    }
+                  },
+                  "right": {
+                    "type": "Identifier",
+                    "name": "c"
+                  }
+                },
+                "right": {
+                  "type": "Identifier",
+                  "name": "d"
+                }
+              },
+              "right": {
+                "type": "Literal",
+                "value": "",
+                "raw": "\"\""
+              }
+            },
+            "right": {
+              "type": "Literal",
+              "value": "e",
+              "raw": "\"e\""
+            }
+          },
+          "right": {
+            "type": "Identifier",
+            "name": "f"
+          }
+        },
+        "parts": [
+          {
+            "type": "Literal",
+            "value": "a",
+            "raw": "\"a\""
+          },
+          {
+            "type": "Literal",
+            "value": "b",
+            "raw": "\"b\""
+          },
+          {
+            "type": "Identifier",
+            "name": "c"
+          },
+          {
+            "type": "Identifier",
+            "name": "d"
+          },
+          {
+            "type": "Literal",
+            "value": "",
+            "raw": "\"\""
+          },
+          {
+            "type": "Literal",
+            "value": "e",
+            "raw": "\"e\""
+          },
+          {
+            "type": "Identifier",
+            "name": "f"
+          }
+        ]
+      }
+    ]
+  }
+}

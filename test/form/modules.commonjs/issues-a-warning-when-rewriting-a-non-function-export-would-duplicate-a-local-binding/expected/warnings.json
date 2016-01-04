@@ -1,0 +1,10 @@
+[
+  {
+    "type": "named-export-conflicts-with-local-binding",
+    "message": "Named export 'a' conflicts with existing local binding",
+    "node": {
+      "type": "Identifier",
+      "name": "a"
+    }
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "type": "Program",
+  "sourceType": "module",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "AssignmentExpression",
+        "operator": "=",
+        "left": {
+          "type": "Identifier",
+          "name": "o"
+        },
+        "right": {
+          "type": "ObjectExpression",
+          "properties": [
+            {
+              "type": "Property",
+              "kind": "init",
+              "computed": false,
+              "shorthand": true,
+              "method": false,
+              "key": {
+                "type": "Identifier",
+                "name": "a"
+              },
+              "value": {
+                "type": "Identifier",
+                "name": "a"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

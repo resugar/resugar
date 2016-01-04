@@ -1,0 +1,62 @@
+{
+  "strings.template": {
+    "concatenations": [
+      {
+        "node": {
+          "type": "BinaryExpression",
+          "operator": "+",
+          "left": {
+            "type": "Literal",
+            "value": "\"",
+            "raw": "'\"'"
+          },
+          "right": {
+            "type": "Literal",
+            "value": "'",
+            "raw": "\"'\""
+          }
+        },
+        "parts": [
+          {
+            "type": "Literal",
+            "value": "\"",
+            "raw": "'\"'"
+          },
+          {
+            "type": "Literal",
+            "value": "'",
+            "raw": "\"'\""
+          }
+        ]
+      },
+      {
+        "node": {
+          "type": "BinaryExpression",
+          "operator": "+",
+          "left": {
+            "type": "Literal",
+            "value": "'",
+            "raw": "\"'\""
+          },
+          "right": {
+            "type": "Literal",
+            "value": "\"",
+            "raw": "'\"'"
+          }
+        },
+        "parts": [
+          {
+            "type": "Literal",
+            "value": "'",
+            "raw": "\"'\""
+          },
+          {
+            "type": "Literal",
+            "value": "\"",
+            "raw": "'\"'"
+          }
+        ]
+      }
+    ]
+  }
+}

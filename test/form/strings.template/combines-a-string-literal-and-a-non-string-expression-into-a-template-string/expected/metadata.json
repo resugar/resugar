@@ -1,0 +1,32 @@
+{
+  "strings.template": {
+    "concatenations": [
+      {
+        "node": {
+          "type": "BinaryExpression",
+          "operator": "+",
+          "left": {
+            "type": "Literal",
+            "value": "foo",
+            "raw": "\"foo\""
+          },
+          "right": {
+            "type": "Identifier",
+            "name": "bar"
+          }
+        },
+        "parts": [
+          {
+            "type": "Literal",
+            "value": "foo",
+            "raw": "\"foo\""
+          },
+          {
+            "type": "Identifier",
+            "name": "bar"
+          }
+        ]
+      }
+    ]
+  }
+}

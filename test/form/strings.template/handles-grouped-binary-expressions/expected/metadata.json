@@ -1,0 +1,48 @@
+{
+  "strings.template": {
+    "concatenations": [
+      {
+        "node": {
+          "type": "BinaryExpression",
+          "operator": "+",
+          "left": {
+            "type": "Literal",
+            "value": "a",
+            "raw": "\"a\""
+          },
+          "right": {
+            "type": "BinaryExpression",
+            "operator": "+",
+            "left": {
+              "type": "Identifier",
+              "name": "b"
+            },
+            "right": {
+              "type": "Identifier",
+              "name": "c"
+            }
+          }
+        },
+        "parts": [
+          {
+            "type": "Literal",
+            "value": "a",
+            "raw": "\"a\""
+          },
+          {
+            "type": "BinaryExpression",
+            "operator": "+",
+            "left": {
+              "type": "Identifier",
+              "name": "b"
+            },
+            "right": {
+              "type": "Identifier",
+              "name": "c"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

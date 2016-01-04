@@ -1,0 +1,3 @@
+{
+  "description": "warns about top-level `require` calls not fitting a known pattern"
+}

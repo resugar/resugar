@@ -1,0 +1,99 @@
+{
+  "modules.commonjs": {
+    "exports": [],
+    "imports": [
+      {
+        "type": "named-import",
+        "path": "math",
+        "bindings": [
+          {
+            "exportName": "pow",
+            "localName": "pow"
+          },
+          {
+            "exportName": "sin",
+            "localName": "sin"
+          },
+          {
+            "exportName": "cos",
+            "localName": "cosine"
+          }
+        ],
+        "node": {
+          "type": "VariableDeclaration",
+          "kind": "var",
+          "declarations": [
+            {
+              "type": "VariableDeclarator",
+              "id": {
+                "type": "ObjectPattern",
+                "properties": [
+                  {
+                    "type": "Property",
+                    "key": {
+                      "type": "Identifier",
+                      "name": "pow"
+                    },
+                    "value": {
+                      "type": "Identifier",
+                      "name": "pow"
+                    },
+                    "kind": "init",
+                    "computed": false,
+                    "method": false,
+                    "shorthand": true
+                  },
+                  {
+                    "type": "Property",
+                    "key": {
+                      "type": "Identifier",
+                      "name": "sin"
+                    },
+                    "value": {
+                      "type": "Identifier",
+                      "name": "sin"
+                    },
+                    "kind": "init",
+                    "computed": false,
+                    "method": false,
+                    "shorthand": true
+                  },
+                  {
+                    "type": "Property",
+                    "key": {
+                      "type": "Identifier",
+                      "name": "cos"
+                    },
+                    "value": {
+                      "type": "Identifier",
+                      "name": "cosine"
+                    },
+                    "kind": "init",
+                    "computed": false,
+                    "method": false,
+                    "shorthand": false
+                  }
+                ]
+              },
+              "init": {
+                "type": "CallExpression",
+                "arguments": [
+                  {
+                    "type": "Literal",
+                    "value": "math",
+                    "raw": "'math'"
+                  }
+                ],
+                "callee": {
+                  "type": "Identifier",
+                  "name": "require"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "directives": []
+  }
+}

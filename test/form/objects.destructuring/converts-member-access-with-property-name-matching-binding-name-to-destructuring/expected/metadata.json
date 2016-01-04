@@ -1,0 +1,26 @@
+{
+  "objects.destructuring": [
+    {
+      "ids": [
+        {
+          "type": "Identifier",
+          "name": "a"
+        }
+      ],
+      "inits": [
+        {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "Identifier",
+            "name": "obj"
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "a"
+          }
+        }
+      ]
+    }
+  ]
+}

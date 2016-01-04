@@ -1,0 +1,45 @@
+{
+  "type": "Program",
+  "sourceType": "module",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "CallExpression",
+        "callee": {
+          "type": "Identifier",
+          "name": "a"
+        },
+        "arguments": [
+          {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "ObjectPattern",
+              "properties": [
+                {
+                  "type": "Property",
+                  "computed": false,
+                  "method": false,
+                  "shorthand": true,
+                  "key": {
+                    "type": "Identifier",
+                    "name": "b"
+                  },
+                  "value": {
+                    "type": "Identifier",
+                    "name": "b"
+                  }
+                }
+              ]
+            },
+            "right": {
+              "type": "Identifier",
+              "name": "obj"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

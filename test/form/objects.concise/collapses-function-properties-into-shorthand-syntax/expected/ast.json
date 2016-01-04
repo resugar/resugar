@@ -1,0 +1,44 @@
+{
+  "type": "Program",
+  "sourceType": "module",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "AssignmentExpression",
+        "operator": "=",
+        "left": {
+          "type": "Identifier",
+          "name": "o"
+        },
+        "right": {
+          "type": "ObjectExpression",
+          "properties": [
+            {
+              "type": "Property",
+              "kind": "init",
+              "computed": false,
+              "shorthand": false,
+              "method": true,
+              "key": {
+                "type": "Identifier",
+                "name": "a"
+              },
+              "value": {
+                "type": "FunctionExpression",
+                "generator": false,
+                "expression": false,
+                "id": null,
+                "params": [],
+                "body": {
+                  "type": "BlockStatement",
+                  "body": []
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

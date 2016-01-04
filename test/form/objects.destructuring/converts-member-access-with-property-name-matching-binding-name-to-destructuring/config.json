@@ -1,0 +1,3 @@
+{
+  "description": "converts member access with property name matching binding name to destructuring"
+}
