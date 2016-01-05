@@ -35,19 +35,24 @@ function mkdir(path) {
 
 readdirSync('test/form').forEach(exampleSet => {
   const exampleSetRoot = join('test/form', exampleSet);
+
   readdirSync(exampleSetRoot).forEach(example => {
     const exampleRoot = join(exampleSetRoot, example);
+    const expectedRoot = join(exampleRoot, 'expected');
+
+    if (exists(expectedRoot)) {
+      return;
+    }
+
     const mainPath = join(exampleRoot, 'main.js');
     const main = readFileSync(mainPath, {encoding: 'utf8'});
     const result = convert(main);
 
-    mkdir(join(exampleRoot, 'expected'));
+    mkdir(expectedRoot);
 
-    if (result.code) {
-      const codePath = join(exampleRoot, 'expected/main.js');
-      if (!exists(codePath)) {
-        write(codePath, result.code);
-      }
+    const codePath = join(exampleRoot, 'expected/main.js');
+    if (!exists(codePath)) {
+      write(codePath, result.code);
     }
 
     if (result.metadata) {
