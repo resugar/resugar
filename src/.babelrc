@@ -1,4 +1,4 @@
 {
-    "presets": ["es2015"],
+    "presets": ["es2015-rollup"],
     "plugins": ["syntax-flow", "transform-flow-strip-types"]
 }
