@@ -1,0 +1,45 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "ObjectExpression",
+        "properties": [
+          {
+            "type": "Property",
+            "key": {
+              "type": "Identifier",
+              "name": "a"
+            },
+            "value": {
+              "type": "FunctionExpression",
+              "id": null,
+              "params": [],
+              "body": {
+                "type": "BlockStatement",
+                "body": [
+                  {
+                    "type": "ReturnStatement",
+                    "argument": {
+                      "type": "Literal",
+                      "value": 0,
+                      "raw": "0"
+                    }
+                  }
+                ]
+              },
+              "generator": false,
+              "expression": false
+            },
+            "kind": "init",
+            "method": true,
+            "shorthand": false,
+            "computed": false
+          }
+        ]
+      }
+    }
+  ],
+  "sourceType": "module"
+}

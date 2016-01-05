@@ -34,6 +34,10 @@ export function enter(node: Object, parent: Object, module: Module, context: Con
     return null;
   }
 
+  if (parent.type === Syntax.Property && parent.method) {
+    return null;
+  }
+
   const [ statement ] = node.body.body;
 
   if (statement.type !== Syntax.ReturnStatement) {

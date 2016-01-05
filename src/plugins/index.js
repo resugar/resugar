@@ -7,11 +7,11 @@ import * as objectsShorthand from './objects.shorthand';
 import * as objectsConcise from './objects.concise';
 
 export default [
+  objectsShorthand,
+  objectsConcise,
   modulesCommonjs,
   functionsArrow,
   declarationsBlockScope,
   objectsDestructuring,
-  stringsTemplate,
-  objectsShorthand,
-  objectsConcise
+  stringsTemplate
 ];

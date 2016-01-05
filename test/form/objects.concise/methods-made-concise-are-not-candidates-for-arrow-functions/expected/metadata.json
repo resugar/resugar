@@ -1,0 +1,40 @@
+{
+  "objects.concise": {
+    "properties": [
+      {
+        "type": "Property",
+        "key": {
+          "type": "Identifier",
+          "name": "a"
+        },
+        "value": {
+          "type": "FunctionExpression",
+          "id": null,
+          "params": [],
+          "body": {
+            "type": "BlockStatement",
+            "body": [
+              {
+                "type": "ReturnStatement",
+                "argument": {
+                  "type": "Literal",
+                  "value": 0,
+                  "raw": "0"
+                }
+              }
+            ]
+          },
+          "generator": false,
+          "expression": false
+        },
+        "kind": "init",
+        "method": false,
+        "shorthand": false,
+        "computed": false
+      }
+    ]
+  },
+  "functions.arrow": {
+    "functions": []
+  }
+}

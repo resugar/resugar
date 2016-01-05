@@ -1,0 +1,23 @@
+{
+  "objects.shorthand": {
+    "properties": []
+  },
+  "objects.concise": {
+    "properties": []
+  },
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [],
+    "directives": []
+  },
+  "functions.arrow": {
+    "functions": []
+  },
+  "declarations.block-scope": {
+    "declarations": []
+  },
+  "objects.destructuring": [],
+  "strings.template": {
+    "concatenations": []
+  }
+}
