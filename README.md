@@ -44,6 +44,32 @@ for (let i = 0; i < 5; i++) {
 }
 ```
 
+### Objects
+
+Use shorthand syntax for various object constructs:
+
+```js
+let person = {
+  first: first,
+  last: last,
+  
+  fullName: function() {
+    return `${first} ${last}`;
+  }
+};
+
+// ↑ becomes ↓
+
+let person = {
+  first,
+  last,
+  
+  fullName() {
+    return `${first} ${last}`;
+  }
+};
+```
+
 ### Strings
 
 Convert string concatenation to string or template literals:
