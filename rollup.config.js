@@ -1,9 +1,8 @@
 import babel from 'rollup-plugin-babel';
-import npm from 'rollup-plugin-npm';
-import commonjs from 'rollup-plugin-commonjs';
-import json from 'rollup-plugin-json';
 
 function jsnextPlugin(packages) {
+  const npmInstance = npm({ jsnext: true });
+
   return {
     resolveId(importee, importer) {
       if (packages.indexOf(importee) >= 0) {
@@ -13,22 +12,14 @@ function jsnextPlugin(packages) {
   };
 }
 
-const npmInstance = npm({ jsnext: true });
-
 export default {
   entry: 'src/esnext.js',
   plugins: [
     jsnextPlugin(['assert']),
-    json(),
     babel({
       babelrc: false,
       presets: ['es2015-rollup'],
       plugins: ['syntax-flow', 'transform-flow-strip-types']
-    }),
-    commonjs({
-      include: 'node_modules/**',
-      exclude: 'node_modules/*-jsnext/**'
-    }),
-    npmInstance
+    })
   ]
 };
