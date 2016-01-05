@@ -1,0 +1,100 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [],
+    "directives": []
+  },
+  "functions.arrow": {
+    "functions": [
+      {
+        "type": "FunctionExpression",
+        "id": null,
+        "params": [],
+        "body": {
+          "type": "BlockStatement",
+          "body": [
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "Literal",
+                "value": 42,
+                "raw": "42",
+                "range": [
+                  88,
+                  90
+                ],
+                "loc": {
+                  "start": {
+                    "line": 3,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 3,
+                    "column": 11
+                  }
+                }
+              },
+              "range": [
+                81,
+                91
+              ],
+              "loc": {
+                "start": {
+                  "line": 3,
+                  "column": 2
+                },
+                "end": {
+                  "line": 3,
+                  "column": 12
+                }
+              }
+            }
+          ],
+          "range": [
+            26,
+            93
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 26
+            },
+            "end": {
+              "line": 4,
+              "column": 1
+            }
+          }
+        },
+        "generator": false,
+        "expression": false,
+        "range": [
+          2,
+          93
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 2
+          },
+          "end": {
+            "line": 4,
+            "column": 1
+          }
+        }
+      }
+    ]
+  },
+  "declarations.block-scope": {
+    "declarations": []
+  },
+  "objects.destructuring": [],
+  "strings.template": {
+    "concatenations": []
+  },
+  "objects.shorthand": {
+    "properties": []
+  },
+  "objects.concise": {
+    "properties": []
+  }
+}

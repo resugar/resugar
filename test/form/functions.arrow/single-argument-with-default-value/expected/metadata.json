@@ -1,0 +1,56 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [],
+    "directives": []
+  },
+  "functions.arrow": {
+    "functions": [
+      {
+        "type": "FunctionExpression",
+        "id": null,
+        "params": [
+          {
+            "type": "AssignmentPattern",
+            "left": {
+              "type": "Identifier",
+              "name": "b"
+            },
+            "right": {
+              "type": "Literal",
+              "value": 0,
+              "raw": "0"
+            }
+          }
+        ],
+        "body": {
+          "type": "BlockStatement",
+          "body": [
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "Identifier",
+                "name": "b"
+              }
+            }
+          ],
+        },
+        "generator": false,
+        "expression": false
+      }
+    ]
+  },
+  "declarations.block-scope": {
+    "declarations": []
+  },
+  "objects.destructuring": [],
+  "strings.template": {
+    "concatenations": []
+  },
+  "objects.shorthand": {
+    "properties": []
+  },
+  "objects.concise": {
+    "properties": []
+  }
+}

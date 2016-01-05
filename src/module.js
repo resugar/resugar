@@ -6,6 +6,8 @@ import { parse } from 'espree';
 const PARSE_OPTIONS = {
   loc: true,
   range: true,
+  sourceType: 'module',
+  tokens: true,
   ecmaFeatures: {
     // enable parsing of arrow functions
     arrowFunctions: true,
@@ -97,12 +99,26 @@ export type RenderedModule = {
   metadata: Object
 };
 
+type Token = {
+  type: string,
+  value: string,
+  range: Array<number>,
+  loc: Loc
+};
+
+type Loc = {
+  line: number,
+  column: number
+};
+
 export default class Module {
   constructor(id: ?string, source: string) {
     this.id = id;
     this.metadata = ({}: Object);
     this.source = source;
     this.ast = parse(source, PARSE_OPTIONS);
+    this.tokens = this.ast.tokens;
+    delete this.ast.tokens;
     this.scopeManager = analyze(this.ast, { ecmaVersion: 6, sourceType: 'module' });
     this.magicString = new MagicString(source, {
       filename: id
@@ -116,6 +132,21 @@ export default class Module {
 
   warn(node: Object, type: string, message: string) {
     this.warnings.push({ node, type, message });
+  }
+
+  tokensForNode(node: Object): Array<Token> {
+    const result = [];
+    const tokens = this.tokens;
+    const [ start, end ] = node.range;
+    for (let i = 0; i < tokens.length; i++) {
+      const { range } = tokens[i];
+      if (range[1] > end) {
+        break;
+      } else if (range[0] >= start) {
+        result.push(tokens[i]);
+      }
+    }
+    return result;
   }
 
   render(): RenderedModule {

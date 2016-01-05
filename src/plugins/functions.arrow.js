@@ -46,33 +46,67 @@ export function enter(node: Object, parent: Object, module: Module, context: Con
 
   context.metadata.functions.push(clone(node));
 
-  if (node.params.length === 0) {
-    context.overwrite(
-      node.range[0],
-      statement.argument.range[0],
-      '() => '
-    );
-  } else {
-    const firstParam = node.params[0];
-    const lastParam = node.params[node.params.length - 1];
-    const needsParens = firstParam !== lastParam;
+  const tokens = module.tokensForNode(node);
+  let tokenIndex = 0;
+  const functionToken = tokens[tokenIndex++];
+  const paramStartParenToken = tokens[tokenIndex++];
+  let paramEndParenToken;
 
-    context.overwrite(
-      node.range[0],
-      firstParam.range[0],
-      needsParens ? '(' : ''
-    );
-    context.overwrite(
-      lastParam.range[1],
-      statement.argument.range[0],
-      needsParens ? ') => ' : ' => '
-    );
+  if (node.params.length === 0) {
+    paramEndParenToken = tokens[tokenIndex++];
+  } else {
+    const lastParam = node.params[node.params.length - 1];
+    while (tokenIndex < tokens.length) {
+      const token = tokens[tokenIndex++];
+      if (token.range[0] >= lastParam.range[1] && token.value === ')') {
+        paramEndParenToken = token;
+        break;
+      }
+    }
   }
 
-  context.remove(
-    statement.argument.range[1],
-    node.range[1]
+  const paramsNeedsParens = node.params.length !== 1 || node.params[0].type !== 'Identifier';
+
+  if (!paramsNeedsParens) {
+    // `(a)` -> `a`
+    //  ^ ^
+    context.remove(...paramStartParenToken.range);
+    context.remove(...paramEndParenToken.range);
+  }
+
+  const blockStartBraceToken = tokens[tokenIndex++];
+  const blockEndBraceToken = tokens[tokens.length - 1];
+
+  // `function() {` -> `() =>`
+  //  ^^^^^^^^   ^         ^^
+  context.remove(functionToken.range[0], paramStartParenToken.range[0]);
+  context.overwrite(...blockStartBraceToken.range, '=>');
+
+  const contentBetweenBlockStartBraceAndReturn = context.slice(
+    blockStartBraceToken.range[1],
+    statement.range[0]
   );
+
+  const shouldCollapseToOneLine = /^\s*$/.test(contentBetweenBlockStartBraceAndReturn);
+
+  if (shouldCollapseToOneLine) {
+    // Removes whitespace between `{` and `return` and `foo;` and `}`.
+    //
+    //  function() {
+    //    return foo;
+    //  }
+    //
+    context.overwrite(blockStartBraceToken.range[1], statement.range[0], ' ');
+    context.remove(statement.range[1], blockEndBraceToken.range[0]);
+  }
+
+  // `return foo;` -> `foo`
+  //  ^^^^^^^   ^
+  context.remove(statement.range[0], statement.argument.range[0]);
+  context.remove(statement.argument.range[1], statement.range[1]);
+
+  // `…}` -> `…`
+  context.remove(...blockEndBraceToken.range);
 
   node.type = Syntax.ArrowFunctionExpression;
   node.body = statement.argument;
