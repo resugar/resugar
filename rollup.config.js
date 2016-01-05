@@ -20,7 +20,11 @@ export default {
   plugins: [
     jsnextPlugin(['assert']),
     json(),
-    babel(),
+    babel({
+      babelrc: false,
+      presets: ['es2015-rollup'],
+      plugins: ['syntax-flow', 'transform-flow-strip-types']
+    }),
     commonjs({
       include: 'node_modules/**',
       exclude: 'node_modules/*-jsnext/**'
