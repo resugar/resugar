@@ -2,6 +2,7 @@ import BaseContext from '../context';
 import clone from '../utils/clone';
 import estraverse from 'estraverse';
 import type Module from '../module';
+import type { ScopeManager } from 'escope';
 
 const { Syntax, VisitorOption } = estraverse;
 
@@ -44,7 +45,7 @@ export function enter(node: Object, parent: Object, module: Module, context: Con
     return null;
   }
 
-  if (referencesThis(statement.argument)) {
+  if (referencesThisOrArguments(node, module.scopeManager)) {
     return null;
   }
 
@@ -116,25 +117,12 @@ export function enter(node: Object, parent: Object, module: Module, context: Con
   node.body = statement.argument;
 }
 
-function referencesThis(node: Object): boolean {
-  let result = false;
+function referencesThisOrArguments(node: Object, scopeManager: ScopeManager): boolean {
+  const scope = scopeManager.acquire(node);
 
-  estraverse.traverse(node, {
-    enter(child: Object): ?VisitorOption {
-      switch (child.type) {
-        case Syntax.ThisExpression:
-          result = true;
-          return VisitorOption.Break;
+  if (scope.thisFound) {
+    return true;
+  }
 
-        case Syntax.FunctionExpression:
-        case Syntax.FunctionDeclaration:
-          return VisitorOption.Skip;
-
-        default:
-          return null;
-      }
-    }
-  });
-
-  return result;
+  return scope.references.some(({ identifier }) => identifier.name === 'arguments');
 }
