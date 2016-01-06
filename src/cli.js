@@ -63,7 +63,7 @@ export default function run(args: Array<string>) {
       });
 
     readStream(input)
-      .then(source => convert(source, plugins))
+      .then(source => convert(source, { plugins, validate: options.validate }))
       .then(result => {
         printWarnings(input.path || '[stdin]', result.warnings);
         output.write(result.code);
@@ -105,7 +105,8 @@ type CLIOptions = {
   input: string,
   output: string,
   blacklist: Array<string>,
-  whitelist: Array<string>
+  whitelist: Array<string>,
+  validate: boolean
 };
 
 function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
@@ -113,6 +114,7 @@ function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
   let whitelist = null;
   let input;
   let output;
+  let validate;
 
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
@@ -158,6 +160,11 @@ function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
         parseList(args[++i]).forEach(name => blacklist[name] = true);
         break;
 
+      case '--validate':
+      case '--no-validate':
+        validate = args[i] === '--validate';
+        break;
+
       default:
         if (args[i][0] === '-') {
           return { error: `Unknown option: ${args[i]}` };
@@ -170,7 +177,7 @@ function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
     }
   }
 
-  return { input, output, blacklist, whitelist };
+  return { input, output, blacklist, whitelist, validate };
 }
 
 function parseList(arg: string): Array<string> {
@@ -197,18 +204,31 @@ function help(out: (data: string) => void) {
   out.write(`${$0} -b modules.commonjs     # blacklist plugins\n`);
   out.write(`${$0} -w modules.commonjs     # whitelist plugins\n`);
   out.write('\n');
-  if (out.isTTY) {
-    out.write('\x1b[1m');
-  }
-  out.write('Built-in Plugins\n');
-  if (out.isTTY) {
-    out.write('\x1b[0m');
-  }
+  writeSectionHeader(out, 'Built-in Plugins');
   out.write('\n');
   table(
     { out, padding: 2, indent: 2 },
     allPlugins.map(({ name, description }) => [ name, description ])
   );
+  out.write('\n');
+  writeSectionHeader(out, 'Additional Options');
+  out.write('\n');
+  table(
+    { out, padding: 4, indent: 2 },
+    [
+      ['--[no-]validate', 'Turn validation on or off (default: on).']
+    ]
+  );
+}
+
+function writeSectionHeader(out, title) {
+  if (out.isTTY) {
+    out.write('\x1b[1m');
+  }
+  out.write(`${title}\n`);
+  if (out.isTTY) {
+    out.write('\x1b[0m');
+  }
 }
 
 type TableOptions = {

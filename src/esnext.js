@@ -1,6 +1,7 @@
-import allPlugins from './plugins/index';
 import Module from './module';
+import allPlugins from './plugins/index';
 import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
+import parse from './utils/parse';
 import shebangRegex from 'shebang-regex';
 import type { RenderedModule } from './module';
 import type { VisitorOption } from 'estraverse';
@@ -17,7 +18,19 @@ type Plugin = {
   end: ?PluginBookendCallback
 };
 
-export function convert(source: string, plugins: Array<Plugin>=allPlugins): RenderedModule {
+type Options = {
+  plugins: Array<Plugin>,
+  validate: boolean
+};
+
+export function convert(source: string, options: (Options|Array<Plugin>)={}): RenderedModule {
+  if (Array.isArray(options)) {
+    console.warn('convert(source, plugins) is deprecated, please call as convert(source, options)');
+    options = { plugins: options };
+  }
+
+  const { validate=true, plugins=allPlugins } = options;
+
   const shebangMatch = source.match(shebangRegex);
 
   if (shebangMatch) {
@@ -51,9 +64,36 @@ export function convert(source: string, plugins: Array<Plugin>=allPlugins): Rend
 
   let result: RenderedModule = module.render();
 
+  if (validate) {
+    const error = validateResult(result);
+    if (error) {
+      result.warnings.push({
+        type: 'output-validation-failure',
+        message: error.description,
+        node: {
+          loc: {
+            start: {
+              line: error.lineNumber,
+              column: error.column - 1
+            }
+          }
+        }
+      });
+    }
+  }
+
   if (shebangMatch) {
     result.code = shebangMatch[0] + result.code;
   }
 
   return result;
+}
+
+function validateResult({ code }) {
+  try {
+    parse(code);
+    return null;
+  } catch (ex) {
+    return ex;
+  }
 }

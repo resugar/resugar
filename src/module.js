@@ -1,90 +1,7 @@
 import MagicString from 'magic-string';
 import type { Scope } from 'escope';
 import { analyze } from 'escope';
-import { parse } from 'espree';
-
-const PARSE_OPTIONS = {
-  loc: true,
-  range: true,
-  sourceType: 'module',
-  tokens: true,
-  ecmaFeatures: {
-    // enable parsing of arrow functions
-    arrowFunctions: true,
-
-    // enable parsing of let/const
-    blockBindings: true,
-
-    // enable parsing of destructured arrays and objects
-    destructuring: true,
-
-    // enable parsing of regular expression y flag
-    regexYFlag: true,
-
-    // enable parsing of regular expression u flag
-    regexUFlag: true,
-
-    // enable parsing of template strings
-    templateStrings: true,
-
-    // enable parsing of binary literals
-    binaryLiterals: true,
-
-    // enable parsing of ES6 octal literals
-    octalLiterals: true,
-
-    // enable parsing unicode code point escape sequences
-    unicodeCodePointEscapes: true,
-
-    // enable parsing of default parameters
-    defaultParams: true,
-
-    // enable parsing of rest parameters
-    restParams: true,
-
-    // enable parsing of for-of statement
-    forOf: true,
-
-    // enable parsing computed object literal properties
-    objectLiteralComputedProperties: true,
-
-    // enable parsing of shorthand object literal methods
-    objectLiteralShorthandMethods: true,
-
-    // enable parsing of shorthand object literal properties
-    objectLiteralShorthandProperties: true,
-
-    // Allow duplicate object literal properties (except '__proto__')
-    objectLiteralDuplicateProperties: true,
-
-    // enable parsing of generators/yield
-    generators: true,
-
-    // enable parsing spread operator
-    spread: true,
-
-    // enable super in functions
-    superInFunctions: true,
-
-    // enable parsing classes
-    classes: true,
-
-    // enable parsing of new.target
-    newTarget: false,
-
-    // enable parsing of modules
-    modules: true,
-
-    // enable React JSX parsing
-    jsx: true,
-
-    // enable return in global scope
-    globalReturn: true,
-
-    // allow experimental object rest/spread
-    experimentalObjectRestSpread: true
-  }
-};
+import parse from './utils/parse';
 
 type Warning = {
   node: Object,
@@ -116,7 +33,7 @@ export default class Module {
     this.id = id;
     this.metadata = ({}: Object);
     this.source = source;
-    this.ast = parse(source, PARSE_OPTIONS);
+    this.ast = parse(source);
     this.tokens = this.ast.tokens;
     delete this.ast.tokens;
     this.scopeManager = analyze(this.ast, { ecmaVersion: 6, sourceType: 'module' });
@@ -154,7 +71,7 @@ export default class Module {
       code: this.magicString.toString(),
       map: this.magicString.generateMap(),
       ast: this.ast,
-      warnings: this.warnings,
+      warnings: this.warnings.slice(),
       metadata: this.metadata
     };
   }
