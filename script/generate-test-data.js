@@ -58,14 +58,14 @@ readdirSync('test/form').forEach(exampleSet => {
     if (result.metadata) {
       const metadataPath = join(exampleRoot, 'expected/metadata.json');
       if (!exists(metadataPath)) {
-        writeJSON(metadataPath, result.metadata);
+        writeJSON(metadataPath, removeLocationData(result.metadata));
       }
     }
 
     if (result.ast) {
       const astPath = join(exampleRoot, 'expected/ast.json');
       if (!exists(astPath)) {
-        writeJSON(astPath, result.ast);
+        writeJSON(astPath, removeLocationData(result.ast));
       }
     }
 
@@ -77,3 +77,14 @@ readdirSync('test/form').forEach(exampleSet => {
     }
   });
 });
+
+function removeLocationData(object) {
+  if (Array.isArray(object)) {
+    object.forEach(removeLocationData);
+  } else if (object && typeof object === 'object') {
+    delete object.range;
+    delete object.loc;
+    Object.keys(object).forEach(key => removeLocationData(object[key]));
+  }
+  return object;
+}
