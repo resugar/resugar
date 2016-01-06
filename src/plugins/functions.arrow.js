@@ -27,6 +27,10 @@ export function enter(node: Object, parent: Object, module: Module, context: Con
     return null;
   }
 
+  if (node.generator) {
+    return null;
+  }
+
   if (node.id) {
     return null;
   }

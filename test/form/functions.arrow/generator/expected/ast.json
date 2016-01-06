@@ -1,0 +1,38 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "CallExpression",
+        "callee": {
+          "type": "Identifier",
+          "name": "a"
+        },
+        "arguments": [
+          {
+            "type": "FunctionExpression",
+            "id": null,
+            "params": [],
+            "body": {
+              "type": "BlockStatement",
+              "body": [
+                {
+                  "type": "ReturnStatement",
+                  "argument": {
+                    "type": "Literal",
+                    "value": 0,
+                    "raw": "0"
+                  }
+                }
+              ]
+            },
+            "generator": true,
+            "expression": false
+          }
+        ]
+      }
+    }
+  ],
+  "sourceType": "module"
+}
