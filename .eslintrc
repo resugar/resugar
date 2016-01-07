@@ -7,7 +7,7 @@
   },
   "rules": {
     "strict": 0,
-    "no-console": 0,
+    "no-console": 1,
     "quotes": [2, "single", "avoid-escape"],
     "no-use-before-define": [2, "nofunc"],
     "babel/object-shorthand": 1,

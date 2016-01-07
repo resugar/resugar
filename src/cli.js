@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { basename, dirname } from 'path';
 import { createReadStream, createWriteStream } from 'fs';
 import mkdirp from 'mkdirp';

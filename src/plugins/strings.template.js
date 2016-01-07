@@ -67,8 +67,6 @@ class Context extends BaseContext {
       return annotatedPart;
     });
 
-    console.log(annotatedParts);
-
     if (annotatedParts.every(part => isString(part.node) && !part.prefix && !part.suffix)) {
       return this.combineStrings(parts);
     } else {

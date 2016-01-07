@@ -25,7 +25,7 @@ type Options = {
 
 export function convert(source: string, options: (Options|Array<Plugin>)={}): RenderedModule {
   if (Array.isArray(options)) {
-    console.warn('convert(source, plugins) is deprecated, please call as convert(source, options)');
+    console.warn('convert(source, plugins) is deprecated, please call as convert(source, options)'); // eslint-disable-line no-console
     options = { plugins: options };
   }
 
