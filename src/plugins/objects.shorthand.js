@@ -35,7 +35,26 @@ class Context extends BaseContext {
       return false;
     }
 
-    this.remove(node.key.range[1], node.value.range[1]);
+    const [ keyToken, colonToken, valueToken ] = this.module.tokensForNode(node);
+    const sourceBetweenKeyAndColon = this.slice(keyToken.range[1], colonToken.range[0]);
+    const sourceBetweenColonAndValue = this.slice(colonToken.range[1], valueToken.range[0]);
+
+    // `a /* 1 */ : /* 2 */ a` -> `/* 1 *//* 2 */a`
+    //  ^^^^^^^^^^^                ^^^^^^^
+    this.overwrite(
+      keyToken.range[0],
+      colonToken.range[1],
+      sourceBetweenKeyAndColon.trim()
+    );
+
+    // `a /* 1 */ : /* 2 */ a` -> `/* 1 *//* 2 */a`
+    //             ^^^^^^^^^              ^^^^^^^
+    this.overwrite(
+      colonToken.range[1],
+      valueToken.range[0],
+      sourceBetweenColonAndValue.trim()
+    );
+
     this.metadata.properties.push(clone(node));
     node.shorthand = true;
 

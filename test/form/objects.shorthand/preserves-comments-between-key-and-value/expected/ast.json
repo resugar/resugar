@@ -1,0 +1,29 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "ObjectExpression",
+        "properties": [
+          {
+            "type": "Property",
+            "key": {
+              "type": "Identifier",
+              "name": "a"
+            },
+            "value": {
+              "type": "Identifier",
+              "name": "a"
+            },
+            "kind": "init",
+            "method": false,
+            "shorthand": true,
+            "computed": false
+          }
+        ]
+      }
+    }
+  ],
+  "sourceType": "module"
+}
