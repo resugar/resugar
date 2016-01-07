@@ -1,0 +1,116 @@
+{
+  "objects.shorthand": {
+    "properties": []
+  },
+  "objects.concise": {
+    "properties": []
+  },
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [],
+    "directives": []
+  },
+  "functions.arrow": {
+    "functions": []
+  },
+  "declarations.block-scope": {
+    "declarations": []
+  },
+  "objects.destructuring": [],
+  "strings.template": {
+    "concatenations": [
+      {
+        "node": {
+          "type": "BinaryExpression",
+          "operator": "+",
+          "left": {
+            "type": "BinaryExpression",
+            "operator": "+",
+            "left": {
+              "type": "BinaryExpression",
+              "operator": "+",
+              "left": {
+                "type": "Literal",
+                "value": "a",
+                "raw": "'a'"
+              },
+              "right": {
+                "type": "Identifier",
+                "name": "b"
+              }
+            },
+            "right": {
+              "type": "Identifier",
+              "name": "c"
+            }
+          },
+          "right": {
+            "type": "Literal",
+            "value": "d",
+            "raw": "'d'"
+          }
+        },
+        "parts": [
+          {
+            "type": "Literal",
+            "value": "a",
+            "raw": "'a'"
+          },
+          {
+            "type": "Identifier",
+            "name": "b"
+          },
+          {
+            "type": "Identifier",
+            "name": "c"
+          },
+          {
+            "type": "Literal",
+            "value": "d",
+            "raw": "'d'"
+          }
+        ]
+      },
+      {
+        "node": {
+          "type": "BinaryExpression",
+          "operator": "+",
+          "left": {
+            "type": "BinaryExpression",
+            "operator": "+",
+            "left": {
+              "type": "Literal",
+              "value": "a",
+              "raw": "'a'"
+            },
+            "right": {
+              "type": "Literal",
+              "value": "b",
+              "raw": "'b'"
+            }
+          },
+          "right": {
+            "type": "Identifier",
+            "name": "c"
+          }
+        },
+        "parts": [
+          {
+            "type": "Literal",
+            "value": "a",
+            "raw": "'a'"
+          },
+          {
+            "type": "Literal",
+            "value": "b",
+            "raw": "'b'"
+          },
+          {
+            "type": "Identifier",
+            "name": "c"
+          }
+        ]
+      }
+    ]
+  }
+}

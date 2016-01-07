@@ -1,0 +1,52 @@
+{
+  "objects.shorthand": {
+    "properties": []
+  },
+  "objects.concise": {
+    "properties": []
+  },
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [],
+    "directives": []
+  },
+  "functions.arrow": {
+    "functions": []
+  },
+  "declarations.block-scope": {
+    "declarations": []
+  },
+  "objects.destructuring": [],
+  "strings.template": {
+    "concatenations": [
+      {
+        "node": {
+          "type": "BinaryExpression",
+          "operator": "+",
+          "left": {
+            "type": "Literal",
+            "value": "a",
+            "raw": "'a'"
+          },
+          "right": {
+            "type": "Literal",
+            "value": "b",
+            "raw": "'b'"
+          }
+        },
+        "parts": [
+          {
+            "type": "Literal",
+            "value": "a",
+            "raw": "'a'"
+          },
+          {
+            "type": "Literal",
+            "value": "b",
+            "raw": "'b'"
+          }
+        ]
+      }
+    ]
+  }
+}

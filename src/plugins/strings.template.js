@@ -1,6 +1,7 @@
 import BaseContext from '../context';
 import clone from '../utils/clone';
 import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
+import groupContentBetweenElements from '../utils/groupContentBetweenElements';
 import replace from '../utils/replace';
 import type Module from '../module';
 
@@ -44,10 +45,34 @@ class Context extends BaseContext {
   }
 
   combine(node: Object, parts: Array<Object>): Object {
-    if (parts.every(isString)) {
+    const annotatedParts = parts.map((part, i) => {
+      const previousPart = parts[i - 1];
+      const nextPart = parts[i + 1];
+      const annotatedPart = {
+        node: part,
+        prefix: '',
+        suffix: ''
+      };
+
+      if (previousPart) {
+        const [ , prefix ] = this.insignificantContentSeparatedByPlus(previousPart, part);
+        annotatedPart.prefix = prefix.replace(/^\s*/, '');
+      }
+
+      if (nextPart) {
+        const [ suffix ] = this.insignificantContentSeparatedByPlus(part, nextPart);
+        annotatedPart.suffix = suffix.replace(/\s*$/, '');
+      }
+
+      return annotatedPart;
+    });
+
+    console.log(annotatedParts);
+
+    if (annotatedParts.every(part => isString(part.node) && !part.prefix && !part.suffix)) {
       return this.combineStrings(parts);
     } else {
-      return this.buildTemplateString(node, parts);
+      return this.buildTemplateString(node, annotatedParts);
     }
   }
 
@@ -80,20 +105,17 @@ class Context extends BaseContext {
     const quasis = [];
 
     const firstPart = parts[0];
-    let cooked = firstPart.value;
-    let raw = firstPart.raw.slice(1, -1);
-    this.overwrite(firstPart.range[0], firstPart.range[0] + 1, '`');
+    const firstNode = firstPart.node;
+    let cooked = '';
+    let raw = '';
+    this.insert(firstNode.range[0], '`');
 
-    parts.forEach(part => this.escape('`', part.range[0] + 1, part.range[1] - 1));
-
-    for (let i = 0; i < parts.length - 1; i++) {
-      const thisPart = parts[i];
-      const nextPart = parts[i + 1];
-      if (isString(nextPart)) {
-        cooked += nextPart.value;
-        raw += nextPart.raw.slice(1, -1);
-      } else {
-        expressions.push(nextPart);
+    parts.forEach(({ node, prefix, suffix }, i) => {
+      if (prefix || suffix || !isString(node)) {
+        // This one has to be an interpolated expression.
+        this.insert(node.range[0], `\${${prefix}`);
+        this.insert(node.range[1], `${suffix}}`);
+        expressions.push(node);
         quasis.push({
           type: Syntax.TemplateElement,
           tail: false,
@@ -101,21 +123,20 @@ class Context extends BaseContext {
         });
         cooked = '';
         raw = '';
-      }
-      if (isString(thisPart)) {
-        if (isString(nextPart)) {
-          this.remove(thisPart.range[1] - 1, nextPart.range[0] + 1);
-        } else {
-          this.overwrite(thisPart.range[1] - 1, nextPart.range[0], '${');
-        }
       } else {
-        if (isString(nextPart)) {
-          this.overwrite(thisPart.range[1], nextPart.range[0] + 1, '}');
-        } else {
-          this.overwrite(thisPart.range[1], nextPart.range[0], '}${');
-        }
+        // This one can become a quasi,
+        cooked += node.value;
+        raw += node.raw.slice(1, -1);
+        this.remove(node.range[0], node.range[0] + 1);
+        this.remove(node.range[1] - 1, node.range[1]);
+        this.escape('`', ...node.range);
       }
-    }
+
+      const nextPart = parts[i + 1];
+      if (nextPart) {
+        this.remove(node.range[1], nextPart.node.range[0]);
+      }
+    });
 
     quasis.push({
       type: Syntax.TemplateElement,
@@ -123,14 +144,86 @@ class Context extends BaseContext {
       value: { cooked, raw }
     });
 
-    const lastPart = parts[parts.length - 1];
-    if (isString(lastPart)) {
-      this.overwrite(lastPart.range[1] - 1, node.range[1], '`');
-    } else {
-      this.overwrite(lastPart.range[1], node.range[1], '}`');
-    }
+    this.overwrite(
+      parts[parts.length - 1].node.range[1],
+      node.range[1],
+      '`'
+    );
+
+    // TODO: test nested template strings
+    //parts.forEach(part => this.escape('`', part.node.range[0] + 1, part.node.range[1] - 1));
+    //
+    //for (let i = 0; i < parts.length - 1; i++) {
+    //  const thisPart = parts[i];
+    //  const thisNode = thisPart.node;
+    //  const nextPart = parts[i + 1];
+    //  const nextNode = nextPart.node;
+    //  if (isString(nextNode)) {
+    //    cooked += nextNode.value;
+    //    raw += nextNode.raw.slice(1, -1);
+    //  } else {
+    //    expressions.push(nextNode);
+    //    quasis.push({
+    //      type: Syntax.TemplateElement,
+    //      tail: false,
+    //      value: { cooked, raw: raw.replace(/`/g, '\\`') }
+    //    });
+    //    cooked = '';
+    //    raw = '';
+    //  }
+    //  if (isString(thisNode)) {
+    //    if (isString(nextNode)) {
+    //      this.remove(
+    //        thisNode.range[1] - 1,
+    //        nextNode.range[0] + 1
+    //      );
+    //    } else {
+    //      this.overwrite(
+    //        thisNode.range[1] - 1,
+    //        nextNode.range[0],
+    //        `\${`
+    //      );
+    //    }
+    //  } else {
+    //    if (isString(nextNode)) {
+    //      this.overwrite(
+    //        thisNode.range[1],
+    //        nextNode.range[0] + 1,
+    //        `}`
+    //      );
+    //    } else {
+    //      this.overwrite(
+    //        thisNode.range[1],
+    //        nextNode.range[0],
+    //        `}\${`
+    //      );
+    //    }
+    //  }
+    //}
+    //
+    //quasis.push({
+    //  type: Syntax.TemplateElement,
+    //  tail: true,
+    //  value: { cooked, raw }
+    //});
+    //
+    //const lastPart = parts[parts.length - 1];
+    //const lastNode = lastPart.node;
+    //if (isString(lastNode)) {
+    //  this.overwrite(lastNode.range[1] - 1, node.range[1], '`');
+    //} else {
+    //  this.overwrite(lastNode.range[1], node.range[1], '}`');
+    //}
 
     return { type: Syntax.TemplateLiteral, expressions, quasis };
+  }
+
+  insignificantContentSeparatedByPlus(left: Object, right: Object): Array<string> {
+    return groupContentBetweenElements(
+      [left, ...this.module.tokensBetweenNodes(left, right), right],
+      token => token.type === 'Punctuator' && token.value === '+',
+      (left, right) => this.slice(left.range[1], right.range[0])
+    ).map(strings => strings.join(''));
   }
 }
 

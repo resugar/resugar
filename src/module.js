@@ -52,9 +52,16 @@ export default class Module {
   }
 
   tokensForNode(node: Object): Array<Token> {
+    return this.tokensInRange(...node.range);
+  }
+
+  tokensBetweenNodes(left: Object, right: Object): Array<Token> {
+    return this.tokensInRange(left.range[1], right.range[0]);
+  }
+
+  tokensInRange(start: number, end: number): Array<Token> {
     const result = [];
     const tokens = this.tokens;
-    const [ start, end ] = node.range;
     for (let i = 0; i < tokens.length; i++) {
       const { range } = tokens[i];
       if (range[1] > end) {
