@@ -41,7 +41,8 @@ export function checkExamples(name: string) {
     readdirSync(directory).forEach(example => {
       const config = readOptionalJSON(join(directory, example, 'config.json')) || {};
       const description = config.description || example;
-      it(description, () => checkExample(join(name, example)));
+      const testFn = config.skip ? it.skip : config.only ? it.only : it;
+      testFn(description, () => checkExample(join(name, example)));
     });
   });
 }
