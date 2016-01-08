@@ -1,0 +1,1 @@
+a(function() {}.bind(this));

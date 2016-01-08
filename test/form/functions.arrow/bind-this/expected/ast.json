@@ -1,0 +1,29 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "CallExpression",
+        "callee": {
+          "type": "Identifier",
+          "name": "a"
+        },
+        "arguments": [
+          {
+            "type": "ArrowFunctionExpression",
+            "id": null,
+            "params": [],
+            "body": {
+              "type": "BlockStatement",
+              "body": []
+            },
+            "generator": false,
+            "expression": false
+          }
+        ]
+      }
+    }
+  ],
+  "sourceType": "module"
+}

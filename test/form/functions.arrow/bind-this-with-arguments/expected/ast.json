@@ -1,0 +1,85 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "CallExpression",
+        "callee": {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "FunctionExpression",
+            "id": null,
+            "params": [
+              {
+                "type": "Identifier",
+                "name": "a"
+              },
+              {
+                "type": "Identifier",
+                "name": "b"
+              }
+            ],
+            "body": {
+              "type": "BlockStatement",
+              "body": [
+                {
+                  "type": "ReturnStatement",
+                  "argument": {
+                    "type": "BinaryExpression",
+                    "operator": "+",
+                    "left": {
+                      "type": "MemberExpression",
+                      "computed": true,
+                      "object": {
+                        "type": "ThisExpression"
+                      },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "a"
+                      }
+                    },
+                    "right": {
+                      "type": "MemberExpression",
+                      "computed": true,
+                      "object": {
+                        "type": "ThisExpression"
+                      },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "b"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "generator": false,
+            "expression": false
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "bind"
+          }
+        },
+        "arguments": [
+          {
+            "type": "ThisExpression"
+          },
+          {
+            "type": "Literal",
+            "value": "a",
+            "raw": "'a'"
+          },
+          {
+            "type": "Literal",
+            "value": "b",
+            "raw": "'b'"
+          }
+        ]
+      }
+    }
+  ],
+  "sourceType": "module"
+}

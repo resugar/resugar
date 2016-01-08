@@ -1,0 +1,59 @@
+{
+  "objects.shorthand": {
+    "properties": []
+  },
+  "objects.concise": {
+    "properties": []
+  },
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [],
+    "directives": []
+  },
+  "functions.arrow": {
+    "functions": [
+      {
+        "type": "FunctionExpression",
+        "id": null,
+        "params": [
+          {
+            "type": "Identifier",
+            "name": "thing"
+          }
+        ],
+        "body": {
+          "type": "BlockStatement",
+          "body": [
+            {
+              "type": "ExpressionStatement",
+              "expression": {
+                "type": "CallExpression",
+                "callee": {
+                  "type": "MemberExpression",
+                  "computed": true,
+                  "object": {
+                    "type": "ThisExpression"
+                  },
+                  "property": {
+                    "type": "Identifier",
+                    "name": "thing"
+                  }
+                },
+                "arguments": []
+              }
+            }
+          ]
+        },
+        "generator": false,
+        "expression": false
+      }
+    ]
+  },
+  "declarations.block-scope": {
+    "declarations": []
+  },
+  "objects.destructuring": [],
+  "strings.template": {
+    "concatenations": []
+  }
+}

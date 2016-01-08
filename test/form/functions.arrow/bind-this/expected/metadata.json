@@ -1,0 +1,35 @@
+{
+  "objects.shorthand": {
+    "properties": []
+  },
+  "objects.concise": {
+    "properties": []
+  },
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [],
+    "directives": []
+  },
+  "functions.arrow": {
+    "functions": [
+      {
+        "type": "FunctionExpression",
+        "id": null,
+        "params": [],
+        "body": {
+          "type": "BlockStatement",
+          "body": []
+        },
+        "generator": false,
+        "expression": false
+      }
+    ]
+  },
+  "declarations.block-scope": {
+    "declarations": []
+  },
+  "objects.destructuring": [],
+  "strings.template": {
+    "concatenations": []
+  }
+}
