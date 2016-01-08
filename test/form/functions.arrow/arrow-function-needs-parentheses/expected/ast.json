@@ -1,0 +1,96 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "CallExpression",
+        "callee": {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "Identifier",
+            "name": "console"
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "log"
+          }
+        },
+        "arguments": [
+          {
+            "type": "MemberExpression",
+            "computed": false,
+            "object": {
+              "type": "ArrowFunctionExpression",
+              "id": null,
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "a"
+                }
+              ],
+              "body": {
+                "type": "Identifier",
+                "name": "a"
+              },
+              "generator": false,
+              "expression": false
+            },
+            "property": {
+              "type": "Identifier",
+              "name": "length"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "BinaryExpression",
+        "operator": "+",
+        "left": {
+          "type": "Identifier",
+          "name": "a"
+        },
+        "right": {
+          "type": "ArrowFunctionExpression",
+          "id": null,
+          "params": [],
+          "body": {
+            "type": "Literal",
+            "value": 0,
+            "raw": "0"
+          },
+          "generator": false,
+          "expression": false
+        }
+      }
+    },
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "BinaryExpression",
+        "operator": "+",
+        "left": {
+          "type": "Identifier",
+          "name": "b"
+        },
+        "right": {
+          "type": "ArrowFunctionExpression",
+          "id": null,
+          "params": [],
+          "body": {
+            "type": "Literal",
+            "value": 1,
+            "raw": "1"
+          },
+          "generator": false,
+          "expression": false
+        }
+      }
+    }
+  ],
+  "sourceType": "module"
+}

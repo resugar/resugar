@@ -28,6 +28,11 @@ type Loc = {
   column: number
 };
 
+type Range = {
+  start: number,
+  end: number
+};
+
 export default class Module {
   constructor(id: ?string, source: string) {
     this.id = id;
@@ -60,17 +65,39 @@ export default class Module {
   }
 
   tokensInRange(start: number, end: number): Array<Token> {
-    const result = [];
+    const tokenRange = this._tokenIndexRangeForSourceRange(start, end);
+
+    if (!tokenRange) {
+      return [];
+    }
+
+    return this.tokens.slice(tokenRange.start, tokenRange.end);
+  }
+
+  tokenRangeForNode(node: Object): ?Range {
+    return this._tokenIndexRangeForSourceRange(node.range[0], node.range[1]);
+  }
+
+  _tokenIndexRangeForSourceRange(start: number, end: number): ?Range {
+    let location = null;
+    let length = 0;
     const tokens = this.tokens;
+
     for (let i = 0; i < tokens.length; i++) {
       const { range } = tokens[i];
       if (range[1] > end) {
         break;
       } else if (range[0] >= start) {
-        result.push(tokens[i]);
+        if (location === null) { location = i; }
+        length++;
       }
     }
-    return result;
+
+    if (location === null) {
+      return null;
+    }
+
+    return { start: location, end: location + length };
   }
 
   render(): RenderedModule {

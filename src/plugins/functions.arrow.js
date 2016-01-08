@@ -1,6 +1,8 @@
 import BaseContext from '../context';
 import clone from '../utils/clone';
 import estraverse from 'estraverse';
+import hasParens from '../utils/hasParens';
+import needsParens from '../utils/needsParens';
 import replace from '../utils/replace';
 import type Module from '../module';
 import type { ScopeManager } from 'escope';
@@ -56,7 +58,7 @@ class Context extends BaseContext {
       return false;
     }
 
-    this._rewriteBlocklessArrowFunction(node);
+    this._rewriteBlocklessArrowFunction(node, parent);
 
     return true;
   }
@@ -105,7 +107,7 @@ class Context extends BaseContext {
     return true;
   }
 
-  _rewriteBlocklessArrowFunction(node: Object) {
+  _rewriteBlocklessArrowFunction(node: Object, parent: Object) {
     const [ statement ] = node.body.body;
 
     this.metadata.functions.push(clone(node));
@@ -174,6 +176,11 @@ class Context extends BaseContext {
 
     node.type = Syntax.ArrowFunctionExpression;
     node.body = statement.argument;
+
+    if (needsParens(node, parent) && !hasParens(node, this.module)) {
+      this.insert(node.range[0], '(');
+      this.insert(node.range[1], ')');
+    }
   }
 
   _rewriteBlockArrowFunction(node: Object) {
