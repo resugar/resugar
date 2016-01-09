@@ -1,4 +1,7 @@
+import estraverse from 'estraverse';
 import type { Reference, ScopeManager } from 'escope';
+
+const { Syntax } = estraverse;
 
 type DeclarationKind = 'var' | 'let' | 'const';
 
@@ -26,7 +29,36 @@ function couldBeConstReference(reference: Reference): boolean {
 }
 
 function referenceCouldBeBlockScope(reference: Reference): boolean {
+  return referenceAfterDefinition(reference) && referenceInDefinitionParentBlock(reference);
+}
+
+function referenceAfterDefinition(reference: Reference): boolean {
   const referenceIndex = reference.identifier.range[0];
   const definitionIndex = reference.resolved.identifiers[0].range[0];
   return referenceIndex >= definitionIndex;
+}
+
+function referenceInDefinitionParentBlock(reference: Reference): boolean {
+  let definitionName = reference.resolved.defs[0].name;
+  let defBlock = definitionName;
+
+  while (defBlock && defBlock.type !== Syntax.BlockStatement && defBlock.type !== Syntax.Program) {
+    defBlock = defBlock.parentNode;
+  }
+
+  if (!defBlock) {
+    const { line, column } = definitionName.loc.start;
+    throw new Error(
+      `BUG: Expected a block containing '${definitionName.name}'` +
+      `(${line}:${column + 1}) but did not find one.`
+    );
+  }
+
+  let refBlock = reference.identifier;
+
+  while (refBlock && refBlock !== defBlock) {
+    refBlock = refBlock.parentNode;
+  }
+
+  return refBlock === defBlock;
 }
