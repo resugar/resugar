@@ -45,32 +45,33 @@ class Context extends BaseContext {
     }: Metadata);
   }
 
-  rewrite(node: Object, parent: Object): boolean {
+  rewrite(node: Object): boolean {
     return (
-      this.rewriteRequire(node, parent) ||
-      this.rewriteExport(node, parent) ||
-      this.removeUseStrictDirective(node, parent)
+      this.rewriteRequire(node) ||
+      this.rewriteExport(node) ||
+      this.removeUseStrictDirective(node)
     );
   }
 
   /**
    * @private
    */
-  rewriteRequire(node: Object, parent: Object): boolean {
+  rewriteRequire(node: Object): boolean {
     return (
-      this.rewriteSingleExportRequire(node, parent) ||
-      this.rewriteNamedExportRequire(node, parent) ||
-      this.rewriteDeconstructedImportRequire(node, parent) ||
-      this.rewriteSideEffectRequire(node, parent) ||
-      this.warnAboutUnsupportedRequire(node, parent)
+      this.rewriteSingleExportRequire(node) ||
+      this.rewriteNamedExportRequire(node) ||
+      this.rewriteDeconstructedImportRequire(node) ||
+      this.rewriteSideEffectRequire(node) ||
+      this.warnAboutUnsupportedRequire(node)
     );
   }
 
   /**
    * @private
    */
-  rewriteSingleExportRequire(node: Object, parent: Object): boolean {
-    if (!parent || parent.type !== Syntax.Program) {
+  rewriteSingleExportRequire(node: Object): boolean {
+    const { parentNode } = node;
+    if (!parentNode || parentNode.type !== Syntax.Program) {
       return false;
     }
 
@@ -114,8 +115,9 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteNamedExportRequire(node: Object, parent: Object): boolean {
-    if (!parent || parent.type !== Syntax.Program) {
+  rewriteNamedExportRequire(node: Object): boolean {
+    const { parentNode } = node;
+    if (!parentNode || parentNode.type !== Syntax.Program) {
       return false;
     }
 
@@ -160,8 +162,9 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteDeconstructedImportRequire(node: Object, parent: Object): boolean {
-    if (!parent || parent.type !== Syntax.Program) {
+  rewriteDeconstructedImportRequire(node: Object): boolean {
+    const { parentNode } = node;
+    if (!parentNode || parentNode.type !== Syntax.Program) {
       return false;
     }
 
@@ -216,8 +219,9 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteSideEffectRequire(node: Object, parent: Object): boolean {
-    if (!parent || parent.type !== Syntax.Program) {
+  rewriteSideEffectRequire(node: Object): boolean {
+    const { parentNode } = node;
+    if (!parentNode || parentNode.type !== Syntax.Program) {
       return false;
     }
 
@@ -291,11 +295,11 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteExport(node: Object, parent: Object): boolean {
+  rewriteExport(node: Object): boolean {
     return (
-      this.rewriteNamespaceExport(node, parent) ||
-      this.rewriteNamedExport(node, parent) ||
-      this.rewriteSingleExportAsDefaultExport(node, parent)
+      this.rewriteNamespaceExport(node) ||
+      this.rewriteNamedExport(node) ||
+      this.rewriteSingleExportAsDefaultExport(node)
     );
   }
 
@@ -338,7 +342,7 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  rewriteNamedExport(node: Object, parent: Object): boolean {
+  rewriteNamedExport(node: Object): boolean {
     if (node.type !== Syntax.ExpressionStatement) {
       return false;
     }
@@ -357,7 +361,7 @@ class Context extends BaseContext {
 
     const { property } = left;
 
-    if (parent.type !== Syntax.Program) {
+    if (node.parentNode.type !== Syntax.Program) {
       this.module.warn(
         node,
         'unsupported-export',
@@ -545,7 +549,7 @@ class Context extends BaseContext {
   /**
    * @private
    */
-  removeUseStrictDirective(node: Object, parent: Object): boolean {
+  removeUseStrictDirective(node: Object): boolean {
     if (node.type !== Syntax.ExpressionStatement) {
       return false;
     }
@@ -560,7 +564,7 @@ class Context extends BaseContext {
       return false;
     }
 
-    if (parent.body[0] !== node) {
+    if (node.parentNode.body[0] !== node) {
       return false;
     }
 
@@ -575,7 +579,7 @@ class Context extends BaseContext {
       node
     });
 
-    parent.body.splice(0, 1);
+    node.parentNode.body.splice(0, 1);
 
     this.remove(start, end);
     return true;
@@ -586,8 +590,8 @@ export function begin(module: Module): Context {
   return new Context(module);
 }
 
-export function enter(node: Object, parent: Object, module: Module, context: Context): ?VisitorOption {
-  if (/Function/.test(node.type) || context.rewrite(node, parent)) {
+export function enter(node: Object, module: Module, context: Context): ?VisitorOption {
+  if (/Function/.test(node.type) || context.rewrite(node)) {
     return VisitorOption.Skip;
   }
 }

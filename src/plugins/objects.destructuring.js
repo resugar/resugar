@@ -90,14 +90,14 @@ class Context extends BaseContext {
     this.remove(lastRight.object.range[1], lastRight.range[1]);
   }
 
-  rewriteAssignment(node: Object, parent: Object): boolean {
+  rewriteAssignment(node: Object): boolean {
     const assignments = this._extractSequentialDestructurableElements([node]);
 
     if (assignments.length === 0) {
       return false;
     }
 
-    if (parent.type === Syntax.ExpressionStatement) {
+    if (node.parentNode.type === Syntax.ExpressionStatement) {
       // `a = obj.a;` -> `(a = obj.a);`
       //                  ^         ^
       this.insert(assignments[0].range[0], '(');
@@ -247,8 +247,8 @@ export function begin(module: Module): Context {
   return new Context(module);
 }
 
-export function enter(node: Object, parent: Object, module: Module, context: Context): ?VisitorOption {
-  context.rewriteVariableDeclaration(node) || context.rewriteSequenceExpression(node, parent) || context.rewriteAssignment(node, parent);
+export function enter(node: Object, module: Module, context: Context): ?VisitorOption {
+  context.rewriteVariableDeclaration(node) || context.rewriteSequenceExpression(node) || context.rewriteAssignment(node);
   return null;
 }
 

@@ -22,7 +22,7 @@ export function begin(module: Module): Context {
   return new Context(module);
 }
 
-export function enter(node: Object, parent: Object, module: Module, context: Context): ?VisitorOption {
+export function enter(node: Object, module: Module, context: Context): ?VisitorOption {
   if (node.type !== Syntax.VariableDeclaration) {
     return null;
   }

@@ -20,14 +20,14 @@ class Context extends BaseContext {
     };
   }
 
-  rewrite(node: Object, parent: Object): boolean {
+  rewrite(node: Object): boolean {
     return (
-      this.rewriteFunctionExpression(node, parent) ||
+      this.rewriteFunctionExpression(node) ||
       this.rewriteCallExpression(node)
     );
   }
 
-  rewriteFunctionExpression(node: Object, parent: Object): boolean {
+  rewriteFunctionExpression(node: Object): boolean {
     if (node.type !== Syntax.FunctionExpression) {
       return false;
     }
@@ -44,7 +44,9 @@ class Context extends BaseContext {
       return false;
     }
 
-    if (parent.type === Syntax.Property && parent.method) {
+    const { parentNode } = node;
+
+    if (parentNode.type === Syntax.Property && parentNode.method) {
       return false;
     }
 
@@ -58,7 +60,7 @@ class Context extends BaseContext {
       return false;
     }
 
-    this._rewriteBlocklessArrowFunction(node, parent);
+    this._rewriteBlocklessArrowFunction(node);
 
     return true;
   }
@@ -107,7 +109,7 @@ class Context extends BaseContext {
     return true;
   }
 
-  _rewriteBlocklessArrowFunction(node: Object, parent: Object) {
+  _rewriteBlocklessArrowFunction(node: Object) {
     const [ statement ] = node.body.body;
 
     this.metadata.functions.push(clone(node));
@@ -177,7 +179,7 @@ class Context extends BaseContext {
     node.type = Syntax.ArrowFunctionExpression;
     node.body = statement.argument;
 
-    if (needsParens(node, parent) && !hasParens(node, this.module)) {
+    if (needsParens(node) && !hasParens(node, this.module)) {
       this.insert(node.range[0], '(');
       this.insert(node.range[1], ')');
     }
@@ -229,8 +231,8 @@ export function begin(module: Module): Context {
   return new Context(module);
 }
 
-export function enter(node: Object, parent: Object, module: Module, context: Context): ?VisitorOption {
-  context.rewrite(node, parent);
+export function enter(node: Object, module: Module, context: Context): ?VisitorOption {
+  context.rewrite(node);
   return null;
 }
 

@@ -9,7 +9,7 @@ import type { VisitorOption } from 'estraverse';
 export { default as run } from './cli';
 
 type PluginBookendCallback = (m: Module) => ?Object;
-type PluginTraversalCallback = (node: Object, parent: Object, module: Module, context: ?Object) => ?VisitorOption;
+type PluginTraversalCallback = (node: Object, module: Module, context: ?Object) => ?VisitorOption;
 
 type Plugin = {
   begin: ?PluginBookendCallback,
@@ -45,14 +45,19 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
 
     estraverse.traverse(module.ast, {
       enter(node, parent) {
+        Object.defineProperty(node, 'parentNode', {
+          value: parent,
+          configurable: true,
+          enumerable: false
+        });
         if (enter) {
-          return enter(node, parent, module, context);
+          return enter(node, module, context);
         }
       },
 
-      leave(node, parent) {
+      leave(node) {
         if (leave) {
-          return leave(node, parent, module, context);
+          return leave(node, module, context);
         }
       }
     });
