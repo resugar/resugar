@@ -334,6 +334,7 @@ class Context extends BaseContext {
       const { id } = right;
 
       this.metadata.exports.push({
+        type: 'named-export',
         bindings: [
           {
             exportName,
