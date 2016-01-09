@@ -293,8 +293,45 @@ class Context extends BaseContext {
    */
   rewriteExport(node: Object, parent: Object): boolean {
     return (
+      this.rewriteNamespaceExport(node, parent) ||
       this.rewriteNamedExport(node, parent) ||
       this.rewriteSingleExportAsDefaultExport(node, parent)
+    );
+  }
+
+  /**
+   * @private
+   */
+  rewriteNamespaceExport(node: Object): boolean {
+    const right = extractModuleExportsSet(node);
+
+    if (!right) {
+      return false;
+    }
+
+    const pathNode = extractRequirePathNode(right);
+
+    if (!pathNode) {
+      return false;
+    }
+
+    this.overwrite(
+      ...node.expression.range,
+      `export * from ${this.slice(...pathNode.range)}`
+    );
+
+    this.metadata.exports.push({
+      type: 'namespace-export',
+      bindings: [],
+      node: clone(node)
+    });
+
+    replace(
+      node,
+      {
+        type: Syntax.ExportAllDeclaration,
+        source: pathNode
+      }
     );
   }
 
@@ -458,29 +495,9 @@ class Context extends BaseContext {
    * @private
    */
   rewriteSingleExportAsDefaultExport(node: Object): boolean {
-    if (node.type !== Syntax.ExpressionStatement) {
-      return false;
-    }
+    const right = extractModuleExportsSet(node);
 
-    const { expression } = node;
-
-    if (expression.type !== Syntax.AssignmentExpression) {
-      return false;
-    }
-
-    const { left, right } = expression;
-
-    if (left.type !== Syntax.MemberExpression || left.computed) {
-      return false;
-    }
-
-    const { object, property } = left;
-
-    if (object.type !== Syntax.Identifier || object.name !== 'module') {
-      return false;
-    }
-
-    if (property.type !== Syntax.Identifier || property.name !== 'exports') {
+    if (right === null) {
       return false;
     }
 
@@ -607,4 +624,37 @@ function extractRequirePathNode(node: Object): ?Object {
   }
 
   return arg;
+}
+
+/**
+ * @private
+ */
+function extractModuleExportsSet(node: Object): ?Object {
+  if (node.type !== Syntax.ExpressionStatement) {
+    return null;
+  }
+
+  const { expression } = node;
+
+  if (expression.type !== Syntax.AssignmentExpression) {
+    return null;
+  }
+
+  const { left, right } = expression;
+
+  if (left.type !== Syntax.MemberExpression || left.computed) {
+    return null;
+  }
+
+  const { object, property } = left;
+
+  if (object.type !== Syntax.Identifier || object.name !== 'module') {
+    return null;
+  }
+
+  if (property.type !== Syntax.Identifier || property.name !== 'exports') {
+    return null;
+  }
+
+  return right;
 }

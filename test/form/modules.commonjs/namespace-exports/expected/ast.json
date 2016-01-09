@@ -1,0 +1,14 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExportAllDeclaration",
+      "source": {
+        "type": "Literal",
+        "value": "./lib",
+        "raw": "'./lib'"
+      }
+    }
+  ],
+  "sourceType": "module"
+}
