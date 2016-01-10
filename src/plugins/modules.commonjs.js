@@ -47,10 +47,66 @@ class Context extends BaseContext {
 
   rewrite(node: Object): boolean {
     return (
+      this.unwrapIIFE(node) ||
       this.rewriteRequire(node) ||
       this.rewriteExport(node) ||
       this.removeUseStrictDirective(node)
     );
+  }
+
+  /**
+   * @private
+   */
+  unwrapIIFE(node: Object): boolean {
+    const iife = extractModuleIIFE(node);
+
+    if (!iife) {
+      return false;
+    }
+
+    const [ statement ] = node.body;
+    const { body } = iife.body;
+    node.body = body;
+
+    this.metadata.unwrapped = iife;
+
+    const { tokens } = this.module;
+    const { start, end } = this.module.tokenRangeForNode(iife);
+    let iifeHeaderEnd = body[0].range[0];
+
+    for (let i = start; i < end; i++) {
+      if (tokens[i].value === '{') {
+        for (let p = tokens[i].range[1]; p < iifeHeaderEnd; p++) {
+          if (this.charAt(p) === '\n') {
+            iifeHeaderEnd = p + 1;
+            break;
+          }
+        }
+        break;
+      }
+    }
+
+    let iifeFooterStart = body[body.length - 1].range[1];
+
+    for (let i = end - 1; i >= start; i--) {
+      if (tokens[i].value === '}') {
+        for (let p = tokens[i].range[0]; p > iifeFooterStart; p--) {
+          if (this.charAt(p) === '\n') {
+            if (this.charAt(p) === '\r') { p--; }
+            iifeFooterStart = p;
+            break;
+          }
+        }
+      }
+    }
+
+    // `(function() {\n  foo();\n})();` -> `foo();`
+    //  ^^^^^^^^^^^^^^^^^      ^^^^^^^
+    this.remove(statement.range[0], iifeHeaderEnd);
+    this.remove(iifeFooterStart, statement.range[1]);
+    this.unindent();
+
+    return false; // Don't skip the program body.
   }
 
   /**
@@ -661,4 +717,74 @@ function extractModuleExportsSet(node: Object): ?Object {
   }
 
   return right;
+}
+
+/**
+ * @private
+ */
+function extractModuleIIFE(node: Object): ?Object {
+  if (node.type !== Syntax.Program) {
+    return null;
+  }
+
+  if (node.body.length !== 1) {
+    return null;
+  }
+
+  const [ statement ] = node.body;
+
+  if (statement.type !== Syntax.ExpressionStatement) {
+    return null;
+  }
+
+  const { expression } = statement;
+
+  let call = expression;
+
+  if (call.type === Syntax.UnaryExpression && call.operator === 'void') {
+    // e.g. `void function(){}();`
+    call = call.argument;
+  }
+
+  if (call.type !== Syntax.CallExpression) {
+    return null;
+  }
+
+  const { callee, arguments: args } = call;
+
+  let iife;
+
+  if (callee.type === Syntax.FunctionExpression) {
+    // e.g. `(function() {})();`
+    if (args.length !== 0) {
+      return null;
+    }
+
+    iife = callee;
+  } else if (callee.type === Syntax.MemberExpression) {
+    // e.g. `(function() {}).call(this);`
+    const { object, property, computed } = callee;
+
+    if (computed || object.type !== Syntax.FunctionExpression) {
+      return null;
+    }
+
+    if (property.type !== Syntax.Identifier || property.name !== 'call') {
+      return null;
+    }
+
+    if (args.length !== 1 || args[0].type !== Syntax.ThisExpression) {
+      return null;
+    }
+
+    iife = object;
+  } else {
+    return null;
+  }
+
+  if (iife.id || iife.params.length > 0 || iife.generator) {
+    return null;
+  }
+
+  return iife;
 }

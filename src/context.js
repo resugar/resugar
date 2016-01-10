@@ -53,4 +53,25 @@ export default class Context {
     }
     return this;
   }
+
+  unindent(): Context {
+    // FIXME: This is only capable of unindenting one level.
+    const { original } = this.module.magicString;
+    const indentString = this.module.magicString.getIndentString();
+
+    let atStartOfLine = true;
+    for (let i = 0; i < original.length; i++) {
+      if (atStartOfLine) {
+        atStartOfLine = false;
+        if (original.slice(i, i + indentString.length) === indentString) {
+          this.remove(i, i + indentString.length);
+        }
+      }
+      if (original[i] === '\n') {
+        atStartOfLine = true;
+      }
+    }
+
+    return this;
+  }
 }

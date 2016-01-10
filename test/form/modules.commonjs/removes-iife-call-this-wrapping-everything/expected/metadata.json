@@ -1,0 +1,43 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [],
+    "directives": [],
+    "unwrapped": {
+      "type": "FunctionExpression",
+      "id": null,
+      "params": [],
+      "body": {
+        "type": "BlockStatement",
+        "body": [
+          {
+            "type": "IfStatement",
+            "test": {
+              "type": "Identifier",
+              "name": "a"
+            },
+            "consequent": {
+              "type": "BlockStatement",
+              "body": [
+                {
+                  "type": "ExpressionStatement",
+                  "expression": {
+                    "type": "CallExpression",
+                    "callee": {
+                      "type": "Identifier",
+                      "name": "b"
+                    },
+                    "arguments": []
+                  }
+                }
+              ]
+            },
+            "alternate": null
+          }
+        ]
+      },
+      "generator": false,
+      "expression": false
+    }
+  }
+}

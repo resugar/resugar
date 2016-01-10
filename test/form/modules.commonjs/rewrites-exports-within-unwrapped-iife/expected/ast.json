@@ -1,0 +1,29 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExportNamedDeclaration",
+      "source": null,
+      "specifiers": [],
+      "declaration": {
+        "type": "VariableDeclaration",
+        "kind": "let",
+        "declarations": [
+          {
+            "type": "VariableDeclarator",
+            "id": {
+              "type": "Identifier",
+              "name": "foo"
+            },
+            "init": {
+              "type": "Literal",
+              "value": 1,
+              "raw": "1"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "sourceType": "module"
+}
