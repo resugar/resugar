@@ -236,11 +236,13 @@ function leftRightOfAssignment(node: Object): ?{ left: Object, right: Object } {
       return { left: node.id, right: node.init };
 
     case Syntax.AssignmentExpression:
-      return { left: node.left, right: node.right };
-
-    default:
-      return null;
+      if (node.operator === '=') {
+        return { left: node.left, right: node.right };
+      }
+      break;
   }
+
+  return null;
 }
 
 export function begin(module: Module): Context {
