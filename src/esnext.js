@@ -1,10 +1,10 @@
 import Module from './module';
 import allPlugins from './plugins/index';
 import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
-import parse from './utils/parse';
 import shebangRegex from 'shebang-regex';
 import type { RenderedModule } from './module';
 import type { VisitorOption } from 'estraverse';
+import { parse } from 'espree';
 
 export { default as run } from './cli';
 
@@ -96,7 +96,7 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
 
 function validateResult({ code }) {
   try {
-    parse(code);
+    parse(code, { sourceType: 'module' });
     return null;
   } catch (ex) {
     return ex;

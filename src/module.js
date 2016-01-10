@@ -1,7 +1,7 @@
 import MagicString from 'magic-string';
 import type { Scope } from 'escope';
 import { analyze } from 'escope';
-import parse from './utils/parse';
+import { parse } from 'espree';
 
 type Warning = {
   node: Object,
@@ -33,12 +33,19 @@ type Range = {
   end: number
 };
 
+const PARSE_OPTIONS = {
+  loc: true,
+  range: true,
+  sourceType: 'module',
+  tokens: true
+};
+
 export default class Module {
   constructor(id: ?string, source: string) {
     this.id = id;
     this.metadata = ({}: Object);
     this.source = source;
-    this.ast = parse(source);
+    this.ast = parse(source, PARSE_OPTIONS);
     this.tokens = this.ast.tokens;
     delete this.ast.tokens;
     this.scopeManager = analyze(this.ast, { ecmaVersion: 6, sourceType: 'module' });
