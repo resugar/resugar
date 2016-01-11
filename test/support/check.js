@@ -85,7 +85,7 @@ function readOptionalJSON(path: string): ?(Object|Array<any>) {
 
 function mkdir(path: string) {
   try { mkdirSync(path); }
-  catch (err) {}
+  catch (err) { return; }
 }
 
 function write(path: string, content: string) {
