@@ -411,7 +411,7 @@ class Context extends BaseContext {
 
     const { left, right } = expression;
 
-    if (!isMemberExpression(left, /^(module\.)?exports\.\w+$/) || left.computed) {
+    if (!isMemberExpression(left, /^((module\.)?exports|this)\.\w+$/) || left.computed) {
       return false;
     }
 

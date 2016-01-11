@@ -26,6 +26,9 @@ function memberExpressionKeyPath(node: Object): ?string {
     case Syntax.Identifier:
       return node.name;
 
+    case Syntax.ThisExpression:
+      return 'this';
+
     case Syntax.MemberExpression:
       const objectPath = memberExpressionKeyPath(node.object);
       const propertyPath = memberExpressionKeyPath(node.property);

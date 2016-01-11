@@ -1,0 +1,24 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExportNamedDeclaration",
+      "source": null,
+      "declaration": null,
+      "specifiers": [
+        {
+          "type": "ExportSpecifier",
+          "local": {
+            "type": "Identifier",
+            "name": "foo"
+          },
+          "exported": {
+            "type": "Identifier",
+            "name": "foo"
+          }
+        }
+      ]
+    }
+  ],
+  "sourceType": "module"
+}

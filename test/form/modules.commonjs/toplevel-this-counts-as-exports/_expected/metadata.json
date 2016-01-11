@@ -1,0 +1,39 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "foo",
+            "localName": "foo"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "computed": false,
+              "object": {
+                "type": "ThisExpression"
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "foo"
+              }
+            },
+            "right": {
+              "type": "Identifier",
+              "name": "foo"
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  }
+}
