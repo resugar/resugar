@@ -2,38 +2,7 @@ import stripIndent from 'strip-indent';
 import { convert } from '../../src/esnext';
 import { deepEqual, strictEqual } from 'assert';
 import { join } from 'path';
-import { readFileSync, readdirSync } from 'fs';
-
-type CheckOptions = {
-  metadata: ?Object,
-  ast: ?Object,
-  warnings: ?Array<Warning>
-};
-
-type Warning = {
-  type: string,
-  message: string,
-  node: ?Object
-};
-
-export default function check(input: string, output: string, options: CheckOptions={}) {
-  const result = convert(stripIndent(input).trim());
-  strictEqual(result.code, stripIndent(output).trim());
-
-  stripLocationInformation(result);
-
-  deepEqual(result.warnings, options.warnings || []);
-
-  if (options.metadata) {
-    for (const key in options.metadata) {
-      deepEqual(result.metadata[key], options.metadata[key]);
-    }
-  }
-
-  if (options.ast) {
-    deepEqual(result.ast, options.ast);
-  }
-}
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'fs';
 
 export function checkExamples(name: string) {
   const directory = join('test/form', name);
@@ -49,18 +18,40 @@ export function checkExamples(name: string) {
 
 export function checkExample(name: string) {
   const directory = join('test/form', name);
-  check(
-    read(join(directory, 'main.js')),
-    read(join(directory, 'expected/main.js')),
-    {
-      metadata: readOptionalJSON(join(directory, 'expected/metadata.json')),
-      ast: readOptionalJSON(join(directory, 'expected/ast.json')),
-      warnings: readOptionalJSON(join(directory, 'expected/warnings.json'))
+  const expectedDir = join(directory, '_expected');
+  const actualDir = join(directory, '_actual');
+  const input = read(join(directory, 'main.js'));
+  const actual = stripLocationInformation(convert(stripIndent(input).trim()));
+
+  mkdir(actualDir);
+  write(join(actualDir, 'main.js'), actual.code);
+  writeJSON(join(actualDir, 'metadata.json'), actual.metadata);
+  writeJSON(join(actualDir, 'ast.json'), actual.ast);
+  if (actual.warnings.length > 0) {
+    writeJSON(join(actualDir, 'warnings.json'), actual.warnings);
+  }
+
+  const expectedCode = read(join(expectedDir, 'main.js'));
+  const expectedMetadata = readOptionalJSON(join(expectedDir, 'metadata.json'));
+  const expectedAst = readOptionalJSON(join(expectedDir, 'ast.json'));
+  const expectedWarnings = readOptionalJSON(join(expectedDir, 'warnings.json'));
+
+  strictEqual(actual.code, stripIndent(expectedCode).trim());
+
+  deepEqual(actual.warnings, expectedWarnings || []);
+
+  if (expectedMetadata) {
+    for (const key in expectedMetadata) {
+      deepEqual(actual.metadata[key], expectedMetadata[key]);
     }
-  );
+  }
+
+  if (expectedAst) {
+    deepEqual(actual.ast, expectedAst);
+  }
 }
 
-function stripLocationInformation(node: Object, seen: Array<Object>=[]) {
+function stripLocationInformation(node: Object, seen: Array<Object>=[]): Object {
   if (seen.indexOf(node) >= 0) {
     return;
   }
@@ -75,6 +66,8 @@ function stripLocationInformation(node: Object, seen: Array<Object>=[]) {
     Object.getOwnPropertyNames(node)
       .forEach(name => stripLocationInformation(node[name], seen));
   }
+
+  return node;
 }
 
 function read(path: string): string {
@@ -88,4 +81,17 @@ function readJSON(path: string): Object|Array<any> {
 function readOptionalJSON(path: string): ?(Object|Array<any>) {
   try { return readJSON(path); }
   catch (err) { return null; }
+}
+
+function mkdir(path: string) {
+  try { mkdirSync(path); }
+  catch (err) {}
+}
+
+function write(path: string, content: string) {
+  writeFileSync(path, content, { encoding: 'utf8' });
+}
+
+function writeJSON(path: string, value: any) {
+  write(path, JSON.stringify(value, null, 2));
 }
