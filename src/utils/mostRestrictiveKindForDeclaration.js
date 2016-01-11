@@ -42,7 +42,7 @@ function referenceInDefinitionParentBlock(reference: Reference): boolean {
   let definitionName = reference.resolved.defs[0].name;
   let defBlock = definitionName;
 
-  while (defBlock && defBlock.type !== Syntax.BlockStatement && defBlock.type !== Syntax.Program) {
+  while (defBlock && !createsBlockScope(defBlock)) {
     defBlock = defBlock.parentNode;
   }
 
@@ -61,4 +61,17 @@ function referenceInDefinitionParentBlock(reference: Reference): boolean {
   }
 
   return refBlock === defBlock;
+}
+
+function createsBlockScope(node: Object): boolean {
+  switch (node.type) {
+    case Syntax.Program:
+    case Syntax.BlockStatement:
+    case Syntax.ForStatement:
+    case Syntax.ForInStatement:
+      return true;
+
+    default:
+      return false;
+  }
 }

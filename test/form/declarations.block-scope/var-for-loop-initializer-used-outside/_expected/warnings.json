@@ -1,0 +1,24 @@
+[
+  {
+    "node": {
+      "type": "VariableDeclaration",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "i"
+          },
+          "init": {
+            "type": "Literal",
+            "value": 0,
+            "raw": "0"
+          }
+        }
+      ],
+      "kind": "var"
+    },
+    "type": "unsupported-declaration",
+    "message": "'var' declaration cannot be converted to block scope"
+  }
+]
