@@ -117,6 +117,7 @@ function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
   let input;
   let output;
   let validate;
+  let inline = false;
 
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
@@ -162,6 +163,11 @@ function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
         parseList(args[++i]).forEach(name => blacklist[name] = true);
         break;
 
+      case '-I':
+      case '--inline':
+        inline = true;
+        break;
+
       case '--validate':
       case '--no-validate':
         validate = args[i] === '--validate';
@@ -177,6 +183,15 @@ function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
         input = args[i];
         break;
     }
+  }
+
+  if (inline) {
+    if (!input) {
+      return { error: `Asked to replace input inline but no input was given` };
+    } else if (output) {
+      return { error: `Asked to replace input inline but output is already set: ${output}` };
+    }
+    output = input;
   }
 
   return { input, output, blacklist, whitelist, validate };
@@ -203,6 +218,7 @@ function help(out: (data: string) => void) {
   out.write(`${$0} -o output.js input.js   # read and write files directly\n`);
   out.write(`${$0} input.js > output.js    # read file and write stdout\n`);
   out.write(`${$0} < input.js > output.js  # read stdin and write stdout\n`);
+  out.write(`${$0} -I file.js              # rewrite a file inline\n`);
   out.write(`${$0} -b modules.commonjs     # blacklist plugins\n`);
   out.write(`${$0} -w modules.commonjs     # whitelist plugins\n`);
   out.write('\n');
