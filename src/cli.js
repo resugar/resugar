@@ -226,7 +226,9 @@ function help(out: (data: string) => void) {
   out.write('\n');
   table(
     { out, padding: 2, indent: 2 },
-    allPlugins.map(({ name, description }) => [ name, description ])
+    allPlugins
+      .sort((left, right) => left.name.localeCompare(right.name))
+      .map(({ name, description }) => [ name, description ])
   );
   out.write('\n');
   writeSectionHeader(out, 'Additional Options');
