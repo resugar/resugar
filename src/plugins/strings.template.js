@@ -29,6 +29,10 @@ class Context extends BaseContext {
       return null;
     }
 
+    if (node.loc.start.line !== node.loc.end.line) {
+      return null;
+    }
+
     const { left, right } = node;
 
     if (isString(left)) {

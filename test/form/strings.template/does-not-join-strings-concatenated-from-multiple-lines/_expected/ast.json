@@ -1,0 +1,32 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "CallExpression",
+        "callee": {
+          "type": "Identifier",
+          "name": "a"
+        },
+        "arguments": [
+          {
+            "type": "BinaryExpression",
+            "operator": "+",
+            "left": {
+              "type": "Literal",
+              "value": "b",
+              "raw": "'b'"
+            },
+            "right": {
+              "type": "Literal",
+              "value": "c",
+              "raw": "'c'"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "sourceType": "module"
+}
