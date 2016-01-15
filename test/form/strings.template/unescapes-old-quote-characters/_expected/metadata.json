@@ -1,0 +1,128 @@
+{
+  "strings.template": {
+    "concatenations": [
+      {
+        "node": {
+          "type": "BinaryExpression",
+          "operator": "+",
+          "left": {
+            "type": "BinaryExpression",
+            "operator": "+",
+            "left": {
+              "type": "BinaryExpression",
+              "operator": "+",
+              "left": {
+                "type": "BinaryExpression",
+                "operator": "+",
+                "left": {
+                  "type": "Literal",
+                  "value": "a",
+                  "raw": "\"a\""
+                },
+                "right": {
+                  "type": "Identifier",
+                  "name": "b"
+                }
+              },
+              "right": {
+                "type": "Literal",
+                "value": "\"",
+                "raw": "\"\\\"\""
+              }
+            },
+            "right": {
+              "type": "Identifier",
+              "name": "c"
+            }
+          },
+          "right": {
+            "type": "Literal",
+            "value": "'",
+            "raw": "'\\''"
+          }
+        },
+        "parts": [
+          {
+            "type": "Literal",
+            "value": "a",
+            "raw": "\"a\""
+          },
+          {
+            "type": "Identifier",
+            "name": "b"
+          },
+          {
+            "type": "Literal",
+            "value": "\"",
+            "raw": "\"\\\"\""
+          },
+          {
+            "type": "Identifier",
+            "name": "c"
+          },
+          {
+            "type": "Literal",
+            "value": "'",
+            "raw": "'\\''"
+          }
+        ]
+      },
+      {
+        "node": {
+          "type": "BinaryExpression",
+          "operator": "+",
+          "left": {
+            "type": "Literal",
+            "value": "'",
+            "raw": "'\\''"
+          },
+          "right": {
+            "type": "Literal",
+            "value": "\"",
+            "raw": "\"\\\"\""
+          }
+        },
+        "parts": [
+          {
+            "type": "Literal",
+            "value": "'",
+            "raw": "'\\''"
+          },
+          {
+            "type": "Literal",
+            "value": "\"",
+            "raw": "\"\\\"\""
+          }
+        ]
+      },
+      {
+        "node": {
+          "type": "BinaryExpression",
+          "operator": "+",
+          "left": {
+            "type": "Literal",
+            "value": "\"",
+            "raw": "\"\\\"\""
+          },
+          "right": {
+            "type": "Literal",
+            "value": "'",
+            "raw": "'\\''"
+          }
+        },
+        "parts": [
+          {
+            "type": "Literal",
+            "value": "\"",
+            "raw": "\"\\\"\""
+          },
+          {
+            "type": "Literal",
+            "value": "'",
+            "raw": "'\\''"
+          }
+        ]
+      }
+    ]
+  }
+}

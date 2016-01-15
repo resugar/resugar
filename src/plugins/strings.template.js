@@ -88,6 +88,8 @@ class Context extends BaseContext {
         value += nextPart.value;
         raw += nextPart.raw.slice(1, -1);
       }
+      const thisPartQuote = this.charAt(parts[i].range[0]);
+      this.unescape(thisPartQuote, thisPart.range[0] + 1, thisPart.range[1] - 1);
       this.escape(quote, thisPart.range[0] + 1, thisPart.range[1] - 1);
     }
 
@@ -127,6 +129,8 @@ class Context extends BaseContext {
         raw += node.raw.slice(1, -1);
         this.remove(node.range[0], node.range[0] + 1);
         this.remove(node.range[1] - 1, node.range[1]);
+        const thisPartQuote = this.charAt(node.range[0]);
+        this.unescape(thisPartQuote, node.range[0] + 1, node.range[1] - 1);
         this.escape('`', ...node.range);
       }
 
