@@ -9,6 +9,8 @@ export default {
       plugins: ['syntax-flow', 'transform-flow-strip-types']
     })
   ],
+  intro: 'require("source-map-support").install();',
   format: 'cjs',
-  dest: 'build/test-bundle.js'
+  dest: 'build/test-bundle.js',
+  sourceMap: true
 };
