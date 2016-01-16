@@ -18,9 +18,12 @@ type Plugin = {
   end: ?PluginBookendCallback
 };
 
+import type { Options as DeclarationsBlockScopeOptions } from './plugins/declarations.block-scope';
+
 type Options = {
   plugins: Array<Plugin>,
-  validate: boolean
+  validate: boolean,
+  'declarations.block-scope': ?DeclarationsBlockScopeOptions
 };
 
 export function convert(source: string, options: (Options|Array<Plugin>)={}): RenderedModule {
@@ -40,8 +43,9 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
   const module = new Module(null, source);
 
   plugins.forEach(plugin => {
-    const { begin, end, enter, leave } = plugin;
-    const context = begin ? begin(module) : null;
+    const { name, begin, end, enter, leave } = plugin;
+    const pluginOptions = options[name];
+    const context = begin ? begin(module, pluginOptions) : null;
 
     estraverse.traverse(module.ast, {
       enter(node, parent) {

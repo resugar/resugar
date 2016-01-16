@@ -121,3 +121,16 @@ export function doSomething() {
   ok(1);
 }
 ```
+
+## Options
+
+```js
+{
+  'declarations.block-scope': {
+    /**
+     * Set this to `true` to only turn `var` into `let`, never `const`.
+     */
+    disableConst: boolean
+  }
+}
+```

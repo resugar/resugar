@@ -11,17 +11,17 @@ export function checkExamples(name: string) {
       const config = readOptionalJSON(join(directory, example, 'config.json')) || {};
       const description = config.description || example;
       const testFn = config.skip ? it.skip : config.only ? it.only : it;
-      testFn(description, () => checkExample(join(name, example)));
+      testFn(description, () => checkExample(join(name, example), config.options));
     });
   });
 }
 
-export function checkExample(name: string) {
+export function checkExample(name: string, options: Object={}) {
   const directory = join('test/form', name);
   const expectedDir = join(directory, '_expected');
   const actualDir = join(directory, '_actual');
   const input = read(join(directory, 'main.js'));
-  const actual = stripLocationInformation(convert(stripIndent(input).trim()));
+  const actual = stripLocationInformation(convert(stripIndent(input).trim(), options));
 
   mkdir(actualDir);
   write(join(actualDir, 'main.js'), actual.code);
