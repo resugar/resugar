@@ -53,7 +53,7 @@ export function checkExample(name: string, options: Object={}) {
 
 function stripLocationInformation(node: Object, seen: Array<Object>=[]): Object {
   if (seen.indexOf(node) >= 0) {
-    return;
+    return node;
   }
   seen.push(node);
 

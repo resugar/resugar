@@ -28,11 +28,11 @@ class Context extends BaseContext {
 
   rewriteVariableDeclaration(node: Object): boolean {
     if (node.type !== Syntax.VariableDeclaration) {
-      return;
+      return false;
     }
 
     if (node.kind !== 'var') {
-      return;
+      return false;
     }
 
     const kind = mostRestrictiveKindForDeclaration(node, this.module.scopeManager);
@@ -46,6 +46,8 @@ class Context extends BaseContext {
         `'var' declaration cannot be converted to block scope`
       );
     }
+
+    return false;
   }
 
   rewriteVariableDeclarationKind(node: Object, kind: 'let'|'const') {
