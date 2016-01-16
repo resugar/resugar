@@ -1,16 +1,9 @@
-import babel from 'rollup-plugin-babel';
+import config from './rollup.config';
 
-export default {
-  entry: 'test/test.js',
-  plugins: [
-    babel({
-      babelrc: false,
-      presets: ['es2015-rollup'],
-      plugins: ['syntax-flow', 'transform-flow-strip-types']
-    })
-  ],
-  intro: 'require("source-map-support").install();',
-  format: 'cjs',
-  dest: 'build/test-bundle.js',
-  sourceMap: true
-};
+config.entry = 'test/test.js';
+config.intro = 'require("source-map-support").install();';
+config.format = 'cjs';
+config.dest = 'build/test-bundle.js';
+config.sourceMap = true;
+
+export default config;
