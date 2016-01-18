@@ -113,6 +113,10 @@ class Context extends BaseContext {
    * @private
    */
   rewriteRequire(node: Object): boolean {
+    if (this.module.moduleScope.variables.some(({ name }) => name === 'require')) {
+      return false;
+    }
+
     return (
       this.rewriteSingleExportRequire(node) ||
       this.rewriteNamedExportRequire(node) ||
