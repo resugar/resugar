@@ -97,12 +97,14 @@ class Context extends BaseContext {
       return false;
     }
 
-    if (node.parentNode.type === Syntax.ExpressionStatement) {
-      // `a = obj.a;` -> `(a = obj.a);`
-      //                  ^         ^
-      this.insert(assignments[0].range[0], '(');
-      this.insert(assignments[assignments.length - 1].range[1], ')');
+    if (node.parentNode.type !== Syntax.ExpressionStatement) {
+      return false;
     }
+
+    // `a = obj.a;` -> `(a = obj.a);`
+    //                  ^         ^
+    this.insert(assignments[0].range[0], '(');
+    this.insert(assignments[assignments.length - 1].range[1], ')');
 
     this._rewriteDestructurableElements(assignments);
 
