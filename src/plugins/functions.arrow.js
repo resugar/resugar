@@ -50,6 +50,10 @@ class Context extends BaseContext {
       return false;
     }
 
+    if (parentNode.type === Syntax.MethodDefinition && parentNode.value === node) {
+      return false;
+    }
+
     const [ statement ] = node.body.body;
 
     if (statement.type !== Syntax.ReturnStatement) {
