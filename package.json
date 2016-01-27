@@ -3,7 +3,7 @@
   "version": "1.14.2",
   "description": "Update your project to the latest ECMAScript syntax.",
   "main": "dist/esnext.umd.js",
-  "jsnext:main": "dist/esnext.es6.js",
+  "jsnext:main": "dist/esnext.ecma.js",
   "bin": {
     "esnext": "./bin/index.js"
   },
@@ -12,7 +12,7 @@
     "pretest": "rollup -c rollup.test.config.js",
     "test": "mocha build/test-bundle.js",
     "prebuild": "npm run lint && rm -rf dist",
-    "build": "rollup -c rollup.umd.config.js && rollup -c rollup.es6.config.js",
+    "build": "rollup -c rollup.umd.config.js && rollup -c rollup.ecma.config.js",
     "prepublish": "npm run build"
   },
   "keywords": [
