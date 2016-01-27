@@ -30,6 +30,8 @@
   },
   "author": "Brian Donovan",
   "license": "MIT",
+  "repository": "https://github.com/esnext/esnext.git",
+  "bugs": "https://github.com/esnext/esnext/issues",
   "dependencies": {
     "escope": "^3.3.0",
     "espree": "^2.2.5",
