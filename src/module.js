@@ -41,11 +41,11 @@ const PARSE_OPTIONS = {
 };
 
 export default class Module {
-  constructor(id: ?string, source: string) {
+  constructor(id: ?string, source: string, ecmaFeatures: ?Object) {
     this.id = id;
     this.metadata = ({}: Object);
     this.source = source;
-    this.ast = parse(source, PARSE_OPTIONS);
+    this.ast = parse(source, Object.assign({}, PARSE_OPTIONS, { ecmaFeatures }));
     this.tokens = this.ast.tokens;
     delete this.ast.tokens;
     this.scopeManager = analyze(this.ast, { ecmaVersion: 6, sourceType: 'module' });

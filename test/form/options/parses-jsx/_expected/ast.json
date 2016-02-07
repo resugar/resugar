@@ -1,0 +1,81 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "a"
+          },
+          "init": {
+            "type": "Literal",
+            "value": 1,
+            "raw": "1"
+          }
+        }
+      ],
+      "kind": "const"
+    },
+    {
+      "type": "VariableDeclaration",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "element"
+          },
+          "init": {
+            "type": "JSXElement",
+            "openingElement": {
+              "type": "JSXOpeningElement",
+              "name": {
+                "type": "JSXIdentifier",
+                "name": "a"
+              },
+              "selfClosing": false,
+              "attributes": [
+                {
+                  "type": "JSXAttribute",
+                  "name": {
+                    "type": "JSXIdentifier",
+                    "name": "href"
+                  },
+                  "value": {
+                    "type": "JSXExpressionContainer",
+                    "expression": {
+                      "type": "Literal",
+                      "value": "http://google.com",
+                      "raw": "\"http://google.com\""
+                    }
+                  }
+                }
+              ]
+            },
+            "closingElement": {
+              "type": "JSXClosingElement",
+              "name": {
+                "type": "JSXIdentifier",
+                "name": "a"
+              }
+            },
+            "children": [
+              {
+                "type": "JSXExpressionContainer",
+                "expression": {
+                  "type": "Identifier",
+                  "name": "a"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "kind": "const"
+    }
+  ],
+  "sourceType": "module"
+}
