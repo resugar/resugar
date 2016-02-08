@@ -23,7 +23,8 @@ import type { Options as DeclarationsBlockScopeOptions } from './plugins/declara
 type Options = {
   plugins?: Array<Plugin>,
   validate?: boolean,
-  'declarations.block-scope'?: ?DeclarationsBlockScopeOptions
+  'declarations.block-scope'?: ?DeclarationsBlockScopeOptions,
+  ecmaFeatures?: Object,
 };
 
 export function convert(source: string, options: (Options|Array<Plugin>)={}): RenderedModule {
@@ -32,7 +33,7 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
     options = { plugins: options };
   }
 
-  const { validate=true, plugins=allPlugins } = options;
+  const { validate=true, plugins=allPlugins, ecmaFeatures={} } = options;
 
   const shebangMatch = source.match(shebangRegex);
 
@@ -40,7 +41,7 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
     source = source.slice(shebangMatch.index + shebangMatch[0].length);
   }
 
-  const module = new Module(null, source);
+  const module = new Module(null, source, ecmaFeatures);
 
   plugins.forEach(plugin => {
     const { name, begin, end, enter, leave } = plugin;
@@ -63,7 +64,9 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
         if (leave) {
           return leave(node, module, context);
         }
-      }
+      },
+
+      fallback: 'iteration'
     });
 
     if (end) {
@@ -74,7 +77,7 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
   let result: RenderedModule = module.render();
 
   if (validate) {
-    const error = validateResult(result);
+    const error = validateResult(result, ecmaFeatures);
     if (error) {
       result.warnings.push({
         type: 'output-validation-failure',
@@ -98,9 +101,9 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
   return result;
 }
 
-function validateResult({ code }) {
+function validateResult({ code }, ecmaFeatures) {
   try {
-    parse(code, { sourceType: 'module' });
+    parse(code, Object.assign({ sourceType: 'module' }, { ecmaFeatures }));
     return null;
   } catch (ex) {
     return ex;
