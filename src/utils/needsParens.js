@@ -10,6 +10,7 @@ export default function needsParens(node: Object): boolean {
           return node.parentNode.object === node;
 
         case Syntax.BinaryExpression:
+        case Syntax.SequenceExpression:
           return true;
       }
       break;

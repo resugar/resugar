@@ -1,0 +1,29 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "ArrowFunctionExpression",
+        "id": null,
+        "params": [],
+        "body": {
+          "type": "SequenceExpression",
+          "expressions": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            },
+            {
+              "type": "Identifier",
+              "name": "b"
+            }
+          ]
+        },
+        "generator": false,
+        "expression": false
+      }
+    }
+  ],
+  "sourceType": "module"
+}

@@ -191,10 +191,20 @@ class Context extends BaseContext {
       this.remove(statement.range[1], blockEndBraceToken.range[0]);
     }
 
+    const returnArgumentNeedsParens = statement.argument.type === Syntax.SequenceExpression;
+
     // `return foo;` -> `foo`
     //  ^^^^^^^   ^
-    this.remove(statement.range[0], statement.argument.range[0]);
-    this.remove(statement.argument.range[1], statement.range[1]);
+    this.overwrite(
+      statement.range[0],
+      statement.argument.range[0],
+      returnArgumentNeedsParens ? '(' : ''
+    );
+    this.overwrite(
+      statement.argument.range[1],
+      statement.range[1],
+      returnArgumentNeedsParens ? ')' : ''
+    );
 
     // `…}` -> `…`
     this.remove(...blockEndBraceToken.range);
