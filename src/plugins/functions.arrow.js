@@ -187,6 +187,11 @@ class Context extends BaseContext {
       this.insert(node.range[0], '(');
       this.insert(node.range[1], ')');
     }
+
+    if (node.body.type === 'ObjectExpression') {
+      this.insert(node.body.range[0], '(');
+      this.insert(node.body.range[1], ')');
+    }
   }
 
   _rewriteBlockArrowFunction(node: Object) {
