@@ -66,6 +66,15 @@ class Context extends BaseContext {
 
     this._rewriteBlocklessArrowFunction(node);
 
+    if (parentNode.type === Syntax.ExpressionStatement && hasParens(node, this.module)) {
+      const { start, end } = this.module.tokenRangeForNode(node);
+      const { tokens } = this.module;
+      const lparen = tokens[start - 1];
+      const rparen = tokens[end];
+      this.remove(lparen.range[0], node.range[0]);
+      this.remove(node.range[1], rparen.range[1]);
+    }
+
     return true;
   }
 
