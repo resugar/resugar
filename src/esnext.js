@@ -60,6 +60,15 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
     const context = begin ? begin(module, pluginOptions) : null;
 
     estraverse.traverse(module.ast, {
+      /**
+       * When using a custom parser we tell estraverse to fall back to object
+       * iteration when encountering node types it doesn't know. The most common
+       * custom parser is probably babel-eslint, which tries to monkeypatch
+       * eslint, estraverse, etc. However, it isn't perfect and may not
+       * monkeypatch *our* estraverse, so we play it conservative here.
+       */
+      fallback: parse === defaultParse ? null : 'iteration',
+
       enter(node, parent) {
         Object.defineProperty(node, 'parentNode', {
           value: parent,
