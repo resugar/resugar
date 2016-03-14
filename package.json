@@ -33,6 +33,7 @@
   "repository": "https://github.com/esnext/esnext.git",
   "bugs": "https://github.com/esnext/esnext/issues",
   "dependencies": {
+    "babel-eslint": "^5.0.0",
     "escope": "^3.3.0",
     "espree": "^2.2.5",
     "estraverse": "^4.1.1",

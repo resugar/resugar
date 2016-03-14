@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { basename, dirname } from 'path';
+import { basename, dirname, join } from 'path';
 import { createReadStream, createWriteStream } from 'fs';
 import mkdirp from 'mkdirp';
 import { convert } from './esnext';
@@ -65,7 +65,7 @@ export default function run(args: Array<string>) {
       });
 
     readStream(input)
-      .then(source => convert(source, { plugins, validate: options.validate }))
+      .then(source => convert(source, { plugins, validate: options.validate, parse: options.parse }))
       .then(result => {
         printWarnings(input.path || '[stdin]', result.warnings);
         output.write(result.code);
@@ -108,7 +108,8 @@ type CLIOptions = {
   output: string,
   blacklist: Array<string>,
   whitelist: Array<string>,
-  validate: boolean
+  validate: boolean,
+  parse: ?((source: string) => Object),
 };
 
 function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
@@ -118,6 +119,7 @@ function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
   let output;
   let validate;
   let inline = false;
+  let parse = null;
 
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
@@ -168,6 +170,10 @@ function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
         inline = true;
         break;
 
+      case '--parser':
+        parse = loadCustomParser(args[++i]);
+        break;
+
       case '--validate':
       case '--no-validate':
         validate = args[i] === '--validate';
@@ -194,7 +200,7 @@ function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
     output = input;
   }
 
-  return { input, output, blacklist, whitelist, validate };
+  return { input, output, blacklist, whitelist, validate, parse };
 }
 
 function parseList(arg: string): Array<string> {
@@ -213,6 +219,28 @@ function parsePath(arg: string): string {
   return arg;
 }
 
+function loadCustomParser(module: string): (source: string) => Object {
+  let required;
+  let isRelative = (
+    module.slice(0, './'.length) === './' ||
+    module.slice(0, '../'.length) === '../'
+  );
+  if (isRelative) {
+    required = require(join(process.cwd(), module));
+  } else {
+    required = require(module);
+  }
+  if (typeof required.parse === 'function') {
+    return required.parse;
+  } else if (typeof required === 'function') {
+    return required
+  } else if (typeof required.default === 'function') {
+    return required.default;
+  } else {
+    throw new OptionError(`Unable to load custom parser from ${module}.`);
+  }
+}
+
 function help(out: (data: string) => void) {
   const $0 = basename(process.argv[1]);
   out.write(`${$0} -o output.js input.js   # read and write files directly\n`);
@@ -221,6 +249,7 @@ function help(out: (data: string) => void) {
   out.write(`${$0} -I file.js              # rewrite a file inline\n`);
   out.write(`${$0} -b modules.commonjs     # blacklist plugins\n`);
   out.write(`${$0} -w modules.commonjs     # whitelist plugins\n`);
+  out.write(`${$0} --parser babel-eslint   # use a custom parser\n`);
   out.write('\n');
   writeSectionHeader(out, 'Built-in Plugins');
   out.write('\n');

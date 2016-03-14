@@ -4,7 +4,7 @@ import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraver
 import shebangRegex from 'shebang-regex';
 import type { RenderedModule } from './module';
 import type { VisitorOption } from 'estraverse';
-import { parse } from 'espree';
+import { parse as espree } from 'espree';
 
 export { default as run } from './cli';
 
@@ -23,8 +23,20 @@ import type { Options as DeclarationsBlockScopeOptions } from './plugins/declara
 type Options = {
   plugins?: Array<Plugin>,
   validate?: boolean,
-  'declarations.block-scope'?: ?DeclarationsBlockScopeOptions
+  'declarations.block-scope'?: ?DeclarationsBlockScopeOptions,
+  parse?: (source: string) => Object
 };
+
+const PARSE_OPTIONS = {
+  loc: true,
+  range: true,
+  sourceType: 'module',
+  tokens: true
+};
+
+function defaultParse(source: string) {
+  return espree(source, PARSE_OPTIONS);
+}
 
 export function convert(source: string, options: (Options|Array<Plugin>)={}): RenderedModule {
   if (Array.isArray(options)) {
@@ -32,7 +44,7 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
     options = { plugins: options };
   }
 
-  const { validate=true, plugins=allPlugins } = options;
+  const { validate=true, plugins=allPlugins, parse=defaultParse } = options;
 
   const shebangMatch = source.match(shebangRegex);
 
@@ -40,7 +52,7 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
     source = source.slice(shebangMatch.index + shebangMatch[0].length);
   }
 
-  const module = new Module(null, source);
+  const module = new Module(null, source, parse(source));
 
   plugins.forEach(plugin => {
     const { name, begin, end, enter, leave } = plugin;
@@ -74,7 +86,7 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
   let result: RenderedModule = module.render();
 
   if (validate) {
-    const error = validateResult(result);
+    const error = validateResult(result, parse);
     if (error) {
       result.warnings.push({
         type: 'output-validation-failure',
@@ -98,7 +110,7 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
   return result;
 }
 
-function validateResult({ code }) {
+function validateResult({ code }, parse: (source: string) => Object) {
   try {
     parse(code, { sourceType: 'module' });
     return null;
