@@ -94,6 +94,10 @@ class Context extends BaseContext {
       return false;
     }
 
+    if (referencesArguments(object, this.module.scopeManager)) {
+      return false;
+    }
+
     this._rewriteBlockArrowFunction(object);
 
     // `() => {}.bind(this)` -> `() => {}bind(this)`
@@ -252,5 +256,10 @@ function referencesThisOrArguments(node: Object, scopeManager: ScopeManager): bo
     return true;
   }
 
+  return referencesArguments(node, scopeManager);
+}
+
+function referencesArguments(node: Object, scopeManager: ScopeManager): boolean {
+  const scope = scopeManager.acquire(node);
   return scope.references.some(({ identifier }) => identifier.name === 'arguments');
 }

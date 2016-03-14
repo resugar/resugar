@@ -1,0 +1,53 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "CallExpression",
+        "callee": {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "FunctionExpression",
+            "id": null,
+            "params": [],
+            "body": {
+              "type": "BlockStatement",
+              "body": [
+                {
+                  "type": "ReturnStatement",
+                  "argument": {
+                    "type": "MemberExpression",
+                    "computed": true,
+                    "object": {
+                      "type": "Identifier",
+                      "name": "arguments"
+                    },
+                    "property": {
+                      "type": "Literal",
+                      "value": 0,
+                      "raw": "0"
+                    }
+                  }
+                }
+              ]
+            },
+            "generator": false,
+            "expression": false
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "bind"
+          }
+        },
+        "arguments": [
+          {
+            "type": "ThisExpression"
+          }
+        ]
+      }
+    }
+  ],
+  "sourceType": "module"
+}
