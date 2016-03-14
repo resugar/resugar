@@ -56,7 +56,7 @@ class Context extends BaseContext {
 
     const [ statement ] = node.body.body;
 
-    if (statement.type !== Syntax.ReturnStatement) {
+    if (statement.type !== Syntax.ReturnStatement || !statement.argument) {
       return false;
     }
 
