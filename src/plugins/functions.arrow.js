@@ -171,8 +171,14 @@ class Context extends BaseContext {
       blockStartBraceToken.range[1],
       statement.range[0]
     );
+    const contentOfReturnArgument = this.slice(...statement.argument.range);
 
-    const shouldCollapseToOneLine = /^\s*$/.test(contentBetweenBlockStartBraceAndReturn);
+    const shouldCollapseToOneLine = (
+      // Wouldn't remove anything interesting.
+      /^\s*$/.test(contentBetweenBlockStartBraceAndReturn) &&
+      // Returned value isn't multi-line.
+      /^[^\n\r]*$/.test(contentOfReturnArgument)
+    );
 
     if (shouldCollapseToOneLine) {
       // Removes whitespace between `{` and `return` and `foo;` and `}`.
