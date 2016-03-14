@@ -1,6 +1,6 @@
 {
   "name": "esnext",
-  "version": "1.15.4",
+  "version": "1.15.5",
   "description": "Update your project to the latest ECMAScript syntax.",
   "main": "dist/esnext.umd.js",
   "jsnext:main": "dist/esnext.ecma.js",
