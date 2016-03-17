@@ -119,7 +119,7 @@ function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
   let output;
   let validate;
   let inline = false;
-  let parse = null;
+  let parse;
 
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
