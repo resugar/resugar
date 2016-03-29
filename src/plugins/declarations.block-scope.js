@@ -10,10 +10,12 @@ export const name = 'declarations.block-scope';
 export const description = 'Transform `var` into `let` and `const` as appropriate.';
 
 export type Options = {
-  disableConst: boolean
+  disableConst: boolean | (node: Object) => boolean,
 };
 
 class Context extends BaseContext {
+  options: Options;
+  
   constructor(module: Module, options: Options={}) {
     super(name, module);
     module.metadata[name] = {
@@ -51,12 +53,24 @@ class Context extends BaseContext {
   }
 
   rewriteVariableDeclarationKind(node: Object, kind: 'let'|'const') {
-    if (kind === 'const' && this.options.disableConst) {
+    if (kind === 'const' && !this.constAllowed(node)) {
       kind = 'let';
     }
     this.overwrite(node.range[0], node.range[0] + 'var'.length, kind);
     this.metadata.declarations.push(clone(node));
     node.kind = kind;
+  }
+
+  /**
+   * @private
+   */
+  constAllowed(node: Object) {
+    const { disableConst } = this.options;
+    if (typeof disableConst === 'function') {
+      return !disableConst(node);
+    } else {
+      return !disableConst;
+    }
   }
 }
 
