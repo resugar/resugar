@@ -4,6 +4,8 @@ import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraver
 import groupContentBetweenElements from '../utils/groupContentBetweenElements';
 import replace from '../utils/replace';
 import type Module from '../module';
+import { escapeString } from '../utils/escape';
+import { unescapeString } from '../utils/unescape';
 
 const { Syntax, VisitorOption } = estraverse;
 
@@ -81,7 +83,7 @@ class Context extends BaseContext {
   combineStrings(parts: Array<Object>): Object {
     const quote = this.charAt(parts[0].range[0]);
     let { value } = parts[0];
-    let raw = parts[0].raw.slice(1, -1);
+    let raw = unescapeString(parts[0].raw[0], parts[0].raw.slice(1, -1));
 
     for (let i = 0; i < parts.length; i++) {
       const thisPart = parts[i];
@@ -90,7 +92,7 @@ class Context extends BaseContext {
         // Remove the space between the strings.
         this.remove(thisPart.range[1] - 1, nextPart.range[0] + 1);
         value += nextPart.value;
-        raw += nextPart.raw.slice(1, -1);
+        raw += unescapeString(nextPart.raw[0], nextPart.raw.slice(1, -1));
       }
       const thisPartQuote = this.charAt(parts[i].range[0]);
       this.unescape(thisPartQuote, thisPart.range[0] + 1, thisPart.range[1] - 1);
@@ -100,7 +102,7 @@ class Context extends BaseContext {
     const lastPart = parts[parts.length - 1];
     this.overwrite(lastPart.range[1] - 1, lastPart.range[1], quote);
 
-    raw = quote + raw.replace(new RegExp(quote, 'g'), `\\${quote}`) + quote;
+    raw = quote + escapeString(quote, raw) + quote;
     return { type: Syntax.Literal, value, raw };
   }
 
@@ -123,14 +125,14 @@ class Context extends BaseContext {
         quasis.push({
           type: Syntax.TemplateElement,
           tail: false,
-          value: { cooked, raw: raw.replace(/`/g, '\\`') }
+          value: { cooked, raw: escapeString('`', raw) }
         });
         cooked = '';
         raw = '';
       } else {
         // This one can become a quasi,
         cooked += node.value;
-        raw += node.raw.slice(1, -1);
+        raw += unescapeString(node.raw[0], node.raw.slice(1, -1));
         this.remove(node.range[0], node.range[0] + 1);
         this.remove(node.range[1] - 1, node.range[1]);
         const thisPartQuote = this.charAt(node.range[0]);

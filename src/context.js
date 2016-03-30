@@ -1,4 +1,6 @@
+import escape from './utils/escape';
 import type Module from './module';
+import unescape from './utils/unescape';
 
 export default class Context {
   constructor(pluginName: string, module: Module) {
@@ -46,21 +48,20 @@ export default class Context {
   }
 
   escape(char: string, start: number, end: number): Context {
-    for (let i = start; i < end; i++) {
-      if (this.charAt(i) === char) {
-        this.insert(i, '\\');
-      }
-    }
+    escape(
+      char, start, end,
+      index => this.charAt(index),
+      (index, string) => this.insert(index, string)
+    );
     return this;
   }
 
   unescape(char: string, start: number, end: number): Context {
-    for (let i = start; i < end; i++) {
-      if (this.charAt(i) === '\\' && this.charAt(i + 1) === char) {
-        this.remove(i, i + 1);
-        i++;
-      }
-    }
+    unescape(
+      char, start, end,
+      index => this.charAt(index),
+      (start, end) => this.remove(start, end)
+    );
     return this;
   }
 
