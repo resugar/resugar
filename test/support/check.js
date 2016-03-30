@@ -3,6 +3,7 @@ import { convert } from '../../src/esnext';
 import { deepEqual, strictEqual } from 'assert';
 import { join } from 'path';
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'fs';
+import { parse } from 'espree';
 
 export function checkExamples(name: string) {
   const directory = join('test/form', name);
@@ -33,7 +34,7 @@ export function checkExample(name: string, options: Object={}) {
 
   const expectedCode = read(join(expectedDir, 'main.js'));
   const expectedMetadata = readOptionalJSON(join(expectedDir, 'metadata.json'));
-  const expectedAst = readOptionalJSON(join(expectedDir, 'ast.json'));
+  const expectedAst = parse(actual.code, { sourceType: 'module' });
   const expectedWarnings = readOptionalJSON(join(expectedDir, 'warnings.json'));
 
   strictEqual(actual.code, stripIndent(expectedCode).trim());

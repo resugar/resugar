@@ -211,6 +211,7 @@ class Context extends BaseContext {
 
     node.type = Syntax.ArrowFunctionExpression;
     node.body = statement.argument;
+    node.expression = true;
 
     if (needsParens(node) && !hasParens(node, this.module)) {
       this.insert(node.range[0], '(');

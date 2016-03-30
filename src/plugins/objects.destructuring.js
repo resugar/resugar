@@ -45,6 +45,7 @@ class Context extends BaseContext {
             type: Syntax.ObjectPattern,
             properties: elements.map(declarator => ({
               type: Syntax.Property,
+              kind: 'init',
               computed: false,
               shorthand: true,
               method: false,
@@ -121,6 +122,7 @@ class Context extends BaseContext {
         type: Syntax.ObjectPattern,
         properties: assignments.map(assignment => ({
           type: Syntax.Property,
+          kind: 'init',
           computed: false,
           shorthand: true,
           method: false,
@@ -171,6 +173,7 @@ class Context extends BaseContext {
             type: Syntax.ObjectPattern,
             properties: assignments.map(({ left }) => ({
               type: Syntax.Property,
+              kind: 'init',
               computed: false,
               method: false,
               shorthand: true,
