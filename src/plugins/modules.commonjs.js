@@ -3,6 +3,8 @@ import clone from '../utils/clone';
 import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
 import isMemberExpression from '../utils/isMemberExpression';
 import replace from '../utils/replace';
+import splice from '../utils/splice';
+import { claim } from '../utils/scopeBindings';
 import type Module from '../module';
 import { Binding, ExportSpecifierListStringBuilder, ImportSpecifierListStringBuilder } from '../bindings';
 
@@ -160,14 +162,17 @@ class Context extends BaseContext {
       pathNode
     );
 
-    replace(node, {
-      type: Syntax.ImportDeclaration,
-      specifiers: [{
-        type: Syntax.ImportDefaultSpecifier,
-        local: id
-      }],
-      source: pathNode
-    });
+    splice(
+      node.parentNode.body, node,
+      {
+        type: Syntax.ImportDeclaration,
+        specifiers: [{
+          type: Syntax.ImportDefaultSpecifier,
+          local: id
+        }],
+        source: pathNode
+      }
+    );
 
     return true;
   }
@@ -206,15 +211,18 @@ class Context extends BaseContext {
       pathNode
     );
 
-    replace(node, {
-      type: Syntax.ImportDeclaration,
-      specifiers: [{
-        type: Syntax.ImportSpecifier,
-        local: id,
-        imported: init.property
-      }],
-      source: pathNode
-    });
+    splice(
+      node.parentNode.body, node,
+      {
+        type: Syntax.ImportDeclaration,
+        specifiers: [{
+          type: Syntax.ImportSpecifier,
+          local: id,
+          imported: init.property
+        }],
+        source: pathNode
+      }
+    );
 
     return true;
   }
@@ -257,21 +265,24 @@ class Context extends BaseContext {
 
     this.rewriteRequireAsImport('named-import', node, bindings, pathNode);
 
-    replace(node, {
-      type: Syntax.ImportDeclaration,
-      specifiers: bindings.map(binding => ({
-        type: Syntax.ImportSpecifier,
-        local: {
-          type: Syntax.Identifier,
-          name: binding.localName
-        },
-        imported: {
-          type: Syntax.Identifier,
-          name: binding.exportName
-        }
-      })),
-      source: pathNode
-    });
+    splice(
+      node.parentNode.body, node,
+      {
+        type: Syntax.ImportDeclaration,
+        specifiers: bindings.map(binding => ({
+          type: Syntax.ImportSpecifier,
+          local: {
+            type: Syntax.Identifier,
+            name: binding.localName
+          },
+          imported: {
+            type: Syntax.Identifier,
+            name: binding.exportName
+          }
+        })),
+        source: pathNode
+      }
+    );
 
     return true;
   }
@@ -297,11 +308,14 @@ class Context extends BaseContext {
 
     this.rewriteRequireAsImport('bare-import', node, [], pathNode);
 
-    replace(node, {
-      type: Syntax.ImportDeclaration,
-      specifiers: [],
-      source: pathNode
-    });
+    splice(
+      node.parentNode.body, node,
+      {
+        type: Syntax.ImportDeclaration,
+        specifiers: [],
+        source: pathNode
+      }
+    );
 
     return true;
   }
@@ -419,8 +433,6 @@ class Context extends BaseContext {
       return false;
     }
 
-    const { property } = left;
-
     if (node.parentNode.type !== Syntax.Program) {
       this.module.warn(
         node,
@@ -431,40 +443,53 @@ class Context extends BaseContext {
     }
 
     if (right.type === Syntax.FunctionExpression) {
-      const exportName = property.name;
-      const { id } = right;
+      return this.rewriteNamedFunctionExpressionExport(node);
+    } else if (right.type === Syntax.Identifier) {
+      return this.rewriteNamedIdentifierExport(node);
+    } else {
+      return this.rewriteNamedValueExport(node);
+    }
+  }
 
-      this.metadata.exports.push({
-        type: 'named-export',
-        bindings: [
-          {
-            exportName,
-            localName: id ? id.name : exportName
-          }
-        ],
-        node: clone(node)
-      });
+  /**
+   * @private
+   */
+  rewriteNamedFunctionExpressionExport(node: Object): boolean {
+    let {
+      expression: {
+        left: {
+          property: { name: exportName }
+        },
+        right,
+        right: { id }
+      }
+    } = node;
 
+    let { moduleScope } = this.module;
+    let fnBinding = id ? id.name : null;
+    let localName = claim(moduleScope, fnBinding || exportName);
+
+    this.metadata.exports.push({
+      type: 'named-export',
+      bindings: [
+        {
+          exportName,
+          localName
+        }
+      ],
+      node: clone(node)
+    });
+
+    let isFunctionDeclaration = true;
+
+    if (localName === exportName) {
+      // `exports.foo = function foo() {}` → `export function foo() {}`
+      //  ^^^^^^^^^^^^^^                      ^^^^^^^
       this.overwrite(node.range[0], right.range[0], 'export ');
-
       if (!id) {
-        this.insert(right.range[0] + 'function'.length, ` ${exportName}`);
+        this.insert(right.range[0] + 'function'.length, ` ${localName}`);
         right.id = { type: Syntax.Identifier, name: exportName };
-      } else if (id.name !== property.name) {
-        this.overwrite(id.range[0], id.range[1], property.name);
-        this.module.warn(
-          clone(id),
-          'export-function-name-mismatch',
-          `Exported function '${id.name}' does not match export name '${exportName}'`
-        );
-        id.name = property.name;
       }
-
-      const lastCharacterPosition = node.range[1] - 1;
-      if (this.charAt(lastCharacterPosition) === ';') {
-        this.remove(lastCharacterPosition, node.range[1]);
-      }
-
       right.type = Syntax.FunctionDeclaration;
       right.expression = false;
       right.id = {
@@ -472,32 +497,109 @@ class Context extends BaseContext {
         name: exportName
       };
       delete right.range;
-
-      replace(node, {
-        type: Syntax.ExportNamedDeclaration,
-        source: null,
-        specifiers: [],
-        declaration: right
-      });
-    } else if (right.type === Syntax.Identifier) {
-      this.metadata.exports.push({
-        type: 'named-export',
-        bindings: [
-          {
-            exportName: property.name,
-            localName: right.name
-          }
-        ],
-        node: clone(node)
-      });
-
-      if (right.name === property.name) {
-        this.overwrite(node.range[0], node.range[1], `export { ${right.name} };`);
+      splice(
+        node.parentNode.body, node,
+        {
+          type: Syntax.ExportNamedDeclaration,
+          source: null,
+          specifiers: [],
+          declaration: right
+        }
+      );
+    } else {
+      let declaration = right;
+      if (!id) {
+        this.remove(node.range[0], right.range[0]);
+        this.insert(right.range[0] + 'function'.length, ` ${localName}`);
+        right.type = Syntax.FunctionDeclaration;
+        right.id = { type: Syntax.Identifier, name: localName };
+      } else if (fnBinding === localName) {
+        right.type = Syntax.FunctionDeclaration;
+        this.remove(node.range[0], right.range[0]);
       } else {
-        this.overwrite(node.range[0], node.range[1], `export { ${right.name} as ${property.name} };`);
+        isFunctionDeclaration = false;
+        this.overwrite(node.range[0], right.range[0], `let ${localName} = `);
+        declaration = {
+          type: Syntax.VariableDeclaration,
+          kind: 'let',
+          declarations: [
+            {
+              type: Syntax.VariableDeclarator,
+              id: {
+                type: Syntax.Identifier,
+                name: localName
+              },
+              init: right
+            }
+          ]
+        };
       }
+      this.insert(node.range[1], `\nexport { ${localName} as ${exportName} };`);
+      splice(
+        node.parentNode.body, node,
+        declaration,
+        {
+          type: Syntax.ExportNamedDeclaration,
+          source: null,
+          specifiers: [
+            {
+              type: Syntax.ExportSpecifier,
+              exported: {
+                type: Syntax.Identifier,
+                name: exportName
+              },
+              local: {
+                type: Syntax.Identifier,
+                name: localName
+              }
+            }
+          ],
+          declaration: null
+        }
+      );
+    }
 
-      replace(node, {
+    if (isFunctionDeclaration) {
+      const lastCharacterPosition = node.range[1] - 1;
+      if (this.charAt(lastCharacterPosition) === ';') {
+        this.remove(lastCharacterPosition, node.range[1]);
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * @private
+   */
+  rewriteNamedIdentifierExport(node: Object): boolean {
+    let {
+      expression: {
+        left: { property },
+        right
+      }
+    } = node;
+
+    this.metadata.exports.push({
+      type: 'named-export',
+      bindings: [
+        {
+          exportName: property.name,
+          localName: right.name
+        }
+      ],
+      node: clone(node)
+    });
+
+    if (right.name === property.name) {
+      this.overwrite(node.range[0], node.range[1], `export { ${right.name} };`);
+    } else {
+      this.overwrite(node.range[0], node.range[1], `export { ${right.name} as ${property.name} };`);
+    }
+
+    splice(
+      node.parentNode.body, node,
+      {
         type: Syntax.ExportNamedDeclaration,
         source: null,
         declaration: null,
@@ -508,34 +610,72 @@ class Context extends BaseContext {
             exported: property
           }
         ]
-      });
-    } else {
-      if (this.module.moduleScope.isUsedName(property.name)) {
-        this.module.warn(
-          clone(property),
-          'named-export-conflicts-with-local-binding',
-          `Named export '${property.name}' conflicts with existing local binding`
-        );
       }
+    );
 
-      this.metadata.exports.push({
-        type: 'named-export',
-        bindings: [
-          {
-            exportName: property.name,
-            localName: property.name
-          }
-        ],
-        node: clone(node)
-      });
+    return true;
+  }
 
+  /**
+   * @private
+   */
+  rewriteNamedValueExport(node: Object): boolean {
+    let {
+      expression: {
+        left: { property },
+        right
+      }
+    } = node;
+
+    let localBinding = claim(this.module.moduleScope, property.name);
+    if (localBinding === property.name) {
+      // `exports.foo = 99;` → `export let foo = 99;`
+      //  ^^^^^^^^              ^^^^^^^^^^^
       this.overwrite(node.range[0], property.range[0], 'export let ');
 
-      replace(node, {
-        type: Syntax.ExportNamedDeclaration,
-        source: null,
-        specifiers: [],
-        declaration: {
+      splice(
+        node.parentNode.body, node,
+        {
+          type: Syntax.ExportNamedDeclaration,
+          source: null,
+          specifiers: [],
+          declaration: {
+            type: Syntax.VariableDeclaration,
+            kind: 'let',
+            declarations: [
+              {
+                type: Syntax.VariableDeclarator,
+                id: {
+                  type: Syntax.Identifier,
+                  name: property.name
+                },
+                init: right
+              }
+            ]
+          }
+        }
+      );
+    } else {
+      // `exports.foo = 99;` → `let foo$1 = 99;`
+      //  ^^^^^^^^^^^^^^        ^^^^^^^^^^^^
+      this.overwrite(node.range[0], right.range[0], `let ${localBinding} = `);
+      let nodeIndex = node.parentNode.body.indexOf(node);
+      if (nodeIndex < 0) {
+        throw new Error(`could not locate ${node.type} at ${node.line}:${node.column} in its parent block`);
+      }
+      let nextStatement = node.parentNode.body[nodeIndex + 1];
+      // `export { foo$1 as foo };`
+      let exportStatement = `export { ${localBinding} as ${property.name} };`;
+      if (nextStatement) {
+        // Insert before the next statement…
+        this.insert(nextStatement.range[0], `${exportStatement}\n`);
+      } else {
+        // …or after the last one of the program.
+        this.insert(node.range[1], `\n${exportStatement}`);
+      }
+      splice(
+        node.parentNode.body, node,
+        {
           type: Syntax.VariableDeclaration,
           kind: 'let',
           declarations: [
@@ -543,14 +683,43 @@ class Context extends BaseContext {
               type: Syntax.VariableDeclarator,
               id: {
                 type: Syntax.Identifier,
-                name: property.name
+                name: localBinding
               },
               init: right
             }
           ]
+        },
+        {
+          type: Syntax.ExportNamedDeclaration,
+          source: null,
+          declaration: null,
+          specifiers: [
+            {
+              type: Syntax.ExportSpecifier,
+              exported: {
+                type: Syntax.Identifier,
+                name: property.name
+              },
+              local: {
+                type: Syntax.Identifier,
+                name: localBinding
+              }
+            }
+          ]
         }
-      });
+      );
     }
+
+    this.metadata.exports.push({
+      type: 'named-export',
+      bindings: [
+        {
+          exportName: property.name,
+          localName: localBinding
+        }
+      ],
+      node: clone(node)
+    });
 
     return true;
   }
@@ -577,30 +746,36 @@ class Context extends BaseContext {
       });
       this.overwrite(node.range[0], node.range[1], `export ${ExportSpecifierListStringBuilder.build(bindings)};`);
 
-      replace(node, {
-        type: Syntax.ExportNamedDeclaration,
-        source: null,
-        declaration: null,
-        specifiers: bindings.map(binding => ({
-          type: Syntax.ExportSpecifier,
-          local: {
-            type: Syntax.Identifier,
-            name: binding.localName
-          },
-          exported: {
-            type: Syntax.Identifier,
-            name: binding.exportName
-          }
-        }))
-      });
+      splice(
+        node.parentNode.body, node,
+        {
+          type: Syntax.ExportNamedDeclaration,
+          source: null,
+          declaration: null,
+          specifiers: bindings.map(binding => ({
+            type: Syntax.ExportSpecifier,
+            local: {
+              type: Syntax.Identifier,
+              name: binding.localName
+            },
+            exported: {
+              type: Syntax.Identifier,
+              name: binding.exportName
+            }
+          }))
+        }
+      );
     } else {
       this.metadata.exports.push({ type: 'default-export', node: clone(node) });
       this.overwrite(node.range[0], right.range[0], 'export default ');
 
-      replace(node, {
-        type: Syntax.ExportDefaultDeclaration,
-        declaration: right
-      });
+      splice(
+        node.parentNode.body, node,
+        {
+          type: Syntax.ExportDefaultDeclaration,
+          declaration: right
+        }
+      );
     }
 
     return true;

@@ -1,3 +1,0 @@
-{
-  "description": "issues a warning when rewriting a non-function export would duplicate a local binding"
-}

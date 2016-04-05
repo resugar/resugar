@@ -1,0 +1,221 @@
+{
+  "objects.shorthand": {
+    "properties": []
+  },
+  "objects.concise": {
+    "properties": []
+  },
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "clearTimeout",
+            "localName": "clearTimeout$1"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "computed": false,
+              "object": {
+                "type": "Identifier",
+                "name": "exports"
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "clearTimeout"
+              }
+            },
+            "right": {
+              "type": "FunctionExpression",
+              "id": null,
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "timeout"
+                }
+              ],
+              "body": {
+                "type": "BlockStatement",
+                "body": [
+                  {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                      "type": "CallExpression",
+                      "callee": {
+                        "type": "Identifier",
+                        "name": "clearTimeout"
+                      },
+                      "arguments": [
+                        {
+                          "type": "Identifier",
+                          "name": "timeout"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "generator": false,
+              "expression": false
+            }
+          }
+        }
+      },
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "setTimeout",
+            "localName": "_setTimeout"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "computed": false,
+              "object": {
+                "type": "Identifier",
+                "name": "exports"
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "setTimeout"
+              }
+            },
+            "right": {
+              "type": "FunctionExpression",
+              "id": {
+                "type": "Identifier",
+                "name": "_setTimeout"
+              },
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "callback"
+                },
+                {
+                  "type": "Identifier",
+                  "name": "timeout"
+                }
+              ],
+              "body": {
+                "type": "BlockStatement",
+                "body": [
+                  {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                      "type": "CallExpression",
+                      "callee": {
+                        "type": "Identifier",
+                        "name": "setTimeout"
+                      },
+                      "arguments": [
+                        {
+                          "type": "Identifier",
+                          "name": "callback"
+                        },
+                        {
+                          "type": "Identifier",
+                          "name": "timeout"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "generator": false,
+              "expression": false
+            }
+          }
+        }
+      },
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "clearInterval",
+            "localName": "_clearInterval$1"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "computed": false,
+              "object": {
+                "type": "Identifier",
+                "name": "exports"
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "clearInterval"
+              }
+            },
+            "right": {
+              "type": "FunctionExpression",
+              "id": {
+                "type": "Identifier",
+                "name": "_clearInterval"
+              },
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "interval"
+                }
+              ],
+              "body": {
+                "type": "BlockStatement",
+                "body": [
+                  {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                      "type": "CallExpression",
+                      "callee": {
+                        "type": "Identifier",
+                        "name": "clearInterval"
+                      },
+                      "arguments": [
+                        {
+                          "type": "Identifier",
+                          "name": "interval"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "generator": false,
+              "expression": false
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  },
+  "functions.arrow": {
+    "functions": []
+  },
+  "declarations.block-scope": {
+    "declarations": []
+  },
+  "objects.destructuring": [],
+  "strings.template": {
+    "concatenations": []
+  }
+}

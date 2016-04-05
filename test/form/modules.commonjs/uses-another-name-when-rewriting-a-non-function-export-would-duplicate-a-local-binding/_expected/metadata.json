@@ -7,7 +7,7 @@
         "bindings": [
           {
             "exportName": "a",
-            "localName": "a"
+            "localName": "a$1"
           }
         ],
         "node": {

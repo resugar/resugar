@@ -2,6 +2,8 @@ import escape from './utils/escape';
 import type Module from './module';
 import unescape from './utils/unescape';
 
+const DEBUG = false;
+
 export default class Context {
   constructor(pluginName: string, module: Module) {
     this.pluginName = pluginName;
@@ -21,16 +23,38 @@ export default class Context {
   }
 
   remove(start: number, end: number): Context {
+    if (DEBUG) {
+      console.log(
+        'REMOVE', `[${start}, ${end})`,
+        JSON.stringify(this.module.magicString.original.slice(start, end))
+      );
+    }
     this.module.magicString.remove(start, end);
     return this;
   }
 
   overwrite(start: number, end: number, content: string): Context {
+    if (DEBUG) {
+      console.log(
+        'OVERWRITE', `[${start}, ${end})`,
+        JSON.stringify(this.module.magicString.original.slice(start, end)),
+        '→', JSON.stringify(content)
+      );
+    }
     this.module.magicString.overwrite(start, end, content);
     return this;
   }
 
   insert(index: number, content: string): Context {
+    if (DEBUG) {
+      console.log(
+        'INSERT',
+        index,
+        JSON.stringify(content),
+        'BEFORE',
+        JSON.stringify(this.module.magicString.original.slice(index, index + 8))
+      );
+    }
     this.module.magicString.insert(index, content);
     return this;
   }
@@ -84,5 +108,11 @@ export default class Context {
     }
 
     return this;
+  }
+
+  ensureHasTrailingSemicolon(node: Object) {
+    let { tokens } = this.module;
+    let { end } = this.module.tokenRangeForNode(node);
+    console.log(tokens[end]);
   }
 }
