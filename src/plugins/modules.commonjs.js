@@ -4,8 +4,8 @@ import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraver
 import isMemberExpression from '../utils/isMemberExpression';
 import replace from '../utils/replace';
 import splice from '../utils/splice';
-import { claim } from '../utils/scopeBindings';
 import type Module from '../module';
+import { claim } from '../utils/scopeBindings';
 import { Binding, ExportSpecifierListStringBuilder, ImportSpecifierListStringBuilder } from '../bindings';
 
 const { Syntax, VisitorOption } = estraverse;
@@ -137,41 +137,61 @@ class Context extends BaseContext {
       return false;
     }
 
-    const declaration = extractSingleDeclaration(node);
-
-    if (!declaration) {
+    if (node.type !== Syntax.VariableDeclaration) {
       return false;
     }
 
-    const { id, init } = declaration;
+    const { declarations } = node;
+    const extractableDeclarations = [];
 
-    if (id.type !== Syntax.Identifier) {
+    declarations.forEach(declaration => {
+      const { id, init } = declaration;
+
+      if (id.type !== Syntax.Identifier) {
+        return;
+      }
+
+      const pathNode = extractRequirePathNode(init);
+
+      if (!pathNode) {
+        return;
+      }
+
+      extractableDeclarations.push({
+        declaration, id, pathNode
+      });
+    });
+
+    if (declarations.length === 0) {
       return false;
     }
 
-    const pathNode = extractRequirePathNode(init);
-
-    if (!pathNode) {
+    if (declarations.length !== extractableDeclarations.length) {
+      // TODO: We have to replace only part of it.
       return false;
     }
 
-    this.rewriteRequireAsImport(
+    this.rewriteRequireAsImports(
       'default-import',
       node,
-      [new Binding(id.name, 'default')],
-      pathNode
+      extractableDeclarations.map(
+        ({ id, pathNode }) => ({
+          bindings: [new Binding(id.name, 'default')],
+          pathNode
+        })
+      )
     );
 
     splice(
       node.parentNode.body, node,
-      {
+      ...extractableDeclarations.map(({ id, pathNode }) => ({
         type: Syntax.ImportDeclaration,
         specifiers: [{
           type: Syntax.ImportDefaultSpecifier,
           local: id
         }],
         source: pathNode
-      }
+      }))
     );
 
     return true;
@@ -343,27 +363,38 @@ class Context extends BaseContext {
    * @private
    */
   rewriteRequireAsImport(type: string, node: Object, bindings: Array<Binding>, pathNode: Object) {
-    this.metadata.imports.push({
+    this.rewriteRequireAsImports(
       type,
-      node: clone(node),
-      bindings,
-      path: pathNode.value
-    });
+      node,
+      [{ bindings, pathNode }]
+    );
+  }
 
-    const pathString = this.slice(...pathNode.range);
-    if (bindings.length === 0) {
-      this.overwrite(
-        node.range[0],
-        node.range[1],
-        `import ${pathString};`
-      );
-    } else {
-      this.overwrite(
-        node.range[0],
-        node.range[1],
-        `import ${ImportSpecifierListStringBuilder.build(bindings)} from ${pathString};`
-      );
-    }
+  /**
+   * @private
+   */
+  rewriteRequireAsImports(type: string, node: Object, imports: Array<{ bindings: Array<Binding>, pathNode: Object }>) {
+    let importStatements = [];
+    imports.forEach(({ bindings, pathNode }) => {
+      this.metadata.imports.push({
+        type,
+        node: clone(node),
+        bindings,
+        path: pathNode.value
+      });
+
+      const pathString = this.slice(...pathNode.range);
+      if (bindings.length === 0) {
+        importStatements.push(`import ${pathString};`);
+      } else {
+        importStatements.push(`import ${ImportSpecifierListStringBuilder.build(bindings)} from ${pathString};`);
+      }
+    });
+    this.overwrite(
+      node.range[0],
+      node.range[1],
+      importStatements.join('\n')
+    );
   }
 
   /**
