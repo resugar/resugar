@@ -9,6 +9,9 @@ export default function needsParens(node: Object): boolean {
         case Syntax.MemberExpression:
           return node.parentNode.object === node;
 
+        case Syntax.CallExpression:
+          return node.parentNode.callee === node;
+
         case Syntax.BinaryExpression:
         case Syntax.SequenceExpression:
           return true;

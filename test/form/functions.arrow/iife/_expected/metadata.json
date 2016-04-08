@@ -1,0 +1,26 @@
+{
+  "functions.arrow": {
+    "functions": [
+      {
+        "type": "FunctionExpression",
+        "id": null,
+        "params": [],
+        "body": {
+          "type": "BlockStatement",
+          "body": [
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "Literal",
+                "value": 1,
+                "raw": "1"
+              }
+            }
+          ]
+        },
+        "generator": false,
+        "expression": false
+      }
+    ]
+  }
+}
