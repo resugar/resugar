@@ -16,6 +16,10 @@ export function claim(scope: Scope, name: string='ref'): string {
   return name;
 }
 
+export function isDeclaredName(scope: Scope, name: string): boolean {
+  return scope.variables.some(variable => variable.name === name);
+}
+
 export function isUsedName(scope: Scope, name: string): boolean {
   if (scope.isUsedName(name)) {
     return true;

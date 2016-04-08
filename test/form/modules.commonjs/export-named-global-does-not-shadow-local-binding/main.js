@@ -1,0 +1,2 @@
+var jQuery;
+exports.jQuery = $;

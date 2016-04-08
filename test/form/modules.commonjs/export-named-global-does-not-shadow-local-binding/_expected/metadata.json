@@ -1,0 +1,40 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "jQuery",
+            "localName": "jQuery$1"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "computed": false,
+              "object": {
+                "type": "Identifier",
+                "name": "exports"
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "jQuery"
+              }
+            },
+            "right": {
+              "type": "Identifier",
+              "name": "$"
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  }
+}
