@@ -17,19 +17,22 @@
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "Identifier",
-                "name": "exports"
+                "name": "exports",
+                "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "b"
-              }
+                "name": "b",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
             "right": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "typeAnnotation": null
             }
           }
         }

@@ -4,11 +4,10 @@
       {
         "type": "FunctionExpression",
         "id": null,
-        "generator": false,
-        "expression": false,
         "params": [],
         "body": {
           "type": "BlockStatement",
+          "directives": [],
           "body": [
             {
               "type": "ReturnStatement",
@@ -16,13 +15,13 @@
                 "type": "FunctionExpression",
                 "id": {
                   "type": "Identifier",
-                  "name": "getThis"
+                  "name": "getThis",
+                  "typeAnnotation": null
                 },
                 "params": [],
-                "generator": false,
-                "expression": false,
                 "body": {
                   "type": "BlockStatement",
+                  "directives": [],
                   "body": [
                     {
                       "type": "ReturnStatement",
@@ -31,11 +30,19 @@
                       }
                     }
                   ]
-                }
+                },
+                "generator": false,
+                "async": false,
+                "returnType": null,
+                "typeParameters": null
               }
             }
           ]
-        }
+        },
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
       }
     ]
   }

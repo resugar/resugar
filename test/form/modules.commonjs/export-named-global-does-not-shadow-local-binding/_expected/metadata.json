@@ -17,19 +17,22 @@
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "Identifier",
-                "name": "exports"
+                "name": "exports",
+                "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "jQuery"
-              }
+                "name": "jQuery",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
             "right": {
               "type": "Identifier",
-              "name": "$"
+              "name": "$",
+              "typeAnnotation": null
             }
           }
         }

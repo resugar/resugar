@@ -1,57 +1,61 @@
-import BaseContext from '../context';
-import clone from '../utils/clone';
-import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
+import * as t from 'babel-types';
+import cleanNode from '../utils/cleanNode.js';
 import type Module from '../module';
-
-const { Syntax, VisitorOption  } = estraverse;
+import type { Node, Path, Visitor } from '../types';
+import { findToken, findEndTokenBalanced } from '../utils/findTokens';
 
 export const name = 'objects.concise';
 export const description = 'Use concise object property method syntax.';
 
+export function visitor(module: Module): Visitor {
+  return {
+    ObjectProperty(path: Path) {
+      let { node } = path;
+
+      if (node.method) {
+        return;
+      }
+
+      if (!t.isFunctionExpression(node.value) || node.value.id) {
+        return;
+      }
+
+      let tokens = module.tokensForNode(node);
+      let keyEnd = node.key.end;
+      let functionEnd;
+
+      if (node.computed) {
+        let { index: startBracketIndex } = findToken('[', tokens, 0);
+        let { index: endBracketIndex, token: endBracket } = findEndTokenBalanced('[', ']', tokens, startBracketIndex);
+        keyEnd = endBracket.end;
+        functionEnd = findToken('function', tokens, endBracketIndex).token.end;
+      } else {
+        functionEnd = findToken('function', tokens, 0).token.end;
+      }
+
+      module.magicString.remove(keyEnd, functionEnd);
+      metadata(module).properties.push(cleanNode(node));
+
+      path.replaceWith(t.objectMethod(
+        'method',
+        node.key,
+        node.value.params,
+        node.value.body,
+        node.computed
+      ));
+    }
+  };
+}
+
 type Metadata = {
-  properties: Array<Object>
+  properties: Array<Node>
 };
 
-class Context extends BaseContext {
-  constructor(module: Module) {
-    super(name, module);
-    module.metadata[name] = ({ properties: [] }: Metadata);
+function metadata(module: Module): Metadata {
+  if (!module.metadata[name]) {
+    module.metadata[name] = {
+      properties: []
+    };
   }
-
-  collapsePropertyToConcise(node: Object): boolean {
-    if (node.type !== Syntax.Property) {
-      return false;
-    }
-
-    if (node.method) {
-      return false;
-    }
-
-    if (node.value.type !== Syntax.FunctionExpression || node.value.id) {
-      return false;
-    }
-
-    const keyEnd = node.key.range[1];
-    const functionEnd = this.endIndexOf('function', keyEnd);
-
-    if (node.computed) {
-      this.remove(this.endIndexOf(']', keyEnd), functionEnd);
-    } else {
-      this.remove(keyEnd, functionEnd);
-    }
-
-    this.metadata.properties.push(clone(node));
-    node.method = true;
-
-    return true;
-  }
-}
-
-export function begin(module: Module): Context {
-  return new Context(module);
-}
-
-export function enter(node: Object, module: Module, context: Context): ?VisitorOption {
-  context.collapsePropertyToConcise(node);
-  return null;
+  return module.metadata[name];
 }

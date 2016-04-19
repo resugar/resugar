@@ -4,16 +4,16 @@
       {
         "type": "FunctionExpression",
         "id": null,
-        "generator": false,
-        "expression": false,
         "params": [
           {
             "type": "Identifier",
-            "name": "n"
+            "name": "n",
+            "typeAnnotation": null
           }
         ],
         "body": {
           "type": "BlockStatement",
+          "directives": [],
           "body": [
             {
               "type": "ReturnStatement",
@@ -22,17 +22,21 @@
                 "operator": "*",
                 "left": {
                   "type": "Identifier",
-                  "name": "n"
+                  "name": "n",
+                  "typeAnnotation": null
                 },
                 "right": {
-                  "type": "Literal",
-                  "value": 2,
-                  "raw": "2"
+                  "type": "NumericLiteral",
+                  "value": 2
                 }
               }
             }
           ]
-        }
+        },
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
       }
     ]
   }

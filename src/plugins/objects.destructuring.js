@@ -1,13 +1,196 @@
-import BaseContext from '../context';
-import clone from '../utils/clone';
-import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
-import replace from '../utils/replace';
+import * as t from 'babel-types';
+import cleanNode from '../utils/cleanNode.js';
 import type Module from '../module';
-
-const { Syntax, VisitorOption  } = estraverse;
+import type { Path, Visitor } from '../types';
 
 export const name = 'objects.destructuring';
 export const description = 'Transform some declarations and assignments to the more compact destructuring form.';
+
+export function visitor(module: Module): Visitor {
+  let meta = metadata(module);
+
+  return {
+    VariableDeclaration(path: Path) {
+      let { node } = path;
+
+      for (let index = 0; index < node.declarations.length; index++) {
+        let elements = extractSequentialDestructurableElements(module, node.declarations, index);
+        rewriteDestructurableElements(module, elements);
+
+        if (elements.length !== 0) {
+          // Add information about the transformation.
+          meta.push({
+            ids: elements.map(({ id }) => cleanNode(id)),
+            inits: elements.map(({ init }) => cleanNode(init))
+          });
+
+          // Mutate the AST to reflect the new reality.
+          node.declarations.splice(index, elements.length, t.variableDeclarator(
+            t.objectPattern(
+              elements.map(declarator => t.objectProperty(
+                declarator.id,
+                declarator.id,
+                false,
+                true
+              ))
+            ),
+            elements[0].init.object
+          ));
+        }
+      }
+    },
+
+    AssignmentExpression(path: Path) {
+      if (!t.isExpressionStatement(path.parent)) {
+        return;
+      }
+
+      let { node } = path;
+      let assignments = extractSequentialDestructurableElements(module, [node]);
+
+      if (assignments.length === 0) {
+        return;
+      }
+
+      // `a = obj.a;` -> `(a = obj.a);`
+      //                  ^         ^
+      module.magicString.insert(assignments[0].start, '(');
+      module.magicString.insert(assignments[assignments.length - 1].end, ')');
+
+      rewriteDestructurableElements(module, assignments);
+
+      // Add information about the transformation.
+      meta.push({
+        ids: assignments.map(assignment => cleanNode(assignment.left)),
+        inits: assignments.map(assignment => cleanNode(assignment.right))
+      });
+
+      path.replaceWith(t.assignmentExpression(
+        '=',
+        t.objectPattern(
+          assignments.map(assignment => t.objectProperty(
+            t.identifier(assignment.left.name),
+            t.identifier(assignment.left.name),
+            false,
+            true
+          ))
+        ),
+        node.right.object
+      ));
+    },
+
+    SequenceExpression(path: Path) {
+      let {
+        node: { expressions }
+      } = path;
+
+      for (let index = 0; index < expressions.length; index++) {
+        let assignments = extractSequentialDestructurableElements(module, expressions, index);
+
+        if (assignments.length > 0 && index === 0) {
+          // `a = obj.a;` -> `(a = obj.a);`
+          module.magicString.insert(assignments[0].start, '(');
+          module.magicString.insert(assignments[assignments.length - 1].end, ')');
+        }
+
+        if (assignments.length > 0) {
+          rewriteDestructurableElements(module, assignments);
+
+          meta.push({
+            ids: assignments.map(assignment => cleanNode(assignment.left)),
+            inits: assignments.map(assignment => cleanNode(assignment.right))
+          });
+
+          expressions.splice(index, assignments.length, t.assignmentExpression(
+            '=',
+            t.objectPattern(
+              assignments.map(({ left }) => t.objectProperty(
+                left, left, false, true
+              ))
+            ),
+            assignments[0].right.object
+          ));
+        }
+      }
+
+      if (expressions.length === 1) {
+        path.replaceWith(expressions[0]);
+      }
+    }
+  };
+}
+
+function extractSequentialDestructurableElements(module: Module, elements: Array<Object>, start=0): Array<Object> {
+  let result = [];
+  let objectSource = null;
+
+  for (let i = start; i < elements.length; i++) {
+    let element = elements[i];
+    let { left, right } = leftRightOfAssignment(element) || {};
+
+    if (!t.isIdentifier(left)) {
+      break;
+    }
+
+    if (!t.isMemberExpression(right)) {
+      break;
+    }
+
+    if (right.computed) {
+      break;
+    }
+
+    if (left.name !== right.property.name) {
+      break;
+    }
+
+    let thisObjectSource = module.sourceOf(right.object);
+
+    if (!objectSource) {
+      objectSource = thisObjectSource;
+    } else if (objectSource !== thisObjectSource) {
+      break;
+    }
+
+    result.push(element);
+
+    if (!isSafeToConsolidate(right.object)) {
+      break;
+    }
+  }
+
+  return result;
+}
+
+function rewriteDestructurableElements(module: Module, elements: Array<Object>) {
+  if (elements.length === 0) {
+    return;
+  }
+
+  let firstElement = elements[0];
+
+  // `const a = obj.a, b = obj.b;` -> `const { a = obj.a, b = obj.b;`
+  //                                         ^^
+  module.magicString.insert(leftRightOfAssignment(firstElement).left.start, '{ ');
+
+  for (let i = 0; i < elements.length - 1; i++) {
+    let { left, right } = leftRightOfAssignment(elements[i]);
+    // `const { a = obj.a, b = obj.b;` -> `const { a, b = obj.b;`
+    //           ^^^^^^^^
+    module.magicString.remove(left.end, right.end);
+  }
+
+  let lastElement = elements[elements.length - 1];
+  let { left: lastLeft, right: lastRight } = leftRightOfAssignment(lastElement);
+
+  // `const { a, b = obj.b;` -> `const { a, b } = obj.b;`
+  //                                         ^^
+  module.magicString.insert(lastLeft.end, ' }');
+
+  // `const { a, b } = obj.b;` -> `const { a, b } = obj;`
+  //                      ^^
+  module.magicString.remove(lastRight.object.end, lastRight.end);
+}
 
 type DestructuringMetadata = {
   ids: Array<Object>,
@@ -16,249 +199,23 @@ type DestructuringMetadata = {
 
 type Metadata = Array<DestructuringMetadata>;
 
-class Context extends BaseContext {
-  constructor(module: Module) {
-    super(name, module);
-    module.metadata[name] = ([]: Metadata);
+function metadata(module: Module): Metadata {
+  if (!module.metadata[name]) {
+    module.metadata[name] = [];
   }
-
-  rewriteVariableDeclaration(node: Object): boolean {
-    if (node.type !== Syntax.VariableDeclaration) {
-      return false;
-    }
-
-    for (let index = 0; index < node.declarations.length; index++) {
-      const elements = this._extractSequentialDestructurableElements(node.declarations, index);
-      this._rewriteDestructurableElements(elements);
-
-      if (elements.length !== 0) {
-        // Add information about the transformation.
-        this.metadata.push({
-          ids: elements.map(({ id }) => id),
-          inits: elements.map(({ init }) => init)
-        });
-
-        // Mutate the AST to reflect the new reality.
-        node.declarations.splice(index, elements.length, {
-          type: Syntax.VariableDeclarator,
-          id: {
-            type: Syntax.ObjectPattern,
-            properties: elements.map(declarator => ({
-              type: Syntax.Property,
-              kind: 'init',
-              computed: false,
-              shorthand: true,
-              method: false,
-              key: declarator.id,
-              value: declarator.id
-            }))
-          },
-          init: elements[0].init.object
-        });
-      }
-    }
-
-    return true;
-  }
-
-  _rewriteDestructurableElements(elements: Array<Object>) {
-    if (elements.length === 0) {
-      return;
-    }
-
-    const firstElement = elements[0];
-
-    // `const a = obj.a, b = obj.b;` -> `const { a = obj.a, b = obj.b;`
-    //                                         ^^
-    this.insert(leftRightOfAssignment(firstElement).left.range[0], '{ ');
-
-    for (let i = 0; i < elements.length - 1; i++) {
-      const { left, right } = leftRightOfAssignment(elements[i]);
-      // `const { a = obj.a, b = obj.b;` -> `const { a, b = obj.b;`
-      //           ^^^^^^^^
-      this.remove(left.range[1], right.range[1]);
-    }
-
-    const lastElement = elements[elements.length - 1];
-    const { left: lastLeft, right: lastRight } = leftRightOfAssignment(lastElement);
-
-    // `const { a, b = obj.b;` -> `const { a, b } = obj.b;`
-    //                                         ^^
-    this.insert(lastLeft.range[1], ' }');
-
-    // `const { a, b } = obj.b;` -> `const { a, b } = obj;`
-    //                      ^^
-    this.remove(lastRight.object.range[1], lastRight.range[1]);
-  }
-
-  rewriteAssignment(node: Object): boolean {
-    const assignments = this._extractSequentialDestructurableElements([node]);
-
-    if (assignments.length === 0) {
-      return false;
-    }
-
-    if (node.parentNode.type !== Syntax.ExpressionStatement) {
-      return false;
-    }
-
-    // `a = obj.a;` -> `(a = obj.a);`
-    //                  ^         ^
-    this.insert(assignments[0].range[0], '(');
-    this.insert(assignments[assignments.length - 1].range[1], ')');
-
-    this._rewriteDestructurableElements(assignments);
-
-    // Add information about the transformation.
-    this.metadata.push({
-      ids: assignments.map(assignment => assignment.left),
-      inits: assignments.map(assignment => assignment.right)
-    });
-
-    replace(node, {
-      type: Syntax.AssignmentExpression,
-      operator: '=',
-      left: {
-        type: Syntax.ObjectPattern,
-        properties: assignments.map(assignment => ({
-          type: Syntax.Property,
-          kind: 'init',
-          computed: false,
-          shorthand: true,
-          method: false,
-          key: {
-            type: Syntax.Identifier,
-            name: assignment.left.name
-          },
-          value: {
-            type: Syntax.Identifier,
-            name: assignment.left.name
-          }
-        }))
-      },
-      right: node.right.object
-    });
-
-    return true;
-  }
-
-  rewriteSequenceExpression(node: Object): boolean {
-    if (node.type !== Syntax.SequenceExpression) {
-      return false;
-    }
-
-    const { expressions } = node;
-
-    for (let index = 0; index < expressions.length; index++) {
-      const assignments = this._extractSequentialDestructurableElements(expressions, index);
-
-      if (assignments.length > 0 && index === 0) {
-        // `a = obj.a;` -> `(a = obj.a);`
-        this.insert(assignments[0].range[0], '(');
-        this.insert(assignments[assignments.length - 1].range[1], ')');
-      }
-
-      if (assignments.length > 0) {
-        this._rewriteDestructurableElements(assignments);
-
-        this.metadata.push({
-          ids: assignments.map(assignment => assignment.left),
-          inits: assignments.map(assignment => assignment.right)
-        });
-
-        expressions.splice(index, assignments.length, {
-          type: Syntax.AssignmentExpression,
-          operator: '=',
-          left: {
-            type: Syntax.ObjectPattern,
-            properties: assignments.map(({ left }) => ({
-              type: Syntax.Property,
-              kind: 'init',
-              computed: false,
-              method: false,
-              shorthand: true,
-              key: left,
-              value: left
-            }))
-          },
-          right: assignments[0].right.object
-        });
-      }
-    }
-
-    if (expressions.length === 1) {
-      replace(node, expressions[0]);
-    }
-
-    return true;
-  }
-
-  _extractSequentialDestructurableElements(elements: Array<Object>, start=0): Array<Object> {
-    const result = [];
-    let objectSource;
-
-    for (let i = start; i < elements.length; i++) {
-      const element = elements[i];
-      const { left, right } = leftRightOfAssignment(element) || {};
-
-      if (!left || left.type !== Syntax.Identifier) {
-        break;
-      }
-
-      if (!right || right.type !== Syntax.MemberExpression) {
-        break;
-      }
-
-      if (right.computed) {
-        break;
-      }
-
-      if (left.name !== right.property.name) {
-        break;
-      }
-
-      const thisObjectSource = this.module.sourceOf(right.object);
-      if (!objectSource) {
-        objectSource = thisObjectSource;
-      } else if (objectSource !== thisObjectSource) {
-        break;
-      }
-
-      result.push(clone(element));
-
-      if (!isSafeToConsolidate(right.object)) {
-        break;
-      }
-    }
-
-    return result;
-  }
+  return module.metadata[name];
 }
 
 function leftRightOfAssignment(node: Object): ?{ left: Object, right: Object } {
-  switch (node.type) {
-    case Syntax.VariableDeclarator:
-      return { left: node.id, right: node.init };
-
-    case Syntax.AssignmentExpression:
-      if (node.operator === '=') {
-        return { left: node.left, right: node.right };
-      }
-      break;
+  if (t.isVariableDeclarator(node)) {
+    return { left: node.id, right: node.init };
+  } else if (t.isAssignmentExpression(node) && node.operator === '=') {
+    return { left: node.left, right: node.right };
+  } else {
+    return null;
   }
-
-  return null;
-}
-
-export function begin(module: Module): Context {
-  return new Context(module);
-}
-
-export function enter(node: Object, module: Module, context: Context): ?VisitorOption {
-  context.rewriteVariableDeclaration(node) || context.rewriteSequenceExpression(node) || context.rewriteAssignment(node);
-  return null;
 }
 
 function isSafeToConsolidate(node: Object): boolean {
-  return node.type === Syntax.Identifier;
+  return t.isIdentifier(node);
 }

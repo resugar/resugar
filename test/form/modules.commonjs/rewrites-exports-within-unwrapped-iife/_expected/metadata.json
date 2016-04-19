@@ -17,20 +17,21 @@
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "Identifier",
-                "name": "exports"
+                "name": "exports",
+                "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "foo"
-              }
+                "name": "foo",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
             "right": {
-              "type": "Literal",
-              "value": 1,
-              "raw": "1"
+              "type": "NumericLiteral",
+              "value": 1
             }
           }
         }
@@ -43,34 +44,39 @@
       "params": [],
       "body": {
         "type": "BlockStatement",
+        "directives": [],
         "body": [
           {
-            "type": "ExportNamedDeclaration",
-            "source": null,
-            "specifiers": [],
-            "declaration": {
-              "type": "VariableDeclaration",
-              "kind": "let",
-              "declarations": [
-                {
-                  "type": "VariableDeclarator",
-                  "id": {
-                    "type": "Identifier",
-                    "name": "foo"
-                  },
-                  "init": {
-                    "type": "Literal",
-                    "value": 1,
-                    "raw": "1"
-                  }
-                }
-              ]
+            "type": "ExpressionStatement",
+            "expression": {
+              "type": "AssignmentExpression",
+              "operator": "=",
+              "left": {
+                "type": "MemberExpression",
+                "object": {
+                  "type": "Identifier",
+                  "name": "exports",
+                  "typeAnnotation": null
+                },
+                "property": {
+                  "type": "Identifier",
+                  "name": "foo",
+                  "typeAnnotation": null
+                },
+                "computed": false
+              },
+              "right": {
+                "type": "NumericLiteral",
+                "value": 1
+              }
             }
           }
         ]
       },
       "generator": false,
-      "expression": false
+      "async": false,
+      "returnType": null,
+      "typeParameters": null
     }
   }
 }

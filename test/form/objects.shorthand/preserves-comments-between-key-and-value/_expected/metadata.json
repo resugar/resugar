@@ -2,38 +2,21 @@
   "objects.shorthand": {
     "properties": [
       {
-        "type": "Property",
+        "type": "ObjectProperty",
+        "computed": false,
         "key": {
           "type": "Identifier",
-          "name": "a"
+          "name": "a",
+          "typeAnnotation": null
         },
         "value": {
           "type": "Identifier",
-          "name": "a"
+          "name": "a",
+          "typeAnnotation": null
         },
-        "kind": "init",
-        "method": false,
         "shorthand": false,
-        "computed": false
+        "decorators": null
       }
     ]
-  },
-  "objects.concise": {
-    "properties": []
-  },
-  "modules.commonjs": {
-    "imports": [],
-    "exports": [],
-    "directives": []
-  },
-  "functions.arrow": {
-    "functions": []
-  },
-  "declarations.block-scope": {
-    "declarations": []
-  },
-  "objects.destructuring": [],
-  "strings.template": {
-    "concatenations": []
   }
 }

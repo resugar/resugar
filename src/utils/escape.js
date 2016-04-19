@@ -8,12 +8,11 @@ export default function escape(char: string, start: number, end: number, charAt:
   }
 }
 
-export function escapeString(char: string, string: string): string {
-  let result = new MagicString(string);
+export function escapeString(char: string, string: string, start: number=0, end: number=string.length, magicString: MagicString=new MagicString(string)): string {
   escape(
-    char, 0, string.length,
+    char, start, end,
     index => string[index],
-    (index, string) => result.insert(index, string)
+    (index, string) => magicString.insert(index, string)
   );
-  return result.toString();
+  return magicString.toString();
 }

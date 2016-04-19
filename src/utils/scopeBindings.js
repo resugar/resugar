@@ -1,8 +1,7 @@
-import type { Scope } from 'escope';
+import * as t from 'babel-types';
+import type { Scope } from 'babel-traverse';
 
-let claimedBindingsByScope: Array<{ scope: Scope, bindings: { [key: string]: boolean } }> = [];
-
-export function claim(scope: Scope, name: string='ref'): string {
+export function claim(scope: Scope, name: string='ref'): { type: 'Identifier', name: string } {
   if (isUsedName(scope, name)) {
     let suffix = 1;
     let prefix = name;
@@ -11,33 +10,21 @@ export function claim(scope: Scope, name: string='ref'): string {
     } while (isUsedName(scope, name));
   }
 
-  let claimedBindings = claimedBindingsForScope(scope);
-  claimedBindings[name] = true;
-  return name;
+  let program = scope.getProgramParent();
+  program.references[name] = true;
+  program.uids[name] = true;
+  return t.identifier(name);
 }
 
 export function isDeclaredName(scope: Scope, name: string): boolean {
-  return scope.variables.some(variable => variable.name === name);
+  return scope.hasBinding(name);
 }
 
 export function isUsedName(scope: Scope, name: string): boolean {
-  if (scope.isUsedName(name)) {
-    return true;
-  }
-
-  let claimedBindings = claimedBindingsForScope(scope);
-  return claimedBindings[name] || false;
-}
-
-function claimedBindingsForScope(scope: Scope): { [key: string]: boolean } {
-  for (let i = 0; i < claimedBindingsByScope.length; i++) {
-    let scopeAndBindingList = claimedBindingsByScope[i];
-    if (scopeAndBindingList.scope === scope) {
-      return scopeAndBindingList.bindings;
-    }
-  }
-
-  let bindings = Object.create(null);
-  claimedBindingsByScope.push({ scope, bindings });
-  return bindings;
+  return (
+    scope.hasBinding(name) ||
+    scope.hasGlobal(name)
+    // FIXME: Do we want this?
+    // scope.hasReference(name)
+  );
 }

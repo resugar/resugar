@@ -1,935 +1,799 @@
-import BaseContext from '../context';
-import clone from '../utils/clone';
-import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
-import isMemberExpression from '../utils/isMemberExpression';
-import replace from '../utils/replace';
-import splice from '../utils/splice';
+import * as t from 'babel-types';
+import cleanNode from '../utils/cleanNode.js';
 import type Module from '../module';
-import { claim, isDeclaredName } from '../utils/scopeBindings';
+import type { Node, Path, Visitor } from '../types';
+import unindent from '../utils/unindent';
 import { Binding, ExportSpecifierListStringBuilder, ImportSpecifierListStringBuilder } from '../bindings';
-
-const { Syntax, VisitorOption } = estraverse;
+import { claim, isDeclaredName } from '../utils/scopeBindings';
+import { findToken, findEndTokenBalanced } from '../utils/findTokens';
 
 export const name = 'modules.commonjs';
 export const description = 'Transform CommonJS modules into ES6 modules.';
 
+export function visitor(module: Module): Visitor {
+  metadata(module);
+
+  return {
+    Program(path: Path) {
+      unwrapIIFE(path, module);
+      removeUseStrictDirective(path, module);
+      rewriteImportsAndExports(path, module);
+    },
+
+    ReferencedIdentifier(path: Path) {
+      // TODO: Warn about `require`, `module`, and `exports` global references.
+      let { node } = path;
+
+      if (node.name === 'require' && !path.scope.hasBinding('require')) {
+        let source = extractRequirePathNode(path.parent);
+
+        if (source) {
+          module.warn(
+            path.parent,
+            'unsupported-import',
+            `Unsupported 'require' call cannot be transformed into an import`
+          );
+        }
+      } else if (node.name === 'exports') {
+        module.warn(
+          node,
+          'unsupported-export',
+          `Unsupported export cannot be turned into an 'export' statement`
+        );
+      }
+    }
+  };
+}
+
+/**
+ * Unwrap an IIFE at program scope if that's the only thing that's there.
+ *
+ *   (function() {
+ *     // All program body here.
+ *   })();
+ */
+function unwrapIIFE(path: Path, module: Module) {
+  let { node } = path;
+  let iife = extractModuleIIFE(node);
+
+  if (!iife) {
+    return;
+  }
+
+  let [ statement ] = node.body;
+  let { body } = iife.body;
+
+  node.body = body;
+  metadata(module).unwrapped = cleanNode(iife);
+
+  let tokens = module.tokensForNode(iife);
+  let iifeHeaderEnd = body[0].start;
+  let { index: iifeBlockStartIndex, token: iifeBlockStart } = findToken('{', tokens);
+
+  for (let p = iifeBlockStart.end; p < iifeHeaderEnd; p++) {
+    if (module.source.charAt(p) === '\n') {
+      iifeHeaderEnd = p + 1;
+      break;
+    }
+  }
+
+  let iifeFooterStart = body[body.length - 1].end;
+  let { token: iifeBlockEnd } = findEndTokenBalanced(
+    '{', '}',
+    tokens,
+    iifeBlockStartIndex
+  );
+
+  for (let p = iifeBlockEnd.start; p > iifeFooterStart; p--) {
+    if (module.source.charAt(p) === '\n') {
+      if (module.source.charAt(p) === '\r') { p--; }
+      iifeFooterStart = p;
+      break;
+    }
+  }
+
+  // `(function() {\n  foo();\n})();` -> `foo();`
+  //  ^^^^^^^^^^^^^^^^^      ^^^^^^^
+  module.magicString.remove(statement.start, iifeHeaderEnd);
+  module.magicString.remove(iifeFooterStart, statement.end);
+  unindent(module.magicString);
+}
+
+/**
+ * Remove a 'use strict' directive in `path`'s body.
+ */
+function removeUseStrictDirective(path: Path, module: Module) {
+  let directives = path.node.directives;
+
+  for (let i = 0; i < directives.length; i++) {
+    let directive = directives[i];
+
+    if (directive.value.value === 'use strict') {
+      let { start, end } = directive;
+
+      // Eat any trailing newlines.
+      while (module.source.charAt(end) === '\n') {
+        end++;
+      }
+
+      module.magicString.remove(start, end);
+      directives.splice(i, 1);
+      metadata(module).directives.push(cleanNode(directive));
+    }
+  }
+}
+
+/**
+ * Re-write requires as imports/exports and exports sets as export statements.
+ */
+function rewriteImportsAndExports(path: Path, module: Module) {
+  let body = path.get('body');
+
+  if (!Array.isArray(body)) {
+    throw new Error(`expected body paths from program node, got: ${body}`);
+  }
+
+  body.forEach(statement => (
+    rewriteAsExport(statement, module) ||
+    rewriteAsImport(statement, module)
+  ));
+}
+
+function rewriteAsExport(path: Path, module: Module): boolean {
+  let { node } = path;
+
+  if (!t.isExpressionStatement(node)) {
+    return false;
+  }
+
+  let { expression } = node;
+
+  if (!t.isAssignmentExpression(expression)) {
+    return false;
+  }
+
+  let { left, right } = expression;
+
+  if (isExportsObject(path.get('expression.left'))) {
+    return rewriteSingleExportAsDefaultExport(path, module);
+  } else if (t.isMemberExpression(left) && !left.computed) {
+    if (!isExportsObject(path.get('expression.left.object'))) {
+      return false;
+    }
+
+    if (t.isFunctionExpression(right)) {
+      return rewriteNamedFunctionExpressionExport(path, module);
+    } else if (t.isIdentifier(right)) {
+      return rewriteNamedIdentifierExport(path, module);
+    } else {
+      return rewriteNamedValueExport(path, module);
+    }
+  } else {
+    return false;
+  }
+}
+
+function isExportsObject(path: Path): boolean {
+  let { node } = path;
+
+  if (t.isMemberExpression(node)) {
+    return (
+      !path.scope.hasBinding('module') &&
+      t.isIdentifier(node.object, { name: 'module' }) &&
+      t.isIdentifier(node.property, { name: 'exports' })
+    );
+  } else if (t.isIdentifier(node, { name: 'exports' })) {
+    return !path.scope.hasBinding('exports');
+  } else {
+    return t.isThisExpression(node);
+  }
+}
+
+function rewriteSingleExportAsDefaultExport(path: Path, module: Module): boolean {
+  let {
+    node,
+    node: {
+      expression: { right }
+    }
+  } = path;
+
+  if (t.isObjectExpression(right)) {
+    let bindings = [];
+
+    for (let { key, value } of right.properties) {
+      bindings.push(new Binding(value.name, key.name));
+    }
+
+    metadata(module).exports.push({
+      type: 'named-export',
+      bindings,
+      node: cleanNode(node)
+    });
+
+    module.magicString.overwrite(
+      node.start,
+      node.end,
+      `export ${ExportSpecifierListStringBuilder.build(bindings)};`
+    );
+
+    path.replaceWith(
+      t.exportNamedDeclaration(
+        null,
+        bindings.map(binding => t.exportSpecifier(
+          t.identifier(binding.localName),
+          t.identifier(binding.exportName)
+        )),
+        null
+      )
+    );
+  } else {
+    let pathNode = extractRequirePathNode(right);
+
+    if (pathNode) {
+      module.magicString.overwrite(
+        node.expression.start,
+        node.expression.end,
+        `export * from ${module.source.slice(pathNode.start, pathNode.end)}`
+      );
+
+      metadata(module).exports.push({
+        type: 'namespace-export',
+        bindings: [],
+        node: cleanNode(node)
+      });
+
+      path.replaceWith(t.exportAllDeclaration(pathNode));
+    } else {
+      metadata(module).exports.push({ type: 'default-export', node: cleanNode(node) });
+      module.magicString.overwrite(node.start, right.start, 'export default ');
+      path.replaceWith(t.exportDefaultDeclaration(right));
+    }
+  }
+
+  return true;
+}
+
+function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
+  let {
+    node,
+    node: {
+      expression: {
+        left: {
+          property: {name: exportName}
+        },
+        right,
+        right: {id}
+      }
+    }
+  } = path;
+
+  let fnBinding = id ? id.name : null;
+  let localId = claim(path.scope, fnBinding || exportName);
+  let localName = localId.name;
+
+  metadata(module).exports.push({
+    type: 'named-export',
+    bindings: [
+      {
+        exportName,
+        localName
+      }
+    ],
+    node: cleanNode(node)
+  });
+
+  let isFunctionDeclaration = true;
+
+  if (localName === exportName) {
+    // `exports.foo = function foo() {}` → `export function foo() {}`
+    //  ^^^^^^^^^^^^^^                      ^^^^^^^
+    module.magicString.overwrite(node.start, right.start, 'export ');
+
+    if (!id) {
+      module.magicString.insert(right.start + 'function'.length, ` ${localName}`);
+      right.id = t.identifier(exportName);
+    }
+
+    right.type = 'FunctionDeclaration';
+    right.expression = false;
+    right.id = t.identifier(exportName);
+    delete right.start;
+    delete right.end;
+
+    path.replaceWith(
+      t.exportNamedDeclaration(
+        right, [], null
+      )
+    );
+  } else {
+    let declaration = right;
+
+    if (!id) {
+      module.magicString.remove(node.start, right.start);
+      module.magicString.insert(right.start + 'function'.length, ` ${localName}`);
+      right.type = 'FunctionDeclaration';
+      right.id = localId;
+    } else if (fnBinding === localName) {
+      right.type = 'FunctionDeclaration';
+      module.magicString.remove(node.start, right.start);
+    } else {
+      isFunctionDeclaration = false;
+      module.magicString.overwrite(node.start, right.start, `let ${localName} = `);
+      declaration = t.variableDeclaration(
+        'let',
+        [
+          t.variableDeclarator(
+            localId,
+            right
+          )
+        ]
+      );
+    }
+
+    module.magicString.insert(node.end, `\nexport { ${localName} as ${exportName} };`);
+
+    path.replaceWithMultiple([
+      declaration,
+      t.exportNamedDeclaration(
+        null,
+        [
+          t.exportSpecifier(
+            localId,
+            t.identifier(exportName)
+          )
+        ]
+      )
+    ]);
+  }
+
+  if (isFunctionDeclaration) {
+    let lastCharacterPosition = node.end - 1;
+
+    if (module.source.charAt(lastCharacterPosition) === ';') {
+      module.magicString.remove(lastCharacterPosition, node.end);
+    }
+  }
+}
+
+function rewriteNamedIdentifierExport(path: Path, module: Module): boolean {
+  let {
+    node,
+    node: {
+      expression: {
+        left: { property },
+        right
+      }
+    }
+  } = path;
+
+  let replacements;
+  let localBinding;
+
+  if (isDeclaredName(path.scope, right.name)) {
+    localBinding = right.name;
+
+    if (right.name === property.name) {
+      module.magicString.overwrite(node.start, node.end, `export { ${right.name} };`);
+    } else {
+      module.magicString.overwrite(node.start, node.end, `export { ${right.name} as ${property.name} };`);
+    }
+
+    replacements = [
+      t.exportNamedDeclaration(
+        null,
+        [t.exportSpecifier(right, property)],
+        null
+      )
+    ];
+  } else {
+    localBinding = claim(path.scope, property.name).name;
+
+    if (localBinding === property.name) {
+      module.magicString.overwrite(node.start, right.start, `export let ${localBinding} = `);
+      replacements = [
+        t.exportNamedDeclaration(
+          t.variableDeclaration(
+            'let',
+            [
+              t.variableDeclarator(
+                t.identifier(localBinding),
+                right
+              )
+            ]
+          ),
+          [],
+          null
+        )
+      ];
+    } else {
+      module.magicString.overwrite(node.start, right.start, `let ${localBinding} = `);
+      module.magicString.insert(node.end, `\nexport { ${localBinding} as ${property.name} };`);
+      replacements = [
+        t.variableDeclaration(
+          'let',
+          [
+            t.variableDeclarator(
+              t.identifier(localBinding),
+              right
+            )
+          ]
+        ),
+        t.exportNamedDeclaration(
+          null,
+          [
+            t.exportSpecifier(
+              t.identifier(localBinding),
+              property
+            )
+          ],
+          null
+        )
+      ];
+    }
+  }
+
+  metadata(module).exports.push({
+    type: 'named-export',
+    bindings: [
+      {
+        exportName: property.name,
+        localName: localBinding
+      }
+    ],
+    node: cleanNode(node)
+  });
+
+  path.replaceWithMultiple(replacements);
+
+  return true;
+}
+
+function rewriteNamedValueExport(path: Path, module: Module): boolean {
+  let {
+    node,
+    node: {
+      expression: {
+        left: { property },
+        right
+      }
+    }
+  } = path;
+  let localBinding = claim(path.scope, property.name).name;
+
+  metadata(module).exports.push({
+    type: 'named-export',
+    bindings: [
+      {
+        exportName: property.name,
+        localName: localBinding
+      }
+    ],
+    node: cleanNode(node)
+  });
+
+  if (localBinding === property.name) {
+    // `exports.foo = 99;` → `export let foo = 99;`
+    //  ^^^^^^^^              ^^^^^^^^^^^
+    module.magicString.overwrite(node.start, property.start, 'export let ');
+
+    path.replaceWith(
+      t.exportNamedDeclaration(
+        t.variableDeclaration(
+          'let',
+          [
+            t.variableDeclarator(
+              t.identifier(property.name),
+              right
+            )
+          ]
+        ),
+        [],
+        null
+      )
+    );
+  } else {
+    // `exports.foo = 99;` → `let foo$1 = 99;`
+    //  ^^^^^^^^^^^^^^        ^^^^^^^^^^^^
+    module.magicString.overwrite(node.start, right.start, `let ${localBinding} = `);
+
+    let nodeIndex = path.parent.body.indexOf(node);
+
+    if (nodeIndex < 0) {
+      throw new Error(`could not locate ${node.type} at ${node.line}:${node.column} in its parent block`);
+    }
+
+    let nextStatement = path.parent.body[nodeIndex + 1];
+
+    // `export { foo$1 as foo };`
+    let exportStatement = `export { ${localBinding} as ${property.name} };`;
+
+    if (nextStatement) {
+      // Insert before the next statement…
+      module.magicString.insert(nextStatement.start, `${exportStatement}\n`);
+    } else {
+      // …or after the last one of the program.
+      module.magicString.insert(node.end, `\n${exportStatement}`);
+    }
+
+    path.replaceWithMultiple([
+      t.variableDeclaration(
+        'let',
+        [
+          t.variableDeclarator(
+            t.identifier(localBinding),
+            right
+          )
+        ]
+      ),
+      t.exportNamedDeclaration(
+        null,
+        [
+          t.exportSpecifier(
+            t.identifier(localBinding),
+            t.identifier(property.name)
+          )
+        ],
+        null
+      )
+    ]);
+  }
+
+  return true;
+}
+
+function rewriteAsImport(path: Path, module: Module): boolean {
+  if (isDeclaredName(path.scope, 'require')) {
+    return false;
+  }
+
+  return (
+    rewriteSingleExportRequire(path, module) ||
+    rewriteNamedExportRequire(path, module) ||
+    rewriteDeconstructedImportRequire(path, module) ||
+    rewriteSideEffectRequire(path, module)
+  );
+}
+
+function rewriteSingleExportRequire(path: Path, module: Module): boolean {
+  let { node } = path;
+
+  if (!t.isVariableDeclaration(node)) {
+    return false;
+  }
+
+  let { declarations } = node;
+  let extractableDeclarations = [];
+
+  declarations.forEach(declaration => {
+    let { id, init } = declaration;
+
+    if (!t.isIdentifier(id)) {
+      return;
+    }
+
+    let pathNode = extractRequirePathNode(init);
+
+    if (!pathNode) {
+      return;
+    }
+
+    extractableDeclarations.push({
+      declaration, id, pathNode
+    });
+  });
+
+  if (declarations.length === 0) {
+    return false;
+  }
+
+  if (declarations.length !== extractableDeclarations.length) {
+    // TODO: We have to replace only part of it.
+    return false;
+  }
+
+  rewriteRequireAsImports(
+    'default-import',
+    path,
+    module,
+    extractableDeclarations.map(
+      ({ id, pathNode }) => ({
+        bindings: [new Binding(id.name, 'default')],
+        pathNode
+      })
+    )
+  );
+
+  path.replaceWithMultiple(
+    extractableDeclarations.map(({ id, pathNode }) => t.importDeclaration(
+      [t.importDefaultSpecifier(id)],
+      pathNode
+    ))
+  );
+
+  return true;
+}
+
+function rewriteNamedExportRequire(path: Path, module: Module): boolean {
+  let declaration = extractSingleDeclaration(path.node);
+
+  if (!declaration) {
+    return false;
+  }
+
+  let { id, init } = declaration;
+
+  if (!init || !t.isMemberExpression(init) || init.computed) {
+    return false;
+  }
+
+  let pathNode = extractRequirePathNode(init.object);
+
+  if (!pathNode) {
+    return false;
+  }
+
+  rewriteRequireAsImport(
+    'named-import',
+    path,
+    module,
+    [new Binding(id.name, init.property.name)],
+    pathNode
+  );
+
+  path.replaceWith(
+    t.importDeclaration(
+      [
+        t.importSpecifier(
+          id, init.property
+        )
+      ],
+      pathNode
+    )
+  );
+
+  return true;
+}
+
+function rewriteDeconstructedImportRequire(path: Path, module: Module): boolean {
+  let declaration = extractSingleDeclaration(path.node);
+
+  if (!declaration) {
+    return false;
+  }
+
+  let { id, init } = declaration;
+
+  if (!t.isObjectPattern(id)) {
+    return false;
+  }
+
+  let bindings = [];
+
+  for (let { key, value } of id.properties) {
+    if (!t.isIdentifier(value)) {
+      return false;
+    }
+    bindings.push(new Binding(value.name, key.name));
+  }
+
+  let pathNode = extractRequirePathNode(init);
+
+  if (!pathNode) {
+    return false;
+  }
+
+  rewriteRequireAsImport('named-import', path, module, bindings, pathNode);
+
+  path.replaceWith(
+    t.importDeclaration(
+      bindings.map(binding => t.importSpecifier(
+        t.identifier(binding.localName),
+        t.identifier(binding.exportName)
+      )),
+      pathNode
+    )
+  );
+
+  return true;
+}
+
+function rewriteSideEffectRequire(path: Path, module: Module): boolean {
+  let { node } = path;
+
+  if (!t.isExpressionStatement(node)) {
+    return false;
+  }
+
+  let pathNode = extractRequirePathNode(node.expression);
+
+  if (!pathNode) {
+    return false;
+  }
+
+  rewriteRequireAsImport('bare-import', path, module, [], pathNode);
+
+  path.replaceWith(
+    t.importDeclaration([], pathNode)
+  );
+
+  return true;
+}
+
+function rewriteRequireAsImport(type: string, path: Path, module: Module, bindings: Array<Binding>, pathNode: Node) {
+  rewriteRequireAsImports(
+    type,
+    path,
+    module,
+    [{ bindings, pathNode }]
+  );
+}
+
+function rewriteRequireAsImports(type: string, path: Path, module: Module, imports: Array<{ bindings: Array<Binding>, pathNode: Node }>) {
+  let { node } = path;
+  let importStatements = [];
+
+  imports.forEach(({ bindings, pathNode }) => {
+    metadata(module).imports.push({
+      type,
+      node: cleanNode(node),
+      bindings,
+      path: pathNode.value
+    });
+
+    let pathString = module.source.slice(pathNode.start, pathNode.end);
+
+    if (bindings.length === 0) {
+      importStatements.push(`import ${pathString};`);
+    } else {
+      importStatements.push(`import ${ImportSpecifierListStringBuilder.build(bindings)} from ${pathString};`);
+    }
+  });
+
+  module.magicString.overwrite(
+    node.start,
+    node.end,
+    importStatements.join('\n')
+  );
+}
+
+function metadata(module: Module): Metadata {
+  if (!module.metadata[name]) {
+    module.metadata[name] = {
+      imports: [],
+      exports: [],
+      directives: []
+    };
+  }
+  return module.metadata[name];
+}
+
 type ImportMetadata = {
   type: string,
-  node: Object,
+  node: Node,
   bindings: Array<Binding>,
-  path: string
+  path: string,
 };
 
 type ExportMetadata = {
   type: string,
-  node: Object,
-  bindings: Array<Binding>
+  node: Node,
+  bindings: Array<Binding>,
 };
 
 type DirectiveMetadata = {
   type: string,
-  node: Object
+  node: Node,
 };
 
 type Metadata = {
   imports: Array<ImportMetadata>,
   exports: Array<ExportMetadata>,
-  directives: Array<DirectiveMetadata>
+  directives: Array<DirectiveMetadata>,
+  unwrapped?: Node
 };
 
-class Context extends BaseContext {
-  constructor(module: Module) {
-    super(name, module);
-    module.metadata[name] = ({
-      imports: [],
-      exports: [],
-      directives: []
-    }: Metadata);
-  }
-
-  rewrite(node: Object): boolean {
-    return (
-      this.unwrapIIFE(node) ||
-      this.rewriteRequire(node) ||
-      this.rewriteExport(node) ||
-      this.removeUseStrictDirective(node)
-    );
-  }
-
-  /**
-   * @private
-   */
-  unwrapIIFE(node: Object): boolean {
-    const iife = extractModuleIIFE(node);
-
-    if (!iife) {
-      return false;
-    }
-
-    const [ statement ] = node.body;
-    const { body } = iife.body;
-    node.body = body;
-
-    this.metadata.unwrapped = iife;
-
-    const { tokens } = this.module;
-    const { start, end } = this.module.tokenRangeForNode(iife);
-    let iifeHeaderEnd = body[0].range[0];
-
-    for (let i = start; i < end; i++) {
-      if (tokens[i].value === '{') {
-        for (let p = tokens[i].range[1]; p < iifeHeaderEnd; p++) {
-          if (this.charAt(p) === '\n') {
-            iifeHeaderEnd = p + 1;
-            break;
-          }
-        }
-        break;
-      }
-    }
-
-    let iifeFooterStart = body[body.length - 1].range[1];
-
-    for (let i = end - 1; i >= start; i--) {
-      if (tokens[i].value === '}') {
-        for (let p = tokens[i].range[0]; p > iifeFooterStart; p--) {
-          if (this.charAt(p) === '\n') {
-            if (this.charAt(p) === '\r') { p--; }
-            iifeFooterStart = p;
-            break;
-          }
-        }
-      }
-    }
-
-    // `(function() {\n  foo();\n})();` -> `foo();`
-    //  ^^^^^^^^^^^^^^^^^      ^^^^^^^
-    this.remove(statement.range[0], iifeHeaderEnd);
-    this.remove(iifeFooterStart, statement.range[1]);
-    this.unindent();
-
-    return false; // Don't skip the program body.
-  }
-
-  /**
-   * @private
-   */
-  rewriteRequire(node: Object): boolean {
-    if (this.module.moduleScope.variables.some(({ name }) => name === 'require')) {
-      return false;
-    }
-
-    return (
-      this.rewriteSingleExportRequire(node) ||
-      this.rewriteNamedExportRequire(node) ||
-      this.rewriteDeconstructedImportRequire(node) ||
-      this.rewriteSideEffectRequire(node) ||
-      this.warnAboutUnsupportedRequire(node)
-    );
-  }
-
-  /**
-   * @private
-   */
-  rewriteSingleExportRequire(node: Object): boolean {
-    const { parentNode } = node;
-    if (!parentNode || parentNode.type !== Syntax.Program) {
-      return false;
-    }
-
-    if (node.type !== Syntax.VariableDeclaration) {
-      return false;
-    }
-
-    const { declarations } = node;
-    const extractableDeclarations = [];
-
-    declarations.forEach(declaration => {
-      const { id, init } = declaration;
-
-      if (id.type !== Syntax.Identifier) {
-        return;
-      }
-
-      const pathNode = extractRequirePathNode(init);
-
-      if (!pathNode) {
-        return;
-      }
-
-      extractableDeclarations.push({
-        declaration, id, pathNode
-      });
-    });
-
-    if (declarations.length === 0) {
-      return false;
-    }
-
-    if (declarations.length !== extractableDeclarations.length) {
-      // TODO: We have to replace only part of it.
-      return false;
-    }
-
-    this.rewriteRequireAsImports(
-      'default-import',
-      node,
-      extractableDeclarations.map(
-        ({ id, pathNode }) => ({
-          bindings: [new Binding(id.name, 'default')],
-          pathNode
-        })
-      )
-    );
-
-    splice(
-      node.parentNode.body, node,
-      ...extractableDeclarations.map(({ id, pathNode }) => ({
-        type: Syntax.ImportDeclaration,
-        specifiers: [{
-          type: Syntax.ImportDefaultSpecifier,
-          local: id
-        }],
-        source: pathNode
-      }))
-    );
-
-    return true;
-  }
-
-  /**
-   * @private
-   */
-  rewriteNamedExportRequire(node: Object): boolean {
-    const { parentNode } = node;
-    if (!parentNode || parentNode.type !== Syntax.Program) {
-      return false;
-    }
-
-    const declaration = extractSingleDeclaration(node);
-
-    if (!declaration) {
-      return false;
-    }
-
-    const { id, init } = declaration;
-
-    if (!init || init.type !== Syntax.MemberExpression || init.computed) {
-      return false;
-    }
-
-    const pathNode = extractRequirePathNode(init.object);
-
-    if (!pathNode) {
-      return false;
-    }
-
-    this.rewriteRequireAsImport(
-      'named-import',
-      node,
-      [new Binding(id.name, init.property.name)],
-      pathNode
-    );
-
-    splice(
-      node.parentNode.body, node,
-      {
-        type: Syntax.ImportDeclaration,
-        specifiers: [{
-          type: Syntax.ImportSpecifier,
-          local: id,
-          imported: init.property
-        }],
-        source: pathNode
-      }
-    );
-
-    return true;
-  }
-
-  /**
-   * @private
-   */
-  rewriteDeconstructedImportRequire(node: Object): boolean {
-    const { parentNode } = node;
-    if (!parentNode || parentNode.type !== Syntax.Program) {
-      return false;
-    }
-
-    const declaration = extractSingleDeclaration(node);
-
-    if (!declaration) {
-      return false;
-    }
-
-    const { id, init } = declaration;
-
-    if (id.type !== Syntax.ObjectPattern) {
-      return false;
-    }
-
-    const bindings = [];
-
-    for (let { key, value } of id.properties) {
-      if (value.type !== Syntax.Identifier) {
-        return false;
-      }
-      bindings.push(new Binding(value.name, key.name));
-    }
-
-    const pathNode = extractRequirePathNode(init);
-
-    if (!pathNode) {
-      return false;
-    }
-
-    this.rewriteRequireAsImport('named-import', node, bindings, pathNode);
-
-    splice(
-      node.parentNode.body, node,
-      {
-        type: Syntax.ImportDeclaration,
-        specifiers: bindings.map(binding => ({
-          type: Syntax.ImportSpecifier,
-          local: {
-            type: Syntax.Identifier,
-            name: binding.localName
-          },
-          imported: {
-            type: Syntax.Identifier,
-            name: binding.exportName
-          }
-        })),
-        source: pathNode
-      }
-    );
-
-    return true;
-  }
-
-  /**
-   * @private
-   */
-  rewriteSideEffectRequire(node: Object): boolean {
-    const { parentNode } = node;
-    if (!parentNode || parentNode.type !== Syntax.Program) {
-      return false;
-    }
-
-    if (node.type !== Syntax.ExpressionStatement) {
-      return false;
-    }
-
-    const pathNode = extractRequirePathNode(node.expression);
-
-    if (!pathNode) {
-      return false;
-    }
-
-    this.rewriteRequireAsImport('bare-import', node, [], pathNode);
-
-    splice(
-      node.parentNode.body, node,
-      {
-        type: Syntax.ImportDeclaration,
-        specifiers: [],
-        source: pathNode
-      }
-    );
-
-    return true;
-  }
-
-  /**
-   * @private
-   */
-  warnAboutUnsupportedRequire(node: Object): boolean {
-    const pathNode = extractRequirePathNode(node);
-
-    if (!pathNode) {
-      return false;
-    }
-
-    this.module.warn(
-      node,
-      'unsupported-import',
-      `Unsupported 'require' call cannot be transformed to an import`
-    );
-
-    return true;
-  }
-
-  /**
-   * @private
-   */
-  rewriteRequireAsImport(type: string, node: Object, bindings: Array<Binding>, pathNode: Object) {
-    this.rewriteRequireAsImports(
-      type,
-      node,
-      [{ bindings, pathNode }]
-    );
-  }
-
-  /**
-   * @private
-   */
-  rewriteRequireAsImports(type: string, node: Object, imports: Array<{ bindings: Array<Binding>, pathNode: Object }>) {
-    let importStatements = [];
-    imports.forEach(({ bindings, pathNode }) => {
-      this.metadata.imports.push({
-        type,
-        node: clone(node),
-        bindings,
-        path: pathNode.value
-      });
-
-      const pathString = this.slice(...pathNode.range);
-      if (bindings.length === 0) {
-        importStatements.push(`import ${pathString};`);
-      } else {
-        importStatements.push(`import ${ImportSpecifierListStringBuilder.build(bindings)} from ${pathString};`);
-      }
-    });
-    this.overwrite(
-      node.range[0],
-      node.range[1],
-      importStatements.join('\n')
-    );
-  }
-
-  /**
-   * @private
-   */
-  rewriteExport(node: Object): boolean {
-    return (
-      this.rewriteNamespaceExport(node) ||
-      this.rewriteNamedExport(node) ||
-      this.rewriteSingleExportAsDefaultExport(node)
-    );
-  }
-
-  /**
-   * @private
-   */
-  rewriteNamespaceExport(node: Object): boolean {
-    const right = extractModuleExportsSet(node);
-
-    if (!right) {
-      return false;
-    }
-
-    const pathNode = extractRequirePathNode(right);
-
-    if (!pathNode) {
-      return false;
-    }
-
-    this.overwrite(
-      ...node.expression.range,
-      `export * from ${this.slice(...pathNode.range)}`
-    );
-
-    this.metadata.exports.push({
-      type: 'namespace-export',
-      bindings: [],
-      node: clone(node)
-    });
-
-    replace(
-      node,
-      {
-        type: Syntax.ExportAllDeclaration,
-        source: pathNode
-      }
-    );
-  }
-
-  /**
-   * @private
-   */
-  rewriteNamedExport(node: Object): boolean {
-    if (node.type !== Syntax.ExpressionStatement) {
-      return false;
-    }
-
-    const { expression } = node;
-
-    if (expression.type !== Syntax.AssignmentExpression) {
-      return false;
-    }
-
-    const { left, right } = expression;
-
-    if (!isMemberExpression(left, /^((module\.)?exports|this)\.\w+$/) || left.computed) {
-      return false;
-    }
-
-    if (node.parentNode.type !== Syntax.Program) {
-      this.module.warn(
-        node,
-        'unsupported-export',
-        `Unsupported export cannot be turned into an 'export' statement`
-      );
-      return false;
-    }
-
-    if (right.type === Syntax.FunctionExpression) {
-      return this.rewriteNamedFunctionExpressionExport(node);
-    } else if (right.type === Syntax.Identifier) {
-      return this.rewriteNamedIdentifierExport(node);
-    } else {
-      return this.rewriteNamedValueExport(node);
-    }
-  }
-
-  /**
-   * @private
-   */
-  rewriteNamedFunctionExpressionExport(node: Object): boolean {
-    let {
-      expression: {
-        left: {
-          property: { name: exportName }
-        },
-        right,
-        right: { id }
-      }
-    } = node;
-
-    let { moduleScope } = this.module;
-    let fnBinding = id ? id.name : null;
-    let localName = claim(moduleScope, fnBinding || exportName);
-
-    this.metadata.exports.push({
-      type: 'named-export',
-      bindings: [
-        {
-          exportName,
-          localName
-        }
-      ],
-      node: clone(node)
-    });
-
-    let isFunctionDeclaration = true;
-
-    if (localName === exportName) {
-      // `exports.foo = function foo() {}` → `export function foo() {}`
-      //  ^^^^^^^^^^^^^^                      ^^^^^^^
-      this.overwrite(node.range[0], right.range[0], 'export ');
-      if (!id) {
-        this.insert(right.range[0] + 'function'.length, ` ${localName}`);
-        right.id = { type: Syntax.Identifier, name: exportName };
-      }
-      right.type = Syntax.FunctionDeclaration;
-      right.expression = false;
-      right.id = {
-        type: Syntax.Identifier,
-        name: exportName
-      };
-      delete right.range;
-      splice(
-        node.parentNode.body, node,
-        {
-          type: Syntax.ExportNamedDeclaration,
-          source: null,
-          specifiers: [],
-          declaration: right
-        }
-      );
-    } else {
-      let declaration = right;
-      if (!id) {
-        this.remove(node.range[0], right.range[0]);
-        this.insert(right.range[0] + 'function'.length, ` ${localName}`);
-        right.type = Syntax.FunctionDeclaration;
-        right.id = { type: Syntax.Identifier, name: localName };
-      } else if (fnBinding === localName) {
-        right.type = Syntax.FunctionDeclaration;
-        this.remove(node.range[0], right.range[0]);
-      } else {
-        isFunctionDeclaration = false;
-        this.overwrite(node.range[0], right.range[0], `let ${localName} = `);
-        declaration = {
-          type: Syntax.VariableDeclaration,
-          kind: 'let',
-          declarations: [
-            {
-              type: Syntax.VariableDeclarator,
-              id: {
-                type: Syntax.Identifier,
-                name: localName
-              },
-              init: right
-            }
-          ]
-        };
-      }
-      this.insert(node.range[1], `\nexport { ${localName} as ${exportName} };`);
-      splice(
-        node.parentNode.body, node,
-        declaration,
-        {
-          type: Syntax.ExportNamedDeclaration,
-          source: null,
-          specifiers: [
-            {
-              type: Syntax.ExportSpecifier,
-              exported: {
-                type: Syntax.Identifier,
-                name: exportName
-              },
-              local: {
-                type: Syntax.Identifier,
-                name: localName
-              }
-            }
-          ],
-          declaration: null
-        }
-      );
-    }
-
-    if (isFunctionDeclaration) {
-      const lastCharacterPosition = node.range[1] - 1;
-      if (this.charAt(lastCharacterPosition) === ';') {
-        this.remove(lastCharacterPosition, node.range[1]);
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * @private
-   */
-  rewriteNamedIdentifierExport(node: Object): boolean {
-    let {
-      expression: {
-        left: { property },
-        right
-      }
-    } = node;
-
-    let replacements;
-    let localBinding;
-
-    if (isDeclaredName(this.module.moduleScope, right.name)) {
-      localBinding = right.name;
-      if (right.name === property.name) {
-        this.overwrite(node.range[0], node.range[1], `export { ${right.name} };`);
-      } else {
-        this.overwrite(node.range[0], node.range[1], `export { ${right.name} as ${property.name} };`);
-      }
-      replacements = [
-        {
-          type: Syntax.ExportNamedDeclaration,
-          source: null,
-          declaration: null,
-          specifiers: [
-            {
-              type: Syntax.ExportSpecifier,
-              local: right,
-              exported: property
-            }
-          ]
-        }
-      ];
-    } else {
-      localBinding = claim(this.module.moduleScope, property.name);
-      if (localBinding === property.name) {
-        this.overwrite(node.range[0], right.range[0], `export let ${localBinding} = `);
-        replacements = [
-          {
-            type: Syntax.ExportNamedDeclaration,
-            source: null,
-            specifiers: [],
-            declaration: {
-              type: Syntax.VariableDeclaration,
-              kind: 'let',
-              declarations: [
-                {
-                  type: Syntax.VariableDeclarator,
-                  id: {
-                    type: Syntax.Identifier,
-                    name: localBinding
-                  },
-                  init: right
-                }
-              ]
-            }
-          }
-        ];
-      } else {
-        this.overwrite(node.range[0], right.range[0], `let ${localBinding} = `);
-        this.insert(node.range[1], `\nexport { ${localBinding} as ${property.name} };`);
-        replacements = [
-          {
-            type: Syntax.VariableDeclaration,
-            kind: 'let',
-            declarations: [
-              {
-                type: Syntax.VariableDeclarator,
-                id: {
-                  type: Syntax.Identifier,
-                  name: localBinding
-                },
-                init: right
-              }
-            ]
-          },
-          {
-            type: Syntax.ExportNamedDeclaration,
-            source: null,
-            declaration: null,
-            specifiers: [
-              {
-                type: Syntax.ExportSpecifier,
-                exported: property,
-                local: {
-                  type: Syntax.Identifier,
-                  name: localBinding
-                }
-              }
-            ]
-          }
-        ];
-      }
-    }
-
-    this.metadata.exports.push({
-      type: 'named-export',
-      bindings: [
-        {
-          exportName: property.name,
-          localName: localBinding
-        }
-      ],
-      node: clone(node)
-    });
-
-    splice(node.parentNode.body, node, ...replacements);
-
-    return true;
-  }
-
-  /**
-   * @private
-   */
-  rewriteNamedValueExport(node: Object): boolean {
-    let {
-      expression: {
-        left: { property },
-        right
-      }
-    } = node;
-
-    let localBinding = claim(this.module.moduleScope, property.name);
-    if (localBinding === property.name) {
-      // `exports.foo = 99;` → `export let foo = 99;`
-      //  ^^^^^^^^              ^^^^^^^^^^^
-      this.overwrite(node.range[0], property.range[0], 'export let ');
-
-      splice(
-        node.parentNode.body, node,
-        {
-          type: Syntax.ExportNamedDeclaration,
-          source: null,
-          specifiers: [],
-          declaration: {
-            type: Syntax.VariableDeclaration,
-            kind: 'let',
-            declarations: [
-              {
-                type: Syntax.VariableDeclarator,
-                id: {
-                  type: Syntax.Identifier,
-                  name: property.name
-                },
-                init: right
-              }
-            ]
-          }
-        }
-      );
-    } else {
-      // `exports.foo = 99;` → `let foo$1 = 99;`
-      //  ^^^^^^^^^^^^^^        ^^^^^^^^^^^^
-      this.overwrite(node.range[0], right.range[0], `let ${localBinding} = `);
-      let nodeIndex = node.parentNode.body.indexOf(node);
-      if (nodeIndex < 0) {
-        throw new Error(`could not locate ${node.type} at ${node.line}:${node.column} in its parent block`);
-      }
-      let nextStatement = node.parentNode.body[nodeIndex + 1];
-      // `export { foo$1 as foo };`
-      let exportStatement = `export { ${localBinding} as ${property.name} };`;
-      if (nextStatement) {
-        // Insert before the next statement…
-        this.insert(nextStatement.range[0], `${exportStatement}\n`);
-      } else {
-        // …or after the last one of the program.
-        this.insert(node.range[1], `\n${exportStatement}`);
-      }
-      splice(
-        node.parentNode.body, node,
-        {
-          type: Syntax.VariableDeclaration,
-          kind: 'let',
-          declarations: [
-            {
-              type: Syntax.VariableDeclarator,
-              id: {
-                type: Syntax.Identifier,
-                name: localBinding
-              },
-              init: right
-            }
-          ]
-        },
-        {
-          type: Syntax.ExportNamedDeclaration,
-          source: null,
-          declaration: null,
-          specifiers: [
-            {
-              type: Syntax.ExportSpecifier,
-              exported: {
-                type: Syntax.Identifier,
-                name: property.name
-              },
-              local: {
-                type: Syntax.Identifier,
-                name: localBinding
-              }
-            }
-          ]
-        }
-      );
-    }
-
-    this.metadata.exports.push({
-      type: 'named-export',
-      bindings: [
-        {
-          exportName: property.name,
-          localName: localBinding
-        }
-      ],
-      node: clone(node)
-    });
-
-    return true;
-  }
-
-  /**
-   * @private
-   */
-  rewriteSingleExportAsDefaultExport(node: Object): boolean {
-    const right = extractModuleExportsSet(node);
-
-    if (right === null) {
-      return false;
-    }
-
-    if (right.type === Syntax.ObjectExpression) {
-      const bindings = [];
-      for (let { key, value } of right.properties) {
-        bindings.push(new Binding(value.name, key.name));
-      }
-      this.metadata.exports.push({
-        type: 'named-export',
-        bindings,
-        node: clone(node)
-      });
-      this.overwrite(node.range[0], node.range[1], `export ${ExportSpecifierListStringBuilder.build(bindings)};`);
-
-      splice(
-        node.parentNode.body, node,
-        {
-          type: Syntax.ExportNamedDeclaration,
-          source: null,
-          declaration: null,
-          specifiers: bindings.map(binding => ({
-            type: Syntax.ExportSpecifier,
-            local: {
-              type: Syntax.Identifier,
-              name: binding.localName
-            },
-            exported: {
-              type: Syntax.Identifier,
-              name: binding.exportName
-            }
-          }))
-        }
-      );
-    } else {
-      this.metadata.exports.push({ type: 'default-export', node: clone(node) });
-      this.overwrite(node.range[0], right.range[0], 'export default ');
-
-      splice(
-        node.parentNode.body, node,
-        {
-          type: Syntax.ExportDefaultDeclaration,
-          declaration: right
-        }
-      );
-    }
-
-    return true;
-  }
-
-  /**
-   * @private
-   */
-  removeUseStrictDirective(node: Object): boolean {
-    if (node.type !== Syntax.ExpressionStatement) {
-      return false;
-    }
-
-    const { expression } = node;
-
-    if (expression.type !== Syntax.Literal) {
-      return false;
-    }
-
-    if (expression.value !== 'use strict') {
-      return false;
-    }
-
-    if (node.parentNode.body[0] !== node) {
-      return false;
-    }
-
-    let [ start, end ] = node.range;
-
-    if ((start === 0 || this.charAt(start - '\n'.length) === '\n') && this.charAt(end) === '\n') {
-      end += '\n'.length;
-    }
-
-    this.metadata.directives.push({
-      type: 'removed-strict-mode',
-      node
-    });
-
-    node.parentNode.body.splice(0, 1);
-
-    this.remove(start, end);
-    return true;
-  }
-}
-
-export function begin(module: Module): Context {
-  return new Context(module);
-}
-
-export function enter(node: Object, module: Module, context: Context): ?VisitorOption {
-  if (/Function/.test(node.type) || context.rewrite(node)) {
-    return VisitorOption.Skip;
-  }
-}
-
-function extractSingleDeclaration(node: Object): ?Object {
-  if (node.type !== Syntax.VariableDeclaration) {
+function extractSingleDeclaration(node: Node): ?Node {
+  if (!t.isVariableDeclaration(node)) {
     return null;
   }
 
@@ -940,12 +804,12 @@ function extractSingleDeclaration(node: Object): ?Object {
   return node.declarations[0];
 }
 
-function extractRequirePathNode(node: Object): ?Object {
-  if (!node || node.type !== Syntax.CallExpression) {
+function extractRequirePathNode(node: Node): ?Node {
+  if (!node || !t.isCallExpression(node)) {
     return null;
   }
 
-  if (node.callee.type !== Syntax.Identifier || node.callee.name !== 'require') {
+  if (!t.isIdentifier(node.callee, { name: 'require' })) {
     return null;
   }
 
@@ -953,9 +817,9 @@ function extractRequirePathNode(node: Object): ?Object {
     return null;
   }
 
-  const arg = node.arguments[0];
+  let arg = node.arguments[0];
 
-  if (arg.type !== Syntax.Literal || typeof arg.value !== 'string') {
+  if (!t.isStringLiteral(arg)) {
     return null;
   }
 
@@ -965,41 +829,8 @@ function extractRequirePathNode(node: Object): ?Object {
 /**
  * @private
  */
-function extractModuleExportsSet(node: Object): ?Object {
-  if (node.type !== Syntax.ExpressionStatement) {
-    return null;
-  }
-
-  const { expression } = node;
-
-  if (expression.type !== Syntax.AssignmentExpression) {
-    return null;
-  }
-
-  const { left, right } = expression;
-
-  if (left.type !== Syntax.MemberExpression || left.computed) {
-    return null;
-  }
-
-  const { object, property } = left;
-
-  if (object.type !== Syntax.Identifier || object.name !== 'module') {
-    return null;
-  }
-
-  if (property.type !== Syntax.Identifier || property.name !== 'exports') {
-    return null;
-  }
-
-  return right;
-}
-
-/**
- * @private
- */
-function extractModuleIIFE(node: Object): ?Object {
-  if (node.type !== Syntax.Program) {
+function extractModuleIIFE(node: Node): ?Node {
+  if (!t.isProgram(node)) {
     return null;
   }
 
@@ -1007,49 +838,47 @@ function extractModuleIIFE(node: Object): ?Object {
     return null;
   }
 
-  const [ statement ] = node.body;
+  let [ statement ] = node.body;
 
-  if (statement.type !== Syntax.ExpressionStatement) {
+  if (!t.isExpressionStatement(statement)) {
     return null;
   }
 
-  const { expression } = statement;
+  let { expression: call } = statement;
 
-  let call = expression;
-
-  if (call.type === Syntax.UnaryExpression && call.operator === 'void') {
+  if (t.isUnaryExpression(call) && call.operator === 'void') {
     // e.g. `void function(){}();`
     call = call.argument;
   }
 
-  if (call.type !== Syntax.CallExpression) {
+  if (!t.isCallExpression(call)) {
     return null;
   }
 
-  const { callee, arguments: args } = call;
+  let { callee, arguments: args } = call;
 
   let iife;
 
-  if (callee.type === Syntax.FunctionExpression) {
+  if (t.isFunctionExpression(callee)) {
     // e.g. `(function() {})();`
     if (args.length !== 0) {
       return null;
     }
 
     iife = callee;
-  } else if (callee.type === Syntax.MemberExpression) {
+  } else if (t.isMemberExpression(callee)) {
     // e.g. `(function() {}).call(this);`
-    const { object, property, computed } = callee;
+    let { object, property, computed } = callee;
 
-    if (computed || object.type !== Syntax.FunctionExpression) {
+    if (computed || !t.isFunctionExpression(object)) {
       return null;
     }
 
-    if (property.type !== Syntax.Identifier || property.name !== 'call') {
+    if (!t.isIdentifier(property, { name: 'call' })) {
       return null;
     }
 
-    if (args.length !== 1 || args[0].type !== Syntax.ThisExpression) {
+    if (args.length !== 1 || !t.isThisExpression(args[0])) {
       return null;
     }
 

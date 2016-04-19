@@ -21,75 +21,73 @@
                     "type": "BinaryExpression",
                     "operator": "+",
                     "left": {
-                      "type": "Literal",
-                      "value": "a",
-                      "raw": "\"a\""
+                      "type": "StringLiteral",
+                      "value": "a"
                     },
                     "right": {
-                      "type": "Literal",
-                      "value": "b",
-                      "raw": "\"b\""
+                      "type": "StringLiteral",
+                      "value": "b"
                     }
                   },
                   "right": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "typeAnnotation": null
                   }
                 },
                 "right": {
                   "type": "Identifier",
-                  "name": "d"
+                  "name": "d",
+                  "typeAnnotation": null
                 }
               },
               "right": {
-                "type": "Literal",
-                "value": "",
-                "raw": "\"\""
+                "type": "StringLiteral",
+                "value": ""
               }
             },
             "right": {
-              "type": "Literal",
-              "value": "e",
-              "raw": "\"e\""
+              "type": "StringLiteral",
+              "value": "e"
             }
           },
           "right": {
             "type": "Identifier",
-            "name": "f"
+            "name": "f",
+            "typeAnnotation": null
           }
         },
         "parts": [
           {
-            "type": "Literal",
-            "value": "a",
-            "raw": "\"a\""
+            "type": "StringLiteral",
+            "value": "a"
           },
           {
-            "type": "Literal",
-            "value": "b",
-            "raw": "\"b\""
-          },
-          {
-            "type": "Identifier",
-            "name": "c"
+            "type": "StringLiteral",
+            "value": "b"
           },
           {
             "type": "Identifier",
-            "name": "d"
-          },
-          {
-            "type": "Literal",
-            "value": "",
-            "raw": "\"\""
-          },
-          {
-            "type": "Literal",
-            "value": "e",
-            "raw": "\"e\""
+            "name": "c",
+            "typeAnnotation": null
           },
           {
             "type": "Identifier",
-            "name": "f"
+            "name": "d",
+            "typeAnnotation": null
+          },
+          {
+            "type": "StringLiteral",
+            "value": ""
+          },
+          {
+            "type": "StringLiteral",
+            "value": "e"
+          },
+          {
+            "type": "Identifier",
+            "name": "f",
+            "typeAnnotation": null
           }
         ]
       }

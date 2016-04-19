@@ -1,29 +1,22 @@
 [
   {
-    "type": "unsupported-export",
-    "message": "Unsupported export cannot be turned into an 'export' statement",
     "node": {
-      "type": "ExpressionStatement",
-      "expression": {
-        "type": "AssignmentExpression",
-        "operator": "=",
-        "left": {
-          "type": "MemberExpression",
-          "computed": false,
-          "object": {
-            "type": "Identifier",
-            "name": "exports"
-          },
-          "property": {
-            "type": "Identifier",
-            "name": "a"
-          }
+      "type": "Identifier",
+      "start": 17,
+      "end": 24,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 2
         },
-        "right": {
-          "type": "Identifier",
-          "name": "a"
+        "end": {
+          "line": 2,
+          "column": 9
         }
-      }
-    }
+      },
+      "name": "exports"
+    },
+    "type": "unsupported-export",
+    "message": "Unsupported export cannot be turned into an 'export' statement"
   }
 ]

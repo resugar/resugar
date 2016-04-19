@@ -17,27 +17,31 @@
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "MemberExpression",
-                "computed": false,
                 "object": {
                   "type": "Identifier",
-                  "name": "module"
+                  "name": "module",
+                  "typeAnnotation": null
                 },
                 "property": {
                   "type": "Identifier",
-                  "name": "exports"
-                }
+                  "name": "exports",
+                  "typeAnnotation": null
+                },
+                "computed": false
               },
               "property": {
                 "type": "Identifier",
-                "name": "a"
-              }
+                "name": "a",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
             "right": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "typeAnnotation": null
             }
           }
         }

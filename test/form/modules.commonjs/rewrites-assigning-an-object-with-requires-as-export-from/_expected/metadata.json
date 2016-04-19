@@ -1,0 +1,165 @@
+{
+  "objects.shorthand": {
+    "properties": []
+  },
+  "objects.concise": {
+    "properties": []
+  },
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "linter"
+          },
+          {
+            "exportName": "CLIEngine"
+          },
+          {
+            "exportName": "RuleTester"
+          },
+          {
+            "exportName": "SourceCode"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "computed": false,
+              "object": {
+                "type": "Identifier",
+                "name": "module"
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "exports"
+              }
+            },
+            "right": {
+              "type": "ObjectExpression",
+              "properties": [
+                {
+                  "type": "Property",
+                  "key": {
+                    "type": "Identifier",
+                    "name": "linter"
+                  },
+                  "value": {
+                    "type": "CallExpression",
+                    "callee": {
+                      "type": "Identifier",
+                      "name": "require"
+                    },
+                    "arguments": [
+                      {
+                        "type": "Literal",
+                        "value": "./eslint",
+                        "raw": "\"./eslint\""
+                      }
+                    ]
+                  },
+                  "kind": "init",
+                  "method": false,
+                  "shorthand": false,
+                  "computed": false
+                },
+                {
+                  "type": "Property",
+                  "key": {
+                    "type": "Identifier",
+                    "name": "CLIEngine"
+                  },
+                  "value": {
+                    "type": "CallExpression",
+                    "callee": {
+                      "type": "Identifier",
+                      "name": "require"
+                    },
+                    "arguments": [
+                      {
+                        "type": "Literal",
+                        "value": "./cli-engine",
+                        "raw": "\"./cli-engine\""
+                      }
+                    ]
+                  },
+                  "kind": "init",
+                  "method": false,
+                  "shorthand": false,
+                  "computed": false
+                },
+                {
+                  "type": "Property",
+                  "key": {
+                    "type": "Identifier",
+                    "name": "RuleTester"
+                  },
+                  "value": {
+                    "type": "CallExpression",
+                    "callee": {
+                      "type": "Identifier",
+                      "name": "require"
+                    },
+                    "arguments": [
+                      {
+                        "type": "Literal",
+                        "value": "./testers/rule-tester",
+                        "raw": "\"./testers/rule-tester\""
+                      }
+                    ]
+                  },
+                  "kind": "init",
+                  "method": false,
+                  "shorthand": false,
+                  "computed": false
+                },
+                {
+                  "type": "Property",
+                  "key": {
+                    "type": "Identifier",
+                    "name": "SourceCode"
+                  },
+                  "value": {
+                    "type": "CallExpression",
+                    "callee": {
+                      "type": "Identifier",
+                      "name": "require"
+                    },
+                    "arguments": [
+                      {
+                        "type": "Literal",
+                        "value": "./util/source-code",
+                        "raw": "\"./util/source-code\""
+                      }
+                    ]
+                  },
+                  "kind": "init",
+                  "method": false,
+                  "shorthand": false,
+                  "computed": false
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  },
+  "functions.arrow": {
+    "functions": []
+  },
+  "declarations.block-scope": {
+    "declarations": []
+  },
+  "objects.destructuring": [],
+  "strings.template": {
+    "concatenations": []
+  }
+}

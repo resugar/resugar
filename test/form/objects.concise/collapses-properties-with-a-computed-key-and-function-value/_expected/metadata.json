@@ -2,26 +2,29 @@
   "objects.concise": {
     "properties": [
       {
-        "type": "Property",
-        "kind": "init",
+        "type": "ObjectProperty",
         "computed": true,
-        "shorthand": false,
-        "method": false,
         "key": {
           "type": "Identifier",
-          "name": "a"
+          "name": "a",
+          "typeAnnotation": null
         },
         "value": {
           "type": "FunctionExpression",
-          "generator": false,
-          "expression": false,
           "id": null,
           "params": [],
           "body": {
             "type": "BlockStatement",
+            "directives": [],
             "body": []
-          }
-        }
+          },
+          "generator": false,
+          "async": false,
+          "returnType": null,
+          "typeParameters": null
+        },
+        "shorthand": false,
+        "decorators": null
       }
     ]
   }

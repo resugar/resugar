@@ -1,20 +1,59 @@
 [
   {
-    "type": "unsupported-import",
-    "message": "Unsupported 'require' call cannot be transformed to an import",
     "node": {
       "type": "CallExpression",
+      "start": 0,
+      "end": 16,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 16
+        }
+      },
       "callee": {
         "type": "Identifier",
+        "start": 0,
+        "end": 7,
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
         "name": "require"
       },
       "arguments": [
         {
-          "type": "Literal",
-          "value": "debug",
-          "raw": "'debug'"
+          "type": "StringLiteral",
+          "start": 8,
+          "end": 15,
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 8
+            },
+            "end": {
+              "line": 1,
+              "column": 15
+            }
+          },
+          "extra": {
+            "rawValue": "debug",
+            "raw": "'debug'"
+          },
+          "value": "debug"
         }
       ]
-    }
+    },
+    "type": "unsupported-import",
+    "message": "Unsupported 'require' call cannot be transformed into an import"
   }
 ]

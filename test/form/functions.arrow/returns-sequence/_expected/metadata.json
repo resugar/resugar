@@ -1,15 +1,4 @@
 {
-  "objects.shorthand": {
-    "properties": []
-  },
-  "objects.concise": {
-    "properties": []
-  },
-  "modules.commonjs": {
-    "imports": [],
-    "exports": [],
-    "directives": []
-  },
   "functions.arrow": {
     "functions": [
       {
@@ -18,6 +7,7 @@
         "params": [],
         "body": {
           "type": "BlockStatement",
+          "directives": [],
           "body": [
             {
               "type": "ReturnStatement",
@@ -26,11 +16,13 @@
                 "expressions": [
                   {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "typeAnnotation": null
                   },
                   {
                     "type": "Identifier",
-                    "name": "b"
+                    "name": "b",
+                    "typeAnnotation": null
                   }
                 ]
               }
@@ -38,15 +30,10 @@
           ]
         },
         "generator": false,
-        "expression": false
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
       }
     ]
-  },
-  "declarations.block-scope": {
-    "declarations": []
-  },
-  "objects.destructuring": [],
-  "strings.template": {
-    "concatenations": []
   }
 }

@@ -1,291 +1,352 @@
-import BaseContext from '../context';
-import clone from '../utils/clone';
-import estraverse from 'estraverse';
-import hasParens from '../utils/hasParens';
-import needsParens from '../utils/needsParens';
+import * as t from 'babel-types';
+import cleanNode from '../utils/cleanNode.js';
 import replace from '../utils/replace';
 import type Module from '../module';
-import type { ScopeManager } from 'escope';
-
-const { Syntax, VisitorOption } = estraverse;
+import type { Node, Path, Token, Visitor } from '../types';
+import { hasParens } from '../utils/hasParens';
+import { needsParens } from '../utils/needsParens';
+import { findToken, findEndBraceTokenBalanced, findEndParenthesisTokenBalanced } from '../utils/findTokens';
 
 export const name = 'functions.arrow';
 export const description = 'Transform regular functions to arrow functions as appropriate.';
 
-class Context extends BaseContext {
-  constructor(module: Module) {
-    super(name, module);
-    module.metadata[name] = {
-      functions: []
-    };
-  }
+export function visitor(module: Module): Visitor {
+  let editor = module.magicString;
+  let functions = metadata(module).functions;
 
-  rewrite(node: Object): boolean {
-    return (
-      this.rewriteFunctionExpression(node) ||
-      this.rewriteCallExpression(node)
-    );
-  }
+  return {
+    FunctionExpression(path) {
+      let { node, parent } = path;
 
-  rewriteFunctionExpression(node: Object): boolean {
-    if (node.type !== Syntax.FunctionExpression) {
-      return false;
-    }
-
-    if (node.generator) {
-      return false;
-    }
-
-    if (node.id) {
-      return false;
-    }
-
-    if (node.body.body.length !== 1) {
-      return false;
-    }
-
-    const { parentNode } = node;
-
-    if (parentNode.type === Syntax.Property && parentNode.method) {
-      return false;
-    }
-
-    if (parentNode.type === Syntax.MethodDefinition && parentNode.value === node) {
-      return false;
-    }
-
-    const [ statement ] = node.body.body;
-
-    if (statement.type !== Syntax.ReturnStatement || !statement.argument) {
-      return false;
-    }
-
-    if (referencesThisOrArguments(node, this.module.scopeManager)) {
-      return false;
-    }
-
-    this._rewriteBlocklessArrowFunction(node);
-
-    if (parentNode.type === Syntax.ExpressionStatement && hasParens(node, this.module)) {
-      const { start, end } = this.module.tokenRangeForNode(node);
-      const { tokens } = this.module;
-      const lparen = tokens[start - 1];
-      const rparen = tokens[end];
-      this.remove(lparen.range[0], node.range[0]);
-      this.remove(node.range[1], rparen.range[1]);
-    }
-
-    return true;
-  }
-
-  rewriteCallExpression(node: Object): boolean {
-    if (node.type !== Syntax.CallExpression) {
-      return false;
-    }
-
-    const { callee } = node;
-
-    if (callee.type !== Syntax.MemberExpression) {
-      return false;
-    }
-
-    const { object, property } = callee;
-
-    if (object.type !== Syntax.FunctionExpression || object.id) {
-      return false;
-    }
-
-    if (property.type !== Syntax.Identifier || property.name !== 'bind') {
-      return false;
-    }
-
-    if (node.arguments.length !== 1 || node.arguments[0].type !== Syntax.ThisExpression) {
-      return false;
-    }
-
-    if (referencesArguments(object, this.module.scopeManager)) {
-      return false;
-    }
-
-    this._rewriteBlockArrowFunction(object);
-
-    // `() => {}.bind(this)` -> `() => {}bind(this)`
-    //          ^
-    this.module.tokensBetweenNodes(object, property).forEach(token => {
-      if (token.type === 'Punctuator' && token.value === '.') {
-        this.remove(...token.range);
+      // Skip generator functions.
+      if (node.generator) {
+        return;
       }
-    });
 
-    // `() => {}bind(this)` -> `() => {}`
-    //          ^^^^^^^^^^
-    this.remove(property.range[0], node.range[1]);
+      // Only process anonymous functions.
+      if (node.id) {
+        return;
+      }
 
-    replace(node, object);
+      // Skip object literal methods.
+      if (t.isProperty(parent) && parent.method) {
+        return;
+      }
 
-    return true;
-  }
+      // Skip class methods.
+      if (t.isClassMethod(parent) && parent.value === node) {
+        return;
+      }
 
-  _rewriteBlocklessArrowFunction(node: Object) {
-    const [ statement ] = node.body.body;
+      // Only process functions with a single return statement.
+      if (node.body.body.length !== 1) {
+        return;
+      }
 
-    this.metadata.functions.push(clone(node));
+      let [ statement ] = node.body.body;
 
-    const tokens = this.module.tokensForNode(node);
-    let tokenIndex = 0;
-    const functionToken = tokens[tokenIndex++];
-    const paramStartParenToken = tokens[tokenIndex++];
-    let paramEndParenToken;
+      if (!t.isReturnStatement(statement) || !statement.argument) {
+        return;
+      }
 
-    if (node.params.length === 0) {
-      paramEndParenToken = tokens[tokenIndex++];
-    } else {
-      const lastParam = node.params[node.params.length - 1];
-      while (tokenIndex < tokens.length) {
-        const token = tokens[tokenIndex++];
-        if (token.range[0] >= lastParam.range[1] && token.value === ')') {
-          paramEndParenToken = token;
-          break;
+      // Skip functions referencing `this` or `arguments`.
+      if (referencesThisOrArguments(path)) {
+        return;
+      }
+
+      rewriteBlocklessArrowFunction(path, module, functions);
+
+      // Remove extra parentheses if they're no longer needed.
+      if (t.isExpressionStatement(parent) && hasParens(path, module)) {
+        let { start, end } = module.tokenIndexRangeForSourceRange(node.start, node.end);
+        let { tokens } = module;
+        let lparen = tokens[start - 1];
+        let rparen = tokens[end];
+        editor.remove(lparen.start, node.start);
+        editor.remove(node.end, rparen.end);
+      }
+    },
+
+    /**
+     * Look for functions that are manually bound, e.g.
+     *
+     *   this.onclick = (function() {
+     *     console.log('registering');
+     *     this.register();
+     *   }).bind(this);
+     */
+    CallExpression(path) {
+      let { node, node: { callee } } = path;
+
+      if (!t.isMemberExpression(callee)) {
+        return;
+      }
+
+      let { object, property } = callee;
+
+      if (!t.isFunctionExpression(object) || object.id) {
+        return;
+      }
+
+      if (!t.isIdentifier(property) || property.name !== 'bind') {
+        return;
+      }
+
+      if (node.arguments.length !== 1 || !t.isThisExpression(node.arguments[0])) {
+        return;
+      }
+
+      let objectPath = path.get('callee').get('object');
+
+      if (referencesArguments(objectPath)) {
+        return;
+      }
+
+      rewriteBlockArrowFunction(objectPath, module, functions);
+
+      // `() => {}.bind(this)` -> `() => {}bind(this)`
+      //          ^
+      let { start, end } = module.tokenIndexRangeForSourceRange(object.end, property.start);
+      let tokens = module.tokens;
+
+      for (let i = start; i < end; i++) {
+        let token = tokens[i];
+        if (token.type.label === '.') {
+          editor.remove(token.start, token.end);
         }
       }
+
+      // `() => {}bind(this)` -> `() => {}`
+      //          ^^^^^^^^^^
+      editor.remove(property.start, node.end);
+
+      replace(node, object);
     }
+  };
+}
 
-    const paramsNeedsParens = node.params.length !== 1 || node.params[0].type !== Syntax.Identifier;
+function referencesThisOrArguments(path: Path): boolean {
+  let result = false;
 
-    if (!paramsNeedsParens) {
-      // `(a)` -> `a`
-      //  ^ ^
-      this.remove(...paramStartParenToken.range);
-      this.remove(...paramEndParenToken.range);
-    }
+  path.scope.traverse(path.node, {
+    Function(fnPath) {
+      // Skip nested functions.
+      fnPath.skip();
+    },
 
-    const blockStartBraceToken = tokens[tokenIndex++];
-    const blockEndBraceToken = tokens[tokens.length - 1];
+    ThisExpression(thisPath) {
+      result = true;
+      thisPath.stop();
+    },
 
-    // `function() {` -> `() =>`
-    //  ^^^^^^^^   ^         ^^
-    this.remove(functionToken.range[0], paramStartParenToken.range[0]);
-    this.overwrite(...blockStartBraceToken.range, '=>');
-
-    const contentBetweenBlockStartBraceAndReturn = this.slice(
-      blockStartBraceToken.range[1],
-      statement.range[0]
-    );
-    const contentOfReturnArgument = this.slice(...statement.argument.range);
-
-    const shouldCollapseToOneLine = (
-      // Wouldn't remove anything interesting.
-      /^\s*$/.test(contentBetweenBlockStartBraceAndReturn) &&
-      // Returned value isn't multi-line.
-      /^[^\n\r]*$/.test(contentOfReturnArgument)
-    );
-
-    if (shouldCollapseToOneLine) {
-      // Removes whitespace between `{` and `return` and `foo;` and `}`.
-      //
-      //  function() {
-      //    return foo;
-      //  }
-      //
-      this.overwrite(blockStartBraceToken.range[1], statement.range[0], ' ');
-      this.remove(statement.range[1], blockEndBraceToken.range[0]);
-    }
-
-    const returnArgumentNeedsParens = statement.argument.type === Syntax.SequenceExpression;
-
-    // `return foo;` -> `foo`
-    //  ^^^^^^^   ^
-    this.overwrite(
-      statement.range[0],
-      statement.argument.range[0],
-      returnArgumentNeedsParens ? '(' : ''
-    );
-    this.overwrite(
-      statement.argument.range[1],
-      statement.range[1],
-      returnArgumentNeedsParens ? ')' : ''
-    );
-
-    // `…}` -> `…`
-    this.remove(...blockEndBraceToken.range);
-
-    node.type = Syntax.ArrowFunctionExpression;
-    node.body = statement.argument;
-    node.expression = true;
-
-    if (needsParens(node) && !hasParens(node, this.module)) {
-      this.insert(node.range[0], '(');
-      this.insert(node.range[1], ')');
-    }
-
-    if (node.body.type === 'ObjectExpression') {
-      this.insert(node.body.range[0], '(');
-      this.insert(node.body.range[1], ')');
-    }
-  }
-
-  _rewriteBlockArrowFunction(node: Object) {
-    this.metadata.functions.push(clone(node));
-
-    const tokens = this.module.tokensForNode(node);
-    let tokenIndex = 0;
-    const functionToken = tokens[tokenIndex++];
-    const paramStartParenToken = tokens[tokenIndex++];
-    let paramEndParenToken;
-
-    if (node.params.length === 0) {
-      paramEndParenToken = tokens[tokenIndex++];
-    } else {
-      const lastParam = node.params[node.params.length - 1];
-      while (tokenIndex < tokens.length) {
-        const token = tokens[tokenIndex++];
-        if (token.range[0] >= lastParam.range[1] && token.value === ')') {
-          paramEndParenToken = token;
-          break;
-        }
+    Identifier(identPath) {
+      if (identPath.node.name === 'arguments') {
+        result = true;
+        identPath.stop();
       }
     }
+  });
 
-    const paramsNeedsParens = node.params.length !== 1 || node.params[0].type !== Syntax.Identifier;
+  return result;
+}
 
-    if (!paramsNeedsParens) {
-      // `(a)` -> `a`
-      //  ^ ^
-      this.remove(...paramStartParenToken.range);
-      this.remove(...paramEndParenToken.range);
+function referencesArguments(path: Path): boolean {
+  let result = false;
+
+  path.scope.traverse(path.node, {
+    Function(fnPath: Path) {
+      // Skip nested functions.
+      fnPath.skip();
+    },
+
+    Identifier(identPath: Path) {
+      if (identPath.node.name === 'arguments') {
+        result = true;
+        identPath.stop();
+      }
     }
+  });
 
-    const blockStartBraceToken = tokens[tokenIndex++];
+  return result;
+}
 
-    // `function() {` -> `() =>`
-    //  ^^^^^^^^   ^         ^^
-    this.remove(functionToken.range[0], paramStartParenToken.range[0]);
-    this.insert(blockStartBraceToken.range[0], '=> ');
+function metadata(module: Module): { functions: Array<Node> } {
+  if (!module.metadata[name]) {
+    module.metadata[name] = { functions: [] };
+  }
+  return module.metadata[name];
+}
 
-    node.type = Syntax.ArrowFunctionExpression;
+function rewriteBlocklessArrowFunction(path: Path, module: Module, functions: Array<Node>) {
+  let { node } = path;
+  let [ statement ] = node.body.body;
+
+  functions.push(cleanNode(node));
+
+  let {
+    fn,
+    paramsStart,
+    paramsEnd,
+    blockStart,
+    blockEnd
+  } = getFunctionPunctuation(node, module);
+
+  let paramsNeedParens = node.params.length !== 1 || !t.isIdentifier(node.params[0]);
+
+  let editor = module.magicString;
+  if (!paramsNeedParens) {
+    // `(a)` -> `a`
+    //  ^ ^
+    editor.remove(paramsStart.start, paramsStart.end);
+    editor.remove(paramsEnd.start, paramsEnd.end);
+  }
+
+  // `function() {` -> `() =>`
+  editor.remove(fn.start, paramsStart.start);
+  editor.overwrite(blockStart.start, blockStart.end, '=>');
+
+  let contentBetweenBlockStartBraceAndReturn = module.source.slice(
+    blockStart.end,
+    statement.start
+  );
+  let contentOfReturnArgument = module.sourceOf(statement.argument);
+
+  let shouldCollapseToOneLine = (
+    // Wouldn't remove anything interesting.
+    /^\s*$/.test(contentBetweenBlockStartBraceAndReturn) &&
+    // Returned value isn't multi-line.
+    /^[^\n\r]*$/.test(contentOfReturnArgument)
+  );
+
+  if (shouldCollapseToOneLine) {
+    // Removes whitespace between `{` and `return` and `foo;` and `}`.
+    //
+    //  function() {
+    //    return foo;
+    //  }
+    //
+    editor.overwrite(blockStart.end, statement.start, ' ');
+    editor.remove(statement.end, blockEnd.end);
+  }
+
+  let returnArgumentNeedsParens = t.isSequenceExpression(statement.argument);
+
+  // `return foo;` -> `foo`
+  //  ^^^^^^^   ^
+  editor.overwrite(
+    statement.start,
+    statement.argument.start,
+    returnArgumentNeedsParens ? '(' : ''
+  );
+  editor.overwrite(
+    statement.argument.end,
+    statement.end,
+    returnArgumentNeedsParens ? ')' : ''
+  );
+
+  // `…}` -> `…`
+  editor.remove(blockEnd.start, blockEnd.end);
+
+  node.type = 'ArrowFunctionExpression';
+  node.body = statement.argument;
+  node.expression = true;
+
+  if (needsParens(path) && !hasParens(path, module)) {
+    editor.insert(node.start, '(');
+    editor.insert(node.end, ')');
+  }
+
+  if (t.isObjectExpression(node.body)) {
+    editor.insert(node.body.start, '(');
+    editor.insert(node.body.end, ')');
   }
 }
 
-export function begin(module: Module): Context {
-  return new Context(module);
-}
+/**
+ * Rewrites a function expression to an arrow function, preserving the block.
+ */
+function rewriteBlockArrowFunction(path: Path, module: Module, functions: Array<Node>) {
+  let { node } = path;
 
-export function enter(node: Object, module: Module, context: Context): ?VisitorOption {
-  context.rewrite(node);
-  return null;
-}
+  functions.push(cleanNode(node));
 
-function referencesThisOrArguments(node: Object, scopeManager: ScopeManager): boolean {
-  const scope = scopeManager.acquire(node);
+  let {
+    fn,
+    paramsStart,
+    paramsEnd,
+    blockStart
+  } = getFunctionPunctuation(node, module);
 
-  if (scope.thisFound) {
-    return true;
+  let paramsNeedsParens = node.params.length !== 1 || !t.isIdentifier(node.params[0]);
+  let editor = module.magicString;
+
+  if (!paramsNeedsParens) {
+    // `(a)` -> `a`
+    //  ^ ^
+    editor.remove(paramsStart.start, paramsStart.end);
+    editor.remove(paramsEnd.start, paramsEnd.end);
   }
 
-  return referencesArguments(node, scopeManager);
+  // `function() {` -> `() =>`
+  //  ^^^^^^^^   ^         ^^
+  editor.remove(fn.start, paramsStart.start);
+  editor.insert(blockStart.start, '=> ');
+
+  node.type = 'ArrowFunctionExpression';
 }
 
-function referencesArguments(node: Object, scopeManager: ScopeManager): boolean {
-  const scope = scopeManager.acquire(node);
-  return scope.references.some(({ identifier }) => identifier.name === 'arguments');
+type FunctionPunctuation = {
+  fn: Token,
+  paramsStart: Token,
+  paramsEnd: Token,
+  blockStart: Token,
+  blockEnd: Token,
+};
+
+/**
+ * Get the tokens for the relevant function punctuation, i.e.
+ *
+ *            paramsStart    paramsEnd
+ *             fn       |    |
+ *              |       |    |
+ *              v       v    v
+ *   let add = (function(a, b) { <- blockStart
+ *     return a + b;
+ *   });
+ *   ^
+ *   |
+ *   blockEnd
+ */
+function getFunctionPunctuation(node: Node, module: Module): FunctionPunctuation {
+  let tokens = module.tokensForNode(node);
+  let { index: functionTokenIndex, token: fn } = findToken(
+    'function',
+    tokens,
+    0
+  );
+  let { index: paramsStartIndex, token: paramsStart } = findToken(
+    '(',
+    tokens,
+    functionTokenIndex
+  );
+  let { index: paramsEndIndex, token: paramsEnd } = findEndParenthesisTokenBalanced(
+    tokens,
+    paramsStartIndex
+  );
+  let { index: blockStartIndex, token: blockStart } = findToken(
+    '{',
+    tokens,
+    paramsEndIndex
+  );
+  let { token: blockEnd } = findEndBraceTokenBalanced(
+    tokens,
+    blockStartIndex
+  );
+  return {
+    fn,
+    paramsStart,
+    paramsEnd,
+    blockStart,
+    blockEnd
+  };
 }

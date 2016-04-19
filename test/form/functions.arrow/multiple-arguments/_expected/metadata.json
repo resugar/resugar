@@ -4,20 +4,21 @@
       {
         "type": "FunctionExpression",
         "id": null,
-        "generator": false,
-        "expression": false,
         "params": [
           {
             "type": "Identifier",
-            "name": "n"
+            "name": "n",
+            "typeAnnotation": null
           },
           {
             "type": "Identifier",
-            "name": "i"
+            "name": "i",
+            "typeAnnotation": null
           }
         ],
         "body": {
           "type": "BlockStatement",
+          "directives": [],
           "body": [
             {
               "type": "ReturnStatement",
@@ -26,16 +27,22 @@
                 "operator": "*",
                 "left": {
                   "type": "Identifier",
-                  "name": "n"
+                  "name": "n",
+                  "typeAnnotation": null
                 },
                 "right": {
                   "type": "Identifier",
-                  "name": "i"
+                  "name": "i",
+                  "typeAnnotation": null
                 }
               }
             }
           ]
-        }
+        },
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
       }
     ]
   }

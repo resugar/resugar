@@ -6,39 +6,41 @@
           "type": "BinaryExpression",
           "operator": "+",
           "left": {
-            "type": "Literal",
-            "value": "a",
-            "raw": "\"a\""
+            "type": "StringLiteral",
+            "value": "a"
           },
           "right": {
             "type": "BinaryExpression",
             "operator": "+",
             "left": {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "typeAnnotation": null
             },
             "right": {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "typeAnnotation": null
             }
           }
         },
         "parts": [
           {
-            "type": "Literal",
-            "value": "a",
-            "raw": "\"a\""
+            "type": "StringLiteral",
+            "value": "a"
           },
           {
             "type": "BinaryExpression",
             "operator": "+",
             "left": {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "typeAnnotation": null
             },
             "right": {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "typeAnnotation": null
             }
           }
         ]

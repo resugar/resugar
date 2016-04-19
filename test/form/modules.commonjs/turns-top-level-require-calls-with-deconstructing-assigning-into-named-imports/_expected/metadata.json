@@ -1,24 +1,8 @@
 {
   "modules.commonjs": {
-    "exports": [],
     "imports": [
       {
         "type": "named-import",
-        "path": "math",
-        "bindings": [
-          {
-            "exportName": "pow",
-            "localName": "pow"
-          },
-          {
-            "exportName": "sin",
-            "localName": "sin"
-          },
-          {
-            "exportName": "cos",
-            "localName": "cosine"
-          }
-        ],
         "node": {
           "type": "VariableDeclaration",
           "kind": "var",
@@ -29,71 +13,91 @@
                 "type": "ObjectPattern",
                 "properties": [
                   {
-                    "type": "Property",
+                    "type": "ObjectProperty",
+                    "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "name": "pow"
+                      "name": "pow",
+                      "typeAnnotation": null
                     },
                     "value": {
                       "type": "Identifier",
-                      "name": "pow"
+                      "name": "pow",
+                      "typeAnnotation": null
                     },
-                    "kind": "init",
-                    "computed": false,
-                    "method": false,
-                    "shorthand": true
+                    "shorthand": true,
+                    "decorators": null
                   },
                   {
-                    "type": "Property",
+                    "type": "ObjectProperty",
+                    "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "name": "sin"
+                      "name": "sin",
+                      "typeAnnotation": null
                     },
                     "value": {
                       "type": "Identifier",
-                      "name": "sin"
+                      "name": "sin",
+                      "typeAnnotation": null
                     },
-                    "kind": "init",
-                    "computed": false,
-                    "method": false,
-                    "shorthand": true
+                    "shorthand": true,
+                    "decorators": null
                   },
                   {
-                    "type": "Property",
+                    "type": "ObjectProperty",
+                    "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "name": "cos"
+                      "name": "cos",
+                      "typeAnnotation": null
                     },
                     "value": {
                       "type": "Identifier",
-                      "name": "cosine"
+                      "name": "cosine",
+                      "typeAnnotation": null
                     },
-                    "kind": "init",
-                    "computed": false,
-                    "method": false,
-                    "shorthand": false
+                    "shorthand": false,
+                    "decorators": null
                   }
-                ]
+                ],
+                "typeAnnotation": null
               },
               "init": {
                 "type": "CallExpression",
-                "arguments": [
-                  {
-                    "type": "Literal",
-                    "value": "math",
-                    "raw": "'math'"
-                  }
-                ],
                 "callee": {
                   "type": "Identifier",
-                  "name": "require"
-                }
+                  "name": "require",
+                  "typeAnnotation": null
+                },
+                "arguments": [
+                  {
+                    "type": "StringLiteral",
+                    "value": "math"
+                  }
+                ]
               }
             }
           ]
-        }
+        },
+        "bindings": [
+          {
+            "localName": "pow",
+            "exportName": "pow"
+          },
+          {
+            "localName": "sin",
+            "exportName": "sin"
+          },
+          {
+            "localName": "cosine",
+            "exportName": "cos"
+          }
+        ],
+        "path": "math"
       }
     ],
+    "exports": [],
     "directives": []
   }
 }

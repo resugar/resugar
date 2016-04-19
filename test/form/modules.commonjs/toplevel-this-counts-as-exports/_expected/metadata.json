@@ -17,18 +17,20 @@
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "ThisExpression"
               },
               "property": {
                 "type": "Identifier",
-                "name": "foo"
-              }
+                "name": "foo",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
             "right": {
               "type": "Identifier",
-              "name": "foo"
+              "name": "foo",
+              "typeAnnotation": null
             }
           }
         }

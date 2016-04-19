@@ -9,6 +9,7 @@
       "params": [],
       "body": {
         "type": "BlockStatement",
+        "directives": [],
         "body": [
           {
             "type": "ExpressionStatement",
@@ -16,20 +17,23 @@
               "type": "CallExpression",
               "callee": {
                 "type": "MemberExpression",
-                "computed": false,
                 "object": {
                   "type": "Identifier",
-                  "name": "console"
+                  "name": "console",
+                  "typeAnnotation": null
                 },
                 "property": {
                   "type": "Identifier",
-                  "name": "log"
-                }
+                  "name": "log",
+                  "typeAnnotation": null
+                },
+                "computed": false
               },
               "arguments": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "typeAnnotation": null
                 }
               ]
             }
@@ -37,7 +41,9 @@
         ]
       },
       "generator": false,
-      "expression": false
+      "async": false,
+      "returnType": null,
+      "typeParameters": null
     }
   }
 }

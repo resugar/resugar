@@ -131,20 +131,6 @@ export function doSomething() {
      * Set this to `true` to only turn `var` into `let`, never `const`.
      */
     disableConst: boolean
-  },
-  /**
-   * Pass a custom function to parse the code as desired. Most likely you'll
-   * want to use `babel-eslint` to parse any valid babel code. To set this
-   * option in code, do something like this:
-   *
-   *   import { parse } from 'babel-eslint';
-   *   convert(code, { parse: parse });
-   *
-   * To set this option from the command-line interface, make sure your custom
-   * parser is installed, then use it like so:
-   *
-   *   $ esnext -I index.js --parser babel-eslint
-   */
-  parse: (source: string) => AST
+  }
 }
 ```

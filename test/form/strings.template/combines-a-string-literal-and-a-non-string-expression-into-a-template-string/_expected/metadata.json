@@ -6,24 +6,24 @@
           "type": "BinaryExpression",
           "operator": "+",
           "left": {
-            "type": "Literal",
-            "value": "foo",
-            "raw": "\"foo\""
+            "type": "StringLiteral",
+            "value": "foo"
           },
           "right": {
             "type": "Identifier",
-            "name": "bar"
+            "name": "bar",
+            "typeAnnotation": null
           }
         },
         "parts": [
           {
-            "type": "Literal",
-            "value": "foo",
-            "raw": "\"foo\""
+            "type": "StringLiteral",
+            "value": "foo"
           },
           {
             "type": "Identifier",
-            "name": "bar"
+            "name": "bar",
+            "typeAnnotation": null
           }
         ]
       }

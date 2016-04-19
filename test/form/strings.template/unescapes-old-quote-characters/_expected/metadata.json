@@ -15,55 +15,53 @@
                 "type": "BinaryExpression",
                 "operator": "+",
                 "left": {
-                  "type": "Literal",
-                  "value": "a",
-                  "raw": "\"a\""
+                  "type": "StringLiteral",
+                  "value": "a"
                 },
                 "right": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "typeAnnotation": null
                 }
               },
               "right": {
-                "type": "Literal",
-                "value": "\"",
-                "raw": "\"\\\"\""
+                "type": "StringLiteral",
+                "value": "\""
               }
             },
             "right": {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "typeAnnotation": null
             }
           },
           "right": {
-            "type": "Literal",
-            "value": "'",
-            "raw": "'\\''"
+            "type": "StringLiteral",
+            "value": "'"
           }
         },
         "parts": [
           {
-            "type": "Literal",
-            "value": "a",
-            "raw": "\"a\""
+            "type": "StringLiteral",
+            "value": "a"
           },
           {
             "type": "Identifier",
-            "name": "b"
+            "name": "b",
+            "typeAnnotation": null
           },
           {
-            "type": "Literal",
-            "value": "\"",
-            "raw": "\"\\\"\""
+            "type": "StringLiteral",
+            "value": "\""
           },
           {
             "type": "Identifier",
-            "name": "c"
+            "name": "c",
+            "typeAnnotation": null
           },
           {
-            "type": "Literal",
-            "value": "'",
-            "raw": "'\\''"
+            "type": "StringLiteral",
+            "value": "'"
           }
         ]
       },
@@ -72,26 +70,22 @@
           "type": "BinaryExpression",
           "operator": "+",
           "left": {
-            "type": "Literal",
-            "value": "'",
-            "raw": "'\\''"
+            "type": "StringLiteral",
+            "value": "'"
           },
           "right": {
-            "type": "Literal",
-            "value": "\"",
-            "raw": "\"\\\"\""
+            "type": "StringLiteral",
+            "value": "\""
           }
         },
         "parts": [
           {
-            "type": "Literal",
-            "value": "'",
-            "raw": "'\\''"
+            "type": "StringLiteral",
+            "value": "'"
           },
           {
-            "type": "Literal",
-            "value": "\"",
-            "raw": "\"\\\"\""
+            "type": "StringLiteral",
+            "value": "\""
           }
         ]
       },
@@ -100,26 +94,22 @@
           "type": "BinaryExpression",
           "operator": "+",
           "left": {
-            "type": "Literal",
-            "value": "\"",
-            "raw": "\"\\\"\""
+            "type": "StringLiteral",
+            "value": "\""
           },
           "right": {
-            "type": "Literal",
-            "value": "'",
-            "raw": "'\\''"
+            "type": "StringLiteral",
+            "value": "'"
           }
         },
         "parts": [
           {
-            "type": "Literal",
-            "value": "\"",
-            "raw": "\"\\\"\""
+            "type": "StringLiteral",
+            "value": "\""
           },
           {
-            "type": "Literal",
-            "value": "'",
-            "raw": "'\\''"
+            "type": "StringLiteral",
+            "value": "'"
           }
         ]
       }

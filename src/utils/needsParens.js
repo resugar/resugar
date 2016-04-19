@@ -1,22 +1,17 @@
-import estraverse from 'estraverse';
+import * as t from 'babel-types';
+import type { Path } from '../types.js';
 
-const { Syntax } = estraverse;
+export function needsParens(path: Path): boolean {
+  let { node, parent } = path;
 
-export default function needsParens(node: Object): boolean {
-  switch (node.type) {
-    case Syntax.ArrowFunctionExpression:
-      switch (node.parentNode.type) {
-        case Syntax.MemberExpression:
-          return node.parentNode.object === node;
-
-        case Syntax.CallExpression:
-          return node.parentNode.callee === node;
-
-        case Syntax.BinaryExpression:
-        case Syntax.SequenceExpression:
-          return true;
-      }
-      break;
+  if (t.isArrowFunctionExpression(node)) {
+    if (t.isMemberExpression(parent)) {
+      return parent.object === node;
+    } else if (t.isCallExpression(parent)) {
+      return parent.callee === node;
+    } else if (t.isBinaryExpression(parent)) {
+      return true;
+    }
   }
 
   return false;

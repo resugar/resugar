@@ -9,15 +9,18 @@
       "params": [],
       "body": {
         "type": "BlockStatement",
+        "directives": [],
         "body": [
           {
             "type": "IfStatement",
             "test": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "typeAnnotation": null
             },
             "consequent": {
               "type": "BlockStatement",
+              "directives": [],
               "body": [
                 {
                   "type": "ExpressionStatement",
@@ -25,7 +28,8 @@
                     "type": "CallExpression",
                     "callee": {
                       "type": "Identifier",
-                      "name": "b"
+                      "name": "b",
+                      "typeAnnotation": null
                     },
                     "arguments": []
                   }
@@ -37,7 +41,9 @@
         ]
       },
       "generator": false,
-      "expression": false
+      "async": false,
+      "returnType": null,
+      "typeParameters": null
     }
   }
 }

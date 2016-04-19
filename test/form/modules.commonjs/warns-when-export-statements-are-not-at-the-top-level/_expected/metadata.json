@@ -1,0 +1,7 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [],
+    "directives": []
+  }
+}

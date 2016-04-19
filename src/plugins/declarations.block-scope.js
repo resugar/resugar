@@ -1,84 +1,61 @@
-import BaseContext from '../context';
-import clone from '../utils/clone';
-import estraverse from 'estraverse';
+import cleanNode from '../utils/cleanNode.js';
 import mostRestrictiveKindForDeclaration from '../utils/mostRestrictiveKindForDeclaration';
 import type Module from '../module';
+import type { Node, Path, Visitor } from '../types';
 
-const { Syntax, VisitorOption } = estraverse;
+export type Options = {
+  disableConst?: boolean | (path: Path) => boolean,
+};
 
 export const name = 'declarations.block-scope';
 export const description = 'Transform `var` into `let` and `const` as appropriate.';
 
-export type Options = {
-  disableConst: boolean | (node: Object) => boolean,
-};
+export function visitor(module: Module, options: Options={}): Visitor {
+  let { declarations } = metadata(module);
 
-class Context extends BaseContext {
-  options: Options;
-  
-  constructor(module: Module, options: Options={}) {
-    super(name, module);
-    module.metadata[name] = {
-      declarations: []
-    };
-    this.options = options;
-  }
+  return {
+    VariableDeclaration(path: Path) {
+      let { node } = path;
 
-  rewrite(node: Object) {
-    this.rewriteVariableDeclaration(node);
-  }
+      if (node.kind !== 'var') {
+        return;
+      }
 
-  rewriteVariableDeclaration(node: Object): boolean {
-    if (node.type !== Syntax.VariableDeclaration) {
-      return false;
+      let kind = mostRestrictiveKindForDeclaration(path);
+
+      if (kind !== 'var') {
+        if (kind === 'const' && !constAllowed(path, options)) {
+          kind = 'let';
+        }
+        module.magicString.overwrite(node.start, node.start + 'var'.length, kind);
+        declarations.push(cleanNode(node));
+        node.kind = kind;
+      } else {
+        module.warn(
+          node,
+          'unsupported-declaration',
+          `'var' declaration cannot be converted to block scope`
+        );
+      }
     }
+  };
+}
 
-    if (node.kind !== 'var') {
-      return false;
-    }
-
-    const kind = mostRestrictiveKindForDeclaration(node, this.module.scopeManager);
-
-    if (kind !== 'var') {
-      this.rewriteVariableDeclarationKind(node, kind);
-    } else {
-      this.module.warn(
-        node,
-        'unsupported-declaration',
-        `'var' declaration cannot be converted to block scope`
-      );
-    }
-
-    return false;
-  }
-
-  rewriteVariableDeclarationKind(node: Object, kind: 'let'|'const') {
-    if (kind === 'const' && !this.constAllowed(node)) {
-      kind = 'let';
-    }
-    this.overwrite(node.range[0], node.range[0] + 'var'.length, kind);
-    this.metadata.declarations.push(clone(node));
-    node.kind = kind;
-  }
-
-  /**
-   * @private
-   */
-  constAllowed(node: Object) {
-    const { disableConst } = this.options;
-    if (typeof disableConst === 'function') {
-      return !disableConst(node);
-    } else {
-      return !disableConst;
-    }
+/**
+ * Delegates to user-supplied options to determine whether `let` is allowed.
+ */
+function constAllowed(path: Path, options: Options): boolean {
+  let { disableConst } = options;
+  if (typeof disableConst === 'function') {
+    return !disableConst(path);
+  } else {
+    return !disableConst;
   }
 }
 
-export function begin(module: Module, options: Options={}): Context {
-  return new Context(module, options);
-}
-
-export function enter(node: Object, module: Module, context: Context): ?VisitorOption {
-  context.rewrite(node);
-  return null;
+function metadata(module: Module): { functions: Array<Node> } {
+  if (!module.metadata[name]) {
+    module.metadata[name] = { declarations: [] };
+  }
+  return module.metadata[name];
 }

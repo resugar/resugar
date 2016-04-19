@@ -1,197 +1,195 @@
-import BaseContext from '../context';
-import clone from '../utils/clone';
-import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
-import groupContentBetweenElements from '../utils/groupContentBetweenElements';
-import replace from '../utils/replace';
+import * as t from 'babel-types';
+import cleanNode from '../utils/cleanNode.js';
 import type Module from '../module';
+import type { Node, Path, Visitor } from '../types';
 import { escapeString } from '../utils/escape';
 import { unescapeString } from '../utils/unescape';
-
-const { Syntax, VisitorOption } = estraverse;
 
 export const name = 'strings.template';
 export const description = 'Transforms manual string concatenation into template strings.';
 
+export function visitor(module: Module): Visitor {
+  let meta = metadata(module);
+
+  return {
+    BinaryExpression(path: Path) {
+      let { node } = path;
+      let parts = flatten(node);
+
+      if (parts) {
+        meta.concatenations.push({
+          node: cleanNode(node),
+          parts: parts.map(cleanNode)
+        });
+
+        path.replaceWith(combine(module, node, parts));
+      }
+    }
+  }
+}
+
+function flatten(node: Object): ?Array<Object> {
+  if (!t.isBinaryExpression(node) || node.operator !== '+') {
+    return null;
+  }
+
+  if (node.loc.start.line !== node.loc.end.line) {
+    return null;
+  }
+
+  let { left, right } = node;
+
+  if (t.isStringLiteral(left)) {
+    // This is the root.
+    return [left, right];
+  } else {
+    // We need to go deeper.
+    let flattenedLeft = flatten(left);
+
+    if (!flattenedLeft) {
+      return null;
+    }
+
+    return [...flattenedLeft, right];
+  }
+}
+
+function combine(module: Module, node: Node, parts: Array<Object>): Node {
+  let annotatedParts = parts.map((part, i) => {
+    let previousPart = parts[i - 1];
+    let nextPart = parts[i + 1];
+    let annotatedPart = {
+      node: part,
+      prefix: '',
+      suffix: ''
+    };
+
+    if (previousPart) {
+      let [ , prefix ] = insignificantContentSeparatedByPlus(module, previousPart, part);
+      annotatedPart.prefix = prefix.replace(/^\s*/, '');
+    }
+
+    if (nextPart) {
+      let [ suffix ] = insignificantContentSeparatedByPlus(module, part, nextPart);
+      annotatedPart.suffix = suffix.replace(/\s*$/, '');
+    }
+
+    return annotatedPart;
+  });
+
+  if (annotatedParts.every(part => t.isStringLiteral(part.node) && !part.prefix && !part.suffix)) {
+    return combineStrings(module, parts);
+  } else {
+    return buildTemplateString(module, node, annotatedParts);
+  }
+}
+
+function combineStrings(module, parts: Array<Object>): Object {
+  let quote = module.source.charAt(parts[0].start);
+  let { value } = parts[0];
+
+  for (let i = 0; i < parts.length; i++) {
+    let thisPart = parts[i];
+    let nextPart = parts[i + 1];
+    if (nextPart) {
+      // Remove the space between the strings.
+      module.magicString.remove(thisPart.end - 1, nextPart.start + 1);
+      value += nextPart.value;
+    }
+    let thisPartQuote = module.source.charAt(parts[i].start);
+    unescapeString(thisPartQuote, module.source, thisPart.start + 1, thisPart.end - 1, module.magicString);
+    escapeString(quote, module.source, thisPart.start + 1, thisPart.end - 1, module.magicString);
+  }
+
+  let lastPart = parts[parts.length - 1];
+  module.magicString.overwrite(lastPart.end - 1, lastPart.end, quote);
+
+  return t.stringLiteral(value);
+}
+
+function buildTemplateString(module: Module, node: Object, parts: Array<Object>): Object {
+  let expressions = [];
+  let quasis = [];
+
+  let firstPart = parts[0];
+  let firstNode = firstPart.node;
+  let cooked = '';
+  let raw = '';
+
+  module.magicString.insert(firstNode.start, '`');
+
+  parts.forEach(({ node, prefix, suffix }, i) => {
+    if (prefix || suffix || !t.isStringLiteral(node)) {
+      // This one has to be an interpolated expression.
+      module.magicString.insert(node.start, `\${${prefix}`);
+      module.magicString.insert(node.end, `${suffix}}`);
+      expressions.push(node);
+      quasis.push(t.templateElement(
+        { cooked, raw: escapeString('`', raw) },
+        false
+      ));
+      cooked = '';
+      raw = '';
+    } else {
+      // This one can become a quasi,
+      cooked += node.value;
+      raw += unescapeString(node.extra.raw[0], node.extra.raw.slice(1, -1));
+      module.magicString.remove(node.start, node.start + 1);
+      module.magicString.remove(node.end - 1, node.end);
+      let thisPartQuote = module.source.charAt(node.start);
+      unescapeString(thisPartQuote, module.source, node.start + 1, node.end - 1, module.magicString);
+      escapeString('`', module.source, node.start, node.end, module.magicString);
+    }
+
+    let nextPart = parts[i + 1];
+
+    if (nextPart) {
+      module.magicString.remove(node.end, nextPart.node.start);
+    }
+  });
+
+  quasis.push(t.templateElement(
+    { cooked, raw },
+    true
+  ));
+
+  module.magicString.overwrite(
+    parts[parts.length - 1].node.end,
+    node.end,
+    '`'
+  );
+
+  return t.templateLiteral(quasis, expressions);
+}
+
+function insignificantContentSeparatedByPlus(module: Module, left: Node, right: Node): Array<string> {
+  let tokens = module.tokensInRange(left.end, right.start);
+  let leftComments = [];
+  let rightComments = [];
+  let hasFoundPlusToken = false;
+  let last = left;
+
+  tokens.forEach((token, i) => {
+    let next = tokens[i + 1] || right;
+    if (token.type.label === '+/-' && token.value === '+') {
+      hasFoundPlusToken = true;
+    } else if (token.type === 'CommentBlock') {
+      let expandedSource = module.source.slice(last.end, next.start);
+      (hasFoundPlusToken ? rightComments : leftComments).push(expandedSource);
+    }
+    last = token;
+  });
+
+  return [leftComments.join(''), rightComments.join('')];
+}
+
 type Metadata = {
-  concatenations: Array<{
-    node: Object
-  }>
+  concatenations: Array<{ node: Object }>
 };
 
-class Context extends BaseContext {
-  constructor(module: Module) {
-    super(name, module);
-    module.metadata[name] = ({
-      concatenations: []
-    }: Metadata);
+function metadata(module: Module): Metadata {
+  if (!module.metadata[name]) {
+    module.metadata[name] = { concatenations: [] };
   }
-
-  flatten(node: Object): ?Array<Object> {
-    if (node.type !== Syntax.BinaryExpression || node.operator !== '+') {
-      return null;
-    }
-
-    if (node.loc.start.line !== node.loc.end.line) {
-      return null;
-    }
-
-    const { left, right } = node;
-
-    if (isString(left)) {
-      // This is the root.
-      return [left, right];
-    } else {
-      // We need to go deeper.
-      const flattenedLeft = this.flatten(left);
-      if (!flattenedLeft) {
-        return null;
-      }
-      return [...flattenedLeft, right];
-    }
-  }
-
-  combine(node: Object, parts: Array<Object>): Object {
-    const annotatedParts = parts.map((part, i) => {
-      const previousPart = parts[i - 1];
-      const nextPart = parts[i + 1];
-      const annotatedPart = {
-        node: part,
-        prefix: '',
-        suffix: ''
-      };
-
-      if (previousPart) {
-        const [ , prefix ] = this.insignificantContentSeparatedByPlus(previousPart, part);
-        annotatedPart.prefix = prefix.replace(/^\s*/, '');
-      }
-
-      if (nextPart) {
-        const [ suffix ] = this.insignificantContentSeparatedByPlus(part, nextPart);
-        annotatedPart.suffix = suffix.replace(/\s*$/, '');
-      }
-
-      return annotatedPart;
-    });
-
-    if (annotatedParts.every(part => isString(part.node) && !part.prefix && !part.suffix)) {
-      return this.combineStrings(parts);
-    } else {
-      return this.buildTemplateString(node, annotatedParts);
-    }
-  }
-
-  combineStrings(parts: Array<Object>): Object {
-    const quote = this.charAt(parts[0].range[0]);
-    let { value } = parts[0];
-    let raw = unescapeString(parts[0].raw[0], parts[0].raw.slice(1, -1));
-
-    for (let i = 0; i < parts.length; i++) {
-      const thisPart = parts[i];
-      const nextPart = parts[i + 1];
-      if (nextPart) {
-        // Remove the space between the strings.
-        this.remove(thisPart.range[1] - 1, nextPart.range[0] + 1);
-        value += nextPart.value;
-        raw += unescapeString(nextPart.raw[0], nextPart.raw.slice(1, -1));
-      }
-      const thisPartQuote = this.charAt(parts[i].range[0]);
-      this.unescape(thisPartQuote, thisPart.range[0] + 1, thisPart.range[1] - 1);
-      this.escape(quote, thisPart.range[0] + 1, thisPart.range[1] - 1);
-    }
-
-    const lastPart = parts[parts.length - 1];
-    this.overwrite(lastPart.range[1] - 1, lastPart.range[1], quote);
-
-    raw = quote + escapeString(quote, raw) + quote;
-    return { type: Syntax.Literal, value, raw };
-  }
-
-  buildTemplateString(node: Object, parts: Array<Object>): Object {
-    const expressions = [];
-    const quasis = [];
-
-    const firstPart = parts[0];
-    const firstNode = firstPart.node;
-    let cooked = '';
-    let raw = '';
-    this.insert(firstNode.range[0], '`');
-
-    parts.forEach(({ node, prefix, suffix }, i) => {
-      if (prefix || suffix || !isString(node)) {
-        // This one has to be an interpolated expression.
-        this.insert(node.range[0], `\${${prefix}`);
-        this.insert(node.range[1], `${suffix}}`);
-        expressions.push(node);
-        quasis.push({
-          type: Syntax.TemplateElement,
-          tail: false,
-          value: { cooked, raw: escapeString('`', raw) }
-        });
-        cooked = '';
-        raw = '';
-      } else {
-        // This one can become a quasi,
-        cooked += node.value;
-        raw += unescapeString(node.raw[0], node.raw.slice(1, -1));
-        this.remove(node.range[0], node.range[0] + 1);
-        this.remove(node.range[1] - 1, node.range[1]);
-        const thisPartQuote = this.charAt(node.range[0]);
-        this.unescape(thisPartQuote, node.range[0] + 1, node.range[1] - 1);
-        this.escape('`', ...node.range);
-      }
-
-      const nextPart = parts[i + 1];
-      if (nextPart) {
-        this.remove(node.range[1], nextPart.node.range[0]);
-      }
-    });
-
-    quasis.push({
-      type: Syntax.TemplateElement,
-      tail: true,
-      value: { cooked, raw }
-    });
-
-    this.overwrite(
-      parts[parts.length - 1].node.range[1],
-      node.range[1],
-      '`'
-    );
-
-    return { type: Syntax.TemplateLiteral, expressions, quasis };
-  }
-
-  insignificantContentSeparatedByPlus(left: Object, right: Object): Array<string> {
-    return groupContentBetweenElements(
-      [left, ...this.module.tokensBetweenNodes(left, right), right],
-      token => token.type === 'Punctuator' && token.value === '+',
-      (left, right) => this.slice(left.range[1], right.range[0])
-    ).map(strings => strings.join(''));
-  }
-}
-
-export function begin(module: Module): Context {
-  return new Context(module);
-}
-
-export function enter(node: Object, module: Module, context: Context): ?VisitorOption {
-  const parts = context.flatten(node);
-
-  if (parts) {
-    context.metadata.concatenations.push({
-      node: clone(node),
-      parts: clone(parts)
-    });
-
-    replace(node, context.combine(node, parts));
-  }
-
-  return null;
-}
-
-function isString(node: Object): boolean {
-  if (!node) {
-    return false;
-  }
-  return node.type === Syntax.Literal && typeof node.value === 'string';
+  return module.metadata[name];
 }

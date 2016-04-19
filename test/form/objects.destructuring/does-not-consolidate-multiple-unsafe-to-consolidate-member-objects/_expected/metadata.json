@@ -4,25 +4,28 @@
       "ids": [
         {
           "type": "Identifier",
-          "name": "a"
+          "name": "a",
+          "typeAnnotation": null
         }
       ],
       "inits": [
         {
           "type": "MemberExpression",
-          "computed": false,
           "object": {
             "type": "CallExpression",
             "callee": {
               "type": "Identifier",
-              "name": "foo"
+              "name": "foo",
+              "typeAnnotation": null
             },
             "arguments": []
           },
           "property": {
             "type": "Identifier",
-            "name": "a"
-          }
+            "name": "a",
+            "typeAnnotation": null
+          },
+          "computed": false
         }
       ]
     },
@@ -30,25 +33,28 @@
       "ids": [
         {
           "type": "Identifier",
-          "name": "b"
+          "name": "b",
+          "typeAnnotation": null
         }
       ],
       "inits": [
         {
           "type": "MemberExpression",
-          "computed": false,
           "object": {
             "type": "CallExpression",
             "callee": {
               "type": "Identifier",
-              "name": "foo"
+              "name": "foo",
+              "typeAnnotation": null
             },
             "arguments": []
           },
           "property": {
             "type": "Identifier",
-            "name": "b"
-          }
+            "name": "b",
+            "typeAnnotation": null
+          },
+          "computed": false
         }
       ]
     }

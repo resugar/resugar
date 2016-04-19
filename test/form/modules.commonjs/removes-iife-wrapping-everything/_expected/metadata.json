@@ -9,6 +9,7 @@
       "params": [],
       "body": {
         "type": "BlockStatement",
+        "directives": [],
         "body": [
           {
             "type": "ExpressionStatement",
@@ -16,21 +17,22 @@
               "type": "CallExpression",
               "callee": {
                 "type": "MemberExpression",
-                "computed": false,
                 "object": {
                   "type": "Identifier",
-                  "name": "console"
+                  "name": "console",
+                  "typeAnnotation": null
                 },
                 "property": {
                   "type": "Identifier",
-                  "name": "log"
-                }
+                  "name": "log",
+                  "typeAnnotation": null
+                },
+                "computed": false
               },
               "arguments": [
                 {
-                  "type": "Literal",
-                  "value": 1,
-                  "raw": "1"
+                  "type": "NumericLiteral",
+                  "value": 1
                 }
               ]
             }
@@ -41,21 +43,22 @@
               "type": "CallExpression",
               "callee": {
                 "type": "MemberExpression",
-                "computed": false,
                 "object": {
                   "type": "Identifier",
-                  "name": "console"
+                  "name": "console",
+                  "typeAnnotation": null
                 },
                 "property": {
                   "type": "Identifier",
-                  "name": "log"
-                }
+                  "name": "log",
+                  "typeAnnotation": null
+                },
+                "computed": false
               },
               "arguments": [
                 {
-                  "type": "Literal",
-                  "value": 2,
-                  "raw": "2"
+                  "type": "NumericLiteral",
+                  "value": 2
                 }
               ]
             }
@@ -63,7 +66,9 @@
         ]
       },
       "generator": false,
-      "expression": false
+      "async": false,
+      "returnType": null,
+      "typeParameters": null
     }
   }
 }

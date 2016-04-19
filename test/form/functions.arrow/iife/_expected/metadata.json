@@ -7,19 +7,21 @@
         "params": [],
         "body": {
           "type": "BlockStatement",
+          "directives": [],
           "body": [
             {
               "type": "ReturnStatement",
               "argument": {
-                "type": "Literal",
-                "value": 1,
-                "raw": "1"
+                "type": "NumericLiteral",
+                "value": 1
               }
             }
           ]
         },
         "generator": false,
-        "expression": false
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
       }
     ]
   }

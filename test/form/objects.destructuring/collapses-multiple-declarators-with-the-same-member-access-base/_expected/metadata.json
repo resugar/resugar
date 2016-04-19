@@ -4,37 +4,43 @@
       "ids": [
         {
           "type": "Identifier",
-          "name": "a"
+          "name": "a",
+          "typeAnnotation": null
         },
         {
           "type": "Identifier",
-          "name": "b"
+          "name": "b",
+          "typeAnnotation": null
         }
       ],
       "inits": [
         {
           "type": "MemberExpression",
-          "computed": false,
           "object": {
             "type": "Identifier",
-            "name": "obj"
+            "name": "obj",
+            "typeAnnotation": null
           },
           "property": {
             "type": "Identifier",
-            "name": "a"
-          }
+            "name": "a",
+            "typeAnnotation": null
+          },
+          "computed": false
         },
         {
           "type": "MemberExpression",
-          "computed": false,
           "object": {
             "type": "Identifier",
-            "name": "obj"
+            "name": "obj",
+            "typeAnnotation": null
           },
           "property": {
             "type": "Identifier",
-            "name": "b"
-          }
+            "name": "b",
+            "typeAnnotation": null
+          },
+          "computed": false
         }
       ]
     }

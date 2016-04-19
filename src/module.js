@@ -1,30 +1,19 @@
+import clone from './utils/clone.js';
 import MagicString from 'magic-string';
-import type { Scope } from 'escope';
-import { analyze } from 'escope';
+import type { Node, Token } from './types';
 
 type Warning = {
-  node: Object,
+  node: Node,
   type: string,
   message: string
 };
 
 export type RenderedModule = {
+  ast: Node,
   code: string,
   map: Object,
+  metadata: Object,
   warnings: Array<Warning>,
-  metadata: Object
-};
-
-type Token = {
-  type: string,
-  value: string,
-  range: Array<number>,
-  loc: Loc
-};
-
-type Loc = {
-  line: number,
-  column: number
 };
 
 type Range = {
@@ -33,38 +22,34 @@ type Range = {
 };
 
 export default class Module {
-  constructor(id: ?string, source: string, ast: Object) {
+  id: ?string;
+  metadata = {};
+  source: string;
+  ast: Node;
+  tokens: Array<Token>;
+  magicString: MagicString;
+  warnings: Array<Warning> = [];
+
+  constructor(id: ?string, source: string, ast: Node) {
     this.id = id;
-    this.metadata = ({}: Object);
     this.source = source;
     this.ast = ast;
     this.tokens = this.ast.tokens;
-    delete this.ast.tokens;
-    this.scopeManager = analyze(this.ast, { ecmaVersion: 6, sourceType: 'module' });
     this.magicString = new MagicString(source, {
       filename: id
     });
-
-    /**
-     * @private
-     */
-    this.warnings = ([]: Array<Warning>);
   }
 
-  warn(node: Object, type: string, message: string) {
-    this.warnings.push({ node, type, message });
+  warn(node: Node, type: string, message: string) {
+    this.warnings.push({ node: clone(node), type, message });
   }
 
-  tokensForNode(node: Object): Array<Token> {
-    return this.tokensInRange(...node.range);
-  }
-
-  tokensBetweenNodes(left: Object, right: Object): Array<Token> {
-    return this.tokensInRange(left.range[1], right.range[0]);
+  tokensForNode(node: Node): Array<Token> {
+    return this.tokensInRange(node.start, node.end);
   }
 
   tokensInRange(start: number, end: number): Array<Token> {
-    const tokenRange = this._tokenIndexRangeForSourceRange(start, end);
+    let tokenRange = this.tokenIndexRangeForSourceRange(start, end);
 
     if (!tokenRange) {
       return [];
@@ -73,20 +58,16 @@ export default class Module {
     return this.tokens.slice(tokenRange.start, tokenRange.end);
   }
 
-  tokenRangeForNode(node: Object): ?Range {
-    return this._tokenIndexRangeForSourceRange(node.range[0], node.range[1]);
-  }
-
-  _tokenIndexRangeForSourceRange(start: number, end: number): ?Range {
+  tokenIndexRangeForSourceRange(start: number, end: number): ?Range {
     let location = null;
     let length = 0;
-    const tokens = this.tokens;
+    let tokens = this.tokens;
 
     for (let i = 0; i < tokens.length; i++) {
-      const { range } = tokens[i];
-      if (range[1] > end) {
+      let token = tokens[i];
+      if (token.end > end) {
         break;
-      } else if (range[0] >= start) {
+      } else if (token.start >= start) {
         if (location === null) { location = i; }
         length++;
       }
@@ -109,16 +90,7 @@ export default class Module {
     };
   }
 
-  get moduleScope(): Scope {
-    for (let i = 0; i < this.scopeManager.scopes.length; i++) {
-      if (this.scopeManager.scopes[i].type === 'module') {
-        return this.scopeManager.scopes[i];
-      }
-    }
-    return this.scopeManager.globalScope;
-  }
-
-  sourceOf(node): string {
-    return this.source.slice(...node.range);
+  sourceOf(node: Node): string {
+    return this.source.slice(node.start, node.end);
   }
 }

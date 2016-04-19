@@ -33,10 +33,9 @@
   "repository": "https://github.com/esnext/esnext.git",
   "bugs": "https://github.com/esnext/esnext/issues",
   "dependencies": {
-    "babel-eslint": "^5.0.0",
-    "escope": "^3.3.0",
-    "espree": "^2.2.5",
-    "estraverse": "^4.1.1",
+    "babel-traverse": "^6.7.6",
+    "babel-types": "^6.7.2",
+    "babylon": "^6.7.0",
     "magic-string": "^0.10.2",
     "mkdirp": "^0.5.1",
     "shebang-regex": "^2.0.0",

@@ -1,0 +1,128 @@
+{
+  "modules.commonjs": {
+    "imports": [
+      {
+        "type": "default-import",
+        "node": {
+          "type": "VariableDeclaration",
+          "kind": "var",
+          "declarations": [
+            {
+              "type": "VariableDeclarator",
+              "id": {
+                "type": "Identifier",
+                "name": "lodash",
+                "typeAnnotation": null
+              },
+              "init": {
+                "type": "CallExpression",
+                "callee": {
+                  "type": "Identifier",
+                  "name": "require",
+                  "typeAnnotation": null
+                },
+                "arguments": [
+                  {
+                    "type": "StringLiteral",
+                    "value": "lodash"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "VariableDeclarator",
+              "id": {
+                "type": "Identifier",
+                "name": "escope",
+                "typeAnnotation": null
+              },
+              "init": {
+                "type": "CallExpression",
+                "callee": {
+                  "type": "Identifier",
+                  "name": "require",
+                  "typeAnnotation": null
+                },
+                "arguments": [
+                  {
+                    "type": "StringLiteral",
+                    "value": "escope"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "bindings": [
+          {
+            "localName": "lodash",
+            "exportName": "default"
+          }
+        ],
+        "path": "lodash"
+      },
+      {
+        "type": "default-import",
+        "node": {
+          "type": "VariableDeclaration",
+          "kind": "var",
+          "declarations": [
+            {
+              "type": "VariableDeclarator",
+              "id": {
+                "type": "Identifier",
+                "name": "lodash",
+                "typeAnnotation": null
+              },
+              "init": {
+                "type": "CallExpression",
+                "callee": {
+                  "type": "Identifier",
+                  "name": "require",
+                  "typeAnnotation": null
+                },
+                "arguments": [
+                  {
+                    "type": "StringLiteral",
+                    "value": "lodash"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "VariableDeclarator",
+              "id": {
+                "type": "Identifier",
+                "name": "escope",
+                "typeAnnotation": null
+              },
+              "init": {
+                "type": "CallExpression",
+                "callee": {
+                  "type": "Identifier",
+                  "name": "require",
+                  "typeAnnotation": null
+                },
+                "arguments": [
+                  {
+                    "type": "StringLiteral",
+                    "value": "escope"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "bindings": [
+          {
+            "localName": "escope",
+            "exportName": "default"
+          }
+        ],
+        "path": "escope"
+      }
+    ],
+    "exports": [],
+    "directives": []
+  }
+}

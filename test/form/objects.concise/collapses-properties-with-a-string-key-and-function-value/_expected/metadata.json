@@ -2,27 +2,28 @@
   "objects.concise": {
     "properties": [
       {
-        "type": "Property",
-        "kind": "init",
+        "type": "ObjectProperty",
         "computed": false,
-        "shorthand": false,
-        "method": false,
         "key": {
-          "type": "Literal",
-          "value": "a-b",
-          "raw": "'a-b'"
+          "type": "StringLiteral",
+          "value": "a-b"
         },
         "value": {
           "type": "FunctionExpression",
-          "generator": false,
-          "expression": false,
           "id": null,
           "params": [],
           "body": {
             "type": "BlockStatement",
+            "directives": [],
             "body": []
-          }
-        }
+          },
+          "generator": false,
+          "async": false,
+          "returnType": null,
+          "typeParameters": null
+        },
+        "shorthand": false,
+        "decorators": null
       }
     ]
   }

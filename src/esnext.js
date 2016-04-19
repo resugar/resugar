@@ -1,21 +1,15 @@
 import Module from './module';
 import allPlugins from './plugins/index';
-import estraverse from 'estraverse'; // TODO: import { traverse } from 'estraverse';
+import parse from './utils/parse';
 import shebangRegex from 'shebang-regex';
+import traverse from 'babel-traverse';
 import type { RenderedModule } from './module';
-import type { VisitorOption } from 'estraverse';
-import { parse as espree } from 'espree';
+import type { Visitor } from './types';
 
 export { default as run } from './cli';
 
-type PluginBookendCallback = (m: Module) => ?Object;
-type PluginTraversalCallback = (node: Object, module: Module, context: ?Object) => ?VisitorOption;
-
 type Plugin = {
-  begin: ?PluginBookendCallback,
-  enter: ?PluginTraversalCallback,
-  leave: ?PluginTraversalCallback,
-  end: ?PluginBookendCallback
+  visitor: (module: Module) => Visitor,
 };
 
 import type { Options as DeclarationsBlockScopeOptions } from './plugins/declarations.block-scope';
@@ -24,19 +18,7 @@ type Options = {
   plugins?: Array<Plugin>,
   validate?: boolean,
   'declarations.block-scope'?: ?DeclarationsBlockScopeOptions,
-  parse?: (source: string) => Object
 };
-
-const PARSE_OPTIONS = {
-  loc: true,
-  range: true,
-  sourceType: 'module',
-  tokens: true
-};
-
-function defaultParse(source: string) {
-  return espree(source, PARSE_OPTIONS);
-}
 
 export function convert(source: string, options: (Options|Array<Plugin>)={}): RenderedModule {
   if (Array.isArray(options)) {
@@ -44,68 +26,32 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
     options = { plugins: options };
   }
 
-  const { validate=true, plugins=allPlugins, parse=defaultParse } = options;
-
-  const shebangMatch = source.match(shebangRegex);
+  let { validate=true, plugins=allPlugins } = options;
+  let shebangMatch = source.match(shebangRegex);
 
   if (shebangMatch) {
     source = source.slice(shebangMatch.index + shebangMatch[0].length);
   }
 
-  const module = new Module(null, source, parse(source));
+  let module = new Module(null, source, parse(source));
 
   plugins.forEach(plugin => {
-    const { name, begin, end, enter, leave } = plugin;
-    const pluginOptions = options[name];
-    const context = begin ? begin(module, pluginOptions) : null;
-
-    estraverse.traverse(module.ast, {
-      /**
-       * When using a custom parser we tell estraverse to fall back to object
-       * iteration when encountering node types it doesn't know. The most common
-       * custom parser is probably babel-eslint, which tries to monkeypatch
-       * eslint, estraverse, etc. However, it isn't perfect and may not
-       * monkeypatch *our* estraverse, so we play it conservative here.
-       */
-      fallback: parse === defaultParse ? null : 'iteration',
-
-      enter(node, parent) {
-        Object.defineProperty(node, 'parentNode', {
-          value: parent,
-          configurable: true,
-          enumerable: false
-        });
-        if (enter) {
-          return enter(node, module, context);
-        }
-      },
-
-      leave(node) {
-        if (leave) {
-          return leave(node, module, context);
-        }
-      }
-    });
-
-    if (end) {
-      end(module, context);
-    }
+    let { name, visitor } = plugin;
+    let pluginOptions = options[name];
+    traverse(module.ast, visitor(module, pluginOptions));
   });
 
   let result: RenderedModule = module.render();
 
   if (validate) {
-    const error = validateResult(result, parse);
+    let error = validateResult(result);
     if (error) {
       result.warnings.push({
         type: 'output-validation-failure',
-        message: error.description,
+        message: error.message,
         node: {
           loc: {
-            start: {
-              line: error.lineNumber,
-              column: error.column - 1
-            }
+            start: error.loc
           }
         }
       });
@@ -119,9 +65,9 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
   return result;
 }
 
-function validateResult({ code }, parse: (source: string) => Object) {
+function validateResult({ code }) {
   try {
-    parse(code, { sourceType: 'module' });
+    parse(code);
     return null;
   } catch (ex) {
     return ex;

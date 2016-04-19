@@ -4,14 +4,10 @@
     "exports": [],
     "directives": [
       {
-        "type": "removed-strict-mode",
-        "node": {
-          "type": "ExpressionStatement",
-          "expression": {
-            "type": "Literal",
-            "value": "use strict",
-            "raw": "\"use strict\""
-          }
+        "type": "Directive",
+        "value": {
+          "type": "DirectiveLiteral",
+          "value": "use strict"
         }
       }
     ]

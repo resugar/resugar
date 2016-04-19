@@ -1,22 +1,4 @@
 {
-  "objects.shorthand": {
-    "properties": []
-  },
-  "objects.concise": {
-    "properties": []
-  },
-  "modules.commonjs": {
-    "imports": [],
-    "exports": [],
-    "directives": []
-  },
-  "functions.arrow": {
-    "functions": []
-  },
-  "declarations.block-scope": {
-    "declarations": []
-  },
-  "objects.destructuring": [],
   "strings.template": {
     "concatenations": [
       {
@@ -30,44 +12,44 @@
               "type": "BinaryExpression",
               "operator": "+",
               "left": {
-                "type": "Literal",
-                "value": "a",
-                "raw": "'a'"
+                "type": "StringLiteral",
+                "value": "a"
               },
               "right": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "typeAnnotation": null
               }
             },
             "right": {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "typeAnnotation": null
             }
           },
           "right": {
-            "type": "Literal",
-            "value": "d",
-            "raw": "'d'"
+            "type": "StringLiteral",
+            "value": "d"
           }
         },
         "parts": [
           {
-            "type": "Literal",
-            "value": "a",
-            "raw": "'a'"
+            "type": "StringLiteral",
+            "value": "a"
           },
           {
             "type": "Identifier",
-            "name": "b"
+            "name": "b",
+            "typeAnnotation": null
           },
           {
             "type": "Identifier",
-            "name": "c"
+            "name": "c",
+            "typeAnnotation": null
           },
           {
-            "type": "Literal",
-            "value": "d",
-            "raw": "'d'"
+            "type": "StringLiteral",
+            "value": "d"
           }
         ]
       },
@@ -79,35 +61,33 @@
             "type": "BinaryExpression",
             "operator": "+",
             "left": {
-              "type": "Literal",
-              "value": "a",
-              "raw": "'a'"
+              "type": "StringLiteral",
+              "value": "a"
             },
             "right": {
-              "type": "Literal",
-              "value": "b",
-              "raw": "'b'"
+              "type": "StringLiteral",
+              "value": "b"
             }
           },
           "right": {
             "type": "Identifier",
-            "name": "c"
+            "name": "c",
+            "typeAnnotation": null
           }
         },
         "parts": [
           {
-            "type": "Literal",
-            "value": "a",
-            "raw": "'a'"
+            "type": "StringLiteral",
+            "value": "a"
           },
           {
-            "type": "Literal",
-            "value": "b",
-            "raw": "'b'"
+            "type": "StringLiteral",
+            "value": "b"
           },
           {
             "type": "Identifier",
-            "name": "c"
+            "name": "c",
+            "typeAnnotation": null
           }
         ]
       }

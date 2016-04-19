@@ -2,6 +2,9 @@
  * Represents a module binding for either an import or export statement.
  */
 export class Binding {
+  localName: string;
+  exportName: string;
+
   constructor(localName: string, exportName: string) {
     this.localName = localName;
     this.exportName = exportName;
@@ -53,7 +56,7 @@ export class ImportSpecifierListStringBuilder {
 
   toString(): string {
     let defaultBinding;
-    const namedBindings = [];
+    let namedBindings = [];
 
     for (let binding of this.bindings) {
       if (binding.isDefaultExport()) {
@@ -65,7 +68,7 @@ export class ImportSpecifierListStringBuilder {
 
     let result = '';
 
-    const hasNamedBindings = namedBindings.length > 0;
+    let hasNamedBindings = namedBindings.length > 0;
     if (defaultBinding) {
       result += defaultBinding.localName;
       if (hasNamedBindings) {

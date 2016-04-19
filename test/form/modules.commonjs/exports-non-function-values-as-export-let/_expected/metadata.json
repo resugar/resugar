@@ -17,20 +17,21 @@
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "Identifier",
-                "name": "exports"
+                "name": "exports",
+                "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "PI"
-              }
+                "name": "PI",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
             "right": {
-              "type": "Literal",
-              "value": 3.14,
-              "raw": "3.14"
+              "type": "NumericLiteral",
+              "value": 3.14
             }
           }
         }

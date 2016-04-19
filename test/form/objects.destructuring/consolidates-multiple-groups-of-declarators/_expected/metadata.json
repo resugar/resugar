@@ -4,37 +4,43 @@
       "ids": [
         {
           "type": "Identifier",
-          "name": "a"
+          "name": "a",
+          "typeAnnotation": null
         },
         {
           "type": "Identifier",
-          "name": "b"
+          "name": "b",
+          "typeAnnotation": null
         }
       ],
       "inits": [
         {
           "type": "MemberExpression",
-          "computed": false,
           "object": {
             "type": "Identifier",
-            "name": "obj"
+            "name": "obj",
+            "typeAnnotation": null
           },
           "property": {
             "type": "Identifier",
-            "name": "a"
-          }
+            "name": "a",
+            "typeAnnotation": null
+          },
+          "computed": false
         },
         {
           "type": "MemberExpression",
-          "computed": false,
           "object": {
             "type": "Identifier",
-            "name": "obj"
+            "name": "obj",
+            "typeAnnotation": null
           },
           "property": {
             "type": "Identifier",
-            "name": "b"
-          }
+            "name": "b",
+            "typeAnnotation": null
+          },
+          "computed": false
         }
       ]
     },
@@ -42,37 +48,43 @@
       "ids": [
         {
           "type": "Identifier",
-          "name": "c"
+          "name": "c",
+          "typeAnnotation": null
         },
         {
           "type": "Identifier",
-          "name": "d"
+          "name": "d",
+          "typeAnnotation": null
         }
       ],
       "inits": [
         {
           "type": "MemberExpression",
-          "computed": false,
           "object": {
             "type": "Identifier",
-            "name": "obj2"
+            "name": "obj2",
+            "typeAnnotation": null
           },
           "property": {
             "type": "Identifier",
-            "name": "c"
-          }
+            "name": "c",
+            "typeAnnotation": null
+          },
+          "computed": false
         },
         {
           "type": "MemberExpression",
-          "computed": false,
           "object": {
             "type": "Identifier",
-            "name": "obj2"
+            "name": "obj2",
+            "typeAnnotation": null
           },
           "property": {
             "type": "Identifier",
-            "name": "d"
-          }
+            "name": "d",
+            "typeAnnotation": null
+          },
+          "computed": false
         }
       ]
     }

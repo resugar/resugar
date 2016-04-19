@@ -6,26 +6,22 @@
           "type": "BinaryExpression",
           "operator": "+",
           "left": {
-            "type": "Literal",
-            "value": "\"",
-            "raw": "'\"'"
+            "type": "StringLiteral",
+            "value": "\""
           },
           "right": {
-            "type": "Literal",
-            "value": "'",
-            "raw": "\"'\""
+            "type": "StringLiteral",
+            "value": "'"
           }
         },
         "parts": [
           {
-            "type": "Literal",
-            "value": "\"",
-            "raw": "'\"'"
+            "type": "StringLiteral",
+            "value": "\""
           },
           {
-            "type": "Literal",
-            "value": "'",
-            "raw": "\"'\""
+            "type": "StringLiteral",
+            "value": "'"
           }
         ]
       },
@@ -34,26 +30,22 @@
           "type": "BinaryExpression",
           "operator": "+",
           "left": {
-            "type": "Literal",
-            "value": "'",
-            "raw": "\"'\""
+            "type": "StringLiteral",
+            "value": "'"
           },
           "right": {
-            "type": "Literal",
-            "value": "\"",
-            "raw": "'\"'"
+            "type": "StringLiteral",
+            "value": "\""
           }
         },
         "parts": [
           {
-            "type": "Literal",
-            "value": "'",
-            "raw": "\"'\""
+            "type": "StringLiteral",
+            "value": "'"
           },
           {
-            "type": "Literal",
-            "value": "\"",
-            "raw": "'\"'"
+            "type": "StringLiteral",
+            "value": "\""
           }
         ]
       }

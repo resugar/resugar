@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { basename, dirname, join } from 'path';
+import { basename, dirname } from 'path';
 import { createReadStream, createWriteStream } from 'fs';
 import mkdirp from 'mkdirp';
 import { convert } from './esnext';
@@ -37,7 +37,7 @@ class DelayedWritableFileStream {
 }
 
 export default function run(args: Array<string>) {
-  const options = parseArguments(args);
+  let options = parseArguments(args);
 
   if (options.error) {
     process.stderr.write(`${options.error}\n`);
@@ -46,14 +46,14 @@ export default function run(args: Array<string>) {
   } else if (options.help) {
     help(process.stdout);
   } else {
-    const input = options.input ?
+    let input = options.input ?
       createReadStream(options.input, { encoding: 'utf8' }) :
       process.stdin;
-    const output = options.output ?
+    let output = options.output ?
       new DelayedWritableFileStream(options.output, { encoding: 'utf8' }) :
       process.stdout;
 
-    const plugins = allPlugins
+    let plugins = allPlugins
       .filter(plugin => {
         if (options.blacklist) {
           return options.blacklist[plugin.name] !== true;
@@ -81,13 +81,13 @@ export default function run(args: Array<string>) {
 type Warning = { type: string, message: string, node: Object };
 
 function printWarnings(path: string, warnings: Array<Warning>) {
-  for (const warning of warnings) {
+  for (let warning of warnings) {
     printWarning(path, warning);
   }
 }
 
 function printWarning(path: string, warning: Warning) {
-  const loc = warning.node.loc;
+  let loc = warning.node.loc;
   process.stderr.write(
     `WARNING: ${path}:${loc.start.line}:${loc.start.column + 1}  ${warning.type}  ${warning.message}\n`
   );
@@ -170,10 +170,6 @@ function parseArguments(args: Array<string>): CLIOptions | { help: boolean } {
         inline = true;
         break;
 
-      case '--parser':
-        parse = loadCustomParser(args[++i]);
-        break;
-
       case '--validate':
       case '--no-validate':
         validate = args[i] === '--validate';
@@ -219,37 +215,14 @@ function parsePath(arg: string): string {
   return arg;
 }
 
-function loadCustomParser(module: string): (source: string) => Object {
-  let required;
-  let isRelative = (
-    module.slice(0, './'.length) === './' ||
-    module.slice(0, '../'.length) === '../'
-  );
-  if (isRelative) {
-    required = require(join(process.cwd(), module));
-  } else {
-    required = require(module);
-  }
-  if (typeof required.parse === 'function') {
-    return required.parse;
-  } else if (typeof required === 'function') {
-    return required
-  } else if (typeof required.default === 'function') {
-    return required.default;
-  } else {
-    throw new OptionError(`Unable to load custom parser from ${module}.`);
-  }
-}
-
 function help(out: (data: string) => void) {
-  const $0 = basename(process.argv[1]);
+  let $0 = basename(process.argv[1]);
   out.write(`${$0} -o output.js input.js   # read and write files directly\n`);
   out.write(`${$0} input.js > output.js    # read file and write stdout\n`);
   out.write(`${$0} < input.js > output.js  # read stdin and write stdout\n`);
   out.write(`${$0} -I file.js              # rewrite a file inline\n`);
   out.write(`${$0} -b modules.commonjs     # blacklist plugins\n`);
   out.write(`${$0} -w modules.commonjs     # whitelist plugins\n`);
-  out.write(`${$0} --parser babel-eslint   # use a custom parser\n`);
   out.write('\n');
   writeSectionHeader(out, 'Built-in Plugins');
   out.write('\n');
@@ -287,10 +260,10 @@ type TableOptions = {
 };
 
 function table(options: TableOptions, data: Array<Array<string>>) {
-  const padding = options.padding || 0;
-  const indent = options.indent || 0;
-  const out = options.out;
-  const longest = [];
+  let padding = options.padding || 0;
+  let indent = options.indent || 0;
+  let out = options.out;
+  let longest = [];
 
   data.forEach(row => {
     row.forEach((value, i) => {

@@ -1,16 +1,8 @@
 {
   "modules.commonjs": {
-    "exports": [],
     "imports": [
       {
         "type": "default-import",
-        "path": "foo",
-        "bindings": [
-          {
-            "localName": "foo",
-            "exportName": "default"
-          }
-        ],
         "node": {
           "type": "VariableDeclaration",
           "kind": "var",
@@ -19,27 +11,36 @@
               "type": "VariableDeclarator",
               "id": {
                 "type": "Identifier",
-                "name": "foo"
+                "name": "foo",
+                "typeAnnotation": null
               },
               "init": {
                 "type": "CallExpression",
-                "arguments": [
-                  {
-                    "type": "Literal",
-                    "value": "foo",
-                    "raw": "'foo'"
-                  }
-                ],
                 "callee": {
                   "type": "Identifier",
-                  "name": "require"
-                }
+                  "name": "require",
+                  "typeAnnotation": null
+                },
+                "arguments": [
+                  {
+                    "type": "StringLiteral",
+                    "value": "foo"
+                  }
+                ]
               }
             }
           ]
-        }
+        },
+        "bindings": [
+          {
+            "localName": "foo",
+            "exportName": "default"
+          }
+        ],
+        "path": "foo"
       }
     ],
+    "exports": [],
     "directives": []
   }
 }

@@ -2,19 +2,20 @@
   "objects.shorthand": {
     "properties": [
       {
-        "type": "Property",
-        "kind": "init",
+        "type": "ObjectProperty",
         "computed": false,
-        "shorthand": false,
-        "method": false,
         "key": {
           "type": "Identifier",
-          "name": "a"
+          "name": "a",
+          "typeAnnotation": null
         },
         "value": {
           "type": "Identifier",
-          "name": "a"
-        }
+          "name": "a",
+          "typeAnnotation": null
+        },
+        "shorthand": false,
+        "decorators": null
       }
     ]
   }

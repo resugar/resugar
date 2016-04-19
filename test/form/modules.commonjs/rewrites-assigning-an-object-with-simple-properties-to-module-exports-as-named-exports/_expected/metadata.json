@@ -6,12 +6,12 @@
         "type": "named-export",
         "bindings": [
           {
-            "exportName": "a",
-            "localName": "b"
+            "localName": "b",
+            "exportName": "a"
           },
           {
-            "exportName": "c",
-            "localName": "d"
+            "localName": "d",
+            "exportName": "c"
           }
         ],
         "node": {
@@ -21,48 +21,52 @@
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "Identifier",
-                "name": "module"
+                "name": "module",
+                "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "exports"
-              }
+                "name": "exports",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
             "right": {
               "type": "ObjectExpression",
               "properties": [
                 {
-                  "type": "Property",
+                  "type": "ObjectProperty",
                   "computed": false,
-                  "kind": "init",
-                  "method": false,
-                  "shorthand": false,
                   "key": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "typeAnnotation": null
                   },
                   "value": {
                     "type": "Identifier",
-                    "name": "b"
-                  }
+                    "name": "b",
+                    "typeAnnotation": null
+                  },
+                  "shorthand": false,
+                  "decorators": null
                 },
                 {
-                  "type": "Property",
+                  "type": "ObjectProperty",
                   "computed": false,
-                  "kind": "init",
-                  "method": false,
-                  "shorthand": false,
                   "key": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "typeAnnotation": null
                   },
                   "value": {
                     "type": "Identifier",
-                    "name": "d"
-                  }
+                    "name": "d",
+                    "typeAnnotation": null
+                  },
+                  "shorthand": false,
+                  "decorators": null
                 }
               ]
             }

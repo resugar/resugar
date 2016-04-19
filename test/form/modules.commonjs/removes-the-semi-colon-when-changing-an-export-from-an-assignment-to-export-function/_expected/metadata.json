@@ -17,26 +17,31 @@
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "Identifier",
-                "name": "exports"
+                "name": "exports",
+                "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "foo"
-              }
+                "name": "foo",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
             "right": {
               "type": "FunctionExpression",
+              "id": null,
+              "params": [],
               "body": {
                 "type": "BlockStatement",
+                "directives": [],
                 "body": []
               },
-              "expression": false,
               "generator": false,
-              "id": null,
-              "params": []
+              "async": false,
+              "returnType": null,
+              "typeParameters": null
             }
           }
         }

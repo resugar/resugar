@@ -1,16 +1,8 @@
 {
   "modules.commonjs": {
-    "exports": [],
     "imports": [
       {
         "type": "named-import",
-        "path": "espree",
-        "bindings": [
-          {
-            "exportName": "parse",
-            "localName": "parse"
-          }
-        ],
         "node": {
           "type": "VariableDeclaration",
           "kind": "var",
@@ -19,35 +11,45 @@
               "type": "VariableDeclarator",
               "id": {
                 "type": "Identifier",
-                "name": "parse"
+                "name": "parse",
+                "typeAnnotation": null
               },
               "init": {
                 "type": "MemberExpression",
-                "computed": false,
                 "object": {
                   "type": "CallExpression",
-                  "arguments": [
-                    {
-                      "type": "Literal",
-                      "value": "espree",
-                      "raw": "'espree'"
-                    }
-                  ],
                   "callee": {
                     "type": "Identifier",
-                    "name": "require"
-                  }
+                    "name": "require",
+                    "typeAnnotation": null
+                  },
+                  "arguments": [
+                    {
+                      "type": "StringLiteral",
+                      "value": "espree"
+                    }
+                  ]
                 },
                 "property": {
                   "type": "Identifier",
-                  "name": "parse"
-                }
+                  "name": "parse",
+                  "typeAnnotation": null
+                },
+                "computed": false
               }
             }
           ]
-        }
+        },
+        "bindings": [
+          {
+            "localName": "parse",
+            "exportName": "parse"
+          }
+        ],
+        "path": "espree"
       }
     ],
+    "exports": [],
     "directives": []
   }
 }

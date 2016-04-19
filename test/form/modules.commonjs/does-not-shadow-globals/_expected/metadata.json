@@ -1,10 +1,4 @@
 {
-  "objects.shorthand": {
-    "properties": []
-  },
-  "objects.concise": {
-    "properties": []
-  },
   "modules.commonjs": {
     "imports": [],
     "exports": [
@@ -23,15 +17,17 @@
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "Identifier",
-                "name": "exports"
+                "name": "exports",
+                "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "clearTimeout"
-              }
+                "name": "clearTimeout",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
             "right": {
               "type": "FunctionExpression",
@@ -39,11 +35,13 @@
               "params": [
                 {
                   "type": "Identifier",
-                  "name": "timeout"
+                  "name": "timeout",
+                  "typeAnnotation": null
                 }
               ],
               "body": {
                 "type": "BlockStatement",
+                "directives": [],
                 "body": [
                   {
                     "type": "ExpressionStatement",
@@ -51,12 +49,14 @@
                       "type": "CallExpression",
                       "callee": {
                         "type": "Identifier",
-                        "name": "clearTimeout"
+                        "name": "clearTimeout",
+                        "typeAnnotation": null
                       },
                       "arguments": [
                         {
                           "type": "Identifier",
-                          "name": "timeout"
+                          "name": "timeout",
+                          "typeAnnotation": null
                         }
                       ]
                     }
@@ -64,7 +64,9 @@
                 ]
               },
               "generator": false,
-              "expression": false
+              "async": false,
+              "returnType": null,
+              "typeParameters": null
             }
           }
         }
@@ -84,34 +86,40 @@
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "Identifier",
-                "name": "exports"
+                "name": "exports",
+                "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "setTimeout"
-              }
+                "name": "setTimeout",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
             "right": {
               "type": "FunctionExpression",
               "id": {
                 "type": "Identifier",
-                "name": "_setTimeout"
+                "name": "_setTimeout",
+                "typeAnnotation": null
               },
               "params": [
                 {
                   "type": "Identifier",
-                  "name": "callback"
+                  "name": "callback",
+                  "typeAnnotation": null
                 },
                 {
                   "type": "Identifier",
-                  "name": "timeout"
+                  "name": "timeout",
+                  "typeAnnotation": null
                 }
               ],
               "body": {
                 "type": "BlockStatement",
+                "directives": [],
                 "body": [
                   {
                     "type": "ExpressionStatement",
@@ -119,16 +127,19 @@
                       "type": "CallExpression",
                       "callee": {
                         "type": "Identifier",
-                        "name": "setTimeout"
+                        "name": "setTimeout",
+                        "typeAnnotation": null
                       },
                       "arguments": [
                         {
                           "type": "Identifier",
-                          "name": "callback"
+                          "name": "callback",
+                          "typeAnnotation": null
                         },
                         {
                           "type": "Identifier",
-                          "name": "timeout"
+                          "name": "timeout",
+                          "typeAnnotation": null
                         }
                       ]
                     }
@@ -136,7 +147,9 @@
                 ]
               },
               "generator": false,
-              "expression": false
+              "async": false,
+              "returnType": null,
+              "typeParameters": null
             }
           }
         }
@@ -156,30 +169,35 @@
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "Identifier",
-                "name": "exports"
+                "name": "exports",
+                "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "clearInterval"
-              }
+                "name": "clearInterval",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
             "right": {
               "type": "FunctionExpression",
               "id": {
                 "type": "Identifier",
-                "name": "_clearInterval"
+                "name": "_clearInterval",
+                "typeAnnotation": null
               },
               "params": [
                 {
                   "type": "Identifier",
-                  "name": "interval"
+                  "name": "interval",
+                  "typeAnnotation": null
                 }
               ],
               "body": {
                 "type": "BlockStatement",
+                "directives": [],
                 "body": [
                   {
                     "type": "ExpressionStatement",
@@ -187,12 +205,14 @@
                       "type": "CallExpression",
                       "callee": {
                         "type": "Identifier",
-                        "name": "clearInterval"
+                        "name": "clearInterval",
+                        "typeAnnotation": null
                       },
                       "arguments": [
                         {
                           "type": "Identifier",
-                          "name": "interval"
+                          "name": "interval",
+                          "typeAnnotation": null
                         }
                       ]
                     }
@@ -200,22 +220,14 @@
                 ]
               },
               "generator": false,
-              "expression": false
+              "async": false,
+              "returnType": null,
+              "typeParameters": null
             }
           }
         }
       }
     ],
     "directives": []
-  },
-  "functions.arrow": {
-    "functions": []
-  },
-  "declarations.block-scope": {
-    "declarations": []
-  },
-  "objects.destructuring": [],
-  "strings.template": {
-    "concatenations": []
   }
 }

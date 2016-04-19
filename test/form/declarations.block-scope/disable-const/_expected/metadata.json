@@ -1,42 +1,24 @@
 {
-  "objects.shorthand": {
-    "properties": []
-  },
-  "objects.concise": {
-    "properties": []
-  },
-  "modules.commonjs": {
-    "imports": [],
-    "exports": [],
-    "directives": []
-  },
-  "functions.arrow": {
-    "functions": []
-  },
   "declarations.block-scope": {
     "declarations": [
       {
         "type": "VariableDeclaration",
+        "kind": "var",
         "declarations": [
           {
             "type": "VariableDeclarator",
             "id": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "typeAnnotation": null
             },
             "init": {
-              "type": "Literal",
-              "value": 1,
-              "raw": "1"
+              "type": "NumericLiteral",
+              "value": 1
             }
           }
-        ],
-        "kind": "var"
+        ]
       }
     ]
-  },
-  "objects.destructuring": [],
-  "strings.template": {
-    "concatenations": []
   }
 }

@@ -1,77 +1,79 @@
-import estraverse from 'estraverse';
-import type { Reference, ScopeManager } from 'escope';
-
-const { Syntax } = estraverse;
+import * as t from 'babel-types';
+import type { Binding, Path } from '../types';
 
 type DeclarationKind = 'var' | 'let' | 'const';
 
-export default function mostRestrictiveKindForDeclaration(node: Object, scopeManager: ScopeManager): DeclarationKind {
-  const declaredVariables = scopeManager.getDeclaredVariables(node);
-  const blockScope = declaredVariables.every(variable =>
-    variable.defs.length < 2 &&
-      variable.references.every(referenceCouldBeBlockScope)
-  );
+/**
+ * Determines the most restrictive declaration kind for a variable declaration.
+ * `const` is preferred, followed by `let` if one or more bindings are
+ * reassigned, then `var` if block scoping cannot be used.
+ */
+export default function mostRestrictiveKindForDeclaration(path: Path): DeclarationKind {
+  let ids = path.getBindingIdentifiers();
+  let { scope } = path;
+  let isConst = path.node.declarations.every(declaration => declaration.init);
 
-  if (!blockScope) {
-    return 'var';
+  for (let id in ids) {
+    let binding = scope.getBinding(id);
+
+    // Does this binding disqualify block scoping for this declaration entirely?
+    if (!bindingCouldBeBlockScope(binding)) {
+      return 'var';
+    }
+
+    // Is this binding reassigned?
+    if (isConst && !binding.constant) {
+      isConst = false;
+    }
   }
-
-  const isConst = declaredVariables.every(variable =>
-    variable.references.length > 0 &&
-    variable.references.every(couldBeConstReference)
-  );
 
   return isConst ? 'const' : 'let';
 }
 
-function couldBeConstReference(reference: Reference): boolean {
-  return reference.init || reference.isReadOnly();
-}
-
-function referenceCouldBeBlockScope(reference: Reference): boolean {
-  return referenceAfterDefinition(reference) && referenceInDefinitionParentBlock(reference);
-}
-
-function referenceAfterDefinition(reference: Reference): boolean {
-  const referenceIndex = reference.identifier.range[0];
-  const definitionIndex = reference.resolved.identifiers[0].range[0];
-  return referenceIndex >= definitionIndex;
-}
-
-function referenceInDefinitionParentBlock(reference: Reference): boolean {
-  let definitionName = reference.resolved.defs[0].name;
-  let defBlock = definitionName;
-
-  while (defBlock && !createsBlockScope(defBlock)) {
-    defBlock = defBlock.parentNode;
+/**
+ * Does this binding meet the requirements for block scoping?
+ */
+function bindingCouldBeBlockScope(binding: Binding): boolean {
+  // Are there duplicate declarations?
+  if (binding.constantViolations.some(path => t.isVariableDeclarator(path.node))) {
+    return false;
   }
 
-  if (!defBlock) {
-    const { line, column } = definitionName.loc.start;
-    throw new Error(
-      `BUG: Expected a block containing '${definitionName.name}'` +
-      `(${line}:${column + 1}) but did not find one.`
-    );
-  }
+  let definition = binding.path;
+  let definitionBlockParent = findBlockParent(definition);
 
-  let refBlock = reference.identifier;
-
-  while (refBlock && refBlock !== defBlock) {
-    refBlock = refBlock.parentNode;
-  }
-
-  return refBlock === defBlock;
+  return binding.referencePaths.every(reference =>
+    // Does this reference come after the definition?
+    reference.node.start > definition.node.start &&
+    // Does this reference share the same block parent?
+    hasAncestor(reference, definitionBlockParent)
+  );
 }
 
-function createsBlockScope(node: Object): boolean {
-  switch (node.type) {
-    case Syntax.Program:
-    case Syntax.BlockStatement:
-    case Syntax.ForStatement:
-    case Syntax.ForInStatement:
-      return true;
+/**
+ * Find the closest ancestor that creates a block scope.
+ */
+function findBlockParent(path: Path): Path {
+  let parent: Path = path;
 
-    default:
-      return false;
+  while (!t.isBlockParent(parent.node)) {
+    parent = parent.parentPath;
+  }
+
+  return parent;
+}
+
+/**
+ * Determines whether `ancestor` is an ancestor of `path`.
+ *
+ * TODO: Use getEarliestCommonAncestorFrom?
+ */
+function hasAncestor(path: Path, ancestor: Path): boolean {
+  if (path === ancestor) {
+    return true;
+  } else if (path.parentPath) {
+    return hasAncestor(path.parentPath, ancestor);
+  } else {
+    return false;
   }
 }

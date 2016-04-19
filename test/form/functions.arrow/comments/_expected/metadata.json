@@ -1,9 +1,4 @@
 {
-  "modules.commonjs": {
-    "imports": [],
-    "exports": [],
-    "directives": []
-  },
   "functions.arrow": {
     "functions": [
       {
@@ -12,33 +7,22 @@
         "params": [],
         "body": {
           "type": "BlockStatement",
+          "directives": [],
           "body": [
             {
               "type": "ReturnStatement",
               "argument": {
-                "type": "Literal",
-                "value": 42,
-                "raw": "42"
+                "type": "NumericLiteral",
+                "value": 42
               }
             }
           ]
         },
         "generator": false,
-        "expression": false
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
       }
     ]
-  },
-  "declarations.block-scope": {
-    "declarations": []
-  },
-  "objects.destructuring": [],
-  "strings.template": {
-    "concatenations": []
-  },
-  "objects.shorthand": {
-    "properties": []
-  },
-  "objects.concise": {
-    "properties": []
   }
 }

@@ -9,12 +9,17 @@ export default function unescape(char: string, start: number, end: number, charA
   }
 }
 
-export function unescapeString(char: string, string: string): string {
-  let result = new MagicString(string);
+export function unescapeString(
+  char: string,
+  string: string,
+  start: number=0,
+  end: number=string.length,
+  magicString: MagicString=new MagicString(string)
+): string {
   unescape(
-    char, 0, string.length,
+    char, start, end,
     index => string[index],
-    (start, end) => result.remove(start, end)
+    (start, end) => magicString.remove(start, end)
   );
-  return result.toString();
+  return magicString.toString();
 }

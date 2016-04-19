@@ -1,15 +1,4 @@
 {
-  "objects.shorthand": {
-    "properties": []
-  },
-  "objects.concise": {
-    "properties": []
-  },
-  "modules.commonjs": {
-    "imports": [],
-    "exports": [],
-    "directives": []
-  },
   "functions.arrow": {
     "functions": [
       {
@@ -18,23 +7,28 @@
         "params": [
           {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "typeAnnotation": null
           }
         ],
         "body": {
           "type": "BlockStatement",
+          "directives": [],
           "body": [
             {
               "type": "ReturnStatement",
               "argument": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "typeAnnotation": null
               }
             }
           ]
         },
         "generator": false,
-        "expression": false
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
       },
       {
         "type": "FunctionExpression",
@@ -42,19 +36,21 @@
         "params": [],
         "body": {
           "type": "BlockStatement",
+          "directives": [],
           "body": [
             {
               "type": "ReturnStatement",
               "argument": {
-                "type": "Literal",
-                "value": 0,
-                "raw": "0"
+                "type": "NumericLiteral",
+                "value": 0
               }
             }
           ]
         },
         "generator": false,
-        "expression": false
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
       },
       {
         "type": "FunctionExpression",
@@ -62,27 +58,22 @@
         "params": [],
         "body": {
           "type": "BlockStatement",
+          "directives": [],
           "body": [
             {
               "type": "ReturnStatement",
               "argument": {
-                "type": "Literal",
-                "value": 1,
-                "raw": "1"
+                "type": "NumericLiteral",
+                "value": 1
               }
             }
           ]
         },
         "generator": false,
-        "expression": false
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
       }
     ]
-  },
-  "declarations.block-scope": {
-    "declarations": []
-  },
-  "objects.destructuring": [],
-  "strings.template": {
-    "concatenations": []
   }
 }

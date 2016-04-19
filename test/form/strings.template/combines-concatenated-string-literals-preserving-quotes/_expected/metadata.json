@@ -6,26 +6,22 @@
           "type": "BinaryExpression",
           "operator": "+",
           "left": {
-            "type": "Literal",
-            "value": "foo",
-            "raw": "\"foo\""
+            "type": "StringLiteral",
+            "value": "foo"
           },
           "right": {
-            "type": "Literal",
-            "value": "bar",
-            "raw": "'bar'"
+            "type": "StringLiteral",
+            "value": "bar"
           }
         },
         "parts": [
           {
-            "type": "Literal",
-            "value": "foo",
-            "raw": "\"foo\""
+            "type": "StringLiteral",
+            "value": "foo"
           },
           {
-            "type": "Literal",
-            "value": "bar",
-            "raw": "'bar'"
+            "type": "StringLiteral",
+            "value": "bar"
           }
         ]
       }

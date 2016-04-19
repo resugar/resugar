@@ -1,15 +1,4 @@
 {
-  "objects.shorthand": {
-    "properties": []
-  },
-  "objects.concise": {
-    "properties": []
-  },
-  "modules.commonjs": {
-    "imports": [],
-    "exports": [],
-    "directives": []
-  },
   "functions.arrow": {
     "functions": [
       {
@@ -18,11 +7,13 @@
         "params": [
           {
             "type": "Identifier",
-            "name": "thing"
+            "name": "thing",
+            "typeAnnotation": null
           }
         ],
         "body": {
           "type": "BlockStatement",
+          "directives": [],
           "body": [
             {
               "type": "ExpressionStatement",
@@ -30,14 +21,15 @@
                 "type": "CallExpression",
                 "callee": {
                   "type": "MemberExpression",
-                  "computed": true,
                   "object": {
                     "type": "ThisExpression"
                   },
                   "property": {
                     "type": "Identifier",
-                    "name": "thing"
-                  }
+                    "name": "thing",
+                    "typeAnnotation": null
+                  },
+                  "computed": true
                 },
                 "arguments": []
               }
@@ -45,15 +37,10 @@
           ]
         },
         "generator": false,
-        "expression": false
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
       }
     ]
-  },
-  "declarations.block-scope": {
-    "declarations": []
-  },
-  "objects.destructuring": [],
-  "strings.template": {
-    "concatenations": []
   }
 }

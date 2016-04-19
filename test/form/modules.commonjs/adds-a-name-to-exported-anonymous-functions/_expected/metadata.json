@@ -14,23 +14,39 @@
           "type": "ExpressionStatement",
           "expression": {
             "type": "AssignmentExpression",
+            "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "computed": false,
               "object": {
                 "type": "Identifier",
-                "name": "exports"
+                "name": "exports",
+                "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "add"
-              }
+                "name": "add",
+                "typeAnnotation": null
+              },
+              "computed": false
             },
-            "operator": "=",
             "right": {
               "type": "FunctionExpression",
+              "id": null,
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "a",
+                  "typeAnnotation": null
+                },
+                {
+                  "type": "Identifier",
+                  "name": "b",
+                  "typeAnnotation": null
+                }
+              ],
               "body": {
                 "type": "BlockStatement",
+                "directives": [],
                 "body": [
                   {
                     "type": "ReturnStatement",
@@ -39,29 +55,22 @@
                       "operator": "+",
                       "left": {
                         "type": "Identifier",
-                        "name": "a"
+                        "name": "a",
+                        "typeAnnotation": null
                       },
                       "right": {
                         "type": "Identifier",
-                        "name": "b"
+                        "name": "b",
+                        "typeAnnotation": null
                       }
                     }
                   }
                 ]
               },
-              "expression": false,
               "generator": false,
-              "id": null,
-              "params": [
-                {
-                  "type": "Identifier",
-                  "name": "a"
-                },
-                {
-                  "type": "Identifier",
-                  "name": "b"
-                }
-              ]
+              "async": false,
+              "returnType": null,
+              "typeParameters": null
             }
           }
         }

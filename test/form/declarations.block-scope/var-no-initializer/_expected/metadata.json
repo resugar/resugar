@@ -7,7 +7,11 @@
         "declarations": [
           {
             "type": "VariableDeclarator",
-            "id": { "type": "Identifier", "name": "a" },
+            "id": {
+              "type": "Identifier",
+              "name": "a",
+              "typeAnnotation": null
+            },
             "init": null
           }
         ]
