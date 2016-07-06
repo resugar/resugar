@@ -5,11 +5,13 @@
         {
           "type": "Identifier",
           "name": "a",
+          "decorators": null,
           "typeAnnotation": null
         },
         {
           "type": "Identifier",
           "name": "b",
+          "decorators": null,
           "typeAnnotation": null
         }
       ],
@@ -19,11 +21,13 @@
           "object": {
             "type": "Identifier",
             "name": "obj",
+            "decorators": null,
             "typeAnnotation": null
           },
           "property": {
             "type": "Identifier",
             "name": "a",
+            "decorators": null,
             "typeAnnotation": null
           },
           "computed": false
@@ -33,11 +37,13 @@
           "object": {
             "type": "Identifier",
             "name": "obj",
+            "decorators": null,
             "typeAnnotation": null
           },
           "property": {
             "type": "Identifier",
             "name": "b",
+            "decorators": null,
             "typeAnnotation": null
           },
           "computed": false

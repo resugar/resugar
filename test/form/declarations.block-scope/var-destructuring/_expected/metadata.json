@@ -16,11 +16,13 @@
                   "key": {
                     "type": "Identifier",
                     "name": "a",
+                    "decorators": null,
                     "typeAnnotation": null
                   },
                   "value": {
                     "type": "Identifier",
                     "name": "a",
+                    "decorators": null,
                     "typeAnnotation": null
                   },
                   "shorthand": true,
@@ -32,22 +34,26 @@
                   "key": {
                     "type": "Identifier",
                     "name": "b",
+                    "decorators": null,
                     "typeAnnotation": null
                   },
                   "value": {
                     "type": "Identifier",
                     "name": "b",
+                    "decorators": null,
                     "typeAnnotation": null
                   },
                   "shorthand": true,
                   "decorators": null
                 }
               ],
+              "decorators": null,
               "typeAnnotation": null
             },
             "init": {
               "type": "Identifier",
               "name": "obj",
+              "decorators": null,
               "typeAnnotation": null
             }
           }

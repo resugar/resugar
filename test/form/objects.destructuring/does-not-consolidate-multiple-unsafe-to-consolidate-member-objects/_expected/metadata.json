@@ -5,6 +5,7 @@
         {
           "type": "Identifier",
           "name": "a",
+          "decorators": null,
           "typeAnnotation": null
         }
       ],
@@ -16,6 +17,7 @@
             "callee": {
               "type": "Identifier",
               "name": "foo",
+              "decorators": null,
               "typeAnnotation": null
             },
             "arguments": []
@@ -23,6 +25,7 @@
           "property": {
             "type": "Identifier",
             "name": "a",
+            "decorators": null,
             "typeAnnotation": null
           },
           "computed": false
@@ -34,6 +37,7 @@
         {
           "type": "Identifier",
           "name": "b",
+          "decorators": null,
           "typeAnnotation": null
         }
       ],
@@ -45,6 +49,7 @@
             "callee": {
               "type": "Identifier",
               "name": "foo",
+              "decorators": null,
               "typeAnnotation": null
             },
             "arguments": []
@@ -52,6 +57,7 @@
           "property": {
             "type": "Identifier",
             "name": "b",
+            "decorators": null,
             "typeAnnotation": null
           },
           "computed": false

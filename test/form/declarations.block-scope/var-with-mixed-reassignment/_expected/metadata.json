@@ -10,6 +10,7 @@
             "id": {
               "type": "Identifier",
               "name": "a",
+              "decorators": null,
               "typeAnnotation": null
             },
             "init": {
@@ -22,6 +23,7 @@
             "id": {
               "type": "Identifier",
               "name": "b",
+              "decorators": null,
               "typeAnnotation": null
             },
             "init": {

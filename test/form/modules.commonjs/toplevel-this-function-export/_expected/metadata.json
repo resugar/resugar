@@ -23,6 +23,7 @@
               "property": {
                 "type": "Identifier",
                 "name": "log",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "computed": false
@@ -34,6 +35,7 @@
                 {
                   "type": "Identifier",
                   "name": "message",
+                  "decorators": null,
                   "typeAnnotation": null
                 }
               ],
@@ -50,11 +52,13 @@
                         "object": {
                           "type": "Identifier",
                           "name": "console",
+                          "decorators": null,
                           "typeAnnotation": null
                         },
                         "property": {
                           "type": "Identifier",
                           "name": "log",
+                          "decorators": null,
                           "typeAnnotation": null
                         },
                         "computed": false
@@ -63,6 +67,7 @@
                         {
                           "type": "Identifier",
                           "name": "message",
+                          "decorators": null,
                           "typeAnnotation": null
                         }
                       ]

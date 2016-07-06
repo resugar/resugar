@@ -18,11 +18,13 @@
                     "key": {
                       "type": "Identifier",
                       "name": "pow",
+                      "decorators": null,
                       "typeAnnotation": null
                     },
                     "value": {
                       "type": "Identifier",
                       "name": "pow",
+                      "decorators": null,
                       "typeAnnotation": null
                     },
                     "shorthand": true,
@@ -34,11 +36,13 @@
                     "key": {
                       "type": "Identifier",
                       "name": "sin",
+                      "decorators": null,
                       "typeAnnotation": null
                     },
                     "value": {
                       "type": "Identifier",
                       "name": "sin",
+                      "decorators": null,
                       "typeAnnotation": null
                     },
                     "shorthand": true,
@@ -50,17 +54,20 @@
                     "key": {
                       "type": "Identifier",
                       "name": "cos",
+                      "decorators": null,
                       "typeAnnotation": null
                     },
                     "value": {
                       "type": "Identifier",
                       "name": "cosine",
+                      "decorators": null,
                       "typeAnnotation": null
                     },
                     "shorthand": false,
                     "decorators": null
                   }
                 ],
+                "decorators": null,
                 "typeAnnotation": null
               },
               "init": {
@@ -68,6 +75,7 @@
                 "callee": {
                   "type": "Identifier",
                   "name": "require",
+                  "decorators": null,
                   "typeAnnotation": null
                 },
                 "arguments": [

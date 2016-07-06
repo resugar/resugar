@@ -15,11 +15,13 @@
               "object": {
                 "type": "Identifier",
                 "name": "module",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
                 "name": "exports",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "computed": false
@@ -29,6 +31,7 @@
               "callee": {
                 "type": "Identifier",
                 "name": "require",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "arguments": [

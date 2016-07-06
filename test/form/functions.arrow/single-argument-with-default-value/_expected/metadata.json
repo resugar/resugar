@@ -10,12 +10,14 @@
             "left": {
               "type": "Identifier",
               "name": "b",
+              "decorators": null,
               "typeAnnotation": null
             },
             "right": {
               "type": "NumericLiteral",
               "value": 0
-            }
+            },
+            "decorators": null
           }
         ],
         "body": {
@@ -27,6 +29,7 @@
               "argument": {
                 "type": "Identifier",
                 "name": "b",
+                "decorators": null,
                 "typeAnnotation": null
               }
             }

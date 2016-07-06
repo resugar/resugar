@@ -20,11 +20,13 @@
               "object": {
                 "type": "Identifier",
                 "name": "exports",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
                 "name": "jQuery",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "computed": false
@@ -32,6 +34,7 @@
             "right": {
               "type": "Identifier",
               "name": "$",
+              "decorators": null,
               "typeAnnotation": null
             }
           }

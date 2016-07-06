@@ -8,11 +8,13 @@
           {
             "type": "Identifier",
             "name": "n",
+            "decorators": null,
             "typeAnnotation": null
           },
           {
             "type": "Identifier",
             "name": "i",
+            "decorators": null,
             "typeAnnotation": null
           }
         ],
@@ -28,11 +30,13 @@
                 "left": {
                   "type": "Identifier",
                   "name": "n",
+                  "decorators": null,
                   "typeAnnotation": null
                 },
                 "right": {
                   "type": "Identifier",
                   "name": "i",
+                  "decorators": null,
                   "typeAnnotation": null
                 }
               }

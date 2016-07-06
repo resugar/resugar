@@ -24,11 +24,13 @@
               "object": {
                 "type": "Identifier",
                 "name": "module",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
                 "name": "exports",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "computed": false
@@ -42,11 +44,13 @@
                   "key": {
                     "type": "Identifier",
                     "name": "a",
+                    "decorators": null,
                     "typeAnnotation": null
                   },
                   "value": {
                     "type": "Identifier",
                     "name": "a",
+                    "decorators": null,
                     "typeAnnotation": null
                   },
                   "shorthand": true,
@@ -58,11 +62,13 @@
                   "key": {
                     "type": "Identifier",
                     "name": "b",
+                    "decorators": null,
                     "typeAnnotation": null
                   },
                   "value": {
                     "type": "Identifier",
                     "name": "b",
+                    "decorators": null,
                     "typeAnnotation": null
                   },
                   "shorthand": true,

@@ -14,11 +14,13 @@
               "object": {
                 "type": "Identifier",
                 "name": "module",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
                 "name": "exports",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "computed": false
@@ -26,6 +28,7 @@
             "right": {
               "type": "Identifier",
               "name": "Foo",
+              "decorators": null,
               "typeAnnotation": null
             }
           }

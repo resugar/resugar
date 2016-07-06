@@ -7,11 +7,13 @@
         "key": {
           "type": "Identifier",
           "name": "a",
+          "decorators": null,
           "typeAnnotation": null
         },
         "value": {
           "type": "Identifier",
           "name": "a",
+          "decorators": null,
           "typeAnnotation": null
         },
         "shorthand": false,

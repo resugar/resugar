@@ -21,6 +21,7 @@
                 "right": {
                   "type": "Identifier",
                   "name": "b",
+                  "decorators": null,
                   "typeAnnotation": null
                 }
               },
@@ -32,6 +33,7 @@
             "right": {
               "type": "Identifier",
               "name": "c",
+              "decorators": null,
               "typeAnnotation": null
             }
           },
@@ -48,6 +50,7 @@
           {
             "type": "Identifier",
             "name": "b",
+            "decorators": null,
             "typeAnnotation": null
           },
           {
@@ -57,6 +60,7 @@
           {
             "type": "Identifier",
             "name": "c",
+            "decorators": null,
             "typeAnnotation": null
           },
           {
