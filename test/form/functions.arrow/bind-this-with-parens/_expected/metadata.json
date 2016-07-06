@@ -8,6 +8,7 @@
           {
             "type": "Identifier",
             "name": "thing",
+            "decorators": null,
             "typeAnnotation": null
           }
         ],
@@ -27,6 +28,7 @@
                   "property": {
                     "type": "Identifier",
                     "name": "thing",
+                    "decorators": null,
                     "typeAnnotation": null
                   },
                   "computed": true

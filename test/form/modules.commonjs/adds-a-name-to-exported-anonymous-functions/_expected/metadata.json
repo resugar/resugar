@@ -20,11 +20,13 @@
               "object": {
                 "type": "Identifier",
                 "name": "exports",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
                 "name": "add",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "computed": false
@@ -36,11 +38,13 @@
                 {
                   "type": "Identifier",
                   "name": "a",
+                  "decorators": null,
                   "typeAnnotation": null
                 },
                 {
                   "type": "Identifier",
                   "name": "b",
+                  "decorators": null,
                   "typeAnnotation": null
                 }
               ],
@@ -56,11 +60,13 @@
                       "left": {
                         "type": "Identifier",
                         "name": "a",
+                        "decorators": null,
                         "typeAnnotation": null
                       },
                       "right": {
                         "type": "Identifier",
                         "name": "b",
+                        "decorators": null,
                         "typeAnnotation": null
                       }
                     }

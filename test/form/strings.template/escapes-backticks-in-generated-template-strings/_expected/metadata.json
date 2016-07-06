@@ -12,6 +12,7 @@
           "right": {
             "type": "Identifier",
             "name": "a",
+            "decorators": null,
             "typeAnnotation": null
           }
         },
@@ -23,6 +24,7 @@
           {
             "type": "Identifier",
             "name": "a",
+            "decorators": null,
             "typeAnnotation": null
           }
         ]

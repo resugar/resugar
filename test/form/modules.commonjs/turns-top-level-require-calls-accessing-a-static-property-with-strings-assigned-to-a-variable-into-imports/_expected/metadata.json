@@ -12,6 +12,7 @@
               "id": {
                 "type": "Identifier",
                 "name": "parse",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "init": {
@@ -21,6 +22,7 @@
                   "callee": {
                     "type": "Identifier",
                     "name": "require",
+                    "decorators": null,
                     "typeAnnotation": null
                   },
                   "arguments": [
@@ -33,6 +35,7 @@
                 "property": {
                   "type": "Identifier",
                   "name": "parse",
+                  "decorators": null,
                   "typeAnnotation": null
                 },
                 "computed": false

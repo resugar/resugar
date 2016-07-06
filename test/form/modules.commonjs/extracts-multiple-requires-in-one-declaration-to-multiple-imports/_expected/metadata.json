@@ -12,6 +12,7 @@
               "id": {
                 "type": "Identifier",
                 "name": "lodash",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "init": {
@@ -19,6 +20,7 @@
                 "callee": {
                   "type": "Identifier",
                   "name": "require",
+                  "decorators": null,
                   "typeAnnotation": null
                 },
                 "arguments": [
@@ -34,6 +36,7 @@
               "id": {
                 "type": "Identifier",
                 "name": "escope",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "init": {
@@ -41,6 +44,7 @@
                 "callee": {
                   "type": "Identifier",
                   "name": "require",
+                  "decorators": null,
                   "typeAnnotation": null
                 },
                 "arguments": [
@@ -72,6 +76,7 @@
               "id": {
                 "type": "Identifier",
                 "name": "lodash",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "init": {
@@ -79,6 +84,7 @@
                 "callee": {
                   "type": "Identifier",
                   "name": "require",
+                  "decorators": null,
                   "typeAnnotation": null
                 },
                 "arguments": [
@@ -94,6 +100,7 @@
               "id": {
                 "type": "Identifier",
                 "name": "escope",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "init": {
@@ -101,6 +108,7 @@
                 "callee": {
                   "type": "Identifier",
                   "name": "require",
+                  "decorators": null,
                   "typeAnnotation": null
                 },
                 "arguments": [

@@ -12,7 +12,7 @@ export function escapeString(char: string, string: string, start: number=0, end:
   escape(
     char, start, end,
     index => string[index],
-    (index, string) => magicString.insert(index, string)
+    (index, string) => magicString.insertRight(index, string)
   );
   return magicString.toString();
 }

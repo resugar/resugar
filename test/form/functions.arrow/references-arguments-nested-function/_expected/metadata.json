@@ -28,6 +28,7 @@
                           "object": {
                             "type": "Identifier",
                             "name": "arguments",
+                            "decorators": null,
                             "typeAnnotation": null
                           },
                           "property": {

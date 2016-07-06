@@ -17,11 +17,13 @@
                   {
                     "type": "Identifier",
                     "name": "a",
+                    "decorators": null,
                     "typeAnnotation": null
                   },
                   {
                     "type": "Identifier",
                     "name": "b",
+                    "decorators": null,
                     "typeAnnotation": null
                   }
                 ]

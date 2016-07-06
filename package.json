@@ -9,10 +9,10 @@
   },
   "scripts": {
     "lint": "eslint src test/test.js test/support",
-    "pretest": "rollup -c rollup.test.config.js",
-    "test": "mocha build/test-bundle.js",
+    "pretest": "npm run lint",
+    "test": "mocha",
     "prebuild": "npm run lint && rm -rf dist",
-    "build": "rollup -c rollup.umd.config.js && rollup -c rollup.ecma.config.js",
+    "build": "rollup -c",
     "prepublish": "npm run build"
   },
   "keywords": [
@@ -30,35 +30,40 @@
   },
   "author": "Brian Donovan",
   "license": "MIT",
-  "repository": "https://github.com/esnext/esnext.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/esnext/esnext.git"
+  },
   "bugs": "https://github.com/esnext/esnext/issues",
   "dependencies": {
-    "babel-traverse": "^6.7.6",
-    "babel-types": "^6.7.2",
-    "babylon": "^6.7.0",
-    "magic-string": "^0.10.2",
+    "babel-traverse": "^6.10.4",
+    "babel-types": "^6.11.1",
+    "babylon": "^6.8.3",
+    "magic-string": "^0.15.2",
     "mkdirp": "^0.5.1",
     "shebang-regex": "^2.0.0",
-    "strip-indent": "^1.0.1"
+    "strip-indent": "^2.0.0"
   },
   "devDependencies": {
     "assert-jsnext": "^1.3.0",
-    "babel": "^6.3.26",
-    "babel-eslint": "^5.0.0-beta6",
-    "babel-plugin-syntax-class-properties": "^6.5.0",
-    "babel-plugin-syntax-flow": "^6.3.13",
-    "babel-plugin-transform-class-properties": "^6.6.0",
-    "babel-plugin-transform-flow-strip-types": "^6.4.0",
-    "babel-preset-es2015": "^6.3.13",
+    "babel": "^6.5.2",
+    "babel-eslint": "^6.1.0",
+    "babel-plugin-syntax-class-properties": "^6.8.0",
+    "babel-plugin-syntax-flow": "^6.8.0",
+    "babel-plugin-transform-class-properties": "^6.10.2",
+    "babel-plugin-transform-flow-strip-types": "^6.8.0",
+    "babel-preset-es2015": "^6.9.0",
     "babel-preset-es2015-rollup": "^1.1.1",
-    "eslint": "^1.10.3",
-    "eslint-plugin-babel": "^3.0.0",
-    "mocha": "^2.3.4",
+    "babel-register": "^6.9.0",
+    "babelrc-rollup": "^1.1.0",
+    "eslint": "^3.0.1",
+    "eslint-plugin-flow-vars": "^0.4.0",
+    "mocha": "^2.5.3",
     "mversion": "^1.10.1",
-    "rollup": "^0.24.1",
-    "rollup-plugin-babel": "^2.3.8",
-    "rollup-plugin-npm": "^1.2.1",
-    "source-map-support": "^0.4.0"
+    "rollup": "^0.33.0",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-npm": "^2.0.0",
+    "source-map-support": "^0.4.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

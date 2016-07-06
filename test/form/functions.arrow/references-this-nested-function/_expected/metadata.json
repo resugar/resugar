@@ -16,6 +16,7 @@
                 "id": {
                   "type": "Identifier",
                   "name": "getThis",
+                  "decorators": null,
                   "typeAnnotation": null
                 },
                 "params": [],

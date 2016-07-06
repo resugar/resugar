@@ -33,6 +33,7 @@
               {
                 "type": "Identifier",
                 "name": "c",
+                "decorators": null,
                 "typeAnnotation": null
               }
             ]
@@ -67,6 +68,7 @@
               {
                 "type": "Identifier",
                 "name": "c",
+                "decorators": null,
                 "typeAnnotation": null
               }
             ]

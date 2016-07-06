@@ -20,11 +20,13 @@
               "object": {
                 "type": "Identifier",
                 "name": "exports",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
                 "name": "a",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "computed": false

@@ -32,12 +32,14 @@
                   "right": {
                     "type": "Identifier",
                     "name": "c",
+                    "decorators": null,
                     "typeAnnotation": null
                   }
                 },
                 "right": {
                   "type": "Identifier",
                   "name": "d",
+                  "decorators": null,
                   "typeAnnotation": null
                 }
               },
@@ -54,6 +56,7 @@
           "right": {
             "type": "Identifier",
             "name": "f",
+            "decorators": null,
             "typeAnnotation": null
           }
         },
@@ -69,11 +72,13 @@
           {
             "type": "Identifier",
             "name": "c",
+            "decorators": null,
             "typeAnnotation": null
           },
           {
             "type": "Identifier",
             "name": "d",
+            "decorators": null,
             "typeAnnotation": null
           },
           {
@@ -87,6 +92,7 @@
           {
             "type": "Identifier",
             "name": "f",
+            "decorators": null,
             "typeAnnotation": null
           }
         ]

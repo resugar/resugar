@@ -8,6 +8,7 @@
           {
             "type": "Identifier",
             "name": "n",
+            "decorators": null,
             "typeAnnotation": null
           }
         ],
@@ -23,6 +24,7 @@
                 "left": {
                   "type": "Identifier",
                   "name": "n",
+                  "decorators": null,
                   "typeAnnotation": null
                 },
                 "right": {

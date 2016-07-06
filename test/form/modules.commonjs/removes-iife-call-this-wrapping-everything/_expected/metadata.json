@@ -16,6 +16,7 @@
             "test": {
               "type": "Identifier",
               "name": "a",
+              "decorators": null,
               "typeAnnotation": null
             },
             "consequent": {
@@ -29,6 +30,7 @@
                     "callee": {
                       "type": "Identifier",
                       "name": "b",
+                      "decorators": null,
                       "typeAnnotation": null
                     },
                     "arguments": []

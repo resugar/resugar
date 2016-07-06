@@ -23,6 +23,7 @@
               "property": {
                 "type": "Identifier",
                 "name": "foo",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "computed": false
@@ -30,6 +31,7 @@
             "right": {
               "type": "Identifier",
               "name": "foo",
+              "decorators": null,
               "typeAnnotation": null
             }
           }

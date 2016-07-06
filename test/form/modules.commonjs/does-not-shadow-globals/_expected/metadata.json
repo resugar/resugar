@@ -20,11 +20,13 @@
               "object": {
                 "type": "Identifier",
                 "name": "exports",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
                 "name": "clearTimeout",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "computed": false
@@ -36,6 +38,7 @@
                 {
                   "type": "Identifier",
                   "name": "timeout",
+                  "decorators": null,
                   "typeAnnotation": null
                 }
               ],
@@ -50,12 +53,14 @@
                       "callee": {
                         "type": "Identifier",
                         "name": "clearTimeout",
+                        "decorators": null,
                         "typeAnnotation": null
                       },
                       "arguments": [
                         {
                           "type": "Identifier",
                           "name": "timeout",
+                          "decorators": null,
                           "typeAnnotation": null
                         }
                       ]
@@ -89,11 +94,13 @@
               "object": {
                 "type": "Identifier",
                 "name": "exports",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
                 "name": "setTimeout",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "computed": false
@@ -103,17 +110,20 @@
               "id": {
                 "type": "Identifier",
                 "name": "_setTimeout",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "params": [
                 {
                   "type": "Identifier",
                   "name": "callback",
+                  "decorators": null,
                   "typeAnnotation": null
                 },
                 {
                   "type": "Identifier",
                   "name": "timeout",
+                  "decorators": null,
                   "typeAnnotation": null
                 }
               ],
@@ -128,17 +138,20 @@
                       "callee": {
                         "type": "Identifier",
                         "name": "setTimeout",
+                        "decorators": null,
                         "typeAnnotation": null
                       },
                       "arguments": [
                         {
                           "type": "Identifier",
                           "name": "callback",
+                          "decorators": null,
                           "typeAnnotation": null
                         },
                         {
                           "type": "Identifier",
                           "name": "timeout",
+                          "decorators": null,
                           "typeAnnotation": null
                         }
                       ]
@@ -172,11 +185,13 @@
               "object": {
                 "type": "Identifier",
                 "name": "exports",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "property": {
                 "type": "Identifier",
                 "name": "clearInterval",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "computed": false
@@ -186,12 +201,14 @@
               "id": {
                 "type": "Identifier",
                 "name": "_clearInterval",
+                "decorators": null,
                 "typeAnnotation": null
               },
               "params": [
                 {
                   "type": "Identifier",
                   "name": "interval",
+                  "decorators": null,
                   "typeAnnotation": null
                 }
               ],
@@ -206,12 +223,14 @@
                       "callee": {
                         "type": "Identifier",
                         "name": "clearInterval",
+                        "decorators": null,
                         "typeAnnotation": null
                       },
                       "arguments": [
                         {
                           "type": "Identifier",
                           "name": "interval",
+                          "decorators": null,
                           "typeAnnotation": null
                         }
                       ]

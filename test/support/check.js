@@ -7,7 +7,7 @@ import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'f
 import cleanNode from '../../src/utils/cleanNode.js';
 
 export function checkExamples(name: string) {
-  let directory = join(__dirname, '../test/form', name);
+  let directory = join(__dirname, '../form', name);
   let suiteConfigPath = join(directory, '_config.js');
   let suiteConfig = requireOptional(suiteConfigPath) || {};
   let suiteFn = suiteConfig.skip ? describe.skip : suiteConfig.only ? describe.only : describe;

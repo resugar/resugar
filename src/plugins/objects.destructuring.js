@@ -54,8 +54,8 @@ export function visitor(module: Module): Visitor {
 
       // `a = obj.a;` -> `(a = obj.a);`
       //                  ^         ^
-      module.magicString.insert(assignments[0].start, '(');
-      module.magicString.insert(assignments[assignments.length - 1].end, ')');
+      module.magicString.insertLeft(assignments[0].start, '(');
+      module.magicString.insertRight(assignments[assignments.length - 1].end, ')');
 
       rewriteDestructurableElements(module, assignments);
 
@@ -89,8 +89,8 @@ export function visitor(module: Module): Visitor {
 
         if (assignments.length > 0 && index === 0) {
           // `a = obj.a;` -> `(a = obj.a);`
-          module.magicString.insert(assignments[0].start, '(');
-          module.magicString.insert(assignments[assignments.length - 1].end, ')');
+          module.magicString.insertLeft(assignments[0].start, '(');
+          module.magicString.insertRight(assignments[assignments.length - 1].end, ')');
         }
 
         if (assignments.length > 0) {
@@ -171,7 +171,7 @@ function rewriteDestructurableElements(module: Module, elements: Array<Object>) 
 
   // `const a = obj.a, b = obj.b;` -> `const { a = obj.a, b = obj.b;`
   //                                         ^^
-  module.magicString.insert(leftRightOfAssignment(firstElement).left.start, '{ ');
+  module.magicString.insertLeft(leftRightOfAssignment(firstElement).left.start, '{ ');
 
   for (let i = 0; i < elements.length - 1; i++) {
     let { left, right } = leftRightOfAssignment(elements[i]);
@@ -185,7 +185,7 @@ function rewriteDestructurableElements(module: Module, elements: Array<Object>) 
 
   // `const { a, b = obj.b;` -> `const { a, b } = obj.b;`
   //                                         ^^
-  module.magicString.insert(lastLeft.end, ' }');
+  module.magicString.insertRight(lastLeft.end, ' }');
 
   // `const { a, b } = obj.b;` -> `const { a, b } = obj;`
   //                      ^^

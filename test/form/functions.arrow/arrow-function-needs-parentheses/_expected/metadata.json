@@ -8,6 +8,7 @@
           {
             "type": "Identifier",
             "name": "a",
+            "decorators": null,
             "typeAnnotation": null
           }
         ],
@@ -20,6 +21,7 @@
               "argument": {
                 "type": "Identifier",
                 "name": "a",
+                "decorators": null,
                 "typeAnnotation": null
               }
             }
