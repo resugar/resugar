@@ -756,17 +756,6 @@ function rewriteRequireAsImports(type: string, path: Path, module: Module, impor
   );
 }
 
-function metadata(module: Module): Metadata {
-  if (!module.metadata[name]) {
-    module.metadata[name] = {
-      imports: [],
-      exports: [],
-      directives: []
-    };
-  }
-  return module.metadata[name];
-}
-
 type ImportMetadata = {
   type: string,
   node: Node,
@@ -791,6 +780,17 @@ type Metadata = {
   directives: Array<DirectiveMetadata>,
   unwrapped?: Node
 };
+
+function metadata(module: Module): Metadata {
+  if (!module.metadata[name]) {
+    module.metadata[name] = {
+      imports: [],
+      exports: [],
+      directives: []
+    };
+  }
+  return module.metadata[name];
+}
 
 function extractSingleDeclaration(node: Node): ?Node {
   if (!t.isVariableDeclaration(node)) {

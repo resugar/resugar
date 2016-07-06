@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+
 export type Token = SemanticToken | CommentToken;
 
 type SemanticToken = {
