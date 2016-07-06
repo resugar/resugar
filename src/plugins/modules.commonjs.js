@@ -290,7 +290,7 @@ function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
     module.magicString.overwrite(node.start, right.start, 'export ');
 
     if (!id) {
-      module.magicString.insert(right.start + 'function'.length, ` ${localName}`);
+      module.magicString.insertLeft(right.start + 'function'.length, ` ${localName}`);
       right.id = t.identifier(exportName);
     }
 
@@ -310,7 +310,7 @@ function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
 
     if (!id) {
       module.magicString.remove(node.start, right.start);
-      module.magicString.insert(right.start + 'function'.length, ` ${localName}`);
+      module.magicString.insertLeft(right.start + 'function'.length, ` ${localName}`);
       right.type = 'FunctionDeclaration';
       right.id = localId;
     } else if (fnBinding === localName) {
@@ -330,7 +330,7 @@ function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
       );
     }
 
-    module.magicString.insert(node.end, `\nexport { ${localName} as ${exportName} };`);
+    module.magicString.insertRight(node.end, `\nexport { ${localName} as ${exportName} };`);
 
     path.replaceWithMultiple([
       declaration,
@@ -407,7 +407,7 @@ function rewriteNamedIdentifierExport(path: Path, module: Module): boolean {
       ];
     } else {
       module.magicString.overwrite(node.start, right.start, `let ${localBinding} = `);
-      module.magicString.insert(node.end, `\nexport { ${localBinding} as ${property.name} };`);
+      module.magicString.insertRight(node.end, `\nexport { ${localBinding} as ${property.name} };`);
       replacements = [
         t.variableDeclaration(
           'let',
@@ -509,10 +509,10 @@ function rewriteNamedValueExport(path: Path, module: Module): boolean {
 
     if (nextStatement) {
       // Insert before the next statement…
-      module.magicString.insert(nextStatement.start, `${exportStatement}\n`);
+      module.magicString.insertRight(nextStatement.start, `${exportStatement}\n`);
     } else {
       // …or after the last one of the program.
-      module.magicString.insert(node.end, `\n${exportStatement}`);
+      module.magicString.insertLeft(node.end, `\n${exportStatement}`);
     }
 
     path.replaceWithMultiple([
