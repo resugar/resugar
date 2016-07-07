@@ -225,7 +225,11 @@ function rewriteBlocklessArrowFunction(path: Path, module: Module, functions: Ar
     //    return foo;
     //  }
     //
-    editor.overwrite(blockStart.end, statement.start, ' ');
+    if (blockStart.end === statement.start) {
+      editor.insertLeft(statement.start, ' ');
+    } else {
+      editor.overwrite(blockStart.end, statement.start, ' ');
+    }
     editor.remove(statement.end, blockEnd.end);
   }
 
