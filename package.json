@@ -2,8 +2,8 @@
   "name": "esnext",
   "version": "2.1.1",
   "description": "Update your project to the latest ECMAScript syntax.",
-  "main": "dist/esnext.umd.js",
-  "jsnext:main": "dist/esnext.ecma.js",
+  "main": "dist/esnext.js",
+  "jsnext:main": "dist/esnext.mjs",
   "bin": {
     "esnext": "./bin/index.js"
   },
