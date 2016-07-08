@@ -2,7 +2,7 @@ import babel from 'rollup-plugin-babel';
 import babelrc from 'babelrc-rollup';
 import { readFileSync } from 'fs';
 
-var pkg = require('./package.json');
+let pkg = require('./package.json');
 
 export default {
   entry: 'src/esnext.js',
