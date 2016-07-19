@@ -1,6 +1,5 @@
 {
   "name": "esnext",
-  "version": "2.1.1",
   "description": "Update your project to the latest ECMAScript syntax.",
   "main": "dist/esnext.js",
   "jsnext:main": "dist/esnext.mjs",
@@ -13,7 +12,8 @@
     "test": "mocha",
     "prebuild": "npm run lint && rm -rf dist",
     "build": "rollup -c",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "keywords": [
     "es6",
@@ -63,7 +63,8 @@
     "rollup": "^0.33.0",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-npm": "^2.0.0",
-    "source-map-support": "^0.4.1"
+    "source-map-support": "^0.4.1",
+    "semantic-release": "^4.3.5"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
