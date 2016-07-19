@@ -1,0 +1,42 @@
+{
+  "objects.shorthand": {
+    "properties": [
+      {
+        "type": "ObjectProperty",
+        "computed": false,
+        "key": {
+          "type": "Identifier",
+          "name": "x",
+          "decorators": null,
+          "typeAnnotation": null
+        },
+        "value": {
+          "type": "Identifier",
+          "name": "x",
+          "decorators": null,
+          "typeAnnotation": null
+        },
+        "shorthand": false,
+        "decorators": null
+      },
+      {
+        "type": "ObjectProperty",
+        "computed": false,
+        "key": {
+          "type": "Identifier",
+          "name": "y",
+          "decorators": null,
+          "typeAnnotation": null
+        },
+        "value": {
+          "type": "Identifier",
+          "name": "y",
+          "decorators": null,
+          "typeAnnotation": null
+        },
+        "shorthand": false,
+        "decorators": null
+      }
+    ]
+  }
+}

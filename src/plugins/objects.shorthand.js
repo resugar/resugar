@@ -43,11 +43,13 @@ export function visitor(module: Module): Visitor {
 
       // `a /* 1 */ : /* 2 */ a` -> `/* 1 *//* 2 */a`
       //             ^^^^^^^^^              ^^^^^^^
-      module.magicString.overwrite(
-        colonToken.end,
-        valueToken.start,
-        sourceBetweenColonAndValue.trim()
-      );
+      if (colonToken.end !== valueToken.start) {
+        module.magicString.overwrite(
+          colonToken.end,
+          valueToken.start,
+          sourceBetweenColonAndValue.trim()
+        );
+      }
 
       meta.properties.push(cleanNode(node));
       node.shorthand = true;
