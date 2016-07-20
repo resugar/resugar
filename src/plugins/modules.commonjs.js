@@ -189,6 +189,20 @@ function isExportsObject(path: Path): boolean {
   }
 }
 
+function isSimpleObjectExpression(node: Node) {
+  if (!t.isObjectExpression(node)) {
+    return false;
+  }
+  for (let property of node.properties) {
+    if (!t.isObjectProperty(property) ||
+        !t.isIdentifier(property.key) ||
+        !t.isIdentifier(property.value)) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function rewriteSingleExportAsDefaultExport(path: Path, module: Module): boolean {
   let {
     node,
@@ -197,7 +211,7 @@ function rewriteSingleExportAsDefaultExport(path: Path, module: Module): boolean
     }
   } = path;
 
-  if (t.isObjectExpression(right)) {
+  if (isSimpleObjectExpression(right)) {
     let bindings = [];
 
     for (let { key, value } of right.properties) {
