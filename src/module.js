@@ -1,4 +1,5 @@
 import clone from './utils/clone.js';
+import parse from './utils/parse';
 import MagicString from 'magic-string';
 import type { Node, Token } from './types';
 
@@ -11,7 +12,6 @@ type Warning = {
 export type RenderedModule = {
   ast: Node,
   code: string,
-  map: Object,
   metadata: Object,
   warnings: Array<Warning>,
 };
@@ -30,14 +30,29 @@ export default class Module {
   magicString: MagicString;
   warnings: Array<Warning> = [];
 
-  constructor(id: ?string, source: string, ast: Node) {
+  constructor(id: ?string, source: string) {
     this.id = id;
+    this.reinit(source);
+  }
+
+  /**
+   * @private
+   */
+  reinit(source: string) {
     this.source = source;
-    this.ast = ast;
+    this.ast = parse(source);
     this.tokens = this.ast.tokens;
     this.magicString = new MagicString(source, {
-      filename: id
+      filename: this.id
     });
+  }
+
+  commit() {
+    let source = this.magicString.toString();
+
+    if (source !== this.source) {
+      this.reinit(source);
+    }
   }
 
   warn(node: Node, type: string, message: string) {
@@ -83,7 +98,6 @@ export default class Module {
   render(): RenderedModule {
     return {
       code: this.magicString.toString(),
-      map: this.magicString.generateMap(),
       ast: this.ast,
       warnings: this.warnings.slice(),
       metadata: this.metadata
