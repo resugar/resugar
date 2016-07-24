@@ -1,0 +1,76 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "find",
+            "localName": "find"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "object": {
+                "type": "MemberExpression",
+                "object": {
+                  "type": "Identifier",
+                  "name": "module",
+                  "decorators": null,
+                  "typeAnnotation": null
+                },
+                "property": {
+                  "type": "Identifier",
+                  "name": "exports",
+                  "decorators": null,
+                  "typeAnnotation": null
+                },
+                "computed": false
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "find",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "computed": false
+            },
+            "right": {
+              "type": "MemberExpression",
+              "object": {
+                "type": "MemberExpression",
+                "object": {
+                  "type": "Identifier",
+                  "name": "Array",
+                  "decorators": null,
+                  "typeAnnotation": null
+                },
+                "property": {
+                  "type": "Identifier",
+                  "name": "prototype",
+                  "decorators": null,
+                  "typeAnnotation": null
+                },
+                "computed": false
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "find",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "computed": false
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  }
+}

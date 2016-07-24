@@ -39,6 +39,7 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
     let { name, visitor } = plugin;
     let pluginOptions = options[name];
     traverse(module.ast, visitor(module, pluginOptions));
+    module.commit();
   });
 
   let result: RenderedModule = module.render();
