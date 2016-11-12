@@ -26,7 +26,8 @@
           "end": {
             "line": 2,
             "column": 9
-          }
+          },
+          "identifierName": "require"
         },
         "name": "require"
       },
