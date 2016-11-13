@@ -636,7 +636,7 @@ function rewriteNamedExportRequire(path: Path, module: Module): boolean {
 
   let { id, init } = declaration;
 
-  if (!init || !t.isMemberExpression(init) || init.computed) {
+  if (!t.isIdentifier(id) || !init || !t.isMemberExpression(init) || init.computed) {
     return false;
   }
 
