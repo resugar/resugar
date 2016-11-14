@@ -3,7 +3,16 @@ import MagicString from 'magic-string';
 export default function escape(char: string, start: number, end: number, charAt: (index: number) => string, insert: (index: number, string: string) => void) {
   for (let i = start; i < end; i++) {
     if (charAt(i) === char) {
-      insert(i, '\\');
+      // If this character is preceded by an odd number of backslashes, then it
+      // is already escaped, so we shouldn't add another backslash.
+      let numPrecedingBackslashes = 0;
+      while (i - numPrecedingBackslashes - 1 >= start &&
+          charAt(i - numPrecedingBackslashes - 1) === '\\') {
+        numPrecedingBackslashes++;
+      }
+      if (numPrecedingBackslashes % 2 == 0) {
+        insert(i, '\\');
+      }
     }
   }
 }
