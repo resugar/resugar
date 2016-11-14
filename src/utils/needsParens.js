@@ -11,6 +11,8 @@ export function needsParens(path: Path): boolean {
       return parent.callee === node;
     } else if (t.isBinaryExpression(parent)) {
       return true;
+    } else if (t.isLogicalExpression(parent)) {
+      return true;
     }
   }
 
