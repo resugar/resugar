@@ -267,7 +267,7 @@ function rewriteBlocklessArrowFunction(path: Path, module: Module, functions: Ar
     editor.insertLeft(node.end, ')');
   }
 
-  if (t.isObjectExpression(node.body)) {
+  if (bodyNeedsParens(node.body)) {
     editor.insertRight(node.body.start, '(');
     editor.insertLeft(node.body.end, ')');
   }
@@ -360,4 +360,9 @@ function getFunctionPunctuation(node: Node, module: Module): FunctionPunctuation
     blockStart,
     blockEnd
   };
+}
+
+function bodyNeedsParens(body: Node) {
+  return t.isObjectExpression(body) ||
+    (t.isAssignmentExpression(body) && t.isObjectPattern(body.left));
 }
