@@ -12,7 +12,8 @@
         "end": {
           "line": 2,
           "column": 9
-        }
+        },
+        "identifierName": "exports"
       },
       "name": "exports"
     },

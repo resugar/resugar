@@ -41,7 +41,8 @@
               "end": {
                 "line": 2,
                 "column": 7
-              }
+              },
+              "identifierName": "b"
             },
             "name": "b"
           },
