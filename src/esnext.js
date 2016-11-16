@@ -38,8 +38,14 @@ export function convert(source: string, options: (Options|Array<Plugin>)={}): Re
   plugins.forEach(plugin => {
     let { name, visitor } = plugin;
     let pluginOptions = options[name];
-    traverse(module.ast, visitor(module, pluginOptions));
-    module.commit();
+    try {
+      traverse(module.ast, visitor(module, pluginOptions));
+      module.commit();
+    } catch (e) {
+      e.message = `Error running plugin ${name}: ${e.message}`;
+      e.source = module.source;
+      throw e;
+    }
   });
 
   let result: RenderedModule = module.render();
