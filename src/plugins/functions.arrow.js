@@ -102,6 +102,10 @@ export function visitor(module: Module): Visitor {
         return;
       }
 
+      if (objectPath.node.generator) {
+        return;
+      }
+
       rewriteBlockArrowFunction(objectPath, module, functions);
 
       // `() => {}.bind(this)` -> `() => {}bind(this)`
