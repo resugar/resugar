@@ -97,8 +97,10 @@ function combineStrings(module, parts: Array<Object>): Object {
       value += nextPart.value;
     }
     let thisPartQuote = module.source.charAt(parts[i].start);
-    unescapeString(thisPartQuote, module.source, thisPart.start + 1, thisPart.end - 1, module.magicString);
-    escapeString(quote, module.source, thisPart.start + 1, thisPart.end - 1, module.magicString);
+    if (thisPartQuote !== quote) {
+      unescapeString(thisPartQuote, module.source, thisPart.start + 1, thisPart.end - 1, module.magicString);
+      escapeString(quote, module.source, thisPart.start + 1, thisPart.end - 1, module.magicString);
+    }
   }
 
   let lastPart = parts[parts.length - 1];
