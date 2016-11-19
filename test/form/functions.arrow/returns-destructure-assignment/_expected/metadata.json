@@ -1,0 +1,59 @@
+{
+  "functions.arrow": {
+    "functions": [
+      {
+        "type": "FunctionExpression",
+        "id": null,
+        "params": [],
+        "body": {
+          "type": "BlockStatement",
+          "directives": [],
+          "body": [
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "AssignmentExpression",
+                "operator": "=",
+                "left": {
+                  "type": "ObjectPattern",
+                  "properties": [
+                    {
+                      "type": "ObjectProperty",
+                      "computed": false,
+                      "key": {
+                        "type": "Identifier",
+                        "name": "a",
+                        "decorators": null,
+                        "typeAnnotation": null
+                      },
+                      "value": {
+                        "type": "Identifier",
+                        "name": "a",
+                        "decorators": null,
+                        "typeAnnotation": null
+                      },
+                      "shorthand": true,
+                      "decorators": null
+                    }
+                  ],
+                  "decorators": null,
+                  "typeAnnotation": null
+                },
+                "right": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "decorators": null,
+                  "typeAnnotation": null
+                }
+              }
+            }
+          ]
+        },
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
+      }
+    ]
+  }
+}
