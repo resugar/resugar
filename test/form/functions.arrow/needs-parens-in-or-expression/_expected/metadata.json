@@ -1,0 +1,28 @@
+{
+  "functions.arrow": {
+    "functions": [
+      {
+        "type": "FunctionExpression",
+        "id": null,
+        "params": [],
+        "body": {
+          "type": "BlockStatement",
+          "directives": [],
+          "body": [
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "StringLiteral",
+                "value": "hello world"
+              }
+            }
+          ]
+        },
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
+      }
+    ]
+  }
+}
