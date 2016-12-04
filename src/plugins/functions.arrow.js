@@ -230,7 +230,7 @@ function rewriteBlocklessArrowFunction(path: Path, module: Module, functions: Ar
     //  }
     //
     if (blockStart.end === statement.start) {
-      editor.insertLeft(statement.start, ' ');
+      editor.appendLeft(statement.start, ' ');
     } else {
       editor.overwrite(blockStart.end, statement.start, ' ');
     }
@@ -247,7 +247,7 @@ function rewriteBlocklessArrowFunction(path: Path, module: Module, functions: Ar
     returnArgumentNeedsParens ? '(' : ''
   );
   if (statement.argument.end === statement.end) {
-    editor.insertLeft(
+    editor.appendLeft(
       statement.end,
       returnArgumentNeedsParens ? ')' : ''
     );
@@ -267,13 +267,13 @@ function rewriteBlocklessArrowFunction(path: Path, module: Module, functions: Ar
   node.expression = true;
 
   if (needsParens(path) && !hasParens(path, module)) {
-    editor.insertRight(node.start, '(');
-    editor.insertLeft(node.end, ')');
+    editor.appendRight(node.start, '(');
+    editor.appendLeft(node.end, ')');
   }
 
   if (bodyNeedsParens(node.body)) {
-    editor.insertRight(node.body.start, '(');
-    editor.insertLeft(node.body.end, ')');
+    editor.appendRight(node.body.start, '(');
+    editor.appendLeft(node.body.end, ')');
   }
 }
 
@@ -305,7 +305,7 @@ function rewriteBlockArrowFunction(path: Path, module: Module, functions: Array<
   // `function() {` -> `() =>`
   //  ^^^^^^^^   ^         ^^
   editor.remove(fn.start, paramsStart.start);
-  editor.insertLeft(blockStart.start, '=> ');
+  editor.appendLeft(blockStart.start, '=> ');
 
   node.type = 'ArrowFunctionExpression';
 }
