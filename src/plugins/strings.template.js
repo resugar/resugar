@@ -118,13 +118,13 @@ function buildTemplateString(module: Module, node: Object, parts: Array<Object>)
   let cooked = '';
   let raw = '';
 
-  module.magicString.insertLeft(firstNode.start, '`');
+  module.magicString.appendLeft(firstNode.start, '`');
 
   parts.forEach(({ node, prefix, suffix }, i) => {
     if (prefix || suffix || !t.isStringLiteral(node)) {
       // This one has to be an interpolated expression.
-      module.magicString.insertRight(node.start, `\${${prefix}`);
-      module.magicString.insertLeft(node.end, `${suffix}}`);
+      module.magicString.appendRight(node.start, `\${${prefix}`);
+      module.magicString.appendLeft(node.end, `${suffix}}`);
       expressions.push(node);
       quasis.push(t.templateElement(
         { cooked, raw: escapeString('`', raw) },
@@ -158,7 +158,7 @@ function buildTemplateString(module: Module, node: Object, parts: Array<Object>)
   let lastPart = parts[parts.length - 1];
 
   if (lastPart.node.end === node.end) {
-    module.magicString.insertRight(
+    module.magicString.appendRight(
       node.end,
       '`'
     );

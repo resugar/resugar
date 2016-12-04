@@ -39,7 +39,7 @@
     "babel-traverse": "^6.18.0",
     "babel-types": "^6.18.0",
     "babylon": "^6.13.1",
-    "magic-string": "^0.15.2",
+    "magic-string": "^0.19.0",
     "mkdirp": "^0.5.1",
     "shebang-regex": "^2.0.0",
     "strip-indent": "^2.0.0"
