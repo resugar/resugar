@@ -40,40 +40,73 @@ function bindingCouldBeBlockScope(binding: Binding): boolean {
   }
 
   let definition = binding.path;
-  let definitionBlockParent = findBlockParent(definition);
+  let definitionBlockParent = definition.findParent(path => path.isBlockParent());
 
-  return binding.referencePaths.every(reference =>
-    // Does this reference come after the definition?
-    reference.node.start > definition.node.start &&
-    // Does this reference share the same block parent?
-    hasAncestor(reference, definitionBlockParent)
-  );
-}
-
-/**
- * Find the closest ancestor that creates a block scope.
- */
-function findBlockParent(path: Path): Path {
-  let parent: Path = path;
-
-  while (!t.isBlockParent(parent.node)) {
-    parent = parent.parentPath;
-  }
-
-  return parent;
-}
-
-/**
- * Determines whether `ancestor` is an ancestor of `path`.
- *
- * TODO: Use getEarliestCommonAncestorFrom?
- */
-function hasAncestor(path: Path, ancestor: Path): boolean {
-  if (path === ancestor) {
-    return true;
-  } else if (path.parentPath) {
-    return hasAncestor(path.parentPath, ancestor);
-  } else {
+  if (binding.referencePaths.some(reference =>
+      // Does this reference come before the definition?
+      reference.node.start < definition.node.start ||
+      // Does this reference exist outside the declaration block?
+      !reference.isDescendant(definitionBlockParent))) {
     return false;
   }
+
+  let functionParent = definition.getFunctionParent();
+  let loopParent = definition.findParent(path => path.isLoop());
+
+  // Is this declaration within a loop in the current function scope?
+  if (loopParent !== null && loopParent.isDescendant(functionParent)) {
+    // Is any reference within a closure?
+    if (binding.referencePaths.some(reference =>
+        reference.getFunctionParent() !== functionParent)) {
+      return false;
+    }
+
+    if (!isBindingAssignedBeforeUse(binding)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Return true if we can statically determine that this variable always assigned
+ * a value in its block before it is used. In other words, check if we can be
+ * sure that the variable will never hold a value from a previous loop
+ * iteration.
+ */
+function isBindingAssignedBeforeUse(binding: Binding): boolean {
+  // Loop assignees are always initialized before use.
+  let loopParent = binding.path.findParent(path => path.isLoop());
+  if (loopParent !== null) {
+    if (loopParent.isForAwaitStatement() ||
+        loopParent.isForInStatement() ||
+        loopParent.isForOfStatement()) {
+      if (binding.path.isDescendant(loopParent.get('left'))) {
+        return true;
+      }
+    }
+  }
+
+  // Variables with an explicit init are always assigned before use.
+  if (binding.path.isVariableDeclarator() && binding.path.node.init !== null) {
+    return true;
+  }
+
+  // Find simple top-level assignments that occur before all usages. This could
+  // theoretically be extended to do more advanced static analysis, e.g.
+  // traversing into conditional blocks and ternary expressions to see if all
+  // code paths assign to this variable, but this should get the common case.
+  let blockParent = binding.path.findParent(path => path.isBlockParent());
+  let earliestUsage = Math.min(
+    ...binding.referencePaths.map(reference => reference.node.start));
+  if (binding.constantViolations.some(path =>
+      path.node.end < earliestUsage &&
+      path.isAssignmentExpression() &&
+      path.parentPath.isExpressionStatement() &&
+      path.parentPath.parentPath === blockParent)) {
+    return true;
+  }
+
+  return false;
 }
