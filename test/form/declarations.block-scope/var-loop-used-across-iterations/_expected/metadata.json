@@ -1,0 +1,57 @@
+{
+  "declarations.block-scope": {
+    "declarations": [
+      {
+        "type": "VariableDeclaration",
+        "kind": "var",
+        "declarations": [
+          {
+            "type": "VariableDeclarator",
+            "id": {
+              "type": "Identifier",
+              "name": "a",
+              "decorators": null,
+              "typeAnnotation": null
+            },
+            "init": null
+          }
+        ]
+      },
+      {
+        "type": "VariableDeclaration",
+        "kind": "var",
+        "declarations": [
+          {
+            "type": "VariableDeclarator",
+            "id": {
+              "type": "Identifier",
+              "name": "usedWithinIteration",
+              "decorators": null,
+              "typeAnnotation": null
+            },
+            "init": null
+          }
+        ]
+      },
+      {
+        "type": "VariableDeclaration",
+        "kind": "var",
+        "declarations": [
+          {
+            "type": "VariableDeclarator",
+            "id": {
+              "type": "Identifier",
+              "name": "initializedInLoop",
+              "decorators": null,
+              "typeAnnotation": null
+            },
+            "init": {
+              "type": "BooleanLiteral",
+              "value": true
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

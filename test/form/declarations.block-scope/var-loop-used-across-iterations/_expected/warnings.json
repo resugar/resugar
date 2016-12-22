@@ -1,0 +1,112 @@
+[
+  {
+    "node": {
+      "type": "VariableDeclaration",
+      "start": 29,
+      "end": 54,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 2
+        },
+        "end": {
+          "line": 2,
+          "column": 27
+        }
+      },
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "start": 33,
+          "end": 53,
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 6
+            },
+            "end": {
+              "line": 2,
+              "column": 26
+            }
+          },
+          "id": {
+            "type": "Identifier",
+            "start": 33,
+            "end": 53,
+            "loc": {
+              "start": {
+                "line": 2,
+                "column": 6
+              },
+              "end": {
+                "line": 2,
+                "column": 26
+              },
+              "identifierName": "usedAcrossIterations"
+            },
+            "name": "usedAcrossIterations"
+          },
+          "init": null
+        }
+      ],
+      "kind": "var"
+    },
+    "type": "unsupported-declaration",
+    "message": "'var' declaration cannot be converted to block scope"
+  },
+  {
+    "node": {
+      "type": "VariableDeclaration",
+      "start": 116,
+      "end": 148,
+      "loc": {
+        "start": {
+          "line": 5,
+          "column": 2
+        },
+        "end": {
+          "line": 5,
+          "column": 34
+        }
+      },
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "start": 120,
+          "end": 147,
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 6
+            },
+            "end": {
+              "line": 5,
+              "column": 33
+            }
+          },
+          "id": {
+            "type": "Identifier",
+            "start": 120,
+            "end": 147,
+            "loc": {
+              "start": {
+                "line": 5,
+                "column": 6
+              },
+              "end": {
+                "line": 5,
+                "column": 33
+              },
+              "identifierName": "conditionallyAssignedInLoop"
+            },
+            "name": "conditionallyAssignedInLoop"
+          },
+          "init": null
+        }
+      ],
+      "kind": "var"
+    },
+    "type": "unsupported-declaration",
+    "message": "'var' declaration cannot be converted to block scope"
+  }
+]
