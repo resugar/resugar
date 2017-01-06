@@ -42,11 +42,16 @@ function bindingCouldBeBlockScope(binding: Binding): boolean {
   let definition = binding.path;
   let definitionBlockParent = definition.findParent(path => path.isBlockParent());
 
-  if (binding.referencePaths.some(reference =>
+  if ([...binding.referencePaths, ...binding.constantViolations].some(reference =>
       // Does this reference come before the definition?
       reference.node.start < definition.node.start ||
       // Does this reference exist outside the declaration block?
-      !reference.isDescendant(definitionBlockParent))) {
+      !reference.isDescendant(definitionBlockParent) ||
+      // Is this reference the initial binding value?
+      reference === binding.path.get('init') ||
+      // Is this reference inside the initial binding value?
+      reference.isDescendant(binding.path.get('init')))
+  ) {
     return false;
   }
 
