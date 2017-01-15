@@ -39,6 +39,13 @@ function flatten(node: Object): ?Array<Object> {
 
   let { left, right } = node;
 
+  // A string ending with \0 could make an octal literal if combined with
+  // the next string, so just ignore it.
+  if (t.isStringLiteral(left) && left.value.endsWith('\0') ||
+      t.isStringLiteral(right) && right.value.endsWith('\0')) {
+    return null;
+  }
+
   if (t.isStringLiteral(left)) {
     // This is the root.
     return [left, right];
