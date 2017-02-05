@@ -43,6 +43,12 @@ export function visitor(module: Module): Visitor {
         return;
       }
 
+      // A directive like "use strict" is syntactically its own line, so if any
+      // exist, we can't assume this is a single-line function.
+      if (node.body.directives.length > 0) {
+        return;
+      }
+
       let [ statement ] = node.body.body;
 
       if (!t.isReturnStatement(statement) || !statement.argument) {
