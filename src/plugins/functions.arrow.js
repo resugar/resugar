@@ -49,6 +49,11 @@ export function visitor(module: Module): Visitor {
         return;
       }
 
+      // `new` can't be called on arrow functions.
+      if (t.isNewExpression(parent)) {
+        return;
+      }
+
       let [ statement ] = node.body.body;
 
       if (!t.isReturnStatement(statement) || !statement.argument) {
@@ -82,7 +87,7 @@ export function visitor(module: Module): Visitor {
      *   }).bind(this);
      */
     CallExpression(path) {
-      let { node, node: { callee } } = path;
+      let { node, node: { callee }, parent } = path;
 
       if (!t.isMemberExpression(callee)) {
         return;
@@ -109,6 +114,12 @@ export function visitor(module: Module): Visitor {
       }
 
       if (objectPath.node.generator) {
+        return;
+      }
+
+      // `new` can't be called on arrow functions.
+      if (t.isNewExpression(parent)) {
+        path.skip();
         return;
       }
 
