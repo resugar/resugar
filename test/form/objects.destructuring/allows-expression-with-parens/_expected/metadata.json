@@ -1,0 +1,32 @@
+{
+  "objects.destructuring": [
+    {
+      "ids": [
+        {
+          "type": "Identifier",
+          "name": "b",
+          "decorators": null,
+          "typeAnnotation": null
+        }
+      ],
+      "inits": [
+        {
+          "type": "MemberExpression",
+          "object": {
+            "type": "Identifier",
+            "name": "a",
+            "decorators": null,
+            "typeAnnotation": null
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "b",
+            "decorators": null,
+            "typeAnnotation": null
+          },
+          "computed": false
+        }
+      ]
+    }
+  ]
+}

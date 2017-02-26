@@ -187,9 +187,23 @@ function rewriteDestructurableElements(module: Module, elements: Array<Object>) 
   //                                         ^^
   module.magicString.appendRight(lastLeft.end, ' }');
 
+  let dotToken = getDotToken(module, lastRight);
   // `const { a, b } = obj.b;` -> `const { a, b } = obj;`
   //                      ^^
-  module.magicString.remove(lastRight.object.end, lastRight.end);
+  module.magicString.remove(dotToken.start, lastRight.end);
+}
+
+function getDotToken(module: Module, memberAccessExpression: Object): Token {
+  let intermediateTokens = module.tokensInRange(
+    memberAccessExpression.object.end, memberAccessExpression.property.start);
+  let dotTokenIndex = intermediateTokens.length - 1;
+  while (dotTokenIndex >= 0 && intermediateTokens[dotTokenIndex].type.label !== '.') {
+    dotTokenIndex -= 1;
+  }
+  if (dotTokenIndex < 0) {
+    throw new Error('Expected to find a dot token in a member access expression.');
+  }
+  return intermediateTokens[dotTokenIndex];
 }
 
 type DestructuringMetadata = {
