@@ -1,0 +1,53 @@
+{
+  "functions.arrow": {
+    "functions": [
+      {
+        "type": "FunctionExpression",
+        "id": null,
+        "params": [],
+        "body": {
+          "type": "BlockStatement",
+          "directives": [],
+          "body": [
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "MemberExpression",
+                "object": {
+                  "type": "ObjectExpression",
+                  "properties": [
+                    {
+                      "type": "ObjectProperty",
+                      "computed": false,
+                      "key": {
+                        "type": "Identifier",
+                        "name": "a",
+                        "decorators": null,
+                        "typeAnnotation": null
+                      },
+                      "value": {
+                        "type": "StringLiteral",
+                        "value": "b"
+                      },
+                      "shorthand": false,
+                      "decorators": null
+                    }
+                  ]
+                },
+                "property": {
+                  "type": "StringLiteral",
+                  "value": "a"
+                },
+                "computed": true
+              }
+            }
+          ]
+        },
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
+      }
+    ]
+  }
+}
