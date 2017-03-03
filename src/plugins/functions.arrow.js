@@ -288,7 +288,7 @@ function rewriteBlocklessArrowFunction(path: Path, module: Module, functions: Ar
     editor.appendLeft(node.end, ')');
   }
 
-  if (bodyNeedsParens(node.body)) {
+  if (bodyNeedsParens(node.body, module.source)) {
     editor.appendRight(node.body.start, '(');
     editor.appendLeft(node.body.end, ')');
   }
@@ -383,7 +383,6 @@ function getFunctionPunctuation(node: Node, module: Module): FunctionPunctuation
   };
 }
 
-function bodyNeedsParens(body: Node) {
-  return t.isObjectExpression(body) ||
-    (t.isAssignmentExpression(body) && t.isObjectPattern(body.left));
+function bodyNeedsParens(body: Node, source: string) {
+  return source[body.start] === '{';
 }
