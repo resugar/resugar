@@ -150,7 +150,7 @@ function referencesThisOrArguments(path: Path): boolean {
   let result = false;
 
   path.scope.traverse(path.node, {
-    Function(fnPath) {
+    'FunctionDeclaration|FunctionExpression'(fnPath) {
       // Skip nested functions.
       fnPath.skip();
     },
