@@ -1,0 +1,37 @@
+{
+  "functions.arrow": {
+    "functions": [
+      {
+        "type": "FunctionExpression",
+        "id": null,
+        "params": [
+          {
+            "type": "Identifier",
+            "name": "b",
+            "decorators": null,
+            "typeAnnotation": null
+          }
+        ],
+        "body": {
+          "type": "BlockStatement",
+          "directives": [],
+          "body": [
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "Identifier",
+                "name": "c",
+                "decorators": null,
+                "typeAnnotation": null
+              }
+            }
+          ]
+        },
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null
+      }
+    ]
+  }
+}

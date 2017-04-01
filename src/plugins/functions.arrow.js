@@ -212,7 +212,10 @@ function rewriteBlocklessArrowFunction(path: Path, module: Module, functions: Ar
     blockEnd
   } = getFunctionPunctuation(node, module);
 
-  let paramsNeedParens = node.params.length !== 1 || !t.isIdentifier(node.params[0]);
+  // Only remove parens for a single simple parameter on the same line as the `=>`.
+  let paramsNeedParens = node.params.length !== 1 ||
+    !t.isIdentifier(node.params[0]) ||
+    node.params[0].loc.end.line !== paramsEnd.loc.start.line;
 
   let editor = module.magicString;
   if (!paramsNeedParens) {

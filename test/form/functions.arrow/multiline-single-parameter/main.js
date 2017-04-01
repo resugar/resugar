@@ -1,0 +1,5 @@
+(function(
+  b
+) {
+  return c;
+});
