@@ -259,7 +259,14 @@ function rewriteSingleExportAsDefaultExport(path: Path, module: Module): boolean
       path.replaceWith(t.exportAllDeclaration(pathNode));
     } else {
       metadata(module).exports.push({ type: 'default-export', node: cleanNode(node) });
-      module.magicString.overwrite(node.start, right.start, 'export default ');
+
+      let equalsToken = findToken('=', module.tokensForNode(node));
+      let equalsEnd = equalsToken.token.end;
+      if (module.magicString.slice(equalsEnd, equalsEnd + 1) === ' ') {
+        equalsEnd++;
+      }
+      module.magicString.overwrite(node.start, equalsEnd, 'export default ');
+
       path.replaceWith(t.exportDefaultDeclaration(right));
     }
   }
