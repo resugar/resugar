@@ -1,0 +1,63 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [
+      {
+        "type": "default-export",
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "object": {
+                "type": "Identifier",
+                "name": "module",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "exports",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "computed": false
+            },
+            "right": {
+              "type": "AssignmentExpression",
+              "operator": "=",
+              "left": {
+                "type": "Identifier",
+                "name": "A",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "right": {
+                "type": "ClassExpression",
+                "id": {
+                  "type": "Identifier",
+                  "name": "A",
+                  "decorators": null,
+                  "typeAnnotation": null
+                },
+                "body": {
+                  "type": "ClassBody",
+                  "body": []
+                },
+                "superClass": null,
+                "decorators": null,
+                "mixins": null,
+                "typeParameters": null,
+                "superTypeParameters": null,
+                "implements": null
+              }
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  }
+}
