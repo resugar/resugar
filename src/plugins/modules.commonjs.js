@@ -9,6 +9,7 @@ import { findToken, findEndTokenBalanced } from '../utils/findTokens';
 import getFirstUnsafeLocation from '../utils/getFirstUnsafeLocation';
 
 export type Options = {
+  forceDefaultExport?: boolean,
   safeFunctionIdentifiers?: Array<string>,
 };
 
@@ -22,7 +23,8 @@ export function visitor(module: Module, options: Options={}): Visitor {
     Program(path: Path) {
       unwrapIIFE(path, module);
       removeUseStrictDirective(path, module);
-      rewriteImportsAndExports(path, module, options.safeFunctionIdentifiers);
+      rewriteImportsAndExports(
+        path, module, options.safeFunctionIdentifiers, options.forceDefaultExport);
     },
 
     ReferencedIdentifier(path: Path) {
@@ -131,19 +133,75 @@ function removeUseStrictDirective(path: Path, module: Module) {
 /**
  * Re-write requires as imports/exports and exports sets as export statements.
  */
-function rewriteImportsAndExports(path: Path, module: Module, safeFunctionIdentifiers: Array<string> = []) {
+function rewriteImportsAndExports(
+    path: Path, module: Module, safeFunctionIdentifiers: Array<string> = [],
+    forceDefaultExport: boolean) {
   let body = path.get('body');
 
   if (!Array.isArray(body)) {
     throw new Error(`expected body paths from program node, got: ${body}`);
   }
 
-  let firstUnsafeLocation = getFirstUnsafeLocation(path, ['require', ...safeFunctionIdentifiers]);
+  if (forceDefaultExport) {
+    rewriteStatementsAsDefaultExport(path, module);
+  } else {
+    body.forEach(statement => rewriteAsExport(statement, module, forceDefaultExport));
+  }
 
-  body.forEach(statement => (
-    rewriteAsExport(statement, module) ||
-    rewriteAsImport(statement, module, firstUnsafeLocation)
-  ));
+  let firstUnsafeLocation = getFirstUnsafeLocation(path, ['require', ...safeFunctionIdentifiers]);
+  body.forEach(statement => rewriteAsImport(statement, module, firstUnsafeLocation));
+}
+
+/**
+ * Rewrites the exports for a file, intentionally converting to a default export
+ * with the same value as the previous module.exports.
+ */
+function rewriteStatementsAsDefaultExport(programPath: Path, module: Module) {
+  let exportPaths = [];
+  programPath.traverse({
+    'MemberExpression|Identifier|ThisExpression'(path: Path) {
+      if (isExportsObject(path)) {
+        exportPaths.push(path);
+        path.skip();
+      }
+    }
+  });
+
+  if (exportPaths.length === 0) {
+    return;
+  }
+
+  // Turn a unique `module.exports` line into a single `export default` statement.
+  if (exportPaths.length === 1) {
+    let exportPath = exportPaths[0];
+    let enclosingStatement = getEnclosingStatement(exportPath);
+    if (t.isExpressionStatement(enclosingStatement.node) &&
+        t.isAssignmentExpression(enclosingStatement.node.expression) &&
+        enclosingStatement.node.expression.left === exportPath.node) {
+      rewriteAssignmentToDefaultExport(enclosingStatement, module);
+      return;
+    }
+  }
+
+  let exportsIdentifier = claim(programPath.scope, 'defaultExport');
+  let exportsVarName = exportsIdentifier.name;
+  let firstStatement = getEnclosingStatement(exportPaths[0]);
+  let lastStatement = getEnclosingStatement(exportPaths[exportPaths.length - 1]);
+
+  module.magicString.appendLeft(firstStatement.node.start, `let ${exportsVarName} = {};\n`);
+  for (let exportPath of exportPaths) {
+    module.magicString.overwrite(exportPath.node.start, exportPath.node.end, exportsVarName);
+    exportPath.replaceWith(exportsIdentifier);
+  }
+  module.magicString.appendRight(lastStatement.node.end, `\nexport default ${exportsVarName};`);
+}
+
+function getEnclosingStatement(path: Path): Path {
+  let resultPath = path;
+  while (!t.isProgram(resultPath.parentPath.node)) {
+    resultPath = resultPath.parentPath;
+  }
+  return resultPath;
 }
 
 function rewriteAsExport(path: Path, module: Module): boolean {
@@ -192,8 +250,22 @@ function isExportsObject(path: Path): boolean {
   } else if (t.isIdentifier(node, { name: 'exports' })) {
     return !path.scope.hasBinding('exports');
   } else {
-    return t.isThisExpression(node);
+    return isTopLevelThis(path);
   }
+}
+
+function isTopLevelThis(path: Path): boolean {
+  if (!t.isThisExpression(path)) {
+    return false;
+  }
+  let ancestor = path;
+  while (!t.isProgram(ancestor.node)) {
+    if (t.isFunction(ancestor.node) && !t.isArrowFunctionExpression(ancestor.node)) {
+      return false;
+    }
+    ancestor = ancestor.parentPath;
+  }
+  return true;
 }
 
 function isSimpleObjectExpression(node: Node) {
@@ -265,20 +337,26 @@ function rewriteSingleExportAsDefaultExport(path: Path, module: Module): boolean
 
       path.replaceWith(t.exportAllDeclaration(pathNode));
     } else {
-      metadata(module).exports.push({ type: 'default-export', node: cleanNode(node) });
-
-      let equalsToken = findToken('=', module.tokensForNode(node));
-      let equalsEnd = equalsToken.token.end;
-      if (module.magicString.slice(equalsEnd, equalsEnd + 1) === ' ') {
-        equalsEnd++;
-      }
-      module.magicString.overwrite(node.start, equalsEnd, 'export default ');
-
-      path.replaceWith(t.exportDefaultDeclaration(right));
+      rewriteAssignmentToDefaultExport(path, module);
     }
   }
 
   return true;
+}
+
+function rewriteAssignmentToDefaultExport(path: Path, module: Module) {
+  let node = path.node;
+  let right = path.node.expression.right;
+  metadata(module).exports.push({ type: 'default-export', node: cleanNode(node) });
+
+  let equalsToken = findToken('=', module.tokensForNode(node));
+  let equalsEnd = equalsToken.token.end;
+  if (module.magicString.slice(equalsEnd, equalsEnd + 1) === ' ') {
+    equalsEnd++;
+  }
+  module.magicString.overwrite(path.node.start, equalsEnd, 'export default ');
+
+  path.replaceWith(t.exportDefaultDeclaration(right));
 }
 
 function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
