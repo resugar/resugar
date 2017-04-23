@@ -13,11 +13,13 @@ type Plugin = {
 };
 
 import type { Options as DeclarationsBlockScopeOptions } from './plugins/declarations.block-scope';
+import type { Options as ModulesCommonJSOptions } from './plugins/modules.commonjs';
 
 type Options = {
   plugins?: Array<Plugin>,
   validate?: boolean,
   'declarations.block-scope'?: ?DeclarationsBlockScopeOptions,
+  'modules.commonjs'?: ?ModulesCommonJSOptions,
 };
 
 export { allPlugins };

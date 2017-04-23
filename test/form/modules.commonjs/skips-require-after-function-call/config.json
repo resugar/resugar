@@ -1,0 +1,7 @@
+{
+  "options": {
+    "modules.commonjs": {
+      "safeFunctionIdentifiers": ["foo"]
+    }
+  }
+}
