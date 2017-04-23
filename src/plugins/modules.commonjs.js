@@ -6,18 +6,23 @@ import unindent from '../utils/unindent';
 import { Binding, ExportSpecifierListStringBuilder, ImportSpecifierListStringBuilder } from '../bindings';
 import { claim, isDeclaredName } from '../utils/scopeBindings';
 import { findToken, findEndTokenBalanced } from '../utils/findTokens';
+import getFirstUnsafeLocation from '../utils/getFirstUnsafeLocation';
+
+export type Options = {
+  safeFunctionIdentifiers?: Array<string>,
+};
 
 export const name = 'modules.commonjs';
 export const description = 'Transform CommonJS modules into ES6 modules.';
 
-export function visitor(module: Module): Visitor {
+export function visitor(module: Module, options: Options={}): Visitor {
   metadata(module);
 
   return {
     Program(path: Path) {
       unwrapIIFE(path, module);
       removeUseStrictDirective(path, module);
-      rewriteImportsAndExports(path, module);
+      rewriteImportsAndExports(path, module, options.safeFunctionIdentifiers);
     },
 
     ReferencedIdentifier(path: Path) {
@@ -126,16 +131,18 @@ function removeUseStrictDirective(path: Path, module: Module) {
 /**
  * Re-write requires as imports/exports and exports sets as export statements.
  */
-function rewriteImportsAndExports(path: Path, module: Module) {
+function rewriteImportsAndExports(path: Path, module: Module, safeFunctionIdentifiers: Array<string> = []) {
   let body = path.get('body');
 
   if (!Array.isArray(body)) {
     throw new Error(`expected body paths from program node, got: ${body}`);
   }
 
+  let firstUnsafeLocation = getFirstUnsafeLocation(path, ['require', ...safeFunctionIdentifiers]);
+
   body.forEach(statement => (
     rewriteAsExport(statement, module) ||
-    rewriteAsImport(statement, module)
+    rewriteAsImport(statement, module, firstUnsafeLocation)
   ));
 }
 
@@ -562,8 +569,12 @@ function rewriteNamedValueExport(path: Path, module: Module): boolean {
   return true;
 }
 
-function rewriteAsImport(path: Path, module: Module): boolean {
+function rewriteAsImport(path: Path, module: Module, firstUnsafeLocation: number): boolean {
   if (isDeclaredName(path.scope, 'require')) {
+    return false;
+  }
+
+  if (path.node && path.node.end > firstUnsafeLocation) {
     return false;
   }
 
