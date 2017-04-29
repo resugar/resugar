@@ -1,0 +1,48 @@
+{
+  "modules.commonjs": {
+    "imports": [
+      {
+        "type": "default-import",
+        "node": {
+          "type": "VariableDeclaration",
+          "kind": "let",
+          "declarations": [
+            {
+              "type": "VariableDeclarator",
+              "id": {
+                "type": "Identifier",
+                "name": "a",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "init": {
+                "type": "CallExpression",
+                "callee": {
+                  "type": "Identifier",
+                  "name": "require",
+                  "decorators": null,
+                  "typeAnnotation": null
+                },
+                "arguments": [
+                  {
+                    "type": "StringLiteral",
+                    "value": "a"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "bindings": [
+          {
+            "localName": "a",
+            "exportName": "default"
+          }
+        ],
+        "path": "a"
+      }
+    ],
+    "exports": [],
+    "directives": []
+  }
+}

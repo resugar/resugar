@@ -148,8 +148,11 @@ function rewriteImportsAndExports(
     body.forEach(statement => rewriteAsExport(statement, module, forceDefaultExport));
   }
 
+  let collectedDefaultImportNames = [];
   let firstUnsafeLocation = getFirstUnsafeLocation(path, ['require', ...safeFunctionIdentifiers]);
-  body.forEach(statement => rewriteAsImport(statement, module, firstUnsafeLocation));
+  body.forEach(statement =>
+    rewriteAsImport(statement, module, firstUnsafeLocation, collectedDefaultImportNames));
+  removeDefaultAccesses(path, module, collectedDefaultImportNames);
 }
 
 /**
@@ -647,7 +650,13 @@ function rewriteNamedValueExport(path: Path, module: Module): boolean {
   return true;
 }
 
-function rewriteAsImport(path: Path, module: Module, firstUnsafeLocation: number): boolean {
+/**
+ * Rewrite this potential import statement, considering various import styles.
+ * Any new default import names are added to collectedDefaultImportNames.
+ */
+function rewriteAsImport(
+    path: Path, module: Module, firstUnsafeLocation: number,
+    collectedDefaultImportNames: Array<string>): boolean {
   if (isDeclaredName(path.scope, 'require')) {
     return false;
   }
@@ -657,14 +666,23 @@ function rewriteAsImport(path: Path, module: Module, firstUnsafeLocation: number
   }
 
   return (
-    rewriteSingleExportRequire(path, module) ||
+    rewriteSingleExportRequire(path, module, collectedDefaultImportNames) ||
     rewriteNamedExportRequire(path, module) ||
     rewriteDeconstructedImportRequire(path, module) ||
     rewriteSideEffectRequire(path, module)
   );
 }
 
-function rewriteSingleExportRequire(path: Path, module: Module): boolean {
+/**
+ * Convert
+ * let a = require('b');
+ * to
+ * import a from 'b';
+ *
+ * Any imported names are added to the collectedDefaultImportNames parameter.
+ */
+function rewriteSingleExportRequire(
+    path: Path, module: Module, collectedDefaultImportNames: Array<string>): boolean {
   let { node } = path;
 
   if (!t.isVariableDeclaration(node)) {
@@ -720,9 +738,16 @@ function rewriteSingleExportRequire(path: Path, module: Module): boolean {
     ))
   );
 
+  collectedDefaultImportNames.push(...extractableDeclarations.map(d => d.id.name));
   return true;
 }
 
+/**
+ * Convert
+ * let a = require('b').c;
+ * to
+ * import { c as a } from 'b';
+ */
 function rewriteNamedExportRequire(path: Path, module: Module): boolean {
   let declaration = extractSingleDeclaration(path.node);
 
@@ -764,6 +789,12 @@ function rewriteNamedExportRequire(path: Path, module: Module): boolean {
   return true;
 }
 
+/**
+ * Convert
+ * let { a } = require('b');
+ * to
+ * import { a } from 'b';
+ */
 function rewriteDeconstructedImportRequire(path: Path, module: Module): boolean {
   let declaration = extractSingleDeclaration(path.node);
 
@@ -807,6 +838,12 @@ function rewriteDeconstructedImportRequire(path: Path, module: Module): boolean 
   return true;
 }
 
+/**
+ * Convert
+ * require('a');
+ * to
+ * import 'a';
+ */
 function rewriteSideEffectRequire(path: Path, module: Module): boolean {
   let { node } = path;
 
@@ -864,6 +901,33 @@ function rewriteRequireAsImports(type: string, path: Path, module: Module, impor
     node.end,
     importStatements.join('\n')
   );
+}
+
+/**
+ * Remove `.default` accesses on names that are known to be default imports.
+ * For example, if `let a = require('a');` became `import a from 'a';`, then
+ * any usage of `a.default` should change to just `a`.
+ *
+ * Note that this isn't 100% correct, and being fully correct here is
+ * undecidable, but it seems good enough for real-world cases.
+ */
+function removeDefaultAccesses(programPath: Path, module: Module, defaultImportNames: Array<string>) {
+  programPath.traverse({
+    MemberExpression(path: Path) {
+      let {object, property, computed} = path.node;
+      if (computed) {
+        return;
+      }
+      if (!computed &&
+          t.isIdentifier(object) &&
+          defaultImportNames.indexOf(object.name) !== -1 &&
+          t.isIdentifier(property) &&
+          property.name === 'default') {
+        let dotToken = findToken('.', module.tokensInRange(object.end, path.node.end));
+        module.magicString.remove(dotToken.token.start, property.end);
+      }
+    }
+  })
 }
 
 type ImportMetadata = {
