@@ -347,17 +347,22 @@ function rewriteSingleExportAsDefaultExport(path: Path, module: Module): boolean
   return true;
 }
 
-function rewriteAssignmentToDefaultExport(path: Path, module: Module) {
-  let node = path.node;
-  let right = path.node.expression.right;
-  metadata(module).exports.push({ type: 'default-export', node: cleanNode(node) });
-
+function getAssignmentEqualsEnd(node: Node, module: Module): number {
   let equalsToken = findToken('=', module.tokensForNode(node));
   let equalsEnd = equalsToken.token.end;
   if (module.magicString.slice(equalsEnd, equalsEnd + 1) === ' ') {
     equalsEnd++;
   }
-  module.magicString.overwrite(path.node.start, equalsEnd, 'export default ');
+  return equalsEnd;
+}
+
+function rewriteAssignmentToDefaultExport(path: Path, module: Module) {
+  let node = path.node;
+  let right = path.node.expression.right;
+  metadata(module).exports.push({ type: 'default-export', node: cleanNode(node) });
+
+  module.magicString.overwrite(
+    path.node.start, getAssignmentEqualsEnd(node, module), 'export default ');
 
   path.replaceWith(t.exportDefaultDeclaration(right));
 }
@@ -396,7 +401,7 @@ function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
   if (localName === exportName) {
     // `exports.foo = function foo() {}` → `export function foo() {}`
     //  ^^^^^^^^^^^^^^                      ^^^^^^^
-    module.magicString.overwrite(node.start, right.start, 'export ');
+    module.magicString.overwrite(node.start, getAssignmentEqualsEnd(node, module), 'export ');
 
     if (!id) {
       module.magicString.appendLeft(right.start + 'function'.length, ` ${localName}`);
@@ -427,7 +432,8 @@ function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
       module.magicString.remove(node.start, right.start);
     } else {
       isFunctionDeclaration = false;
-      module.magicString.overwrite(node.start, right.start, `let ${localName} = `);
+      module.magicString.overwrite(
+        node.start, getAssignmentEqualsEnd(node, module), `let ${localName} = `);
       declaration = t.variableDeclaration(
         'let',
         [
@@ -498,7 +504,8 @@ function rewriteNamedIdentifierExport(path: Path, module: Module): boolean {
     localBinding = claim(path.scope, property.name).name;
 
     if (localBinding === property.name) {
-      module.magicString.overwrite(node.start, right.start, `export let ${localBinding} = `);
+      module.magicString.overwrite(
+        node.start, getAssignmentEqualsEnd(node, module), `export let ${localBinding} = `);
       replacements = [
         t.exportNamedDeclaration(
           t.variableDeclaration(
@@ -515,7 +522,8 @@ function rewriteNamedIdentifierExport(path: Path, module: Module): boolean {
         )
       ];
     } else {
-      module.magicString.overwrite(node.start, right.start, `let ${localBinding} = `);
+      module.magicString.overwrite(
+        node.start, getAssignmentEqualsEnd(node, module), `let ${localBinding} = `);
       module.magicString.appendRight(node.end, `\nexport { ${localBinding} as ${property.name} };`);
       replacements = [
         t.variableDeclaration(
@@ -603,7 +611,8 @@ function rewriteNamedValueExport(path: Path, module: Module): boolean {
   } else {
     // `exports.foo = 99;` → `let foo$1 = 99;`
     //  ^^^^^^^^^^^^^^        ^^^^^^^^^^^^
-    module.magicString.overwrite(node.start, right.start, `let ${localBinding} = `);
+    module.magicString.overwrite(
+      node.start, getAssignmentEqualsEnd(node, module), `let ${localBinding} = `);
 
     let nodeIndex = path.parent.body.indexOf(node);
 
