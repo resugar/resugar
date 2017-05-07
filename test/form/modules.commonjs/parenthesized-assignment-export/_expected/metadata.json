@@ -1,0 +1,64 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "a",
+            "localName": "a$1"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "object": {
+                "type": "Identifier",
+                "name": "exports",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "a",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "computed": false
+            },
+            "right": {
+              "type": "AssignmentExpression",
+              "operator": "=",
+              "left": {
+                "type": "Identifier",
+                "name": "a",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "right": {
+                "type": "FunctionExpression",
+                "id": null,
+                "params": [],
+                "body": {
+                  "type": "BlockStatement",
+                  "directives": [],
+                  "body": []
+                },
+                "generator": false,
+                "async": false,
+                "returnType": null,
+                "typeParameters": null
+              }
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  }
+}
