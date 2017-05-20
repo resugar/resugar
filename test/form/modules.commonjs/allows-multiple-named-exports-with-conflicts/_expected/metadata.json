@@ -1,0 +1,80 @@
+{
+  "modules.commonjs": {
+    "imports": [],
+    "exports": [
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "a",
+            "localName": "a$1"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "object": {
+                "type": "Identifier",
+                "name": "exports",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "a",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "computed": false
+            },
+            "right": {
+              "type": "NumericLiteral",
+              "value": 3
+            }
+          }
+        }
+      },
+      {
+        "type": "named-export",
+        "bindings": [
+          {
+            "exportName": "b",
+            "localName": "b$1"
+          }
+        ],
+        "node": {
+          "type": "ExpressionStatement",
+          "expression": {
+            "type": "AssignmentExpression",
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "object": {
+                "type": "Identifier",
+                "name": "exports",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "b",
+                "decorators": null,
+                "typeAnnotation": null
+              },
+              "computed": false
+            },
+            "right": {
+              "type": "NumericLiteral",
+              "value": 4
+            }
+          }
+        }
+      }
+    ],
+    "directives": []
+  }
+}

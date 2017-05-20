@@ -196,7 +196,7 @@ function rewriteStatementsAsDefaultExport(programPath: Path, module: Module) {
     module.magicString.overwrite(exportPath.node.start, exportPath.node.end, exportsVarName);
     exportPath.replaceWith(exportsIdentifier);
   }
-  module.magicString.appendRight(lastStatement.node.end, `\nexport default ${exportsVarName};`);
+  module.magicString.appendLeft(lastStatement.node.end, `\nexport default ${exportsVarName};`);
 }
 
 function getEnclosingStatement(path: Path): Path {
@@ -396,8 +396,6 @@ function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
     node: cleanNode(node)
   });
 
-  let isFunctionDeclaration = true;
-
   if (localName === exportName) {
     // `exports.foo = function foo() {}` → `export function foo() {}`
     //  ^^^^^^^^^^^^^^                      ^^^^^^^
@@ -407,6 +405,8 @@ function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
       module.magicString.appendLeft(right.start + 'function'.length, ` ${localName}`);
       right.id = t.identifier(exportName);
     }
+
+    removeTrailingSemicolon(node, module);
 
     right.type = 'FunctionDeclaration';
     right.expression = false;
@@ -421,6 +421,7 @@ function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
     );
   } else {
     let declaration = right;
+    let isFunctionDeclaration = true;
 
     if (!id) {
       module.magicString.remove(node.start, right.start);
@@ -445,7 +446,11 @@ function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
       );
     }
 
-    module.magicString.appendRight(node.end, `\nexport { ${localName} as ${exportName} };`);
+    if (isFunctionDeclaration) {
+      removeTrailingSemicolon(node, module);
+    }
+
+    module.magicString.appendLeft(node.end, `\nexport { ${localName} as ${exportName} };`);
 
     path.replaceWithMultiple([
       declaration,
@@ -460,13 +465,13 @@ function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
       )
     ]);
   }
+}
 
-  if (isFunctionDeclaration) {
-    let lastCharacterPosition = node.end - 1;
+function removeTrailingSemicolon(node, module) {
+  let lastCharacterPosition = node.end - 1;
 
-    if (module.source.charAt(lastCharacterPosition) === ';') {
-      module.magicString.remove(lastCharacterPosition, node.end);
-    }
+  if (module.source.charAt(lastCharacterPosition) === ';') {
+    module.magicString.remove(lastCharacterPosition, node.end);
   }
 }
 
@@ -524,7 +529,7 @@ function rewriteNamedIdentifierExport(path: Path, module: Module): boolean {
     } else {
       module.magicString.overwrite(
         node.start, getAssignmentEqualsEnd(node, module), `let ${localBinding} = `);
-      module.magicString.appendRight(node.end, `\nexport { ${localBinding} as ${property.name} };`);
+      module.magicString.appendLeft(node.end, `\nexport { ${localBinding} as ${property.name} };`);
       replacements = [
         t.variableDeclaration(
           'let',
@@ -627,7 +632,7 @@ function rewriteNamedValueExport(path: Path, module: Module): boolean {
 
     if (nextStatement) {
       // Insert before the next statement…
-      module.magicString.appendRight(nextStatement.start, `${exportStatement}\n`);
+      module.magicString.appendLeft(nextStatement.start, `${exportStatement}\n`);
     } else {
       // …or after the last one of the program.
       module.magicString.appendLeft(node.end, `\n${exportStatement}`);
