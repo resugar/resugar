@@ -2,8 +2,7 @@ import * as t from 'babel-types';
 import cleanNode from '../utils/cleanNode.js';
 import type Module from '../module';
 import type { Node, Path, Visitor } from '../types';
-import { escapeString } from '../utils/escape';
-import { unescapeString } from '../utils/unescape';
+import convertStringEscaping from '../utils/convertStringEscaping';
 
 export const name = 'strings.template';
 export const description = 'Transforms manual string concatenation into template strings.';
@@ -104,9 +103,10 @@ function combineStrings(module, parts: Array<Object>): Object {
       value += nextPart.value;
     }
     let thisPartQuote = module.source.charAt(parts[i].start);
-    if (thisPartQuote !== quote) {
-      unescapeString(thisPartQuote, module.source, thisPart.start + 1, thisPart.end - 1, module.magicString);
-      escapeString(quote, module.source, thisPart.start + 1, thisPart.end - 1, module.magicString);
+    let originalString = module.magicString.slice(thisPart.start + 1, thisPart.end - 1);
+    let convertedString = convertStringEscaping(thisPartQuote, quote, originalString);
+    if (originalString !== convertedString) {
+      module.magicString.overwrite(thisPart.start + 1, thisPart.end - 1, convertedString);
     }
   }
 
@@ -134,7 +134,7 @@ function buildTemplateString(module: Module, node: Object, parts: Array<Object>)
       module.magicString.appendLeft(node.end, `${suffix}}`);
       expressions.push(node);
       quasis.push(t.templateElement(
-        { cooked, raw: escapeString('`', raw) },
+        { cooked, raw },
         false
       ));
       cooked = '';
@@ -142,12 +142,15 @@ function buildTemplateString(module: Module, node: Object, parts: Array<Object>)
     } else {
       // This one can become a quasi,
       cooked += node.value;
-      raw += unescapeString(node.extra.raw[0], node.extra.raw.slice(1, -1));
+      raw += convertStringEscaping(node.extra.raw[0], '`', node.extra.raw.slice(1, -1));
       module.magicString.remove(node.start, node.start + 1);
       module.magicString.remove(node.end - 1, node.end);
       let thisPartQuote = module.source.charAt(node.start);
-      unescapeString(thisPartQuote, module.source, node.start + 1, node.end - 1, module.magicString);
-      escapeString('`', module.source, node.start, node.end, module.magicString);
+      let originalString = module.magicString.slice(node.start + 1, node.end - 1);
+      let convertedString = convertStringEscaping(thisPartQuote, '`', originalString);
+      if (originalString !== convertedString) {
+        module.magicString.overwrite(node.start + 1, node.end - 1, convertedString);
+      }
     }
 
     let nextPart = parts[i + 1];
