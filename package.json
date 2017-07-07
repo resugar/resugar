@@ -3,6 +3,7 @@
   "description": "Update your project to the latest ECMAScript syntax.",
   "main": "dist/esnext.js",
   "jsnext:main": "dist/esnext.mjs",
+  "types": "index.d.ts",
   "bin": {
     "esnext": "./bin/index.js"
   },
@@ -36,6 +37,7 @@
   },
   "bugs": "https://github.com/esnext/esnext/issues",
   "dependencies": {
+    "@types/babel-traverse": "^6.7.17",
     "babel-traverse": "^6.21.0",
     "babel-types": "^6.21.0",
     "babylon": "^6.14.1",
