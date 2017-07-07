@@ -24,7 +24,8 @@
   "files": [
     "dist",
     "src",
-    "bin"
+    "bin",
+    "index.d.ts"
   ],
   "engines": {
     "node": ">=4.0.0"
