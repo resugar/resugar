@@ -20,8 +20,10 @@ export let BABEL_PARSE_OPTIONS = {
     'functionBind',
     'functionSent',
     'objectRestSpread',
-    'trailingFunctionCommas'
-  ]
+    'trailingFunctionCommas',
+    'optionalChaining',
+  ],
+  tokens: true,
 };
 
 Object.defineProperty(tokTypes.backQuote, 'updateContext', {
