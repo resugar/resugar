@@ -13,6 +13,10 @@ export default function mostRestrictiveKindForDeclaration(path: Path): Declarati
   let { scope } = path;
   let isConst = path.node.declarations.every(declaration => declaration.init);
 
+  if (t.isSwitchCase(path.parent)) {
+    return 'var';
+  }
+
   for (let id in ids) {
     let binding = scope.getBinding(id);
 
