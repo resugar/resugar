@@ -9,12 +9,12 @@
   },
   "scripts": {
     "lint": "eslint src test/test.js test/support",
-    "pretest": "npm run lint",
+    "pretest": "yarn lint",
     "test": "mocha",
-    "prebuild": "npm run lint && rm -rf dist",
+    "prebuild": "yarn lint && rm -rf dist",
     "build": "rollup -c",
-    "prepublish": "npm run build",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "prepublish": "yarn build",
+    "semantic-release": "semantic-release pre && yarn publish && semantic-release post"
   },
   "keywords": [
     "es6",

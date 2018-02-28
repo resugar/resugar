@@ -5,6 +5,8 @@ Bring your JavaScript into the future.
 ## Installation
 
 ```
+$ yarn global add esnext
+# or, with `npm`:
 $ npm install -g esnext
 ```
 
