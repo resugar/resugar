@@ -5,19 +5,19 @@ import { readFileSync } from 'fs';
 let pkg = require('./package.json');
 
 export default {
-  entry: 'src/esnext.js',
+  input: 'src/esnext.js',
   plugins: [
     babel(babelrc())
   ],
   targets: [
     {
       format: 'umd',
-      moduleName: 'esnext',
-      dest: pkg['main']
+      name: 'esnext',
+      file: pkg['main']
     },
     {
       format: 'es',
-      dest: pkg['jsnext:main']
+      file: pkg['jsnext:main']
     }
   ]
 };
