@@ -11,6 +11,7 @@ after_success:
   - python travis_after_all.py
   - export $(cat .to_export_back) &> /dev/null
   - yarn semantic-release
+  - yarn ts-node script/update-website.ts
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
