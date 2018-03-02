@@ -73,6 +73,9 @@ async function updateWebsite(spinner: Ora): Promise<number> {
   let latestVersion = pkg['version'];
   let currentRevision = await gitRevParse('HEAD');
 
+  spinner.text = 'Building';
+  await run('yarn', ['build']);
+
   spinner.text = 'Switching to website branch';
   await run('git', ['fetch', 'origin']);
   await run('git', ['reset', '--hard', 'origin/gh-pages']);
