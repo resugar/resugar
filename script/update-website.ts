@@ -28,6 +28,11 @@ async function run(command: string, args: Array<string>): Promise<{ stdout: stri
   return { stdout, stderr };
 }
 
+async function gitRevParse(ref: string): Promise<string> {
+  let { stdout } = await run('git', ['rev-parse', ref]);
+  return stdout.trim();
+}
+
 async function hasChanges(): Promise<boolean> {
   // update the cache
   await run('git', ['status']);
@@ -66,10 +71,10 @@ async function updateWebsite(spinner: Ora): Promise<number> {
 
   let pkg = await readPackage();
   let latestVersion = pkg['version'];
+  let currentRevision = await gitRevParse('HEAD');
 
   spinner.text = 'Switching to website branch';
-  await run('git', ['reset', '--hard', 'HEAD']);
-  await run('git', ['checkout', 'gh-pages']);
+  await run('git', ['reset', '--hard', 'origin/gh-pages']);
 
   spinner.text = 'Creating browser build';
   await run('browserify',[
@@ -82,7 +87,7 @@ async function updateWebsite(spinner: Ora): Promise<number> {
     if (commit) {
       spinner.text = 'Pushing changes to website';
       await run('git', ['commit', '-av', '-m', `chore: update to v${latestVersion}`]);
-      await run('git', ['push', 'origin', 'gh-pages']);
+      await run('git', ['push', '--force', 'origin', 'HEAD:gh-pages']);
       spinner.succeed('Website published');
     } else {
       console.log((await run('git', ['diff'])).stdout);
@@ -91,7 +96,7 @@ async function updateWebsite(spinner: Ora): Promise<number> {
     spinner.succeed('Already up to date');
   }
 
-  await run('git', ['checkout', '-']);
+  await run('git', ['reset', '--hard', currentRevision]);
 
   return 0;
 }
