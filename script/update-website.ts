@@ -77,7 +77,7 @@ async function updateWebsite(spinner: Ora): Promise<number> {
   await run('yarn', ['build']);
 
   spinner.text = 'Switching to website branch';
-  await run('git', ['fetch', 'origin']);
+  await run('git', ['fetch', 'origin', '+refs/heads/gh-pages:refs/remotes/origin/gh-pages']);
   await run('git', ['reset', '--hard', 'origin/gh-pages']);
 
   spinner.text = 'Creating browser build';
