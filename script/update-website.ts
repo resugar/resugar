@@ -95,7 +95,7 @@ async function updateWebsite(spinner: Ora): Promise<number> {
   spinner.text = 'Creating browser build';
   await run('browserify',[
     '--standalone', 'esnext',
-    '--require', `./${pkg['main']}`,
+    '--require', `./${pkg.main}`,
     '--outfile', 'esnext.js'
   ]);
 

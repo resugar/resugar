@@ -3,6 +3,7 @@ import { format, parse } from 'url';
 
 export interface Package {
   name: string;
+  main: string;
   publishConfig?: PublishConfig;
 }
 
