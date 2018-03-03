@@ -1,3 +1,4 @@
+import getLatestVersion, { Package } from './getLatestVersion';
 import { execFile } from 'mz/child_process';
 import { readFile } from 'mz/fs';
 import { join } from 'path';
@@ -19,7 +20,7 @@ for (let i = 2; i < process.argv.length; i++) {
   }
 }
 
-async function readPackage(): Promise<{}> {
+async function readPackage(): Promise<Package> {
   let content = await readFile(join(__dirname, '../package.json'), { encoding: 'utf8' });
   return JSON.parse(content);
 }
@@ -71,7 +72,7 @@ async function updateWebsite(spinner: Ora): Promise<number> {
   }
 
   let pkg = await readPackage();
-  let latestVersion = pkg['version'];
+  let latestVersion = await getLatestVersion(pkg);
   let currentRevision = await gitRevParse('HEAD');
   let remote = 'origin';
 
