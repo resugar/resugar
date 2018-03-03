@@ -1,6 +1,7 @@
 import { execFile } from 'mz/child_process';
 import { readFile } from 'mz/fs';
 import { join } from 'path';
+import { URL } from 'url';
 import Ora = require('ora');
 
 let commit = true;
@@ -72,13 +73,23 @@ async function updateWebsite(spinner: Ora): Promise<number> {
   let pkg = await readPackage();
   let latestVersion = pkg['version'];
   let currentRevision = await gitRevParse('HEAD');
+  let remote = 'origin';
 
   spinner.text = 'Building';
   await run('yarn', ['build']);
 
   spinner.text = 'Switching to website branch';
-  await run('git', ['fetch', 'origin', '+refs/heads/gh-pages:refs/remotes/origin/gh-pages']);
-  await run('git', ['reset', '--hard', 'origin/gh-pages']);
+  let githubToken = process.env['GH_TOKEN'];
+
+  if (githubToken) {
+    let remoteURL = new URL((await run('git', ['remote', 'get-url', remote])).stdout.trim());
+    remoteURL.username = githubToken;
+    remoteURL.password = '';
+    await run('git', ['remote', 'set-url', remote, remoteURL.toString()]);
+  }
+
+  await run('git', ['fetch', remote, `+refs/heads/gh-pages:refs/remotes/${remote}/gh-pages`]);
+  await run('git', ['reset', '--hard', `${remote}/gh-pages`]);
 
   spinner.text = 'Creating browser build';
   await run('browserify',[
@@ -91,7 +102,7 @@ async function updateWebsite(spinner: Ora): Promise<number> {
     if (commit) {
       spinner.text = 'Pushing changes to website';
       await run('git', ['commit', '-av', '-m', `chore: update to v${latestVersion}`]);
-      await run('git', ['push', '--force', 'origin', 'HEAD:gh-pages']);
+      await run('git', ['push', '--force', remote, 'HEAD:gh-pages']);
       spinner.succeed('Website published');
     } else {
       console.log((await run('git', ['diff'])).stdout);
