@@ -5,30 +5,36 @@
         "type": "default-import",
         "node": {
           "type": "VariableDeclaration",
+          "declare": null,
           "kind": "var",
           "declarations": [
             {
               "type": "VariableDeclarator",
               "id": {
                 "type": "Identifier",
-                "name": "foo",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "foo",
+                "optional": null
               },
+              "definite": null,
               "init": {
                 "type": "CallExpression",
                 "callee": {
                   "type": "Identifier",
-                  "name": "require",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "require",
+                  "optional": null
                 },
                 "arguments": [
                   {
                     "type": "StringLiteral",
                     "value": "foo"
                   }
-                ]
+                ],
+                "optional": null,
+                "typeParameters": null
               }
             }
           ]

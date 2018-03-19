@@ -22,17 +22,20 @@
               },
               "property": {
                 "type": "Identifier",
-                "name": "foo",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "foo",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "Identifier",
-              "name": "foo",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "foo",
+              "optional": null
             }
           }
         }

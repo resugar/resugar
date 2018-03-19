@@ -4,9 +4,10 @@
       "ids": [
         {
           "type": "Identifier",
-          "name": "b",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "b",
+          "optional": null
         }
       ],
       "inits": [
@@ -14,17 +15,20 @@
           "type": "MemberExpression",
           "object": {
             "type": "Identifier",
-            "name": "a",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "a",
+            "optional": null
           },
           "property": {
             "type": "Identifier",
-            "name": "b",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "b",
+            "optional": null
           },
-          "computed": false
+          "computed": false,
+          "optional": null
         }
       ]
     }

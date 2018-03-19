@@ -3,48 +3,57 @@
     "declarations": [
       {
         "type": "VariableDeclaration",
+        "declare": null,
         "kind": "var",
         "declarations": [
           {
             "type": "VariableDeclarator",
             "id": {
               "type": "Identifier",
+              "typeAnnotation": null,
+              "decorators": null,
               "name": "a",
-              "decorators": null,
-              "typeAnnotation": null
+              "optional": null
             },
+            "definite": null,
             "init": null
           }
         ]
       },
       {
         "type": "VariableDeclaration",
+        "declare": null,
         "kind": "var",
         "declarations": [
           {
             "type": "VariableDeclarator",
             "id": {
               "type": "Identifier",
+              "typeAnnotation": null,
+              "decorators": null,
               "name": "usedWithinIteration",
-              "decorators": null,
-              "typeAnnotation": null
+              "optional": null
             },
+            "definite": null,
             "init": null
           }
         ]
       },
       {
         "type": "VariableDeclaration",
+        "declare": null,
         "kind": "var",
         "declarations": [
           {
             "type": "VariableDeclarator",
             "id": {
               "type": "Identifier",
-              "name": "initializedInLoop",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "initializedInLoop",
+              "optional": null
             },
+            "definite": null,
             "init": {
               "type": "BooleanLiteral",
               "value": true

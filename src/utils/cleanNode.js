@@ -1,4 +1,4 @@
-import { isNode, NODE_FIELDS } from 'babel-types';
+import { isNode, NODE_FIELDS } from '@babel/types';
 import type { Node } from '../types.js';
 import { inspect } from 'util';
 

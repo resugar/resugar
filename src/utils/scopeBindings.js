@@ -1,5 +1,5 @@
-import * as t from 'babel-types';
-import type { Scope } from 'babel-traverse';
+import * as t from '@babel/types';
+import type { Scope } from '@babel/traverse';
 
 export function claim(scope: Scope, name: string='ref'): { type: 'Identifier', name: string } {
   if (isUsedName(scope, name)) {

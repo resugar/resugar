@@ -5,27 +5,32 @@
         "type": "named-import",
         "node": {
           "type": "VariableDeclaration",
+          "declare": null,
           "kind": "var",
           "declarations": [
             {
               "type": "VariableDeclarator",
               "id": {
                 "type": "ObjectPattern",
+                "typeAnnotation": null,
+                "decorators": null,
                 "properties": [
                   {
                     "type": "ObjectProperty",
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "name": "pow",
+                      "typeAnnotation": null,
                       "decorators": null,
-                      "typeAnnotation": null
+                      "name": "pow",
+                      "optional": null
                     },
                     "value": {
                       "type": "Identifier",
-                      "name": "pow",
+                      "typeAnnotation": null,
                       "decorators": null,
-                      "typeAnnotation": null
+                      "name": "pow",
+                      "optional": null
                     },
                     "shorthand": true,
                     "decorators": null
@@ -35,15 +40,17 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "name": "sin",
+                      "typeAnnotation": null,
                       "decorators": null,
-                      "typeAnnotation": null
+                      "name": "sin",
+                      "optional": null
                     },
                     "value": {
                       "type": "Identifier",
-                      "name": "sin",
+                      "typeAnnotation": null,
                       "decorators": null,
-                      "typeAnnotation": null
+                      "name": "sin",
+                      "optional": null
                     },
                     "shorthand": true,
                     "decorators": null
@@ -53,37 +60,41 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
+                      "typeAnnotation": null,
+                      "decorators": null,
                       "name": "cos",
-                      "decorators": null,
-                      "typeAnnotation": null
+                      "optional": null
                     },
                     "value": {
                       "type": "Identifier",
-                      "name": "cosine",
+                      "typeAnnotation": null,
                       "decorators": null,
-                      "typeAnnotation": null
+                      "name": "cosine",
+                      "optional": null
                     },
                     "shorthand": false,
                     "decorators": null
                   }
-                ],
-                "decorators": null,
-                "typeAnnotation": null
+                ]
               },
+              "definite": null,
               "init": {
                 "type": "CallExpression",
                 "callee": {
                   "type": "Identifier",
-                  "name": "require",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "require",
+                  "optional": null
                 },
                 "arguments": [
                   {
                     "type": "StringLiteral",
                     "value": "math"
                   }
-                ]
+                ],
+                "optional": null,
+                "typeParameters": null
               }
             }
           ]

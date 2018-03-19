@@ -5,8 +5,12 @@
     "directives": [],
     "unwrapped": {
       "type": "FunctionExpression",
-      "id": null,
       "params": [],
+      "generator": false,
+      "async": false,
+      "returnType": null,
+      "typeParameters": null,
+      "id": null,
       "body": {
         "type": "BlockStatement",
         "directives": [],
@@ -15,9 +19,10 @@
             "type": "IfStatement",
             "test": {
               "type": "Identifier",
-              "name": "a",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "a",
+              "optional": null
             },
             "consequent": {
               "type": "BlockStatement",
@@ -29,11 +34,14 @@
                     "type": "CallExpression",
                     "callee": {
                       "type": "Identifier",
-                      "name": "b",
+                      "typeAnnotation": null,
                       "decorators": null,
-                      "typeAnnotation": null
+                      "name": "b",
+                      "optional": null
                     },
-                    "arguments": []
+                    "arguments": [],
+                    "optional": null,
+                    "typeParameters": null
                   }
                 }
               ]
@@ -41,11 +49,7 @@
             "alternate": null
           }
         ]
-      },
-      "generator": false,
-      "async": false,
-      "returnType": null,
-      "typeParameters": null
+      }
     }
   }
 }

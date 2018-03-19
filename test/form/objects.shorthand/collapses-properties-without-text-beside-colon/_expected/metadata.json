@@ -6,15 +6,17 @@
         "computed": false,
         "key": {
           "type": "Identifier",
-          "name": "x",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "x",
+          "optional": null
         },
         "value": {
           "type": "Identifier",
-          "name": "x",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "x",
+          "optional": null
         },
         "shorthand": false,
         "decorators": null
@@ -24,15 +26,17 @@
         "computed": false,
         "key": {
           "type": "Identifier",
-          "name": "y",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "y",
+          "optional": null
         },
         "value": {
           "type": "Identifier",
-          "name": "y",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "y",
+          "optional": null
         },
         "shorthand": false,
         "decorators": null

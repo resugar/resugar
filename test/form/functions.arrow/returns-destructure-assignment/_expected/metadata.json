@@ -3,8 +3,12 @@
     "functions": [
       {
         "type": "FunctionExpression",
-        "id": null,
         "params": [],
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null,
+        "id": null,
         "body": {
           "type": "BlockStatement",
           "directives": [],
@@ -16,43 +20,42 @@
                 "operator": "=",
                 "left": {
                   "type": "ObjectPattern",
+                  "typeAnnotation": null,
+                  "decorators": null,
                   "properties": [
                     {
                       "type": "ObjectProperty",
                       "computed": false,
                       "key": {
                         "type": "Identifier",
-                        "name": "a",
+                        "typeAnnotation": null,
                         "decorators": null,
-                        "typeAnnotation": null
+                        "name": "a",
+                        "optional": null
                       },
                       "value": {
                         "type": "Identifier",
-                        "name": "a",
+                        "typeAnnotation": null,
                         "decorators": null,
-                        "typeAnnotation": null
+                        "name": "a",
+                        "optional": null
                       },
                       "shorthand": true,
                       "decorators": null
                     }
-                  ],
-                  "decorators": null,
-                  "typeAnnotation": null
+                  ]
                 },
                 "right": {
                   "type": "Identifier",
-                  "name": "b",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "b",
+                  "optional": null
                 }
               }
             }
           ]
-        },
-        "generator": false,
-        "async": false,
-        "returnType": null,
-        "typeParameters": null
+        }
       }
     ]
   }

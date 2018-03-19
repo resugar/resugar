@@ -19,23 +19,27 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "jQuery",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "jQuery",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "Identifier",
-              "name": "$",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "$",
+              "optional": null
             }
           }
         }

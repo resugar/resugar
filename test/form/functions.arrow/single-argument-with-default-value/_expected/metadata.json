@@ -3,23 +3,29 @@
     "functions": [
       {
         "type": "FunctionExpression",
-        "id": null,
         "params": [
           {
             "type": "AssignmentPattern",
+            "typeAnnotation": null,
+            "decorators": null,
             "left": {
               "type": "Identifier",
-              "name": "b",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "b",
+              "optional": null
             },
             "right": {
               "type": "NumericLiteral",
               "value": 0
-            },
-            "decorators": null
+            }
           }
         ],
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null,
+        "id": null,
         "body": {
           "type": "BlockStatement",
           "directives": [],
@@ -28,17 +34,14 @@
               "type": "ReturnStatement",
               "argument": {
                 "type": "Identifier",
-                "name": "b",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "b",
+                "optional": null
               }
             }
           ]
-        },
-        "generator": false,
-        "async": false,
-        "returnType": null,
-        "typeParameters": null
+        }
       }
     ]
   }

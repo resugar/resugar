@@ -3,8 +3,12 @@
     "functions": [
       {
         "type": "FunctionExpression",
-        "id": null,
         "params": [],
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null,
+        "id": null,
         "body": {
           "type": "BlockStatement",
           "directives": [],
@@ -13,13 +17,18 @@
               "type": "ReturnStatement",
               "argument": {
                 "type": "FunctionExpression",
+                "params": [],
+                "generator": false,
+                "async": false,
+                "returnType": null,
+                "typeParameters": null,
                 "id": {
                   "type": "Identifier",
-                  "name": "getThis",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "getThis",
+                  "optional": null
                 },
-                "params": [],
                 "body": {
                   "type": "BlockStatement",
                   "directives": [],
@@ -31,19 +40,11 @@
                       }
                     }
                   ]
-                },
-                "generator": false,
-                "async": false,
-                "returnType": null,
-                "typeParameters": null
+                }
               }
             }
           ]
-        },
-        "generator": false,
-        "async": false,
-        "returnType": null,
-        "typeParameters": null
+        }
       }
     ]
   }

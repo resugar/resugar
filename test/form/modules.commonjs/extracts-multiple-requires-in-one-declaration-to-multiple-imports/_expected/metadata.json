@@ -5,54 +5,65 @@
         "type": "default-import",
         "node": {
           "type": "VariableDeclaration",
+          "declare": null,
           "kind": "var",
           "declarations": [
             {
               "type": "VariableDeclarator",
               "id": {
                 "type": "Identifier",
-                "name": "lodash",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "lodash",
+                "optional": null
               },
+              "definite": null,
               "init": {
                 "type": "CallExpression",
                 "callee": {
                   "type": "Identifier",
-                  "name": "require",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "require",
+                  "optional": null
                 },
                 "arguments": [
                   {
                     "type": "StringLiteral",
                     "value": "lodash"
                   }
-                ]
+                ],
+                "optional": null,
+                "typeParameters": null
               }
             },
             {
               "type": "VariableDeclarator",
               "id": {
                 "type": "Identifier",
-                "name": "escope",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "escope",
+                "optional": null
               },
+              "definite": null,
               "init": {
                 "type": "CallExpression",
                 "callee": {
                   "type": "Identifier",
-                  "name": "require",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "require",
+                  "optional": null
                 },
                 "arguments": [
                   {
                     "type": "StringLiteral",
                     "value": "escope"
                   }
-                ]
+                ],
+                "optional": null,
+                "typeParameters": null
               }
             }
           ]
@@ -69,54 +80,65 @@
         "type": "default-import",
         "node": {
           "type": "VariableDeclaration",
+          "declare": null,
           "kind": "var",
           "declarations": [
             {
               "type": "VariableDeclarator",
               "id": {
                 "type": "Identifier",
-                "name": "lodash",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "lodash",
+                "optional": null
               },
+              "definite": null,
               "init": {
                 "type": "CallExpression",
                 "callee": {
                   "type": "Identifier",
-                  "name": "require",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "require",
+                  "optional": null
                 },
                 "arguments": [
                   {
                     "type": "StringLiteral",
                     "value": "lodash"
                   }
-                ]
+                ],
+                "optional": null,
+                "typeParameters": null
               }
             },
             {
               "type": "VariableDeclarator",
               "id": {
                 "type": "Identifier",
-                "name": "escope",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "escope",
+                "optional": null
               },
+              "definite": null,
               "init": {
                 "type": "CallExpression",
                 "callee": {
                   "type": "Identifier",
-                  "name": "require",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "require",
+                  "optional": null
                 },
                 "arguments": [
                   {
                     "type": "StringLiteral",
                     "value": "escope"
                   }
-                ]
+                ],
+                "optional": null,
+                "typeParameters": null
               }
             }
           ]

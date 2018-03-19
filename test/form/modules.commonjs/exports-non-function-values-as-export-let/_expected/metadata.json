@@ -19,17 +19,20 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "PI",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "PI",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "NumericLiteral",

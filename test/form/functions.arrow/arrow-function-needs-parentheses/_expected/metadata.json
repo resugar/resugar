@@ -3,15 +3,20 @@
     "functions": [
       {
         "type": "FunctionExpression",
-        "id": null,
         "params": [
           {
             "type": "Identifier",
-            "name": "a",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "a",
+            "optional": null
           }
         ],
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null,
+        "id": null,
         "body": {
           "type": "BlockStatement",
           "directives": [],
@@ -20,22 +25,23 @@
               "type": "ReturnStatement",
               "argument": {
                 "type": "Identifier",
-                "name": "a",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "a",
+                "optional": null
               }
             }
           ]
-        },
-        "generator": false,
-        "async": false,
-        "returnType": null,
-        "typeParameters": null
+        }
       },
       {
         "type": "FunctionExpression",
-        "id": null,
         "params": [],
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null,
+        "id": null,
         "body": {
           "type": "BlockStatement",
           "directives": [],
@@ -48,16 +54,16 @@
               }
             }
           ]
-        },
-        "generator": false,
-        "async": false,
-        "returnType": null,
-        "typeParameters": null
+        }
       },
       {
         "type": "FunctionExpression",
-        "id": null,
         "params": [],
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null,
+        "id": null,
         "body": {
           "type": "BlockStatement",
           "directives": [],
@@ -70,11 +76,7 @@
               }
             }
           ]
-        },
-        "generator": false,
-        "async": false,
-        "returnType": null,
-        "typeParameters": null
+        }
       }
     ]
   }

@@ -19,17 +19,20 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "foo",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "foo",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "NumericLiteral",
@@ -42,8 +45,12 @@
     "directives": [],
     "unwrapped": {
       "type": "FunctionExpression",
-      "id": null,
       "params": [],
+      "generator": false,
+      "async": false,
+      "returnType": null,
+      "typeParameters": null,
+      "id": null,
       "body": {
         "type": "BlockStatement",
         "directives": [],
@@ -57,17 +64,20 @@
                 "type": "MemberExpression",
                 "object": {
                   "type": "Identifier",
-                  "name": "exports",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "exports",
+                  "optional": null
                 },
                 "property": {
                   "type": "Identifier",
-                  "name": "foo",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "foo",
+                  "optional": null
                 },
-                "computed": false
+                "computed": false,
+                "optional": null
               },
               "right": {
                 "type": "NumericLiteral",
@@ -76,11 +86,7 @@
             }
           }
         ]
-      },
-      "generator": false,
-      "async": false,
-      "returnType": null,
-      "typeParameters": null
+      }
     }
   }
 }

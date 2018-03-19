@@ -17,16 +17,18 @@
               },
               "right": {
                 "type": "Identifier",
-                "name": "b",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "b",
+                "optional": null
               }
             },
             "right": {
               "type": "Identifier",
-              "name": "c",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "c",
+              "optional": null
             }
           },
           "right": {
@@ -41,15 +43,17 @@
           },
           {
             "type": "Identifier",
-            "name": "b",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "b",
+            "optional": null
           },
           {
             "type": "Identifier",
-            "name": "c",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "c",
+            "optional": null
           },
           {
             "type": "StringLiteral",
@@ -75,9 +79,10 @@
           },
           "right": {
             "type": "Identifier",
-            "name": "c",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "c",
+            "optional": null
           }
         },
         "parts": [
@@ -91,9 +96,10 @@
           },
           {
             "type": "Identifier",
-            "name": "c",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "c",
+            "optional": null
           }
         ]
       }

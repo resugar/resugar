@@ -5,30 +5,36 @@
         "type": "default-import",
         "node": {
           "type": "VariableDeclaration",
+          "declare": null,
           "kind": "let",
           "declarations": [
             {
               "type": "VariableDeclarator",
               "id": {
                 "type": "Identifier",
-                "name": "a",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "a",
+                "optional": null
               },
+              "definite": null,
               "init": {
                 "type": "CallExpression",
                 "callee": {
                   "type": "Identifier",
-                  "name": "require",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "require",
+                  "optional": null
                 },
                 "arguments": [
                   {
                     "type": "StringLiteral",
                     "value": "a"
                   }
-                ]
+                ],
+                "optional": null,
+                "typeParameters": null
               }
             }
           ]
@@ -45,30 +51,36 @@
         "type": "default-import",
         "node": {
           "type": "VariableDeclaration",
+          "declare": null,
           "kind": "let",
           "declarations": [
             {
               "type": "VariableDeclarator",
               "id": {
                 "type": "Identifier",
-                "name": "c",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "c",
+                "optional": null
               },
+              "definite": null,
               "init": {
                 "type": "CallExpression",
                 "callee": {
                   "type": "Identifier",
-                  "name": "require",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "require",
+                  "optional": null
                 },
                 "arguments": [
                   {
                     "type": "StringLiteral",
                     "value": "c"
                   }
-                ]
+                ],
+                "optional": null,
+                "typeParameters": null
               }
             }
           ]

@@ -14,15 +14,17 @@
             "operator": "+",
             "left": {
               "type": "Identifier",
-              "name": "b",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "b",
+              "optional": null
             },
             "right": {
               "type": "Identifier",
-              "name": "c",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "c",
+              "optional": null
             }
           }
         },
@@ -36,15 +38,17 @@
             "operator": "+",
             "left": {
               "type": "Identifier",
-              "name": "b",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "b",
+              "optional": null
             },
             "right": {
               "type": "Identifier",
-              "name": "c",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "c",
+              "optional": null
             }
           }
         ]

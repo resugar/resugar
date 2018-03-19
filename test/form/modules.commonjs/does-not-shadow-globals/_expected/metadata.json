@@ -19,29 +19,37 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "clearTimeout",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "clearTimeout",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "FunctionExpression",
-              "id": null,
               "params": [
                 {
                   "type": "Identifier",
-                  "name": "timeout",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "timeout",
+                  "optional": null
                 }
               ],
+              "generator": false,
+              "async": false,
+              "returnType": null,
+              "typeParameters": null,
+              "id": null,
               "body": {
                 "type": "BlockStatement",
                 "directives": [],
@@ -52,26 +60,26 @@
                       "type": "CallExpression",
                       "callee": {
                         "type": "Identifier",
-                        "name": "clearTimeout",
+                        "typeAnnotation": null,
                         "decorators": null,
-                        "typeAnnotation": null
+                        "name": "clearTimeout",
+                        "optional": null
                       },
                       "arguments": [
                         {
                           "type": "Identifier",
-                          "name": "timeout",
+                          "typeAnnotation": null,
                           "decorators": null,
-                          "typeAnnotation": null
+                          "name": "timeout",
+                          "optional": null
                         }
-                      ]
+                      ],
+                      "optional": null,
+                      "typeParameters": null
                     }
                   }
                 ]
-              },
-              "generator": false,
-              "async": false,
-              "returnType": null,
-              "typeParameters": null
+              }
             }
           }
         }
@@ -93,40 +101,50 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "setTimeout",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "setTimeout",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "FunctionExpression",
-              "id": {
-                "type": "Identifier",
-                "name": "_setTimeout",
-                "decorators": null,
-                "typeAnnotation": null
-              },
               "params": [
                 {
                   "type": "Identifier",
-                  "name": "callback",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "callback",
+                  "optional": null
                 },
                 {
                   "type": "Identifier",
-                  "name": "timeout",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "timeout",
+                  "optional": null
                 }
               ],
+              "generator": false,
+              "async": false,
+              "returnType": null,
+              "typeParameters": null,
+              "id": {
+                "type": "Identifier",
+                "typeAnnotation": null,
+                "decorators": null,
+                "name": "_setTimeout",
+                "optional": null
+              },
               "body": {
                 "type": "BlockStatement",
                 "directives": [],
@@ -137,32 +155,33 @@
                       "type": "CallExpression",
                       "callee": {
                         "type": "Identifier",
-                        "name": "setTimeout",
+                        "typeAnnotation": null,
                         "decorators": null,
-                        "typeAnnotation": null
+                        "name": "setTimeout",
+                        "optional": null
                       },
                       "arguments": [
                         {
                           "type": "Identifier",
-                          "name": "callback",
+                          "typeAnnotation": null,
                           "decorators": null,
-                          "typeAnnotation": null
+                          "name": "callback",
+                          "optional": null
                         },
                         {
                           "type": "Identifier",
-                          "name": "timeout",
+                          "typeAnnotation": null,
                           "decorators": null,
-                          "typeAnnotation": null
+                          "name": "timeout",
+                          "optional": null
                         }
-                      ]
+                      ],
+                      "optional": null,
+                      "typeParameters": null
                     }
                   }
                 ]
-              },
-              "generator": false,
-              "async": false,
-              "returnType": null,
-              "typeParameters": null
+              }
             }
           }
         }
@@ -184,34 +203,43 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "clearInterval",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "clearInterval",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "FunctionExpression",
-              "id": {
-                "type": "Identifier",
-                "name": "_clearInterval",
-                "decorators": null,
-                "typeAnnotation": null
-              },
               "params": [
                 {
                   "type": "Identifier",
-                  "name": "interval",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "interval",
+                  "optional": null
                 }
               ],
+              "generator": false,
+              "async": false,
+              "returnType": null,
+              "typeParameters": null,
+              "id": {
+                "type": "Identifier",
+                "typeAnnotation": null,
+                "decorators": null,
+                "name": "_clearInterval",
+                "optional": null
+              },
               "body": {
                 "type": "BlockStatement",
                 "directives": [],
@@ -222,26 +250,26 @@
                       "type": "CallExpression",
                       "callee": {
                         "type": "Identifier",
-                        "name": "clearInterval",
+                        "typeAnnotation": null,
                         "decorators": null,
-                        "typeAnnotation": null
+                        "name": "clearInterval",
+                        "optional": null
                       },
                       "arguments": [
                         {
                           "type": "Identifier",
-                          "name": "interval",
+                          "typeAnnotation": null,
                           "decorators": null,
-                          "typeAnnotation": null
+                          "name": "interval",
+                          "optional": null
                         }
-                      ]
+                      ],
+                      "optional": null,
+                      "typeParameters": null
                     }
                   }
                 ]
-              },
-              "generator": false,
-              "async": false,
-              "returnType": null,
-              "typeParameters": null
+              }
             }
           }
         }

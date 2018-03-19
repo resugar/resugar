@@ -13,30 +13,39 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "module",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "module",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "ObjectExpression",
               "properties": [
                 {
                   "type": "ObjectMethod",
+                  "params": [],
+                  "generator": false,
+                  "async": false,
+                  "returnType": null,
+                  "typeParameters": null,
                   "kind": "method",
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "name": "foo",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "foo",
+                    "optional": null
                   },
                   "decorators": null,
                   "body": {
@@ -51,22 +60,23 @@
                         }
                       }
                     ]
-                  },
-                  "generator": false,
-                  "async": false,
-                  "params": [],
-                  "returnType": null,
-                  "typeParameters": null
+                  }
                 },
                 {
                   "type": "ObjectMethod",
+                  "params": [],
+                  "generator": false,
+                  "async": false,
+                  "returnType": null,
+                  "typeParameters": null,
                   "kind": "method",
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "name": "bar",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "bar",
+                    "optional": null
                   },
                   "decorators": null,
                   "body": {
@@ -81,12 +91,7 @@
                         }
                       }
                     ]
-                  },
-                  "generator": false,
-                  "async": false,
-                  "params": [],
-                  "returnType": null,
-                  "typeParameters": null
+                  }
                 }
               ]
             }

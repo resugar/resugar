@@ -19,23 +19,27 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "a",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "a",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "Identifier",
-              "name": "b",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "b",
+              "optional": null
             }
           }
         }
