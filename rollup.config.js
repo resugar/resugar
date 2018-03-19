@@ -1,6 +1,5 @@
 import babel from 'rollup-plugin-babel';
 import babelrc from 'babelrc-rollup';
-import { readFileSync } from 'fs';
 
 let pkg = require('./package.json');
 
