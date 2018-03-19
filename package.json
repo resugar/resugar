@@ -14,7 +14,7 @@
     "prebuild": "yarn lint && rm -rf dist",
     "build": "rollup -c",
     "prepublish": "yarn build",
-    "semantic-release": "semantic-release pre && yarn publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "keywords": [
     "es6",
