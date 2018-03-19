@@ -3,8 +3,12 @@
     "functions": [
       {
         "type": "FunctionExpression",
-        "id": null,
         "params": [],
+        "generator": false,
+        "async": false,
+        "returnType": null,
+        "typeParameters": null,
+        "id": null,
         "body": {
           "type": "BlockStatement",
           "directives": [],
@@ -16,25 +20,23 @@
                 "expressions": [
                   {
                     "type": "Identifier",
-                    "name": "a",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "a",
+                    "optional": null
                   },
                   {
                     "type": "Identifier",
-                    "name": "b",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "b",
+                    "optional": null
                   }
                 ]
               }
             }
           ]
-        },
-        "generator": false,
-        "async": false,
-        "returnType": null,
-        "typeParameters": null
+        }
       }
     ]
   }

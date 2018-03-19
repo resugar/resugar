@@ -20,9 +20,10 @@
                 },
                 "right": {
                   "type": "Identifier",
-                  "name": "b",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "b",
+                  "optional": null
                 }
               },
               "right": {
@@ -32,9 +33,10 @@
             },
             "right": {
               "type": "Identifier",
-              "name": "c",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "c",
+              "optional": null
             }
           },
           "right": {
@@ -49,9 +51,10 @@
           },
           {
             "type": "Identifier",
-            "name": "b",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "b",
+            "optional": null
           },
           {
             "type": "StringLiteral",
@@ -59,9 +62,10 @@
           },
           {
             "type": "Identifier",
-            "name": "c",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "c",
+            "optional": null
           },
           {
             "type": "StringLiteral",

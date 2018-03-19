@@ -3,27 +3,32 @@
     "declarations": [
       {
         "type": "VariableDeclaration",
+        "declare": null,
         "kind": "var",
         "declarations": [
           {
             "type": "VariableDeclarator",
             "id": {
               "type": "ObjectPattern",
+              "typeAnnotation": null,
+              "decorators": null,
               "properties": [
                 {
                   "type": "ObjectProperty",
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "name": "a",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "a",
+                    "optional": null
                   },
                   "value": {
                     "type": "Identifier",
-                    "name": "a",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "a",
+                    "optional": null
                   },
                   "shorthand": true,
                   "decorators": null
@@ -33,28 +38,30 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "name": "b",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "b",
+                    "optional": null
                   },
                   "value": {
                     "type": "Identifier",
-                    "name": "b",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "b",
+                    "optional": null
                   },
                   "shorthand": true,
                   "decorators": null
                 }
-              ],
-              "decorators": null,
-              "typeAnnotation": null
+              ]
             },
+            "definite": null,
             "init": {
               "type": "Identifier",
-              "name": "obj",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "obj",
+              "optional": null
             }
           }
         ]

@@ -19,40 +19,44 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "a",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "a",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "AssignmentExpression",
               "operator": "=",
               "left": {
                 "type": "Identifier",
-                "name": "a",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "a",
+                "optional": null
               },
               "right": {
                 "type": "FunctionExpression",
-                "id": null,
                 "params": [],
+                "generator": false,
+                "async": false,
+                "returnType": null,
+                "typeParameters": null,
+                "id": null,
                 "body": {
                   "type": "BlockStatement",
                   "directives": [],
                   "body": []
-                },
-                "generator": false,
-                "async": false,
-                "returnType": null,
-                "typeParameters": null
+                }
               }
             }
           }

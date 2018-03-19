@@ -9,16 +9,19 @@
             "type": "CallExpression",
             "callee": {
               "type": "Identifier",
-              "name": "require",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "require",
+              "optional": null
             },
             "arguments": [
               {
                 "type": "StringLiteral",
                 "value": "foo"
               }
-            ]
+            ],
+            "optional": null,
+            "typeParameters": null
           }
         },
         "bindings": [],

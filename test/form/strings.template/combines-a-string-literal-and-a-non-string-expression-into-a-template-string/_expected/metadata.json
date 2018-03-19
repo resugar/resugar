@@ -11,9 +11,10 @@
           },
           "right": {
             "type": "Identifier",
-            "name": "bar",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "bar",
+            "optional": null
           }
         },
         "parts": [
@@ -23,9 +24,10 @@
           },
           {
             "type": "Identifier",
-            "name": "bar",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "bar",
+            "optional": null
           }
         ]
       }

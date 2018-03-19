@@ -22,23 +22,30 @@
               },
               "property": {
                 "type": "Identifier",
-                "name": "log",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "log",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "FunctionExpression",
-              "id": null,
               "params": [
                 {
                   "type": "Identifier",
-                  "name": "message",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "message",
+                  "optional": null
                 }
               ],
+              "generator": false,
+              "async": false,
+              "returnType": null,
+              "typeParameters": null,
+              "id": null,
               "body": {
                 "type": "BlockStatement",
                 "directives": [],
@@ -51,34 +58,36 @@
                         "type": "MemberExpression",
                         "object": {
                           "type": "Identifier",
-                          "name": "console",
+                          "typeAnnotation": null,
                           "decorators": null,
-                          "typeAnnotation": null
+                          "name": "console",
+                          "optional": null
                         },
                         "property": {
                           "type": "Identifier",
-                          "name": "log",
+                          "typeAnnotation": null,
                           "decorators": null,
-                          "typeAnnotation": null
+                          "name": "log",
+                          "optional": null
                         },
-                        "computed": false
+                        "computed": false,
+                        "optional": null
                       },
                       "arguments": [
                         {
                           "type": "Identifier",
-                          "name": "message",
+                          "typeAnnotation": null,
                           "decorators": null,
-                          "typeAnnotation": null
+                          "name": "message",
+                          "optional": null
                         }
-                      ]
+                      ],
+                      "optional": null,
+                      "typeParameters": null
                     }
                   }
                 ]
-              },
-              "generator": false,
-              "async": false,
-              "returnType": null,
-              "typeParameters": null
+              }
             }
           }
         }

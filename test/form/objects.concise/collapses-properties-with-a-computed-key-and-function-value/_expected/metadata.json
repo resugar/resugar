@@ -6,23 +6,24 @@
         "computed": true,
         "key": {
           "type": "Identifier",
-          "name": "a",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "a",
+          "optional": null
         },
         "value": {
           "type": "FunctionExpression",
-          "id": null,
           "params": [],
+          "generator": false,
+          "async": false,
+          "returnType": null,
+          "typeParameters": null,
+          "id": null,
           "body": {
             "type": "BlockStatement",
             "directives": [],
             "body": []
-          },
-          "generator": false,
-          "async": false,
-          "returnType": null,
-          "typeParameters": null
+          }
         },
         "shorthand": false,
         "decorators": null

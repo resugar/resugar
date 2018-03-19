@@ -14,32 +14,38 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "module",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "module",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "CallExpression",
               "callee": {
                 "type": "Identifier",
-                "name": "require",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "require",
+                "optional": null
               },
               "arguments": [
                 {
                   "type": "StringLiteral",
                   "value": "./lib"
                 }
-              ]
+              ],
+              "optional": null,
+              "typeParameters": null
             }
           }
         }

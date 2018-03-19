@@ -19,35 +19,44 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "add",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "add",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "FunctionExpression",
-              "id": null,
               "params": [
                 {
                   "type": "Identifier",
-                  "name": "a",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "a",
+                  "optional": null
                 },
                 {
                   "type": "Identifier",
-                  "name": "b",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "b",
+                  "optional": null
                 }
               ],
+              "generator": false,
+              "async": false,
+              "returnType": null,
+              "typeParameters": null,
+              "id": null,
               "body": {
                 "type": "BlockStatement",
                 "directives": [],
@@ -59,24 +68,22 @@
                       "operator": "+",
                       "left": {
                         "type": "Identifier",
-                        "name": "a",
+                        "typeAnnotation": null,
                         "decorators": null,
-                        "typeAnnotation": null
+                        "name": "a",
+                        "optional": null
                       },
                       "right": {
                         "type": "Identifier",
-                        "name": "b",
+                        "typeAnnotation": null,
                         "decorators": null,
-                        "typeAnnotation": null
+                        "name": "b",
+                        "optional": null
                       }
                     }
                   }
                 ]
-              },
-              "generator": false,
-              "async": false,
-              "returnType": null,
-              "typeParameters": null
+              }
             }
           }
         }

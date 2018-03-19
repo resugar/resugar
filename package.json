@@ -38,10 +38,10 @@
   },
   "bugs": "https://github.com/esnext/esnext/issues",
   "dependencies": {
+    "@babel/traverse": "^7.0.0-beta.42",
+    "@babel/types": "^7.0.0-beta.42",
     "@types/babel-traverse": "^6.7.17",
-    "babel-traverse": "^6.21.0",
-    "babel-types": "^6.21.0",
-    "babylon": "^7.0.0-beta.16",
+    "babylon": "^7.0.0-beta.42",
     "magic-string": "^0.22.2",
     "mkdirp": "^0.5.1",
     "shebang-regex": "^2.0.0",

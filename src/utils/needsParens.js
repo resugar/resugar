@@ -1,4 +1,4 @@
-import * as t from 'babel-types';
+import * as t from '@babel/types';
 import type { Path } from '../types.js';
 
 export function needsParens(path: Path): boolean {

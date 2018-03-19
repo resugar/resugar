@@ -4,9 +4,10 @@
       "ids": [
         {
           "type": "Identifier",
-          "name": "a",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "a",
+          "optional": null
         }
       ],
       "inits": [
@@ -16,19 +17,24 @@
             "type": "CallExpression",
             "callee": {
               "type": "Identifier",
-              "name": "foo",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "foo",
+              "optional": null
             },
-            "arguments": []
+            "arguments": [],
+            "optional": null,
+            "typeParameters": null
           },
           "property": {
             "type": "Identifier",
-            "name": "a",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "a",
+            "optional": null
           },
-          "computed": false
+          "computed": false,
+          "optional": null
         }
       ]
     },
@@ -36,9 +42,10 @@
       "ids": [
         {
           "type": "Identifier",
-          "name": "b",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "b",
+          "optional": null
         }
       ],
       "inits": [
@@ -48,19 +55,24 @@
             "type": "CallExpression",
             "callee": {
               "type": "Identifier",
-              "name": "foo",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "foo",
+              "optional": null
             },
-            "arguments": []
+            "arguments": [],
+            "optional": null,
+            "typeParameters": null
           },
           "property": {
             "type": "Identifier",
-            "name": "b",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "b",
+            "optional": null
           },
-          "computed": false
+          "computed": false,
+          "optional": null
         }
       ]
     }

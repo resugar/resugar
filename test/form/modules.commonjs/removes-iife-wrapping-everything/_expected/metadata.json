@@ -5,8 +5,12 @@
     "directives": [],
     "unwrapped": {
       "type": "FunctionExpression",
-      "id": null,
       "params": [],
+      "generator": false,
+      "async": false,
+      "returnType": null,
+      "typeParameters": null,
+      "id": null,
       "body": {
         "type": "BlockStatement",
         "directives": [],
@@ -19,24 +23,29 @@
                 "type": "MemberExpression",
                 "object": {
                   "type": "Identifier",
-                  "name": "console",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "console",
+                  "optional": null
                 },
                 "property": {
                   "type": "Identifier",
-                  "name": "log",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "log",
+                  "optional": null
                 },
-                "computed": false
+                "computed": false,
+                "optional": null
               },
               "arguments": [
                 {
                   "type": "NumericLiteral",
                   "value": 1
                 }
-              ]
+              ],
+              "optional": null,
+              "typeParameters": null
             }
           },
           {
@@ -47,32 +56,33 @@
                 "type": "MemberExpression",
                 "object": {
                   "type": "Identifier",
-                  "name": "console",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "console",
+                  "optional": null
                 },
                 "property": {
                   "type": "Identifier",
-                  "name": "log",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "log",
+                  "optional": null
                 },
-                "computed": false
+                "computed": false,
+                "optional": null
               },
               "arguments": [
                 {
                   "type": "NumericLiteral",
                   "value": 2
                 }
-              ]
+              ],
+              "optional": null,
+              "typeParameters": null
             }
           }
         ]
-      },
-      "generator": false,
-      "async": false,
-      "returnType": null,
-      "typeParameters": null
+      }
     }
   }
 }

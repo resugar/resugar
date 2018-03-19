@@ -3,16 +3,19 @@
     "declarations": [
       {
         "type": "VariableDeclaration",
+        "declare": null,
         "kind": "var",
         "declarations": [
           {
             "type": "VariableDeclarator",
             "id": {
               "type": "Identifier",
-              "name": "c",
+              "typeAnnotation": null,
               "decorators": null,
-              "typeAnnotation": null
+              "name": "c",
+              "optional": null
             },
+            "definite": null,
             "init": {
               "type": "NumericLiteral",
               "value": 5

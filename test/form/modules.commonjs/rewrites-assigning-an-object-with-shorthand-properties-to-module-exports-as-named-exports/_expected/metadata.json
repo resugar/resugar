@@ -23,17 +23,20 @@
               "type": "MemberExpression",
               "object": {
                 "type": "Identifier",
-                "name": "module",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "module",
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "exports",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "exports",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "ObjectExpression",
@@ -43,15 +46,17 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "name": "a",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "a",
+                    "optional": null
                   },
                   "value": {
                     "type": "Identifier",
-                    "name": "a",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "a",
+                    "optional": null
                   },
                   "shorthand": true,
                   "decorators": null
@@ -61,15 +66,17 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "name": "b",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "b",
+                    "optional": null
                   },
                   "value": {
                     "type": "Identifier",
-                    "name": "b",
+                    "typeAnnotation": null,
                     "decorators": null,
-                    "typeAnnotation": null
+                    "name": "b",
+                    "optional": null
                   },
                   "shorthand": true,
                   "decorators": null

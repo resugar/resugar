@@ -1,4 +1,4 @@
-import * as t from 'babel-types';
+import * as t from '@babel/types';
 import type { Binding, Path } from '../types';
 
 type DeclarationKind = 'var' | 'let' | 'const';
@@ -63,7 +63,7 @@ function bindingCouldBeBlockScope(binding: Binding): boolean {
   let loopParent = definition.findParent(path => path.isLoop());
 
   // Is this declaration within a loop in the current function scope?
-  if (loopParent !== null && loopParent.isDescendant(functionParent)) {
+  if (loopParent !== null && (!functionParent || loopParent.isDescendant(functionParent))) {
     // Is any reference within a closure?
     if (binding.referencePaths.some(reference =>
         reference.getFunctionParent() !== functionParent)) {

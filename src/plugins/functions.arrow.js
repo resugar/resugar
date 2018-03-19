@@ -1,4 +1,4 @@
-import * as t from 'babel-types';
+import * as t from '@babel/types';
 import cleanNode from '../utils/cleanNode.js';
 import replace from '../utils/replace';
 import type Module from '../module';

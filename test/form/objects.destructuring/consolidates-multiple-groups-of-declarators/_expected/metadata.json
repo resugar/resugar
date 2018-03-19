@@ -4,15 +4,17 @@
       "ids": [
         {
           "type": "Identifier",
-          "name": "a",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "a",
+          "optional": null
         },
         {
           "type": "Identifier",
-          "name": "b",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "b",
+          "optional": null
         }
       ],
       "inits": [
@@ -20,33 +22,39 @@
           "type": "MemberExpression",
           "object": {
             "type": "Identifier",
-            "name": "obj",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "obj",
+            "optional": null
           },
           "property": {
             "type": "Identifier",
-            "name": "a",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "a",
+            "optional": null
           },
-          "computed": false
+          "computed": false,
+          "optional": null
         },
         {
           "type": "MemberExpression",
           "object": {
             "type": "Identifier",
-            "name": "obj",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "obj",
+            "optional": null
           },
           "property": {
             "type": "Identifier",
-            "name": "b",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "b",
+            "optional": null
           },
-          "computed": false
+          "computed": false,
+          "optional": null
         }
       ]
     },
@@ -54,15 +62,17 @@
       "ids": [
         {
           "type": "Identifier",
-          "name": "c",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "c",
+          "optional": null
         },
         {
           "type": "Identifier",
-          "name": "d",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "d",
+          "optional": null
         }
       ],
       "inits": [
@@ -70,33 +80,39 @@
           "type": "MemberExpression",
           "object": {
             "type": "Identifier",
-            "name": "obj2",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "obj2",
+            "optional": null
           },
           "property": {
             "type": "Identifier",
-            "name": "c",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "c",
+            "optional": null
           },
-          "computed": false
+          "computed": false,
+          "optional": null
         },
         {
           "type": "MemberExpression",
           "object": {
             "type": "Identifier",
-            "name": "obj2",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "obj2",
+            "optional": null
           },
           "property": {
             "type": "Identifier",
-            "name": "d",
+            "typeAnnotation": null,
             "decorators": null,
-            "typeAnnotation": null
+            "name": "d",
+            "optional": null
           },
-          "computed": false
+          "computed": false,
+          "optional": null
         }
       ]
     }

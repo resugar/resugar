@@ -6,15 +6,17 @@
         "computed": false,
         "key": {
           "type": "Identifier",
-          "name": "a",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "a",
+          "optional": null
         },
         "value": {
           "type": "Identifier",
-          "name": "a",
+          "typeAnnotation": null,
           "decorators": null,
-          "typeAnnotation": null
+          "name": "a",
+          "optional": null
         },
         "shorthand": false,
         "decorators": null

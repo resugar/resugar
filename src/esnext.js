@@ -2,7 +2,7 @@ import Module from './module';
 import allPlugins from './plugins/index';
 import parse from './utils/parse';
 import shebangRegex from 'shebang-regex';
-import traverse from 'babel-traverse';
+import traverse from '@babel/traverse';
 import type { RenderedModule } from './module';
 import type { Visitor } from './types';
 

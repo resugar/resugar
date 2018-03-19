@@ -21,25 +21,30 @@
                 "type": "MemberExpression",
                 "object": {
                   "type": "Identifier",
-                  "name": "module",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "module",
+                  "optional": null
                 },
                 "property": {
                   "type": "Identifier",
-                  "name": "exports",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "exports",
+                  "optional": null
                 },
-                "computed": false
+                "computed": false,
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "find",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "find",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             },
             "right": {
               "type": "MemberExpression",
@@ -47,25 +52,30 @@
                 "type": "MemberExpression",
                 "object": {
                   "type": "Identifier",
-                  "name": "Array",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "Array",
+                  "optional": null
                 },
                 "property": {
                   "type": "Identifier",
-                  "name": "prototype",
+                  "typeAnnotation": null,
                   "decorators": null,
-                  "typeAnnotation": null
+                  "name": "prototype",
+                  "optional": null
                 },
-                "computed": false
+                "computed": false,
+                "optional": null
               },
               "property": {
                 "type": "Identifier",
-                "name": "find",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "find",
+                "optional": null
               },
-              "computed": false
+              "computed": false,
+              "optional": null
             }
           }
         }

@@ -32,9 +32,10 @@
             "expressions": [
               {
                 "type": "Identifier",
-                "name": "c",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "c",
+                "optional": null
               }
             ]
           }
@@ -67,9 +68,10 @@
             "expressions": [
               {
                 "type": "Identifier",
-                "name": "c",
+                "typeAnnotation": null,
                 "decorators": null,
-                "typeAnnotation": null
+                "name": "c",
+                "optional": null
               }
             ]
           }
