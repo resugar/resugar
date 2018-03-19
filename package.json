@@ -70,7 +70,6 @@
     "rollup": "^0.56.3",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-npm": "^2.0.0",
-    "semantic-release": "^6.3.2",
     "source-map-support": "^0.4.8",
     "ts-node": "^5.0.0",
     "typescript": "^2.7.2"
