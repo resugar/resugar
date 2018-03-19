@@ -8,7 +8,7 @@
     "esnext": "./bin/index.js"
   },
   "scripts": {
-    "lint": "eslint src test/test.js test/support",
+    "lint": "eslint rollup.config.js src test/test.js test/support",
     "pretest": "yarn lint",
     "test": "mocha",
     "prebuild": "yarn lint && rm -rf dist",
