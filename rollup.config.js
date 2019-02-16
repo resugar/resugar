@@ -8,7 +8,7 @@ export default {
   plugins: [
     babel(babelrc())
   ],
-  targets: [
+  output: [
     {
       format: 'umd',
       name: 'esnext',
