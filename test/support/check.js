@@ -2,7 +2,7 @@ import parse, { BABEL_PARSE_OPTIONS } from '../../src/utils/parse';
 import stripIndent from 'strip-indent';
 import { convert } from '../../src/esnext';
 import { deepEqual, strictEqual } from 'assert';
-import { dirname, join } from 'path';
+import { join } from 'path';
 import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'fs';
 import cleanNode from '../../src/utils/cleanNode.js';
 
@@ -27,7 +27,6 @@ export function checkExamples(name: string) {
 }
 
 export function checkExample(name: string, options: Object={}) {
-  let plugin = dirname(name);
   let directory = join('test/form', name);
   let expectedDir = join(directory, '_expected');
   let actualDir = join(directory, '_actual');
@@ -36,28 +35,17 @@ export function checkExample(name: string, options: Object={}) {
 
   mkdir(actualDir);
   write(join(actualDir, 'main.js'), actual.code);
-  writeJSON(join(actualDir, 'metadata.json'), { [plugin]: actual.metadata[plugin] });
   writeJSON(join(actualDir, 'ast.json'), actual.ast);
   if (actual.warnings.length > 0) {
     writeJSON(join(actualDir, 'warnings.json'), actual.warnings);
   }
 
   let expectedCode = read(join(expectedDir, 'main.js'));
-  let expectedMetadata = readOptionalJSON(join(expectedDir, 'metadata.json'));
   let expectedWarnings = readOptionalJSON(join(expectedDir, 'warnings.json'));
 
   strictEqual(actual.code, stripIndent(expectedCode).trim());
 
   deepEqual(actual.warnings, expectedWarnings || []);
-
-  if (expectedMetadata) {
-    for (let key in expectedMetadata) {
-      deepEqual(
-        actual.metadata[key],
-        expectedMetadata[key]
-      );
-    }
-  }
 
   deepEqual(
     cleanNode(actual.ast.program),

@@ -1,5 +1,4 @@
 import * as t from '@babel/types';
-import cleanNode from '../utils/cleanNode.js';
 import replace from '../utils/replace';
 import type Module from '../module';
 import type { Node, Path, Token, Visitor } from '../types';
@@ -12,7 +11,6 @@ export const description = 'Transform regular functions to arrow functions as ap
 
 export function visitor(module: Module): Visitor {
   let editor = module.magicString;
-  let functions = metadata(module).functions;
 
   return {
     FunctionExpression(path) {
@@ -65,7 +63,7 @@ export function visitor(module: Module): Visitor {
         return;
       }
 
-      rewriteBlocklessArrowFunction(path, module, functions);
+      rewriteBlocklessArrowFunction(path, module);
 
       // Remove extra parentheses if they're no longer needed.
       if (t.isExpressionStatement(parent) && hasParens(path, module)) {
@@ -123,7 +121,7 @@ export function visitor(module: Module): Visitor {
         return;
       }
 
-      rewriteBlockArrowFunction(objectPath, module, functions);
+      rewriteBlockArrowFunction(objectPath, module);
 
       // `() => {}.bind(this)` -> `() => {}bind(this)`
       //          ^
@@ -191,18 +189,9 @@ function referencesArguments(path: Path): boolean {
   return result;
 }
 
-function metadata(module: Module): { functions: Array<Node> } {
-  if (!module.metadata[name]) {
-    module.metadata[name] = { functions: [] };
-  }
-  return module.metadata[name];
-}
-
-function rewriteBlocklessArrowFunction(path: Path, module: Module, functions: Array<Node>) {
+function rewriteBlocklessArrowFunction(path: Path, module: Module) {
   let { node } = path;
   let [ statement ] = node.body.body;
-
-  functions.push(cleanNode(node));
 
   let {
     fn,
@@ -300,10 +289,8 @@ function rewriteBlocklessArrowFunction(path: Path, module: Module, functions: Ar
 /**
  * Rewrites a function expression to an arrow function, preserving the block.
  */
-function rewriteBlockArrowFunction(path: Path, module: Module, functions: Array<Node>) {
+function rewriteBlockArrowFunction(path: Path, module: Module) {
   let { node } = path;
-
-  functions.push(cleanNode(node));
 
   let {
     fn,

@@ -1,5 +1,4 @@
 import * as t from '@babel/types';
-import cleanNode from '../utils/cleanNode.js';
 import type Module from '../module';
 import type { Node, Path, Visitor } from '../types';
 import convertStringEscaping from '../utils/convertStringEscaping';
@@ -8,19 +7,12 @@ export const name = 'strings.template';
 export const description = 'Transforms manual string concatenation into template strings.';
 
 export function visitor(module: Module): Visitor {
-  let meta = metadata(module);
-
   return {
     BinaryExpression(path: Path) {
       let { node } = path;
       let parts = flatten(node);
 
       if (parts) {
-        meta.concatenations.push({
-          node: cleanNode(node),
-          parts: parts.map(cleanNode)
-        });
-
         path.replaceWith(combine(module, node, parts));
       }
     }
@@ -202,15 +194,4 @@ function insignificantContentSeparatedByPlus(module: Module, left: Node, right: 
   });
 
   return [leftComments.join(''), rightComments.join('')];
-}
-
-type Metadata = {
-  concatenations: Array<{ node: Object }>
-};
-
-function metadata(module: Module): Metadata {
-  if (!module.metadata[name]) {
-    module.metadata[name] = { concatenations: [] };
-  }
-  return module.metadata[name];
 }

@@ -1,5 +1,4 @@
 import * as t from '@babel/types';
-import cleanNode from '../utils/cleanNode.js';
 import type Module from '../module';
 import type { Path, Visitor } from '../types';
 
@@ -7,8 +6,6 @@ export const name = 'objects.destructuring';
 export const description = 'Transform some declarations and assignments to the more compact destructuring form.';
 
 export function visitor(module: Module): Visitor {
-  let meta = metadata(module);
-
   return {
     VariableDeclaration(path: Path) {
       let { node } = path;
@@ -18,12 +15,6 @@ export function visitor(module: Module): Visitor {
         rewriteDestructurableElements(module, elements);
 
         if (elements.length !== 0) {
-          // Add information about the transformation.
-          meta.push({
-            ids: elements.map(({ id }) => cleanNode(id)),
-            inits: elements.map(({ init }) => cleanNode(init))
-          });
-
           // Mutate the AST to reflect the new reality.
           node.declarations.splice(index, elements.length, t.variableDeclarator(
             t.objectPattern(
@@ -59,12 +50,6 @@ export function visitor(module: Module): Visitor {
 
       rewriteDestructurableElements(module, assignments);
 
-      // Add information about the transformation.
-      meta.push({
-        ids: assignments.map(assignment => cleanNode(assignment.left)),
-        inits: assignments.map(assignment => cleanNode(assignment.right))
-      });
-
       path.replaceWith(t.assignmentExpression(
         '=',
         t.objectPattern(
@@ -95,11 +80,6 @@ export function visitor(module: Module): Visitor {
 
         if (assignments.length > 0) {
           rewriteDestructurableElements(module, assignments);
-
-          meta.push({
-            ids: assignments.map(assignment => cleanNode(assignment.left)),
-            inits: assignments.map(assignment => cleanNode(assignment.right))
-          });
 
           expressions.splice(index, assignments.length, t.assignmentExpression(
             '=',
@@ -204,20 +184,6 @@ function getDotToken(module: Module, memberAccessExpression: Object): Token {
     throw new Error('Expected to find a dot token in a member access expression.');
   }
   return intermediateTokens[dotTokenIndex];
-}
-
-type DestructuringMetadata = {
-  ids: Array<Object>,
-  inits: Array<Object>
-};
-
-type Metadata = Array<DestructuringMetadata>;
-
-function metadata(module: Module): Metadata {
-  if (!module.metadata[name]) {
-    module.metadata[name] = [];
-  }
-  return module.metadata[name];
 }
 
 function leftRightOfAssignment(node: Object): ?{ left: Object, right: Object } {

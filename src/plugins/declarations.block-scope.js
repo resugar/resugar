@@ -1,7 +1,6 @@
-import cleanNode from '../utils/cleanNode.js';
 import mostRestrictiveKindForDeclaration from '../utils/mostRestrictiveKindForDeclaration';
 import type Module from '../module';
-import type { Node, Path, Visitor } from '../types';
+import type { Path, Visitor } from '../types';
 
 export type Options = {
   disableConst?: boolean | (path: Path) => boolean,
@@ -11,8 +10,6 @@ export const name = 'declarations.block-scope';
 export const description = 'Transform `var` into `let` and `const` as appropriate.';
 
 export function visitor(module: Module, options: Options={}): Visitor {
-  let { declarations } = metadata(module);
-
   return {
     VariableDeclaration(path: Path) {
       let { node } = path;
@@ -28,7 +25,6 @@ export function visitor(module: Module, options: Options={}): Visitor {
           kind = 'let';
         }
         module.magicString.overwrite(node.start, node.start + 'var'.length, kind);
-        declarations.push(cleanNode(node));
         node.kind = kind;
       } else {
         module.warn(
@@ -51,11 +47,4 @@ function constAllowed(path: Path, options: Options): boolean {
   } else {
     return !disableConst;
   }
-}
-
-function metadata(module: Module): { functions: Array<Node> } {
-  if (!module.metadata[name]) {
-    module.metadata[name] = { declarations: [] };
-  }
-  return module.metadata[name];
 }

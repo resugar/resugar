@@ -1,5 +1,4 @@
 import * as t from '@babel/types';
-import cleanNode from '../utils/cleanNode.js';
 import type Module from '../module';
 import type { Path, Visitor } from '../types';
 import { findTokenMatchingPredicate } from '../utils/findTokens';
@@ -8,8 +7,6 @@ export const name = 'objects.shorthand';
 export const description = 'Use shorthand notation for object properties.';
 
 export function visitor(module: Module): Visitor {
-  let meta = metadata(module);
-
   return {
     ObjectProperty(path: Path) {
       let { node } = path;
@@ -51,19 +48,7 @@ export function visitor(module: Module): Visitor {
         );
       }
 
-      meta.properties.push(cleanNode(node));
       node.shorthand = true;
     }
   };
-}
-
-type Metadata = {
-  properties: Array<Object>
-};
-
-function metadata(module: Module): Metadata {
-  if (!module.metadata[name]) {
-    module.metadata[name] = { properties: [] };
-  }
-  return module.metadata[name];
 }
