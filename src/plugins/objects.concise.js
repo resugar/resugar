@@ -1,7 +1,6 @@
 import * as t from '@babel/types';
-import cleanNode from '../utils/cleanNode.js';
 import type Module from '../module';
-import type { Node, Path, Visitor } from '../types';
+import type { Path, Visitor } from '../types';
 import { findToken, findEndTokenBalanced } from '../utils/findTokens';
 
 export const name = 'objects.concise';
@@ -34,7 +33,6 @@ export function visitor(module: Module): Visitor {
       }
 
       module.magicString.remove(keyEnd, functionEnd);
-      metadata(module).properties.push(cleanNode(node));
 
       path.replaceWith(t.objectMethod(
         'method',
@@ -45,17 +43,4 @@ export function visitor(module: Module): Visitor {
       ));
     }
   };
-}
-
-type Metadata = {
-  properties: Array<Node>
-};
-
-function metadata(module: Module): Metadata {
-  if (!module.metadata[name]) {
-    module.metadata[name] = {
-      properties: []
-    };
-  }
-  return module.metadata[name];
 }

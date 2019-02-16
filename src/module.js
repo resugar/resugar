@@ -12,7 +12,6 @@ type Warning = {
 export type RenderedModule = {
   ast: Node,
   code: string,
-  metadata: Object,
   warnings: Array<Warning>,
 };
 
@@ -23,7 +22,6 @@ type Range = {
 
 export default class Module {
   id: ?string;
-  metadata = {};
   source: string;
   ast: Node;
   tokens: Array<Token>;
@@ -99,8 +97,7 @@ export default class Module {
     return {
       code: this.magicString.toString(),
       ast: this.ast,
-      warnings: this.warnings.slice(),
-      metadata: this.metadata
+      warnings: this.warnings.slice()
     };
   }
 

@@ -32,7 +32,6 @@ type Warning = {
 type RenderedModule = {
   ast: Node,
   code: string,
-  metadata: Object,
   warnings: Array<Warning>,
 };
 

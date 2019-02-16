@@ -1,5 +1,4 @@
 import * as t from '@babel/types';
-import cleanNode from '../utils/cleanNode.js';
 import type Module from '../module';
 import type { Node, Path, Visitor } from '../types';
 import unindent from '../utils/unindent';
@@ -17,8 +16,6 @@ export const name = 'modules.commonjs';
 export const description = 'Transform CommonJS modules into ES6 modules.';
 
 export function visitor(module: Module, options: Options={}): Visitor {
-  metadata(module);
-
   return {
     Program(path: Path) {
       unwrapIIFE(path, module);
@@ -71,7 +68,6 @@ function unwrapIIFE(path: Path, module: Module) {
   let { body } = iife.body;
 
   node.body = body;
-  metadata(module).unwrapped = cleanNode(iife);
 
   let tokens = module.tokensForNode(iife);
   let iifeHeaderEnd = body[0].start;
@@ -125,7 +121,6 @@ function removeUseStrictDirective(path: Path, module: Module) {
 
       module.magicString.remove(start, end);
       directives.splice(i, 1);
-      metadata(module).directives.push(cleanNode(directive));
     }
   }
 }
@@ -300,12 +295,6 @@ function rewriteSingleExportAsDefaultExport(path: Path, module: Module): boolean
       bindings.push(new Binding(value.name, key.name));
     }
 
-    metadata(module).exports.push({
-      type: 'named-export',
-      bindings,
-      node: cleanNode(node)
-    });
-
     module.magicString.overwrite(
       node.start,
       node.end,
@@ -332,12 +321,6 @@ function rewriteSingleExportAsDefaultExport(path: Path, module: Module): boolean
         `export * from ${module.source.slice(pathNode.start, pathNode.end)}`
       );
 
-      metadata(module).exports.push({
-        type: 'namespace-export',
-        bindings: [],
-        node: cleanNode(node)
-      });
-
       path.replaceWith(t.exportAllDeclaration(pathNode));
     } else {
       rewriteAssignmentToDefaultExport(path, module);
@@ -359,7 +342,6 @@ function getAssignmentEqualsEnd(node: Node, module: Module): number {
 function rewriteAssignmentToDefaultExport(path: Path, module: Module) {
   let node = path.node;
   let right = path.node.expression.right;
-  metadata(module).exports.push({ type: 'default-export', node: cleanNode(node) });
 
   module.magicString.overwrite(
     path.node.start, getAssignmentEqualsEnd(node, module), 'export default ');
@@ -384,17 +366,6 @@ function rewriteNamedFunctionExpressionExport(path: Path, module: Module) {
   let fnBinding = id ? id.name : null;
   let localId = claim(path.scope, fnBinding || exportName);
   let localName = localId.name;
-
-  metadata(module).exports.push({
-    type: 'named-export',
-    bindings: [
-      {
-        exportName,
-        localName
-      }
-    ],
-    node: cleanNode(node)
-  });
 
   if (localName === exportName) {
     // `exports.foo = function foo() {}` → `export function foo() {}`
@@ -554,17 +525,6 @@ function rewriteNamedIdentifierExport(path: Path, module: Module): boolean {
     }
   }
 
-  metadata(module).exports.push({
-    type: 'named-export',
-    bindings: [
-      {
-        exportName: property.name,
-        localName: localBinding
-      }
-    ],
-    node: cleanNode(node)
-  });
-
   path.replaceWithMultiple(replacements);
 
   return true;
@@ -581,17 +541,6 @@ function rewriteNamedValueExport(path: Path, module: Module): boolean {
     }
   } = path;
   let localBinding = claim(path.scope, property.name).name;
-
-  metadata(module).exports.push({
-    type: 'named-export',
-    bindings: [
-      {
-        exportName: property.name,
-        localName: localBinding
-      }
-    ],
-    node: cleanNode(node)
-  });
 
   if (localBinding === property.name) {
     // `exports.foo = 99;` → `export let foo = 99;`
@@ -894,13 +843,6 @@ function rewriteRequireAsImports(type: string, path: Path, module: Module, impor
   let importStatements = [];
 
   imports.forEach(({ bindings, pathNode }) => {
-    metadata(module).imports.push({
-      type,
-      node: cleanNode(node),
-      bindings,
-      path: pathNode.value
-    });
-
     let pathString = module.source.slice(pathNode.start, pathNode.end);
 
     if (bindings.length === 0) {
@@ -942,42 +884,6 @@ function removeDefaultAccesses(programPath: Path, module: Module, defaultImportN
       }
     }
   })
-}
-
-type ImportMetadata = {
-  type: string,
-  node: Node,
-  bindings: Array<Binding>,
-  path: string,
-};
-
-type ExportMetadata = {
-  type: string,
-  node: Node,
-  bindings: Array<Binding>,
-};
-
-type DirectiveMetadata = {
-  type: string,
-  node: Node,
-};
-
-type Metadata = {
-  imports: Array<ImportMetadata>,
-  exports: Array<ExportMetadata>,
-  directives: Array<DirectiveMetadata>,
-  unwrapped?: Node
-};
-
-function metadata(module: Module): Metadata {
-  if (!module.metadata[name]) {
-    module.metadata[name] = {
-      imports: [],
-      exports: [],
-      directives: []
-    };
-  }
-  return module.metadata[name];
 }
 
 function extractSingleDeclaration(node: Node): ?Node {
