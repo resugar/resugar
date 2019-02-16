@@ -1,0 +1,2744 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`declarations.block-scope converts \`var\` to \`let\` when a binding is reassigned using compound assignment: code 1`] = `
+"let a = 1;
+a += 2;"
+`;
+
+exports[`declarations.block-scope converts \`var\` to \`let\` when a binding is reassigned using compound assignment: warnings 1`] = `Array []`;
+
+exports[`declarations.block-scope converts \`var\` to \`let\` when some but not all bindings on the declaration could be \`const\`: code 1`] = `
+"let a = 1, b = 2;
+a++;"
+`;
+
+exports[`declarations.block-scope converts \`var\` to \`let\` when some but not all bindings on the declaration could be \`const\`: warnings 1`] = `Array []`;
+
+exports[`declarations.block-scope converts destructuring \`var\` to \`const\`: code 1`] = `"const { a, b } = obj;"`;
+
+exports[`declarations.block-scope converts destructuring \`var\` to \`const\`: warnings 1`] = `Array []`;
+
+exports[`declarations.block-scope disable-const: code 1`] = `
+"let a = 1;
+console.log(a);"
+`;
+
+exports[`declarations.block-scope disable-const: warnings 1`] = `Array []`;
+
+exports[`declarations.block-scope does not convert \`var\` declarations within switch cases: code 1`] = `
+"switch (a) {
+  case 1:
+    var x = 1;
+    console.log(x);
+    break;
+  case 2:
+    x = 2;
+    console.log(x);
+    break;
+}"
+`;
+
+exports[`declarations.block-scope does not convert \`var\` declarations within switch cases: warnings 1`] = `
+Array [
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 36,
+          "id": Object {
+            "end": 32,
+            "loc": Object {
+              "end": Object {
+                "column": 9,
+                "line": 3,
+              },
+              "identifierName": "x",
+              "start": Object {
+                "column": 8,
+                "line": 3,
+              },
+            },
+            "name": "x",
+            "start": 31,
+            "type": "Identifier",
+          },
+          "init": Object {
+            "end": 36,
+            "extra": Object {
+              "raw": "1",
+              "rawValue": 1,
+            },
+            "loc": Object {
+              "end": Object {
+                "column": 13,
+                "line": 3,
+              },
+              "start": Object {
+                "column": 12,
+                "line": 3,
+              },
+            },
+            "start": 35,
+            "type": "NumericLiteral",
+            "value": 1,
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 13,
+              "line": 3,
+            },
+            "start": Object {
+              "column": 8,
+              "line": 3,
+            },
+          },
+          "start": 31,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 37,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 14,
+          "line": 3,
+        },
+        "start": Object {
+          "column": 4,
+          "line": 3,
+        },
+      },
+      "start": 27,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+]
+`;
+
+exports[`declarations.block-scope leaves \`var\` where the initializer for a variable references itself: code 1`] = `"var x = x;"`;
+
+exports[`declarations.block-scope leaves \`var\` where the initializer for a variable references itself: warnings 1`] = `
+Array [
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 9,
+          "id": Object {
+            "end": 5,
+            "loc": Object {
+              "end": Object {
+                "column": 5,
+                "line": 1,
+              },
+              "identifierName": "x",
+              "start": Object {
+                "column": 4,
+                "line": 1,
+              },
+            },
+            "name": "x",
+            "start": 4,
+            "type": "Identifier",
+          },
+          "init": Object {
+            "end": 9,
+            "loc": Object {
+              "end": Object {
+                "column": 9,
+                "line": 1,
+              },
+              "identifierName": "x",
+              "start": Object {
+                "column": 8,
+                "line": 1,
+              },
+            },
+            "name": "x",
+            "start": 8,
+            "type": "Identifier",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 9,
+              "line": 1,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 1,
+            },
+          },
+          "start": 4,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 10,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 10,
+          "line": 1,
+        },
+        "start": Object {
+          "column": 0,
+          "line": 1,
+        },
+      },
+      "start": 0,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+]
+`;
+
+exports[`declarations.block-scope leaves duplicate \`var\`s alone: code 1`] = `
+"var a = 1;
+var a = 2;"
+`;
+
+exports[`declarations.block-scope leaves duplicate \`var\`s alone: warnings 1`] = `
+Array [
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 9,
+          "id": Object {
+            "end": 5,
+            "loc": Object {
+              "end": Object {
+                "column": 5,
+                "line": 1,
+              },
+              "identifierName": "a",
+              "start": Object {
+                "column": 4,
+                "line": 1,
+              },
+            },
+            "name": "a",
+            "start": 4,
+            "type": "Identifier",
+          },
+          "init": Object {
+            "end": 9,
+            "extra": Object {
+              "raw": "1",
+              "rawValue": 1,
+            },
+            "loc": Object {
+              "end": Object {
+                "column": 9,
+                "line": 1,
+              },
+              "start": Object {
+                "column": 8,
+                "line": 1,
+              },
+            },
+            "start": 8,
+            "type": "NumericLiteral",
+            "value": 1,
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 9,
+              "line": 1,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 1,
+            },
+          },
+          "start": 4,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 10,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 10,
+          "line": 1,
+        },
+        "start": Object {
+          "column": 0,
+          "line": 1,
+        },
+      },
+      "start": 0,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 20,
+          "id": Object {
+            "end": 16,
+            "loc": Object {
+              "end": Object {
+                "column": 5,
+                "line": 2,
+              },
+              "identifierName": "a",
+              "start": Object {
+                "column": 4,
+                "line": 2,
+              },
+            },
+            "name": "a",
+            "start": 15,
+            "type": "Identifier",
+          },
+          "init": Object {
+            "end": 20,
+            "extra": Object {
+              "raw": "2",
+              "rawValue": 2,
+            },
+            "loc": Object {
+              "end": Object {
+                "column": 9,
+                "line": 2,
+              },
+              "start": Object {
+                "column": 8,
+                "line": 2,
+              },
+            },
+            "start": 19,
+            "type": "NumericLiteral",
+            "value": 2,
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 9,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 2,
+            },
+          },
+          "start": 15,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 21,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 10,
+          "line": 2,
+        },
+        "start": Object {
+          "column": 0,
+          "line": 2,
+        },
+      },
+      "start": 11,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+]
+`;
+
+exports[`declarations.block-scope reference-in-nested-scope: code 1`] = `
+"let name;
+if (!a[name = b()]) {
+  a[name] = c;
+}"
+`;
+
+exports[`declarations.block-scope reference-in-nested-scope: warnings 1`] = `Array []`;
+
+exports[`declarations.block-scope rewrites \`var\` to \`const\` when there is only an initialization and no reassignments: code 1`] = `"const a = 1;"`;
+
+exports[`declarations.block-scope rewrites \`var\` to \`const\` when there is only an initialization and no reassignments: warnings 1`] = `Array []`;
+
+exports[`declarations.block-scope rewrites \`var\` to \`let\` when there is no initializer: code 1`] = `"let a;"`;
+
+exports[`declarations.block-scope rewrites \`var\` to \`let\` when there is no initializer: warnings 1`] = `Array []`;
+
+exports[`declarations.block-scope var-for-in-loop-binding-used-outside: code 1`] = `
+"for (var key in object) {
+  break;
+}
+console.log(key);"
+`;
+
+exports[`declarations.block-scope var-for-in-loop-binding-used-outside: warnings 1`] = `
+Array [
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 12,
+          "id": Object {
+            "end": 12,
+            "loc": Object {
+              "end": Object {
+                "column": 12,
+                "line": 1,
+              },
+              "identifierName": "key",
+              "start": Object {
+                "column": 9,
+                "line": 1,
+              },
+            },
+            "name": "key",
+            "start": 9,
+            "type": "Identifier",
+          },
+          "init": null,
+          "loc": Object {
+            "end": Object {
+              "column": 12,
+              "line": 1,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 1,
+            },
+          },
+          "start": 9,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 12,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 12,
+          "line": 1,
+        },
+        "start": Object {
+          "column": 5,
+          "line": 1,
+        },
+      },
+      "start": 5,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+]
+`;
+
+exports[`declarations.block-scope var-for-loop-initializer-used-outside: code 1`] = `
+"for (var i = 0; i < 2; i++) {}
+i;"
+`;
+
+exports[`declarations.block-scope var-for-loop-initializer-used-outside: warnings 1`] = `
+Array [
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 14,
+          "id": Object {
+            "end": 10,
+            "loc": Object {
+              "end": Object {
+                "column": 10,
+                "line": 1,
+              },
+              "identifierName": "i",
+              "start": Object {
+                "column": 9,
+                "line": 1,
+              },
+            },
+            "name": "i",
+            "start": 9,
+            "type": "Identifier",
+          },
+          "init": Object {
+            "end": 14,
+            "extra": Object {
+              "raw": "0",
+              "rawValue": 0,
+            },
+            "loc": Object {
+              "end": Object {
+                "column": 14,
+                "line": 1,
+              },
+              "start": Object {
+                "column": 13,
+                "line": 1,
+              },
+            },
+            "start": 13,
+            "type": "NumericLiteral",
+            "value": 0,
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 14,
+              "line": 1,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 1,
+            },
+          },
+          "start": 9,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 14,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 14,
+          "line": 1,
+        },
+        "start": Object {
+          "column": 5,
+          "line": 1,
+        },
+      },
+      "start": 5,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+]
+`;
+
+exports[`declarations.block-scope var-inside-block-used-outside-block: code 1`] = `
+"if (a) {
+  var b = 1;
+}
+
+console.log(b);"
+`;
+
+exports[`declarations.block-scope var-inside-block-used-outside-block: warnings 1`] = `
+Array [
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 20,
+          "id": Object {
+            "end": 16,
+            "loc": Object {
+              "end": Object {
+                "column": 7,
+                "line": 2,
+              },
+              "identifierName": "b",
+              "start": Object {
+                "column": 6,
+                "line": 2,
+              },
+            },
+            "name": "b",
+            "start": 15,
+            "type": "Identifier",
+          },
+          "init": Object {
+            "end": 20,
+            "extra": Object {
+              "raw": "1",
+              "rawValue": 1,
+            },
+            "loc": Object {
+              "end": Object {
+                "column": 11,
+                "line": 2,
+              },
+              "start": Object {
+                "column": 10,
+                "line": 2,
+              },
+            },
+            "start": 19,
+            "type": "NumericLiteral",
+            "value": 1,
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 11,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 6,
+              "line": 2,
+            },
+          },
+          "start": 15,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 21,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 12,
+          "line": 2,
+        },
+        "start": Object {
+          "column": 2,
+          "line": 2,
+        },
+      },
+      "start": 11,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+]
+`;
+
+exports[`declarations.block-scope var-loop-used-across-iterations: code 1`] = `
+"for (let a of [1, 2, 3]) {
+  var usedAcrossIterations;
+  let usedWithinIteration;
+  const initializedInLoop = true;
+  var conditionallyAssignedInLoop;
+  usedWithinIteration = true;
+  if (false) {
+    conditionallyAssignedInLoop = true;
+  }
+  console.log(usedAcrossIterations);
+  console.log(usedWithinIteration);
+  console.log(initializedInLoop);
+  console.log(conditionallyAssignedInLoop);
+  usedAcrossIterations = true;
+}"
+`;
+
+exports[`declarations.block-scope var-loop-used-across-iterations: warnings 1`] = `
+Array [
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 53,
+          "id": Object {
+            "end": 53,
+            "loc": Object {
+              "end": Object {
+                "column": 26,
+                "line": 2,
+              },
+              "identifierName": "usedAcrossIterations",
+              "start": Object {
+                "column": 6,
+                "line": 2,
+              },
+            },
+            "name": "usedAcrossIterations",
+            "start": 33,
+            "type": "Identifier",
+          },
+          "init": null,
+          "loc": Object {
+            "end": Object {
+              "column": 26,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 6,
+              "line": 2,
+            },
+          },
+          "start": 33,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 54,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 27,
+          "line": 2,
+        },
+        "start": Object {
+          "column": 2,
+          "line": 2,
+        },
+      },
+      "start": 29,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 147,
+          "id": Object {
+            "end": 147,
+            "loc": Object {
+              "end": Object {
+                "column": 33,
+                "line": 5,
+              },
+              "identifierName": "conditionallyAssignedInLoop",
+              "start": Object {
+                "column": 6,
+                "line": 5,
+              },
+            },
+            "name": "conditionallyAssignedInLoop",
+            "start": 120,
+            "type": "Identifier",
+          },
+          "init": null,
+          "loc": Object {
+            "end": Object {
+              "column": 33,
+              "line": 5,
+            },
+            "start": Object {
+              "column": 6,
+              "line": 5,
+            },
+          },
+          "start": 120,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 148,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 34,
+          "line": 5,
+        },
+        "start": Object {
+          "column": 2,
+          "line": 5,
+        },
+      },
+      "start": 116,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+]
+`;
+
+exports[`declarations.block-scope var-loop-with-closure-reference: code 1`] = `
+"funcs = [];
+for (var a of [1, 2, 3]) {
+  var b = 4;
+  const c = 5;
+  funcs.append(function() {
+    console.log(a);
+  });
+  funcs.append(() => {
+    console.log(b);
+  });
+  console.log(c);
+}"
+`;
+
+exports[`declarations.block-scope var-loop-with-closure-reference: warnings 1`] = `
+Array [
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 22,
+          "id": Object {
+            "end": 22,
+            "loc": Object {
+              "end": Object {
+                "column": 10,
+                "line": 2,
+              },
+              "identifierName": "a",
+              "start": Object {
+                "column": 9,
+                "line": 2,
+              },
+            },
+            "name": "a",
+            "start": 21,
+            "type": "Identifier",
+          },
+          "init": null,
+          "loc": Object {
+            "end": Object {
+              "column": 10,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 2,
+            },
+          },
+          "start": 21,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 22,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 10,
+          "line": 2,
+        },
+        "start": Object {
+          "column": 5,
+          "line": 2,
+        },
+      },
+      "start": 17,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 50,
+          "id": Object {
+            "end": 46,
+            "loc": Object {
+              "end": Object {
+                "column": 7,
+                "line": 3,
+              },
+              "identifierName": "b",
+              "start": Object {
+                "column": 6,
+                "line": 3,
+              },
+            },
+            "name": "b",
+            "start": 45,
+            "type": "Identifier",
+          },
+          "init": Object {
+            "end": 50,
+            "extra": Object {
+              "raw": "4",
+              "rawValue": 4,
+            },
+            "loc": Object {
+              "end": Object {
+                "column": 11,
+                "line": 3,
+              },
+              "start": Object {
+                "column": 10,
+                "line": 3,
+              },
+            },
+            "start": 49,
+            "type": "NumericLiteral",
+            "value": 4,
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 11,
+              "line": 3,
+            },
+            "start": Object {
+              "column": 6,
+              "line": 3,
+            },
+          },
+          "start": 45,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 51,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 12,
+          "line": 3,
+        },
+        "start": Object {
+          "column": 2,
+          "line": 3,
+        },
+      },
+      "start": 41,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+]
+`;
+
+exports[`declarations.block-scope var-with-own-binding-in-initializer: code 1`] = `
+"var xxx = (() => { try {
+  return xxx = 1;
+} catch (error) {} })();"
+`;
+
+exports[`declarations.block-scope var-with-own-binding-in-initializer: warnings 1`] = `
+Array [
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 66,
+          "id": Object {
+            "end": 7,
+            "loc": Object {
+              "end": Object {
+                "column": 7,
+                "line": 1,
+              },
+              "identifierName": "xxx",
+              "start": Object {
+                "column": 4,
+                "line": 1,
+              },
+            },
+            "name": "xxx",
+            "start": 4,
+            "type": "Identifier",
+          },
+          "init": Object {
+            "arguments": Array [],
+            "callee": Object {
+              "async": false,
+              "body": Object {
+                "body": Array [
+                  Object {
+                    "block": Object {
+                      "body": Array [
+                        Object {
+                          "argument": Object {
+                            "end": 41,
+                            "left": Object {
+                              "end": 37,
+                              "loc": Object {
+                                "end": Object {
+                                  "column": 12,
+                                  "line": 2,
+                                },
+                                "identifierName": "xxx",
+                                "start": Object {
+                                  "column": 9,
+                                  "line": 2,
+                                },
+                              },
+                              "name": "xxx",
+                              "start": 34,
+                              "type": "Identifier",
+                            },
+                            "loc": Object {
+                              "end": Object {
+                                "column": 16,
+                                "line": 2,
+                              },
+                              "start": Object {
+                                "column": 9,
+                                "line": 2,
+                              },
+                            },
+                            "operator": "=",
+                            "right": Object {
+                              "end": 41,
+                              "extra": Object {
+                                "raw": "1",
+                                "rawValue": 1,
+                              },
+                              "loc": Object {
+                                "end": Object {
+                                  "column": 16,
+                                  "line": 2,
+                                },
+                                "start": Object {
+                                  "column": 15,
+                                  "line": 2,
+                                },
+                              },
+                              "start": 40,
+                              "type": "NumericLiteral",
+                              "value": 1,
+                            },
+                            "start": 34,
+                            "type": "AssignmentExpression",
+                          },
+                          "end": 42,
+                          "loc": Object {
+                            "end": Object {
+                              "column": 17,
+                              "line": 2,
+                            },
+                            "start": Object {
+                              "column": 2,
+                              "line": 2,
+                            },
+                          },
+                          "start": 27,
+                          "type": "ReturnStatement",
+                        },
+                      ],
+                      "directives": Array [],
+                      "end": 44,
+                      "loc": Object {
+                        "end": Object {
+                          "column": 1,
+                          "line": 3,
+                        },
+                        "start": Object {
+                          "column": 23,
+                          "line": 1,
+                        },
+                      },
+                      "start": 23,
+                      "type": "BlockStatement",
+                    },
+                    "end": 61,
+                    "finalizer": null,
+                    "guardedHandlers": Array [],
+                    "handler": Object {
+                      "body": Object {
+                        "body": Array [],
+                        "directives": Array [],
+                        "end": 61,
+                        "loc": Object {
+                          "end": Object {
+                            "column": 18,
+                            "line": 3,
+                          },
+                          "start": Object {
+                            "column": 16,
+                            "line": 3,
+                          },
+                        },
+                        "start": 59,
+                        "type": "BlockStatement",
+                      },
+                      "end": 61,
+                      "loc": Object {
+                        "end": Object {
+                          "column": 18,
+                          "line": 3,
+                        },
+                        "start": Object {
+                          "column": 2,
+                          "line": 3,
+                        },
+                      },
+                      "param": Object {
+                        "end": 57,
+                        "loc": Object {
+                          "end": Object {
+                            "column": 14,
+                            "line": 3,
+                          },
+                          "identifierName": "error",
+                          "start": Object {
+                            "column": 9,
+                            "line": 3,
+                          },
+                        },
+                        "name": "error",
+                        "start": 52,
+                        "type": "Identifier",
+                      },
+                      "start": 45,
+                      "type": "CatchClause",
+                    },
+                    "loc": Object {
+                      "end": Object {
+                        "column": 18,
+                        "line": 3,
+                      },
+                      "start": Object {
+                        "column": 19,
+                        "line": 1,
+                      },
+                    },
+                    "start": 19,
+                    "type": "TryStatement",
+                  },
+                ],
+                "directives": Array [],
+                "end": 63,
+                "loc": Object {
+                  "end": Object {
+                    "column": 20,
+                    "line": 3,
+                  },
+                  "start": Object {
+                    "column": 17,
+                    "line": 1,
+                  },
+                },
+                "start": 17,
+                "type": "BlockStatement",
+              },
+              "end": 63,
+              "extra": Object {
+                "parenStart": 10,
+                "parenthesized": true,
+              },
+              "generator": false,
+              "id": null,
+              "loc": Object {
+                "end": Object {
+                  "column": 20,
+                  "line": 3,
+                },
+                "start": Object {
+                  "column": 11,
+                  "line": 1,
+                },
+              },
+              "params": Array [],
+              "start": 11,
+              "type": "ArrowFunctionExpression",
+            },
+            "end": 66,
+            "loc": Object {
+              "end": Object {
+                "column": 23,
+                "line": 3,
+              },
+              "start": Object {
+                "column": 10,
+                "line": 1,
+              },
+            },
+            "start": 10,
+            "type": "CallExpression",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 23,
+              "line": 3,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 1,
+            },
+          },
+          "start": 4,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 67,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 24,
+          "line": 3,
+        },
+        "start": Object {
+          "column": 0,
+          "line": 1,
+        },
+      },
+      "start": 0,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+]
+`;
+
+exports[`declarations.block-scope warns about \`var\` when references precede the declaration: code 1`] = `
+"a;
+var a = 1;"
+`;
+
+exports[`declarations.block-scope warns about \`var\` when references precede the declaration: warnings 1`] = `
+Array [
+  Object {
+    "message": "'var' declaration cannot be converted to block scope",
+    "node": Object {
+      "declarations": Array [
+        Object {
+          "end": 12,
+          "id": Object {
+            "end": 8,
+            "loc": Object {
+              "end": Object {
+                "column": 5,
+                "line": 2,
+              },
+              "identifierName": "a",
+              "start": Object {
+                "column": 4,
+                "line": 2,
+              },
+            },
+            "name": "a",
+            "start": 7,
+            "type": "Identifier",
+          },
+          "init": Object {
+            "end": 12,
+            "extra": Object {
+              "raw": "1",
+              "rawValue": 1,
+            },
+            "loc": Object {
+              "end": Object {
+                "column": 9,
+                "line": 2,
+              },
+              "start": Object {
+                "column": 8,
+                "line": 2,
+              },
+            },
+            "start": 11,
+            "type": "NumericLiteral",
+            "value": 1,
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 9,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 4,
+              "line": 2,
+            },
+          },
+          "start": 7,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 13,
+      "kind": "var",
+      "loc": Object {
+        "end": Object {
+          "column": 10,
+          "line": 2,
+        },
+        "start": Object {
+          "column": 0,
+          "line": 2,
+        },
+      },
+      "start": 3,
+      "type": "VariableDeclaration",
+    },
+    "type": "unsupported-declaration",
+  },
+]
+`;
+
+exports[`functions.arrow arrow-function-needs-parentheses: code 1`] = `
+"console.log((a => a).length);
+a + (() => 0);
+b + (() => 1);"
+`;
+
+exports[`functions.arrow arrow-function-needs-parentheses: warnings 1`] = `Array []`;
+
+exports[`functions.arrow bind-this: code 1`] = `"a(() => {});"`;
+
+exports[`functions.arrow bind-this: warnings 1`] = `Array []`;
+
+exports[`functions.arrow bind-this-referencing-arguments: code 1`] = `"(function() { return arguments[0]; }).bind(this);"`;
+
+exports[`functions.arrow bind-this-referencing-arguments: warnings 1`] = `Array []`;
+
+exports[`functions.arrow bind-this-with-arguments: code 1`] = `
+"(function(a, b) {
+  return this[a] + this[b];
+}.bind(this, 'a', 'b'));"
+`;
+
+exports[`functions.arrow bind-this-with-arguments: warnings 1`] = `Array []`;
+
+exports[`functions.arrow bind-this-with-parens: code 1`] = `
+"let callThing = (thing => {
+  this[thing]();
+});"
+`;
+
+exports[`functions.arrow bind-this-with-parens: warnings 1`] = `Array []`;
+
+exports[`functions.arrow class-methods: code 1`] = `
+"class Foo {
+  bar() {
+    return 0;
+  }
+}"
+`;
+
+exports[`functions.arrow class-methods: warnings 1`] = `Array []`;
+
+exports[`functions.arrow comments: code 1`] = `
+"a((/* no args */) =>
+  // Answer to life, the universe, and everything.
+  42
+);"
+`;
+
+exports[`functions.arrow comments: warnings 1`] = `Array []`;
+
+exports[`functions.arrow correctly handles a single parameter spanning multiple lines: code 1`] = `
+"(
+  b
+) => c;"
+`;
+
+exports[`functions.arrow correctly handles a single parameter spanning multiple lines: warnings 1`] = `Array []`;
+
+exports[`functions.arrow does not rewrite functions that have a name: code 1`] = `"[].map(function identity(item) { return item; });"`;
+
+exports[`functions.arrow does not rewrite functions that have a name: warnings 1`] = `Array []`;
+
+exports[`functions.arrow does not rewrite functions that reference \`this\`: code 1`] = `
+"$('.button').on('click', function() {
+  return this.attr('href') !== '';
+});"
+`;
+
+exports[`functions.arrow does not rewrite functions that reference \`this\`: warnings 1`] = `Array []`;
+
+exports[`functions.arrow function-returning-template-with-interpolation: code 1`] = `"() => \`\${a}\`;"`;
+
+exports[`functions.arrow function-returning-template-with-interpolation: warnings 1`] = `Array []`;
+
+exports[`functions.arrow generator: code 1`] = `"a(function*() { return 0; });"`;
+
+exports[`functions.arrow generator: warnings 1`] = `Array []`;
+
+exports[`functions.arrow ignores-concise-methods: code 1`] = `
+"({
+  a() {
+    return 0;
+  }
+});"
+`;
+
+exports[`functions.arrow ignores-concise-methods: warnings 1`] = `Array []`;
+
+exports[`functions.arrow iife: code 1`] = `"const one = (() => 1)();"`;
+
+exports[`functions.arrow iife: warnings 1`] = `Array []`;
+
+exports[`functions.arrow needs-parens-in-or-expression: code 1`] = `"a || (() => 'hello world');"`;
+
+exports[`functions.arrow needs-parens-in-or-expression: warnings 1`] = `Array []`;
+
+exports[`functions.arrow nested-arrow-within-non-arrow: code 1`] = `
+"{
+  foo: getFunc(function() {
+    return setImmediate(() => {
+        return this.foo2();
+      }
+    );
+  })
+};"
+`;
+
+exports[`functions.arrow nested-arrow-within-non-arrow: warnings 1`] = `Array []`;
+
+exports[`functions.arrow no-space-between-open-curly-and-return: code 1`] = `"()=> 0;"`;
+
+exports[`functions.arrow no-space-between-open-curly-and-return: warnings 1`] = `Array []`;
+
+exports[`functions.arrow only-return: code 1`] = `"(function() { return; });"`;
+
+exports[`functions.arrow only-return: warnings 1`] = `Array []`;
+
+exports[`functions.arrow references-arguments: code 1`] = `"a(function() { return arguments[0]; });"`;
+
+exports[`functions.arrow references-arguments: warnings 1`] = `Array []`;
+
+exports[`functions.arrow references-arguments-nested-function: code 1`] = `"a(() => function() { arguments[0](); });"`;
+
+exports[`functions.arrow references-arguments-nested-function: warnings 1`] = `Array []`;
+
+exports[`functions.arrow return-on-next-line: code 1`] = `
+"a(() =>
+  [
+    1
+  ]
+);"
+`;
+
+exports[`functions.arrow return-on-next-line: warnings 1`] = `Array []`;
+
+exports[`functions.arrow returns-destructure-assignment: code 1`] = `"() => ({a} = b);"`;
+
+exports[`functions.arrow returns-destructure-assignment: warnings 1`] = `Array []`;
+
+exports[`functions.arrow returns-expression-starting-with-object: code 1`] = `"() => ({a: 'b'}['a']);"`;
+
+exports[`functions.arrow returns-expression-starting-with-object: warnings 1`] = `Array []`;
+
+exports[`functions.arrow returns-object: code 1`] = `"() => ({});"`;
+
+exports[`functions.arrow returns-object: warnings 1`] = `Array []`;
+
+exports[`functions.arrow returns-object-has-parens: code 1`] = `"() => ({});"`;
+
+exports[`functions.arrow returns-object-has-parens: warnings 1`] = `Array []`;
+
+exports[`functions.arrow returns-sequence: code 1`] = `"() => (a, b);"`;
+
+exports[`functions.arrow returns-sequence: warnings 1`] = `Array []`;
+
+exports[`functions.arrow rewrites functions that are just a return statement as an arrow function: code 1`] = `"map([1, 2, 3], n => n * 2);"`;
+
+exports[`functions.arrow rewrites functions that are just a return statement as an arrow function: warnings 1`] = `Array []`;
+
+exports[`functions.arrow rewrites functions that reference \`this\` only inside a nested function: code 1`] = `"a(() => function getThis() { return this; });"`;
+
+exports[`functions.arrow rewrites functions that reference \`this\` only inside a nested function: warnings 1`] = `Array []`;
+
+exports[`functions.arrow rewrites functions with a single return statement with multiple arguments: code 1`] = `"map([1, 2, 3], (n, i) => n * i);"`;
+
+exports[`functions.arrow rewrites functions with a single return statement with multiple arguments: warnings 1`] = `Array []`;
+
+exports[`functions.arrow single-argument-with-default-value: code 1`] = `"a((b=0) => b);"`;
+
+exports[`functions.arrow single-argument-with-default-value: warnings 1`] = `Array []`;
+
+exports[`functions.arrow skips-bound-functions-within-new: code 1`] = `"new (function() { return {a: 'b'}; }.bind(this));"`;
+
+exports[`functions.arrow skips-bound-functions-within-new: warnings 1`] = `Array []`;
+
+exports[`functions.arrow skips-bound-generator-functions: code 1`] = `"a(function*() { yield 0; }.bind(this));"`;
+
+exports[`functions.arrow skips-bound-generator-functions: warnings 1`] = `Array []`;
+
+exports[`functions.arrow skips-functions-within-new: code 1`] = `"new function() { return {a: 'b'}; };"`;
+
+exports[`functions.arrow skips-functions-within-new: warnings 1`] = `Array []`;
+
+exports[`functions.arrow string-on-first-line: code 1`] = `
+"let x = function() {
+  'use strict';
+  return 1;
+};"
+`;
+
+exports[`functions.arrow string-on-first-line: warnings 1`] = `Array []`;
+
+exports[`general allows JSX fragment syntax: code 1`] = `"<></>;"`;
+
+exports[`general allows JSX fragment syntax: warnings 1`] = `Array []`;
+
+exports[`general allows JSX syntax: code 1`] = `"<div />;"`;
+
+exports[`general allows JSX syntax: warnings 1`] = `Array []`;
+
+exports[`general allows optional chaining syntax: code 1`] = `"a?.b;"`;
+
+exports[`general allows optional chaining syntax: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs adds a name to exported anonymous functions: code 1`] = `
+"export function add(a, b) {
+  return a + b;
+}"
+`;
+
+exports[`modules.commonjs adds a name to exported anonymous functions: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs allows multiple named exports with conflicts: code 1`] = `
+"let a = 1;
+let b = 2;
+let a$1 = 3;
+export { a$1 as a };
+let b$1 = 4;
+export { b$1 as b };"
+`;
+
+exports[`modules.commonjs allows multiple named exports with conflicts: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs changes setting \`module.exports\` to \`export default\`: code 1`] = `"export default Foo;"`;
+
+exports[`modules.commonjs changes setting \`module.exports\` to \`export default\`: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs converts-complex-forced-default-export: code 1`] = `
+"console.log('Start of file');
+let defaultExport = {};
+defaultExport = a;
+if (b) {
+  defaultExport.d = e;
+}
+for (let f in defaultExport) {
+  defaultExport[f]++;
+}
+defaultExport[g] = {
+  h() {
+    console.log(this);
+  }
+};
+export default defaultExport;
+console.log('End of file');"
+`;
+
+exports[`modules.commonjs converts-complex-forced-default-export: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs converts-require-after-safe-call: code 1`] = `
+"import a from 'a';
+let b = React.createFactory(require('b'));
+import c from 'c';"
+`;
+
+exports[`modules.commonjs converts-require-after-safe-call: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported 'require' call cannot be transformed into an import",
+    "node": Object {
+      "arguments": Array [
+        Object {
+          "end": 61,
+          "extra": Object {
+            "raw": "'b'",
+            "rawValue": "b",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 39,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 36,
+              "line": 2,
+            },
+          },
+          "start": 58,
+          "type": "StringLiteral",
+          "value": "b",
+        },
+      ],
+      "callee": Object {
+        "end": 57,
+        "loc": Object {
+          "end": Object {
+            "column": 35,
+            "line": 2,
+          },
+          "identifierName": "require",
+          "start": Object {
+            "column": 28,
+            "line": 2,
+          },
+        },
+        "name": "require",
+        "start": 50,
+        "type": "Identifier",
+      },
+      "end": 62,
+      "loc": Object {
+        "end": Object {
+          "column": 40,
+          "line": 2,
+        },
+        "start": Object {
+          "column": 28,
+          "line": 2,
+        },
+      },
+      "start": 50,
+      "type": "CallExpression",
+    },
+    "type": "unsupported-import",
+  },
+]
+`;
+
+exports[`modules.commonjs converts-simple-forced-default-export: code 1`] = `
+"export default {
+  a,
+  b,
+};"
+`;
+
+exports[`modules.commonjs converts-simple-forced-default-export: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs does not add a name to an exported named function when the name matches the export name: code 1`] = `
+"export function add(a, b) {
+  return a + b;
+}"
+`;
+
+exports[`modules.commonjs does not add a name to an exported named function when the name matches the export name: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs does-not-rewrite-require-calls-for-non-global-require: code 1`] = `
+"import { require } from 'utils';
+
+require('foo');"
+`;
+
+exports[`modules.commonjs does-not-rewrite-require-calls-for-non-global-require: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs does-not-shadow-globals: code 1`] = `
+"// don't give function a name that shadows the global
+function clearTimeout$1(timeout) {
+  clearTimeout(timeout);
+}
+export { clearTimeout$1 as clearTimeout };
+
+// use the existing name that won't shadow a local or global
+function _setTimeout(callback, timeout) {
+  setTimeout(callback, timeout);
+}
+export { _setTimeout as setTimeout };
+
+// give function a local binding that won't shadow a local or global
+function _clearInterval() {}
+let _clearInterval$1 = function _clearInterval(interval) {
+  clearInterval(interval);
+};
+export { _clearInterval$1 as clearInterval };"
+`;
+
+exports[`modules.commonjs does-not-shadow-globals: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs export-default-class: code 1`] = `
+"let A;
+export default (A = class A {});"
+`;
+
+exports[`modules.commonjs export-default-class: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs export-named-global: code 1`] = `"export let jQuery = $;"`;
+
+exports[`modules.commonjs export-named-global: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs export-named-global-does-not-shadow-local-binding: code 1`] = `
+"let jQuery;
+let jQuery$1 = $;
+export { jQuery$1 as jQuery };"
+`;
+
+exports[`modules.commonjs export-named-global-does-not-shadow-local-binding: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs exports non-function values as \`export let\`: code 1`] = `"export let PI = 3.14;"`;
+
+exports[`modules.commonjs exports non-function values as \`export let\`: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs exports separately when the exported name and the function name do not match: code 1`] = `
+"function doSomething(a, b) {
+  return a + b;
+}
+export { doSomething as add };"
+`;
+
+exports[`modules.commonjs exports separately when the exported name and the function name do not match: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs extracts multiple requires in one declaration to multiple imports: code 1`] = `
+"import lodash from 'lodash';
+import escope from 'escope';"
+`;
+
+exports[`modules.commonjs extracts multiple requires in one declaration to multiple imports: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs ignores a missing semi-colon when changing an export from an assignment to \`export function\`: code 1`] = `"export function foo() {}"`;
+
+exports[`modules.commonjs ignores a missing semi-colon when changing an export from an assignment to \`export function\`: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs ignores-iife-with-computed-member-access: code 1`] = `
+"(function() {
+  console.log(1);
+})['call']();"
+`;
+
+exports[`modules.commonjs ignores-iife-with-computed-member-access: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs ignores-iife-with-id: code 1`] = `
+"(function named() {
+  console.log(1);
+})();"
+`;
+
+exports[`modules.commonjs ignores-iife-with-id: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs ignores-iife-with-parameters: code 1`] = `
+"(function(undefined) {
+  console.log(undefined);
+})();"
+`;
+
+exports[`modules.commonjs ignores-iife-with-parameters: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs namespace-exports: code 1`] = `"export * from './lib';"`;
+
+exports[`modules.commonjs namespace-exports: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs parenthesized-assignment-export: code 1`] = `
+"let a;
+let a$1 = (a = function() {
+});
+export { a$1 as a };"
+`;
+
+exports[`modules.commonjs parenthesized-assignment-export: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs parenthesized-named-export: code 1`] = `"export let a = (b);"`;
+
+exports[`modules.commonjs parenthesized-named-export: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs preserves-leading-comments-in-removed-iife: code 1`] = `
+"// log 1
+console.log(1);"
+`;
+
+exports[`modules.commonjs preserves-leading-comments-in-removed-iife: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs removes a "use strict" directive from the top of the global scope: code 1`] = `"foo();"`;
+
+exports[`modules.commonjs removes a "use strict" directive from the top of the global scope: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs removes the semi-colon when changing an export from an assignment to \`export function\`: code 1`] = `"export function foo() {}"`;
+
+exports[`modules.commonjs removes the semi-colon when changing an export from an assignment to \`export function\`: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs removes-default-access-on-require: code 1`] = `
+"import a from 'a';
+console.log(a);
+let b = {default: 3};
+console.log(b.default);
+console.log((a));"
+`;
+
+exports[`modules.commonjs removes-default-access-on-require: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs removes-iife-call-this-wrapping-everything: code 1`] = `
+"if (a) {
+  b();
+}"
+`;
+
+exports[`modules.commonjs removes-iife-call-this-wrapping-everything: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs removes-iife-void-wrapping-everything: code 1`] = `
+"// 0
+console.log(a);
+// 1"
+`;
+
+exports[`modules.commonjs removes-iife-void-wrapping-everything: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs removes-iife-wrapping-everything: code 1`] = `
+"console.log(1);
+console.log(2);"
+`;
+
+exports[`modules.commonjs removes-iife-wrapping-everything: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs rewrites assigning an object with shorthand properties to \`module.exports\` as named exports: code 1`] = `"export { a, b };"`;
+
+exports[`modules.commonjs rewrites assigning an object with shorthand properties to \`module.exports\` as named exports: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs rewrites assigning an object with simple properties to \`module.exports\` as named exports: code 1`] = `"export { b as a, d as c };"`;
+
+exports[`modules.commonjs rewrites assigning an object with simple properties to \`module.exports\` as named exports: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs rewrites assignment to a static property of \`module.exports\` as a named export: code 1`] = `
+"const a = 0;
+export { a };"
+`;
+
+exports[`modules.commonjs rewrites assignment to a static property of \`module.exports\` as a named export: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs rewrites whole module \`require\` calls as default imports: code 1`] = `"import foo from 'foo';"`;
+
+exports[`modules.commonjs rewrites whole module \`require\` calls as default imports: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs rewrites-assigning-a-complex-object-as-export-default: code 1`] = `
+"export default {
+  foo() {
+    return 1;
+  },
+  bar() {
+    return 2;
+  },
+};"
+`;
+
+exports[`modules.commonjs rewrites-assigning-a-complex-object-as-export-default: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs rewrites-exports-within-unwrapped-iife: code 1`] = `"export let foo = 1;"`;
+
+exports[`modules.commonjs rewrites-exports-within-unwrapped-iife: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs skips-require-after-function-call: code 1`] = `
+"import a from 'a';
+foo();
+import b from 'b';
+bar();
+let c = require('c');"
+`;
+
+exports[`modules.commonjs skips-require-after-function-call: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported 'require' call cannot be transformed into an import",
+    "node": Object {
+      "arguments": Array [
+        Object {
+          "end": 77,
+          "extra": Object {
+            "raw": "'c'",
+            "rawValue": "c",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 19,
+              "line": 5,
+            },
+            "start": Object {
+              "column": 16,
+              "line": 5,
+            },
+          },
+          "start": 74,
+          "type": "StringLiteral",
+          "value": "c",
+        },
+      ],
+      "callee": Object {
+        "end": 73,
+        "loc": Object {
+          "end": Object {
+            "column": 15,
+            "line": 5,
+          },
+          "identifierName": "require",
+          "start": Object {
+            "column": 8,
+            "line": 5,
+          },
+        },
+        "name": "require",
+        "start": 66,
+        "type": "Identifier",
+      },
+      "end": 78,
+      "loc": Object {
+        "end": Object {
+          "column": 20,
+          "line": 5,
+        },
+        "start": Object {
+          "column": 8,
+          "line": 5,
+        },
+      },
+      "start": 66,
+      "type": "CallExpression",
+    },
+    "type": "unsupported-import",
+  },
+]
+`;
+
+exports[`modules.commonjs skips-require-after-increment: code 1`] = `
+"import a from 'a';
+import b from 'b';
+c = 1;
+d++;
+import e from 'e';
+window.f++;
+let g = require('g');"
+`;
+
+exports[`modules.commonjs skips-require-after-increment: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported 'require' call cannot be transformed into an import",
+    "node": Object {
+      "arguments": Array [
+        Object {
+          "end": 109,
+          "extra": Object {
+            "raw": "'g'",
+            "rawValue": "g",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 19,
+              "line": 7,
+            },
+            "start": Object {
+              "column": 16,
+              "line": 7,
+            },
+          },
+          "start": 106,
+          "type": "StringLiteral",
+          "value": "g",
+        },
+      ],
+      "callee": Object {
+        "end": 105,
+        "loc": Object {
+          "end": Object {
+            "column": 15,
+            "line": 7,
+          },
+          "identifierName": "require",
+          "start": Object {
+            "column": 8,
+            "line": 7,
+          },
+        },
+        "name": "require",
+        "start": 98,
+        "type": "Identifier",
+      },
+      "end": 110,
+      "loc": Object {
+        "end": Object {
+          "column": 20,
+          "line": 7,
+        },
+        "start": Object {
+          "column": 8,
+          "line": 7,
+        },
+      },
+      "start": 98,
+      "type": "CallExpression",
+    },
+    "type": "unsupported-import",
+  },
+]
+`;
+
+exports[`modules.commonjs skips-require-after-return: code 1`] = `
+"import a from 'a';
+import b from 'b';
+return c;
+let d = require('d');"
+`;
+
+exports[`modules.commonjs skips-require-after-return: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported 'require' call cannot be transformed into an import",
+    "node": Object {
+      "arguments": Array [
+        Object {
+          "end": 73,
+          "extra": Object {
+            "raw": "'d'",
+            "rawValue": "d",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 19,
+              "line": 4,
+            },
+            "start": Object {
+              "column": 16,
+              "line": 4,
+            },
+          },
+          "start": 70,
+          "type": "StringLiteral",
+          "value": "d",
+        },
+      ],
+      "callee": Object {
+        "end": 69,
+        "loc": Object {
+          "end": Object {
+            "column": 15,
+            "line": 4,
+          },
+          "identifierName": "require",
+          "start": Object {
+            "column": 8,
+            "line": 4,
+          },
+        },
+        "name": "require",
+        "start": 62,
+        "type": "Identifier",
+      },
+      "end": 74,
+      "loc": Object {
+        "end": Object {
+          "column": 20,
+          "line": 4,
+        },
+        "start": Object {
+          "column": 8,
+          "line": 4,
+        },
+      },
+      "start": 62,
+      "type": "CallExpression",
+    },
+    "type": "unsupported-import",
+  },
+]
+`;
+
+exports[`modules.commonjs skips-require-after-side-effect: code 1`] = `
+"import a from 'a';
+import b from 'b';
+window.d = d;
+let e = require('e');"
+`;
+
+exports[`modules.commonjs skips-require-after-side-effect: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported 'require' call cannot be transformed into an import",
+    "node": Object {
+      "arguments": Array [
+        Object {
+          "end": 77,
+          "extra": Object {
+            "raw": "'e'",
+            "rawValue": "e",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 19,
+              "line": 4,
+            },
+            "start": Object {
+              "column": 16,
+              "line": 4,
+            },
+          },
+          "start": 74,
+          "type": "StringLiteral",
+          "value": "e",
+        },
+      ],
+      "callee": Object {
+        "end": 73,
+        "loc": Object {
+          "end": Object {
+            "column": 15,
+            "line": 4,
+          },
+          "identifierName": "require",
+          "start": Object {
+            "column": 8,
+            "line": 4,
+          },
+        },
+        "name": "require",
+        "start": 66,
+        "type": "Identifier",
+      },
+      "end": 78,
+      "loc": Object {
+        "end": Object {
+          "column": 20,
+          "line": 4,
+        },
+        "start": Object {
+          "column": 8,
+          "line": 4,
+        },
+      },
+      "start": 66,
+      "type": "CallExpression",
+    },
+    "type": "unsupported-import",
+  },
+]
+`;
+
+exports[`modules.commonjs skips-require-after-throw: code 1`] = `
+"import a from 'a';
+import b from 'b';
+throw c;
+let d = require('d');"
+`;
+
+exports[`modules.commonjs skips-require-after-throw: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported 'require' call cannot be transformed into an import",
+    "node": Object {
+      "arguments": Array [
+        Object {
+          "end": 72,
+          "extra": Object {
+            "raw": "'d'",
+            "rawValue": "d",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 19,
+              "line": 4,
+            },
+            "start": Object {
+              "column": 16,
+              "line": 4,
+            },
+          },
+          "start": 69,
+          "type": "StringLiteral",
+          "value": "d",
+        },
+      ],
+      "callee": Object {
+        "end": 68,
+        "loc": Object {
+          "end": Object {
+            "column": 15,
+            "line": 4,
+          },
+          "identifierName": "require",
+          "start": Object {
+            "column": 8,
+            "line": 4,
+          },
+        },
+        "name": "require",
+        "start": 61,
+        "type": "Identifier",
+      },
+      "end": 73,
+      "loc": Object {
+        "end": Object {
+          "column": 20,
+          "line": 4,
+        },
+        "start": Object {
+          "column": 8,
+          "line": 4,
+        },
+      },
+      "start": 61,
+      "type": "CallExpression",
+    },
+    "type": "unsupported-import",
+  },
+]
+`;
+
+exports[`modules.commonjs skips-require-property-assigned-to-destructure: code 1`] = `"const {foo} = require('bar').x;"`;
+
+exports[`modules.commonjs skips-require-property-assigned-to-destructure: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported 'require' call cannot be transformed into an import",
+    "node": Object {
+      "arguments": Array [
+        Object {
+          "end": 25,
+          "extra": Object {
+            "raw": "'bar'",
+            "rawValue": "bar",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 25,
+              "line": 1,
+            },
+            "start": Object {
+              "column": 20,
+              "line": 1,
+            },
+          },
+          "start": 20,
+          "type": "StringLiteral",
+          "value": "bar",
+        },
+      ],
+      "callee": Object {
+        "end": 19,
+        "loc": Object {
+          "end": Object {
+            "column": 19,
+            "line": 1,
+          },
+          "identifierName": "require",
+          "start": Object {
+            "column": 12,
+            "line": 1,
+          },
+        },
+        "name": "require",
+        "start": 12,
+        "type": "Identifier",
+      },
+      "end": 26,
+      "loc": Object {
+        "end": Object {
+          "column": 26,
+          "line": 1,
+        },
+        "start": Object {
+          "column": 12,
+          "line": 1,
+        },
+      },
+      "start": 12,
+      "type": "CallExpression",
+    },
+    "type": "unsupported-import",
+  },
+]
+`;
+
+exports[`modules.commonjs toplevel-this-counts-as-exports: code 1`] = `
+"const foo = 42;
+export { foo };"
+`;
+
+exports[`modules.commonjs toplevel-this-counts-as-exports: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs toplevel-this-function-export: code 1`] = `"export function log(message) { console.log(message); }"`;
+
+exports[`modules.commonjs toplevel-this-function-export: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs turns top-level \`require\` calls accessing a static property with strings assigned to a variable into imports: code 1`] = `"import { parse } from 'espree';"`;
+
+exports[`modules.commonjs turns top-level \`require\` calls accessing a static property with strings assigned to a variable into imports: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs turns top-level \`require\` calls with deconstructing assigning into named imports: code 1`] = `"import { pow, sin, cos as cosine } from 'math';"`;
+
+exports[`modules.commonjs turns top-level \`require\` calls with deconstructing assigning into named imports: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs turns top-level \`require\` calls without a binding to an import: code 1`] = `"import 'foo';"`;
+
+exports[`modules.commonjs turns top-level \`require\` calls without a binding to an import: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs uses another name when rewriting a non-function export that would duplicate a local binding: code 1`] = `
+"let a;
+let a$1 = 1;
+export { a$1 as a };"
+`;
+
+exports[`modules.commonjs uses another name when rewriting a non-function export that would duplicate a local binding: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs uses shorthand export when the exported value is an identifier matching the export name: code 1`] = `
+"let a = 1;
+export { a };"
+`;
+
+exports[`modules.commonjs uses shorthand export when the exported value is an identifier matching the export name: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs uses shorthand export with an alias when the exported value is an identifier not matching the export name: code 1`] = `
+"let a = 1;
+export { a as b };"
+`;
+
+exports[`modules.commonjs uses shorthand export with an alias when the exported value is an identifier not matching the export name: warnings 1`] = `Array []`;
+
+exports[`modules.commonjs warns about \`require\` calls in function declarations: code 1`] = `
+"function foo() {
+  require('foo');
+}"
+`;
+
+exports[`modules.commonjs warns about \`require\` calls in function declarations: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported 'require' call cannot be transformed into an import",
+    "node": Object {
+      "arguments": Array [
+        Object {
+          "end": 32,
+          "extra": Object {
+            "raw": "'foo'",
+            "rawValue": "foo",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 15,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 10,
+              "line": 2,
+            },
+          },
+          "start": 27,
+          "type": "StringLiteral",
+          "value": "foo",
+        },
+      ],
+      "callee": Object {
+        "end": 26,
+        "loc": Object {
+          "end": Object {
+            "column": 9,
+            "line": 2,
+          },
+          "identifierName": "require",
+          "start": Object {
+            "column": 2,
+            "line": 2,
+          },
+        },
+        "name": "require",
+        "start": 19,
+        "type": "Identifier",
+      },
+      "end": 33,
+      "loc": Object {
+        "end": Object {
+          "column": 16,
+          "line": 2,
+        },
+        "start": Object {
+          "column": 2,
+          "line": 2,
+        },
+      },
+      "start": 19,
+      "type": "CallExpression",
+    },
+    "type": "unsupported-import",
+  },
+]
+`;
+
+exports[`modules.commonjs warns about \`require\` calls in function expressions: code 1`] = `
+"let foo = function() {
+  require('foo');
+};"
+`;
+
+exports[`modules.commonjs warns about \`require\` calls in function expressions: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported 'require' call cannot be transformed into an import",
+    "node": Object {
+      "arguments": Array [
+        Object {
+          "end": 38,
+          "extra": Object {
+            "raw": "'foo'",
+            "rawValue": "foo",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 15,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 10,
+              "line": 2,
+            },
+          },
+          "start": 33,
+          "type": "StringLiteral",
+          "value": "foo",
+        },
+      ],
+      "callee": Object {
+        "end": 32,
+        "loc": Object {
+          "end": Object {
+            "column": 9,
+            "line": 2,
+          },
+          "identifierName": "require",
+          "start": Object {
+            "column": 2,
+            "line": 2,
+          },
+        },
+        "name": "require",
+        "start": 25,
+        "type": "Identifier",
+      },
+      "end": 39,
+      "loc": Object {
+        "end": Object {
+          "column": 16,
+          "line": 2,
+        },
+        "start": Object {
+          "column": 2,
+          "line": 2,
+        },
+      },
+      "start": 25,
+      "type": "CallExpression",
+    },
+    "type": "unsupported-import",
+  },
+]
+`;
+
+exports[`modules.commonjs warns about top-level \`require\` calls not fitting a known pattern: code 1`] = `"require('debug')('mocha:debug');"`;
+
+exports[`modules.commonjs warns about top-level \`require\` calls not fitting a known pattern: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported 'require' call cannot be transformed into an import",
+    "node": Object {
+      "arguments": Array [
+        Object {
+          "end": 15,
+          "extra": Object {
+            "raw": "'debug'",
+            "rawValue": "debug",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 15,
+              "line": 1,
+            },
+            "start": Object {
+              "column": 8,
+              "line": 1,
+            },
+          },
+          "start": 8,
+          "type": "StringLiteral",
+          "value": "debug",
+        },
+      ],
+      "callee": Object {
+        "end": 7,
+        "loc": Object {
+          "end": Object {
+            "column": 7,
+            "line": 1,
+          },
+          "identifierName": "require",
+          "start": Object {
+            "column": 0,
+            "line": 1,
+          },
+        },
+        "name": "require",
+        "start": 0,
+        "type": "Identifier",
+      },
+      "end": 16,
+      "loc": Object {
+        "end": Object {
+          "column": 16,
+          "line": 1,
+        },
+        "start": Object {
+          "column": 0,
+          "line": 1,
+        },
+      },
+      "start": 0,
+      "type": "CallExpression",
+    },
+    "type": "unsupported-import",
+  },
+]
+`;
+
+exports[`modules.commonjs warns when export statements are not at the top level: code 1`] = `
+"if (a === b) {
+  exports.a = a;
+}"
+`;
+
+exports[`modules.commonjs warns when export statements are not at the top level: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported export cannot be turned into an 'export' statement",
+    "node": Object {
+      "end": 24,
+      "loc": Object {
+        "end": Object {
+          "column": 9,
+          "line": 2,
+        },
+        "identifierName": "exports",
+        "start": Object {
+          "column": 2,
+          "line": 2,
+        },
+      },
+      "name": "exports",
+      "start": 17,
+      "type": "Identifier",
+    },
+    "type": "unsupported-export",
+  },
+]
+`;
+
+exports[`modules.commonjs warns when would-be import statements are not at the top level: code 1`] = `
+"if (a === b) {
+  require('assert');
+}"
+`;
+
+exports[`modules.commonjs warns when would-be import statements are not at the top level: warnings 1`] = `
+Array [
+  Object {
+    "message": "Unsupported 'require' call cannot be transformed into an import",
+    "node": Object {
+      "arguments": Array [
+        Object {
+          "end": 33,
+          "extra": Object {
+            "raw": "'assert'",
+            "rawValue": "assert",
+          },
+          "loc": Object {
+            "end": Object {
+              "column": 18,
+              "line": 2,
+            },
+            "start": Object {
+              "column": 10,
+              "line": 2,
+            },
+          },
+          "start": 25,
+          "type": "StringLiteral",
+          "value": "assert",
+        },
+      ],
+      "callee": Object {
+        "end": 24,
+        "loc": Object {
+          "end": Object {
+            "column": 9,
+            "line": 2,
+          },
+          "identifierName": "require",
+          "start": Object {
+            "column": 2,
+            "line": 2,
+          },
+        },
+        "name": "require",
+        "start": 17,
+        "type": "Identifier",
+      },
+      "end": 34,
+      "loc": Object {
+        "end": Object {
+          "column": 19,
+          "line": 2,
+        },
+        "start": Object {
+          "column": 2,
+          "line": 2,
+        },
+      },
+      "start": 17,
+      "type": "CallExpression",
+    },
+    "type": "unsupported-import",
+  },
+]
+`;
+
+exports[`modules.commonjs works-with-object-destructuring-for-named-exports: code 1`] = `"export let { find } = Array.prototype;"`;
+
+exports[`modules.commonjs works-with-object-destructuring-for-named-exports: warnings 1`] = `Array []`;
+
+exports[`objects.concise collapses function properties into shorthand syntax: code 1`] = `"o = { a() {} };"`;
+
+exports[`objects.concise collapses function properties into shorthand syntax: warnings 1`] = `Array []`;
+
+exports[`objects.concise collapses properties with a computed key and function value: code 1`] = `"o = { [a]() {} };"`;
+
+exports[`objects.concise collapses properties with a computed key and function value: warnings 1`] = `Array []`;
+
+exports[`objects.concise collapses properties with a string key and function value: code 1`] = `"o = { 'a-b'() {} };"`;
+
+exports[`objects.concise collapses properties with a string key and function value: warnings 1`] = `Array []`;
+
+exports[`objects.concise ignores already-concise properties: code 1`] = `"({ a() {} });"`;
+
+exports[`objects.concise ignores already-concise properties: warnings 1`] = `Array []`;
+
+exports[`objects.concise ignores properties with named function values: code 1`] = `"({ a: function b() {} });"`;
+
+exports[`objects.concise ignores properties with named function values: warnings 1`] = `Array []`;
+
+exports[`objects.concise methods-made-concise-are-not-candidates-for-arrow-functions: code 1`] = `
+"({
+  a() {
+    return 0;
+  }
+});"
+`;
+
+exports[`objects.concise methods-made-concise-are-not-candidates-for-arrow-functions: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring allows destructuring for an expression with parens: code 1`] = `"let { b } = (a);"`;
+
+exports[`objects.destructuring allows destructuring for an expression with parens: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring collapses multiple declarators with the same member access base: code 1`] = `"const { a, b } = obj;"`;
+
+exports[`objects.destructuring collapses multiple declarators with the same member access base: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring consolidates multiple groups of declarators: code 1`] = `"const { a, b } = obj, { c, d } = obj2;"`;
+
+exports[`objects.destructuring consolidates multiple groups of declarators: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring consolidates sequences of assignments into destructuring as appropriate: code 1`] = `"({ a, b } = obj);"`;
+
+exports[`objects.destructuring consolidates sequences of assignments into destructuring as appropriate: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring converts member access with property name matching binding name to destructuring: code 1`] = `"const { a } = obj;"`;
+
+exports[`objects.destructuring converts member access with property name matching binding name to destructuring: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring does not collapse multiple declarators when the member objects do not match: code 1`] = `"const { a } = foo, { b } = bar;"`;
+
+exports[`objects.destructuring does not collapse multiple declarators when the member objects do not match: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring does not consolidate multiple unsafe-to-consolidate member objects: code 1`] = `"const { a } = foo(), { b } = foo();"`;
+
+exports[`objects.destructuring does not consolidate multiple unsafe-to-consolidate member objects: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring does not convert computed properties: code 1`] = `"const a = b[a];"`;
+
+exports[`objects.destructuring does not convert computed properties: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring does not rewrite assignments whose binding does not match the property name: code 1`] = `"opts = config.options;"`;
+
+exports[`objects.destructuring does not rewrite assignments whose binding does not match the property name: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring does not rewrite assignments with a LHS member expression: code 1`] = `"opts.path = opts.pathname;"`;
+
+exports[`objects.destructuring does not rewrite assignments with a LHS member expression: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring does-not-convert-in-expression-context: code 1`] = `"a(b = c.b);"`;
+
+exports[`objects.destructuring does-not-convert-in-expression-context: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring skips-compound-assignment: code 1`] = `"value += next.value;"`;
+
+exports[`objects.destructuring skips-compound-assignment: warnings 1`] = `Array []`;
+
+exports[`objects.destructuring transforms standalone assignments into destructuring assignment: code 1`] = `"({ a } = obj);"`;
+
+exports[`objects.destructuring transforms standalone assignments into destructuring assignment: warnings 1`] = `Array []`;
+
+exports[`objects.shorthand collapses properties with the same key & value identifier: code 1`] = `"o = { a };"`;
+
+exports[`objects.shorthand collapses properties with the same key & value identifier: warnings 1`] = `Array []`;
+
+exports[`objects.shorthand collapses properties without text beside colon: code 1`] = `"a({x, y});"`;
+
+exports[`objects.shorthand collapses properties without text beside colon: warnings 1`] = `Array []`;
+
+exports[`objects.shorthand does not collapse properties with a computed key matching the value: code 1`] = `"o = { [a]: a };"`;
+
+exports[`objects.shorthand does not collapse properties with a computed key matching the value: warnings 1`] = `Array []`;
+
+exports[`objects.shorthand ignores already-shorthand properties: code 1`] = `"({ a });"`;
+
+exports[`objects.shorthand ignores already-shorthand properties: warnings 1`] = `Array []`;
+
+exports[`objects.shorthand preserves-comments-between-key-and-value: code 1`] = `
+"({
+  /* before *//* between 1 *//* between 2 */a/* after */
+});"
+`;
+
+exports[`objects.shorthand preserves-comments-between-key-and-value: warnings 1`] = `Array []`;
+
+exports[`strings.template combines a string literal and a non-string expression into a template string: code 1`] = `"let s = \`foo\${bar}\`;"`;
+
+exports[`strings.template combines a string literal and a non-string expression into a template string: warnings 1`] = `Array []`;
+
+exports[`strings.template combines a string parts and interpolates non-string parts in a template string: code 1`] = `"let s = \`ab\${c}\${d}e\${f}\`;"`;
+
+exports[`strings.template combines a string parts and interpolates non-string parts in a template string: warnings 1`] = `Array []`;
+
+exports[`strings.template combines concatenated string literals handling escaping properly: code 1`] = `
+"let a = '\\"\\\\'';
+let b = \\"'\\\\\\"\\";"
+`;
+
+exports[`strings.template combines concatenated string literals handling escaping properly: warnings 1`] = `Array []`;
+
+exports[`strings.template combines concatenated string literals preserving quotes: code 1`] = `"let s = \\"foobar\\";"`;
+
+exports[`strings.template combines concatenated string literals preserving quotes: warnings 1`] = `Array []`;
+
+exports[`strings.template does not affect standalone strings: code 1`] = `"'a';"`;
+
+exports[`strings.template does not affect standalone strings: warnings 1`] = `Array []`;
+
+exports[`strings.template does not create an octal literal by joining strings: code 1`] = `"'\\\\0' + '1';"`;
+
+exports[`strings.template does not create an octal literal by joining strings: warnings 1`] = `Array []`;
+
+exports[`strings.template does-not-join-strings-concatenated-from-multiple-lines: code 1`] = `
+"a(
+  'b' +
+  'c'
+);"
+`;
+
+exports[`strings.template does-not-join-strings-concatenated-from-multiple-lines: warnings 1`] = `Array []`;
+
+exports[`strings.template escapes backticks in generated template strings: code 1`] = `"let s = \`\\\\\`\${a}\`;"`;
+
+exports[`strings.template escapes backticks in generated template strings: warnings 1`] = `Array []`;
+
+exports[`strings.template escapes-fake-interpolations: code 1`] = `"\`\\\\\${a}\${b}\`;"`;
+
+exports[`strings.template escapes-fake-interpolations: warnings 1`] = `Array []`;
+
+exports[`strings.template handles grouped binary expressions: code 1`] = `"let s = \`a\${b + c}\`;"`;
+
+exports[`strings.template handles grouped binary expressions: warnings 1`] = `Array []`;
+
+exports[`strings.template handles-escaped-backticks-in-original-string: code 1`] = `"\`a\\\\\` \\\\\\\\\\\\\` \\\\\\\\\\\\\` \${b}\`;"`;
+
+exports[`strings.template handles-escaped-backticks-in-original-string: warnings 1`] = `Array []`;
+
+exports[`strings.template handles-interpolation-start-in-string-fragment: code 1`] = `"\`\\\\\${\${a}\`;"`;
+
+exports[`strings.template handles-interpolation-start-in-string-fragment: warnings 1`] = `Array []`;
+
+exports[`strings.template handles-nested-template-strings: code 1`] = `"\`a\${\`b\${c}\`}\`;"`;
+
+exports[`strings.template handles-nested-template-strings: warnings 1`] = `Array []`;
+
+exports[`strings.template handles-string-fragments-ending-in-backslash: code 1`] = `"\`\\\\\\\\\${a}\`;"`;
+
+exports[`strings.template handles-string-fragments-ending-in-backslash: warnings 1`] = `Array []`;
+
+exports[`strings.template preserves-comments-between-string-additions: code 1`] = `
+"/* 0 */ \`\${'a' /* 1 */}\${/* 2 */ b /* 3 */}\${/* 4 */ c /* 5 */}\${/* 6 */ 'd'}\` /* 7 */;
+\`a\${/* 0 */ 'b'}\${c}\`;"
+`;
+
+exports[`strings.template preserves-comments-between-string-additions: warnings 1`] = `Array []`;
+
+exports[`strings.template preserves-comments-between-strings: code 1`] = `"\`\${'a' /* 1 */}\${/* 2 */ 'b'}\`;"`;
+
+exports[`strings.template preserves-comments-between-strings: warnings 1`] = `Array []`;
+
+exports[`strings.template unescapes-old-quote-characters: code 1`] = `
+"\`a\${b}\\"\${c}'\`;
+'\\\\'\\"';
+\\"\\\\\\"'\\";"
+`;
+
+exports[`strings.template unescapes-old-quote-characters: warnings 1`] = `Array []`;

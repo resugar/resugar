@@ -1,25 +1,20 @@
 import parse, { BABEL_PARSE_OPTIONS } from '../../src/utils/parse';
 import stripIndent from 'strip-indent';
 import { convert } from '../../src/esnext';
-import { deepEqual, strictEqual } from 'assert';
 import { join } from 'path';
 import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'fs';
 import cleanNode from '../../src/utils/cleanNode.js';
 
 export function checkExamples(name: string) {
   let directory = join(__dirname, '../form', name);
-  let suiteConfigPath = join(directory, '_config.js');
-  let suiteConfig = requireOptional(suiteConfigPath) || {};
-  let suiteFn = suiteConfig.skip ? describe.skip : suiteConfig.only ? describe.only : describe;
-  suiteFn(name, () => {
+  describe(name, () => {
     readdirSync(directory).forEach(example => {
       let exampleRoot = join(directory, example);
       if (statSync(exampleRoot).isDirectory()) {
         let configJSONPath = join(exampleRoot, 'config.json');
-        let configJSPath = join(exampleRoot, '_config.js');
-        let config = requireOptional(configJSPath) || readOptionalJSON(configJSONPath) || {};
+        let config = readOptionalJSON(configJSONPath) || {};
         let description = config.description || example;
-        let testFn = config.skip ? it.skip : config.only ? it.only : it;
+        let testFn = config.skip ? test.skip : config.only ? test.only : test;
         testFn(description, () => checkExample(join(name, example), config.options));
       }
     });
@@ -38,17 +33,13 @@ export function checkExample(name: string, options: Object={}) {
     writeJSON(join(actualDir, 'warnings.json'), actual.warnings);
   }
 
-  let expectedCode = read(join(directory, 'output.js'));
-  let expectedWarnings = readOptionalJSON(join(directory, 'warnings.json'));
+  expect(actual.code).toMatchSnapshot('code');
+  expect(actual.warnings).toMatchSnapshot('warnings');
 
-  strictEqual(actual.code, stripIndent(expectedCode).trim());
-
-  deepEqual(actual.warnings, expectedWarnings || []);
-
-  deepEqual(
-    cleanNode(actual.ast.program),
-    cleanNode(parse(actual.code, BABEL_PARSE_OPTIONS).program),
-    're-written AST should match re-written code'
+  expect(
+    cleanNode(actual.ast.program)
+  ).toEqual(
+    cleanNode(parse(actual.code, BABEL_PARSE_OPTIONS).program)
   );
 }
 
@@ -62,11 +53,6 @@ function readJSON(path: string): Object|Array<any> {
 
 function readOptionalJSON(path: string): ?(Object|Array<any>) {
   try { return readJSON(path); }
-  catch (err) { return null; }
-}
-
-function requireOptional(path: string): ?any {
-  try { return require(path); }
   catch (err) { return null; }
 }
 
