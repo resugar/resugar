@@ -28,20 +28,18 @@ export function checkExamples(name: string) {
 
 export function checkExample(name: string, options: Object={}) {
   let directory = join('test/form', name);
-  let expectedDir = join(directory, '_expected');
   let actualDir = join(directory, '_actual');
   let input = read(join(directory, 'main.js'));
   let actual = convert(stripIndent(input).trim(), options);
 
   mkdir(actualDir);
   write(join(actualDir, 'main.js'), actual.code);
-  writeJSON(join(actualDir, 'ast.json'), actual.ast);
   if (actual.warnings.length > 0) {
     writeJSON(join(actualDir, 'warnings.json'), actual.warnings);
   }
 
-  let expectedCode = read(join(expectedDir, 'main.js'));
-  let expectedWarnings = readOptionalJSON(join(expectedDir, 'warnings.json'));
+  let expectedCode = read(join(directory, 'output.js'));
+  let expectedWarnings = readOptionalJSON(join(directory, 'warnings.json'));
 
   strictEqual(actual.code, stripIndent(expectedCode).trim());
 
