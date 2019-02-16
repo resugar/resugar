@@ -1,9 +1,8 @@
 {
-  "presets": [["env", { "targets": { "node": "4" } }]],
+  "presets": [["@babel/preset-env", { "targets": { "node": "4" } }]],
   "plugins": [
-    "syntax-flow",
-    "transform-flow-strip-types",
-    "syntax-class-properties",
-    "transform-class-properties"
+    "@babel/plugin-syntax-flow",
+    "@babel/plugin-transform-flow-strip-types",
+    "@babel/plugin-proposal-class-properties"
   ]
 }

@@ -1,4 +1,4 @@
-import { Node, NodePath } from 'babel-traverse';
+import { Node, NodePath } from '@babel/traverse';
 
 export { Node, NodePath };
 
