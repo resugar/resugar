@@ -1,12 +1,11 @@
 import babel from 'rollup-plugin-babel';
-import babelrc from 'babelrc-rollup';
 
 let pkg = require('./package.json');
 
 export default {
   input: 'src/esnext.js',
   plugins: [
-    babel(babelrc())
+    babel()
   ],
   output: [
     {

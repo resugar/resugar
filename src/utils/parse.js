@@ -1,4 +1,4 @@
-import { parse, tokTypes } from 'babylon';
+import { parse, tokTypes } from '@babel/parser';
 
 export let BABEL_PARSE_OPTIONS = {
   sourceType: 'module',
@@ -13,7 +13,7 @@ export let BABEL_PARSE_OPTIONS = {
     'asyncGenerators',
     'classConstructorCall',
     'classProperties',
-    'decorators',
+    ['decorators', { decoratorsBeforeExport: true }],
     'doExpressions',
     'exponentiationOperator',
     'exportExtensions',
