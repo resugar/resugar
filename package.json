@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "eslint rollup.config.js src test/test.js test/support",
     "pretest": "yarn lint",
-    "test": "mocha",
+    "test": "jest",
     "prebuild": "yarn lint && rm -rf dist",
     "build": "rollup -c",
     "prepublish": "yarn build",
@@ -62,7 +62,7 @@
     "browserify": "^16.1.0",
     "eslint": "^4.18.1",
     "eslint-plugin-flow-vars": "^0.5.0",
-    "mocha": "^4.0.1",
+    "jest": "^24.1.0",
     "mz": "^2.7.0",
     "ora": "^2.0.0",
     "rollup": "^0.56.3",
