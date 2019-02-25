@@ -1,0 +1,15 @@
+{
+  "name": "@resugar/codemod-objects-concise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Brian Donovan",
+  "license": "MIT",
+  "devDependencies": {
+    "@resugar/test-runner": "*"
+  }
+}

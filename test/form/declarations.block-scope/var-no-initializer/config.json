@@ -1,3 +1,0 @@
-{
-  "description": "rewrites `var` to `let` when there is no initializer"
-}

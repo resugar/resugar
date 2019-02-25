@@ -1,3 +1,0 @@
-{
-  "description": "ignores a missing semi-colon when changing an export from an assignment to `export function`"
-}

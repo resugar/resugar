@@ -3,3 +3,6 @@ dist
 _actual
 node_modules
 *.log
+
+src/**/*.js
+packages/*/src/**/*.js

@@ -1,7 +1,0 @@
-{
-  "options": {
-    "declarations.block-scope": {
-      "disableConst": true
-    }
-  }
-}

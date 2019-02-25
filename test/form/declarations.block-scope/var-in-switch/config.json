@@ -1,3 +1,0 @@
-{
-  "description": "does not convert `var` declarations within switch cases"
-}

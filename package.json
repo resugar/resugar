@@ -1,20 +1,11 @@
 {
-  "name": "esnext",
+  "name": "@resugar/resugar",
   "description": "Update your project to the latest ECMAScript syntax.",
-  "main": "dist/esnext.js",
-  "jsnext:main": "dist/esnext.mjs",
-  "types": "index.d.ts",
-  "bin": {
-    "esnext": "./bin/index.js"
-  },
+  "private": true,
   "scripts": {
-    "lint": "eslint rollup.config.js src test/test.js test/support",
+    "lint": "eslint packages/**/*.ts",
     "pretest": "yarn lint",
-    "test": "jest",
-    "prebuild": "yarn lint && rm -rf dist",
-    "build": "rollup -c",
-    "prepublish": "yarn build",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "test": "lerna run test"
   },
   "keywords": [
     "es6",
@@ -34,9 +25,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/esnext/esnext.git"
+    "url": "https://github.com/resugar/resugar.git"
   },
-  "bugs": "https://github.com/esnext/esnext/issues",
+  "bugs": "https://github.com/resugar/resugar/issues",
   "dependencies": {
     "@babel/parser": "^7.3.3",
     "@babel/traverse": "^7.2.3",
@@ -44,33 +35,32 @@
     "@types/babel-traverse": "^6.25.5",
     "magic-string": "^0.25.2",
     "mkdirp": "^0.5.1",
+    "recast": "^0.17.3",
     "shebang-regex": "^2.0.0",
     "strip-indent": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
-    "@babel/plugin-external-helpers": "^7.2.0",
-    "@babel/plugin-proposal-class-properties": "^7.3.3",
-    "@babel/plugin-syntax-flow": "^7.2.0",
-    "@babel/plugin-transform-flow-strip-types": "^7.2.3",
-    "@babel/preset-env": "^7.3.1",
-    "@babel/register": "^7.0.0",
-    "@types/mz": "^0.0.32",
+    "@types/babel__core": "^7.0.5",
+    "@types/babel__traverse": "^7.0.6",
+    "@types/jest": "^24.0.5",
+    "@types/mkdirp": "^0.5.2",
     "@types/node": "^11.9.4",
-    "@types/ora": "^1.3.2",
-    "babel-eslint": "^10.0.1",
+    "@types/shebang-regex": "^2.0.0",
+    "@types/strip-indent": "^2.0.0",
     "browserify": "^16.1.0",
-    "eslint": "^4.18.1",
-    "eslint-plugin-flow-vars": "^0.5.0",
+    "eslint": "^5.14.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-typescript": "^0.14.0",
     "jest": "^24.1.0",
-    "mz": "^2.7.0",
-    "ora": "^2.0.0",
-    "rollup": "^0.56.3",
-    "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-npm": "^2.0.0",
+    "lerna": "^3.13.0",
+    "prettier": "^1.16.4",
     "source-map-support": "^0.4.8",
+    "ts-jest": "^24.0.0",
     "ts-node": "^5.0.0",
-    "typescript": "^2.7.2"
+    "typescript": "^3.3.3",
+    "typescript-eslint-parser": "^22.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

@@ -1,0 +1,12 @@
+{
+  "name": "@resugar/extra-types",
+  "version": "0.0.0",
+  "private": true,
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo 'no tests'"
+  },
+  "author": "Brian Donovan",
+  "license": "MIT"
+}

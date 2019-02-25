@@ -1,3 +1,0 @@
-{
-  "description": "rewrites whole module `require` calls as default imports"
-}

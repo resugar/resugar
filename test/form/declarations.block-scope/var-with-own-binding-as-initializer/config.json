@@ -1,3 +1,0 @@
-{
-  "description": "leaves `var` where the initializer for a variable references itself"
-}

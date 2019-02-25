@@ -1,1 +1,0 @@
-opts.path = opts.pathname;

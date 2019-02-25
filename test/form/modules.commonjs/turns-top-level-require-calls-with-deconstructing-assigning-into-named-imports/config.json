@@ -1,3 +1,0 @@
-{
-  "description": "turns top-level `require` calls with deconstructing assigning into named imports"
-}

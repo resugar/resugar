@@ -1,3 +1,0 @@
-{
-  "description": "rewrites `var` to `const` when there is only an initialization and no reassignments"
-}

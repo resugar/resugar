@@ -1,3 +1,0 @@
-{
-  "description": "does not add a name to an exported named function when the name matches the export name"
-}

@@ -1,0 +1,16 @@
+{
+  "name": "@resugar/codemod-strings-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Brian Donovan",
+  "license": "MIT",
+  "devDependencies": {
+    "@resugar/test-runner": "*",
+    "@resugar/extra-types": "*"
+  }
+}

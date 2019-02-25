@@ -1,3 +1,0 @@
-{
-  "description": "rewrites assignment to a static property of `module.exports` as a named export"
-}

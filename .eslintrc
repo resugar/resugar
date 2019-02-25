@@ -1,6 +1,12 @@
 {
-  "parser": "babel-eslint",
-  "extends": "eslint:recommended",
+  "parser": "typescript-eslint-parser",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "extends": [
+    "eslint:recommended",
+    "prettier"
+  ],
   "env": {
     "node": true,
     "jest": true,
@@ -9,12 +15,10 @@
   "rules": {
     "strict": 0,
     "no-console": 1,
-    "quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
+    "no-unused-vars": 0,
+    "prettier/prettier": [2, {"singleQuote": true}],
     "no-use-before-define": [2, "nofunc"],
-    "flow-vars/define-flow-type": 1,
-    "flow-vars/use-flow-type": 1
+    "typescript/no-unused-vars": 2
   },
-  "plugins": [
-    "flow-vars"
-  ]
+  "plugins": ["prettier", "typescript"]
 }

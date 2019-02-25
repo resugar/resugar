@@ -1,3 +1,0 @@
-{
-  "description": "turns top-level `require` calls without a binding to an import"
-}

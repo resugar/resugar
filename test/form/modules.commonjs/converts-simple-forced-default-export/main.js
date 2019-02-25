@@ -1,4 +1,0 @@
-module.exports = {
-  a,
-  b,
-};

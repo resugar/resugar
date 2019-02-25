@@ -1,3 +1,0 @@
-{
-  "description": "rewrites assigning an object with shorthand properties to `module.exports` as named exports"
-}
