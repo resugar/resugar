@@ -1,3 +1,0 @@
-{
-  "description": "rewrites functions that reference `this` only inside a nested function"
-}

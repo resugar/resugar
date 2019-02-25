@@ -1,3 +1,0 @@
-{
-  "description": "does not rewrite functions that reference `this`"
-}

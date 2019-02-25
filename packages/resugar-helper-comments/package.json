@@ -1,0 +1,11 @@
+{
+  "name": "@resugar/helper-comments",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo 'no tests'"
+  },
+  "author": "Brian Donovan",
+  "license": "MIT"
+}

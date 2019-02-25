@@ -1,6 +1,10 @@
-# esnext [![Build Status](https://api.travis-ci.org/esnext/esnext.svg?branch=master)](https://travis-ci.org/esnext/esnext)
+# resugar
 
-Bring your JavaScript into the future.
+Rewrite your JavaScript & TypeScript source code with sweet new features.
+
+> TODO: Below is the README for esnext, the project this one came from. It will be replaced in time.
+
+---
 
 ## Installation
 

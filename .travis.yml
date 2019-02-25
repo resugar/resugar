@@ -2,20 +2,10 @@ sudo: false
 language: node_js
 cache: yarn
 node_js:
-  - '9'
+  - '11'
+  - '10'
   - '8'
   - '6'
-  - '4'
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
-jobs:
-  include:
-    - stage: release
-      node_js: lts/*
-      deploy:
-        provider: script
-        skip_cleanup: true
-        script: 'yarn install && yarn build && npx semantic-release && yarn ts-node script/update-website.ts'
-        on:
-          branch: master

@@ -1,3 +1,0 @@
-{
-  "description": "uses shorthand export with an alias when the exported value is an identifier not matching the export name"
-}

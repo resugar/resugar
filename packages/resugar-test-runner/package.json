@@ -1,0 +1,12 @@
+{
+  "name": "@resugar/test-runner",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Test runner for codemods",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo 'no tests'"
+  },
+  "author": "Brian Donovan",
+  "license": "MIT"
+}

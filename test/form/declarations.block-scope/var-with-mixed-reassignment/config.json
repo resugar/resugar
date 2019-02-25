@@ -1,3 +1,0 @@
-{
-  "description": "converts `var` to `let` when some but not all bindings on the declaration could be `const`"
-}
