@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint packages/**/*.ts",
     "pretest": "yarn lint",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "prepare": "lerna bootstrap"
   },
   "keywords": [
     "es6",
