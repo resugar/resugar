@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo 'no tests'"
+    "test": "echo 'no tests'",
+    "prepare": "tsc"
   },
   "author": "Brian Donovan",
   "license": "MIT"
