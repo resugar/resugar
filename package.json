@@ -3,7 +3,7 @@
   "description": "Update your project to the latest ECMAScript syntax.",
   "private": true,
   "scripts": {
-    "lint": "eslint packages/**/*.ts",
+    "lint": "eslint packages/**/*.ts jest.config.js",
     "pretest": "yarn lint",
     "test": "lerna run test",
     "prepare": "lerna bootstrap"
