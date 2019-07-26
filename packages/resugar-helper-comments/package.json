@@ -8,5 +8,8 @@
     "prepare": "tsc"
   },
   "author": "Brian Donovan",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -11,5 +11,8 @@
   "license": "MIT",
   "devDependencies": {
     "@resugar/test-runner": "*"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

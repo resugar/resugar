@@ -12,5 +12,8 @@
   "devDependencies": {
     "@resugar/test-runner": "*",
     "@resugar/extra-types": "*"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
