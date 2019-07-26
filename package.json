@@ -20,7 +20,7 @@
     "index.d.ts"
   ],
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "author": "Brian Donovan",
   "license": "MIT",

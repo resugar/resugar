@@ -20,14 +20,10 @@ aliases:
       - *save_cache_step
       - run:
           name: tests
-          command: 'yarn test'
+          command: 'yarn jest --ci'
 
 version: 2
 jobs:
-  node-v6-latest:
-    docker:
-      - image: circleci/node:6
-    <<: *unit_test
   node-v8-latest:
     docker:
       - image: circleci/node:8
@@ -40,12 +36,16 @@ jobs:
     docker:
       - image: circleci/node:11
     <<: *unit_test
+  node-v12-latest:
+    docker:
+      - image: circleci/node:12
+    <<: *unit_test
 
 workflows:
   version: 2
   test:
     jobs:
-      - node-v6-latest
       - node-v8-latest
       - node-v10-latest
       - node-v11-latest
+      - node-v12-latest
