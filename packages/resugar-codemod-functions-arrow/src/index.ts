@@ -32,7 +32,7 @@ export default function({ types: t }: typeof Babel): Babel.PluginObj {
         }
 
         // `new` can't be called on arrow functions.
-        if (t.isNewExpression(parent)) {
+        if (t.isNewExpression(parent) && parent.callee === node) {
           return;
         }
 
