@@ -1,0 +1,1 @@
+new Promise(() => 42);
