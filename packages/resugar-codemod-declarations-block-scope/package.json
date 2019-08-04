@@ -1,14 +1,25 @@
 {
   "name": "@resugar/codemod-declarations-block-scope",
   "version": "1.0.0",
-  "description": "",
+  "description": "Convert 'var' declarations to 'let' or 'const' as appropriate.",
   "main": "index.js",
   "scripts": {
+    "prepare": "tsc",
     "test": "jest"
   },
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts",
+    "src/**/*.js.map"
+  ],
   "keywords": [],
   "author": "Brian Donovan",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/resugar/resugar.git"
+  },
+  "bugs": "https://github.com/resugar/resugar/issues",
   "devDependencies": {
     "@resugar/test-runner": "*"
   },
