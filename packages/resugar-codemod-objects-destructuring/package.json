@@ -1,14 +1,25 @@
 {
   "name": "@resugar/codemod-objects-destructuring",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Convert declarations & assignments to destructuring as appropriate.",
+  "main": "src/index.js",
   "scripts": {
+    "prepare": "tsc",
     "test": "jest"
   },
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts",
+    "src/**/*.js.map"
+  ],
   "keywords": [],
   "author": "Brian Donovan",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/resugar/resugar.git"
+  },
+  "bugs": "https://github.com/resugar/resugar/issues",
   "devDependencies": {
     "@resugar/test-runner": "*"
   },

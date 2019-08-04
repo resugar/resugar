@@ -4,5 +4,8 @@ _actual
 node_modules
 *.log
 
+*.d.ts
+*.map
 src/**/*.js
 packages/*/src/**/*.js
+test.js

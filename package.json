@@ -3,21 +3,15 @@
   "description": "Update your project to the latest ECMAScript syntax.",
   "private": true,
   "scripts": {
+    "prepare": "lerna run prepare",
     "lint": "eslint packages/**/*.ts jest.config.js",
     "pretest": "yarn lint",
-    "test": "lerna run test",
-    "prepare": "lerna bootstrap"
+    "test": "jest"
   },
   "keywords": [
     "es6",
     "es7",
     "ast"
-  ],
-  "files": [
-    "dist",
-    "src",
-    "bin",
-    "index.d.ts"
   ],
   "engines": {
     "node": ">=8.0.0"
@@ -57,5 +51,10 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   }
 }
