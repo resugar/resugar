@@ -1,6 +1,6 @@
 {
   "name": "@resugar/codemod-objects-destructuring",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert declarations & assignments to destructuring as appropriate.",
   "main": "src/index.js",
   "scripts": {

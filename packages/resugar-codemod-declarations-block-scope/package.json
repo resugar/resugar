@@ -1,6 +1,6 @@
 {
   "name": "@resugar/codemod-declarations-block-scope",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert 'var' declarations to 'let' or 'const' as appropriate.",
   "main": "index.js",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@resugar/codemod-strings-template",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Converts string concatenation to template literals as appropriate.",
   "main": "src/index.js",
   "scripts": {

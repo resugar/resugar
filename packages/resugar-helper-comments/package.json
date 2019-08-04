@@ -1,6 +1,6 @@
 {
   "name": "@resugar/helper-comments",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utilities for manipulating comments in an AST.",
   "main": "src/index.js",
   "scripts": {
