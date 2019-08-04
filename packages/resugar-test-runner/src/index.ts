@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
-import { transformSync, PluginItem } from '@babel/core';
-import RecastPlugin from './RecastPlugin';
+import { PluginItem } from '@babel/core';
+import { transform as codemodTransform } from '@codemod/core';
 
 export function defineTestSuites(
   fixturesPath: string,
@@ -40,46 +40,12 @@ export function defineTestSuites(
   }
 
   function transform(code: string, config?: any): string {
-    const result = transformSync(code, {
-      plugins: [
-        ...plugins.map(plugin => (config ? [plugin, config] : plugin)),
-        RecastPlugin
-      ],
-      parserOpts: {
-        tokens: true,
-        allowImportExportEverywhere: true,
-        allowAwaitOutsideFunction: true,
-        allowReturnOutsideFunction: true,
-        plugins: [
-          'jsx',
-          'flow',
-          'flowComments',
-          'doExpressions',
-          'objectRestSpread',
-          ['decorators', { decoratorsBeforeExport: true }],
-          'classProperties',
-          'classPrivateProperties',
-          'classPrivateMethods',
-          'exportDefaultFrom',
-          'exportNamespaceFrom',
-          'asyncGenerators',
-          'functionBind',
-          'functionSent',
-          'dynamicImport',
-          'numericSeparator',
-          'optionalChaining',
-          'importMeta',
-          'bigInt',
-          'optionalCatchBinding',
-          'throwExpressions',
-          ['pipelineOperator', { proposal: 'smart' }],
-          'nullishCoalescingOperator'
-        ]
-      }
+    const result = codemodTransform(code, {
+      plugins: [...plugins.map(plugin => (config ? [plugin, config] : plugin))]
     });
 
     if (!result || !result.code) {
-      throw new Error(`babel.transformSync returned no code`);
+      throw new Error(`transform returned no code`);
     }
 
     return result.code;
