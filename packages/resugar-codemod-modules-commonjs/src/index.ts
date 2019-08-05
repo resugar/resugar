@@ -176,10 +176,12 @@ function rewriteStatementsAsDefaultExport(programPath: NodePath<t.Program>) {
     exportPaths[exportPaths.length - 1]
   );
 
-  firstStatement.insertBefore(
-    t.variableDeclaration('var', [
-      t.variableDeclarator(exportsIdentifier, t.objectExpression([]))
-    ])
+  lastStatement.scope.registerDeclaration(
+    firstStatement.insertBefore(
+      t.variableDeclaration('var', [
+        t.variableDeclarator(exportsIdentifier, t.objectExpression([]))
+      ])
+    )[0]
   );
 
   for (const exportPath of exportPaths) {
