@@ -1,7 +1,7 @@
-import { NodePath, Node } from '@babel/traverse';
-import { Comment } from '@babel/types';
+import { NodePath, Node, Scope } from '@babel/traverse';
+import * as t from '@babel/types';
 
-type RecastComment = Comment & {
+type RecastComment = t.Comment & {
   leading?: boolean;
   trailing?: boolean;
 };
@@ -34,15 +34,30 @@ export function replaceWithAndPreserveComments(
       copyTrailingComments(path.node, lastNode);
     }
 
-    path.replaceWithMultiple(nodeOrNodes);
+    registerDeclarations(path.scope, (path.replaceWithMultiple(
+      nodeOrNodes
+    ) as unknown) as Array<NodePath<t.Node>>);
   } else {
     copyLeadingComments(path.node as RecastNode, nodeOrNodes as RecastNode);
     copyTrailingComments(path.node, nodeOrNodes);
-    path.replaceWith(nodeOrNodes);
+    registerDeclarations(path.scope, (path.replaceWith(
+      nodeOrNodes
+    ) as unknown) as NodePath<t.Node>);
   }
 }
 
-export function addTrailingComment(comment: Comment, to: Node): void {
+function registerDeclarations(
+  scope: Scope,
+  declarations: NodePath<t.Node> | Array<NodePath<t.Node>>
+): void {
+  for (const declaration of Array.isArray(declarations)
+    ? declarations
+    : [declarations]) {
+    scope.registerDeclaration(declaration);
+  }
+}
+
+export function addTrailingComment(comment: t.Comment, to: Node): void {
   const comments: Array<RecastComment> =
     (to as RecastNode).comments || ((to as RecastNode).comments = []);
 
@@ -55,7 +70,7 @@ export function addTrailingComment(comment: Comment, to: Node): void {
   to.trailingComments = comments.filter(comment => comment.trailing);
 }
 
-export function addLeadingComment(comment: Comment, to: Node): void {
+export function addLeadingComment(comment: t.Comment, to: Node): void {
   const comments: Array<RecastComment> =
     (to as RecastNode).comments || ((to as RecastNode).comments = []);
 
