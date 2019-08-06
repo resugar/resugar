@@ -1,11 +1,12 @@
-import { readdirSync, readFileSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { PluginItem } from '@babel/core';
 import { transform as codemodTransform } from '@codemod/core';
 
 export function defineTestSuites(
   fixturesPath: string,
-  plugins: ReadonlyArray<PluginItem> = []
+  plugins: ReadonlyArray<PluginItem> = [],
+  runAsUpdate: boolean = Boolean(process.env.UPDATE)
 ): void {
   const fixtures = new Set<string>();
 
@@ -23,12 +24,16 @@ export function defineTestSuites(
     const config = match && JSON.parse(match[1]);
 
     test(fixture.replace(/-/g, ' '), () => {
-      const output = readFileSync(
-        join(fixturesPath, `${fixture}.output.js`),
-        'utf8'
-      );
+      const actual = transform(input, config);
+      const outputPath = join(fixturesPath, `${fixture}.output.js`);
 
-      expect(transform(input, config)).toEqual(output);
+      if (runAsUpdate) {
+        writeFileSync(outputPath, actual, 'utf8');
+      }
+
+      const output = readFileSync(outputPath, 'utf8');
+
+      expect(actual).toEqual(output);
     });
 
     test(`${fixture.replace(/-/g, ' ')} (idempotent)`, () => {
