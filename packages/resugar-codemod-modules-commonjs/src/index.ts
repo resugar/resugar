@@ -1,7 +1,7 @@
 import * as t from '@babel/types';
 import { Binding } from './bindings';
 import getFirstUnsafeLocation from './getFirstUnsafeLocation';
-import { NodePath } from '@babel/traverse';
+import { NodePath, Scope } from '@babel/traverse';
 import * as Babel from '@babel/core';
 import { replaceWithAndPreserveComments } from '@resugar/helper-comments';
 
@@ -52,7 +52,7 @@ export default function({ types: t }: typeof Babel): Babel.PluginObj {
         }
       }
     }
-  } as any;
+  } as Babel.PluginObj;
 }
 
 /**
@@ -148,7 +148,7 @@ function rewriteStatementsAsDefaultExport(programPath: NodePath<t.Program>) {
         path.skip();
       }
     }
-  } as any);
+  } as Babel.Visitor);
 
   if (exportPaths.length === 0) {
     return;
@@ -168,7 +168,8 @@ function rewriteStatementsAsDefaultExport(programPath: NodePath<t.Program>) {
     }
   }
 
-  const exportsIdentifier = programPath.scope.generateUidIdentifier(
+  const exportsIdentifier = generateUidIdentifier(
+    programPath.scope,
     'defaultExport'
   );
   const firstStatement = getEnclosingStatement(exportPaths[0]);
@@ -340,22 +341,6 @@ function mapExportObject(node: t.Node): Array<t.ExportDeclaration> | undefined {
   return result;
 }
 
-function isSimpleObjectExpression(node: t.Node): node is t.ObjectExpression {
-  if (!t.isObjectExpression(node)) {
-    return false;
-  }
-  for (let property of node.properties) {
-    if (
-      !t.isObjectProperty(property) ||
-      !t.isIdentifier(property.key) ||
-      !t.isIdentifier(property.value)
-    ) {
-      return false;
-    }
-  }
-  return true;
-}
-
 function rewriteSingleExportAsDefaultExport(
   path: NodePath<t.ExpressionStatement>
 ): void {
@@ -400,7 +385,7 @@ function rewriteNamedFunctionExpressionExport(
   const id = right.node.id;
 
   const fnBinding = id ? id.name : null;
-  const localId = path.scope.generateUidIdentifier(fnBinding || exportName);
+  const localId = generateUidIdentifier(path.scope, fnBinding || exportName);
   const localName = localId.name;
 
   if (localName === exportName) {
@@ -474,7 +459,7 @@ function rewriteNamedIdentifierExport(
       )
     ];
   } else {
-    localBinding = path.scope.generateUidIdentifier(property.node.name);
+    localBinding = generateUidIdentifier(path.scope, property.node.name);
 
     if (localBinding.name === property.node.name) {
       replacements = [
@@ -512,8 +497,7 @@ function rewriteNamedValueExport(
   const left = expression.get('left') as NodePath<t.MemberExpression>;
   const property = left.get('property') as NodePath<t.Identifier>;
   const right = expression.get('right');
-
-  let localBinding = path.scope.generateUidIdentifier(property.node.name);
+  const localBinding = generateUidIdentifier(path.scope, property.node.name);
 
   if (localBinding.name === property.node.name) {
     replaceWithAndPreserveComments(
@@ -895,4 +879,52 @@ function extractModuleIIFE(node: t.Node): t.FunctionExpression | null {
   }
 
   return iife;
+}
+
+interface ScopeWithPrivate extends Scope {
+  hasLabel(label: string): boolean;
+  references: { [key: string]: boolean };
+  uids: { [key: string]: boolean };
+}
+
+function generateUidIdentifier(scope: Scope, name: string): t.Identifier {
+  return t.identifier(generateUid(scope, name));
+}
+
+/**
+ * Mimics the `@babel/traverse` implementation of `Scope#generateUid` but
+ * without always prefixing with `_`, which makes it impossible for the return
+ * value to match `name`.
+ */
+function generateUid(scope: Scope, name: string): string {
+  const privateScope = scope as ScopeWithPrivate;
+
+  for (const uid of uniquify(name)) {
+    if (
+      privateScope.hasLabel(uid) ||
+      privateScope.hasBinding(uid) ||
+      privateScope.hasGlobal(uid) ||
+      privateScope.hasReference(uid)
+    ) {
+      continue;
+    }
+
+    const program = privateScope.getProgramParent() as ScopeWithPrivate;
+    program.references[uid] = true;
+    program.uids[uid] = true;
+
+    return uid;
+  }
+
+  throw new Error(`could not find a unique name based on ${name}`);
+}
+
+function* uniquify(name: string): Iterable<string> {
+  yield name;
+  yield `_${name}`;
+
+  let i = 1;
+  while (true) {
+    yield `${name}${i++}`;
+  }
 }

@@ -1,2 +1,1 @@
-let _jQuery = $;
-export { _jQuery as jQuery };
+export let jQuery = $;

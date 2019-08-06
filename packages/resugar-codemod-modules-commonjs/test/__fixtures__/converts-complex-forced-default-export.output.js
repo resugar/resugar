@@ -1,17 +1,17 @@
 // config={"forceDefaultExport": true}
 console.log('Start of file');
-var _defaultExport = {};
-_defaultExport = a;
+var defaultExport = {};
+defaultExport = a;
 if (b) {
-  _defaultExport.d = e;
+  defaultExport.d = e;
 }
-for (let f in _defaultExport) {
-  _defaultExport[f]++;
+for (let f in defaultExport) {
+  defaultExport[f]++;
 }
-_defaultExport[g] = {
+defaultExport[g] = {
   h() {
     console.log(this);
   }
 };
-export default _defaultExport;
+export default defaultExport;
 console.log('End of file');

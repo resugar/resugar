@@ -1,2 +1,1 @@
-function _foo() {}
-export { _foo as foo };
+export function foo() {}
