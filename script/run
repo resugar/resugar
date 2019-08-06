@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+require('ts-node/register');
+require('./_commands/run.ts')
+  .default(process.argv.slice(2), process.stdin, process.stdout, process.stderr)
+  .then((code = 0) => {
+    process.exitCode = code;
+  })
+  .catch(error => {
+    process.stderr.write(error.stack + '\n');
+    process.exitCode = 1;
+  });
