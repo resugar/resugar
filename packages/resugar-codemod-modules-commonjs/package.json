@@ -1,6 +1,6 @@
 {
   "name": "@resugar/codemod-modules-commonjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Convert CommonJS `require` and `module.exports` to ES module syntax.",
   "main": "src/index.js",
   "scripts": {
