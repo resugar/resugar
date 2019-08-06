@@ -15,7 +15,7 @@ describe('scope consistency', () => {
         {
           visitor: {
             Program(path: NodePath<t.Program>): void {
-              expect(scopeBindingNames(path.scope)).toContain('_defaultExport');
+              expect(scopeBindingNames(path.scope)).toContain('defaultExport');
             }
           }
         }
@@ -30,7 +30,7 @@ describe('scope consistency', () => {
         {
           visitor: {
             Program(path: NodePath<t.Program>): void {
-              expect(scopeBindingNames(path.scope)).toContain('_a');
+              expect(scopeBindingNames(path.scope)).toContain('a');
             }
           }
         }

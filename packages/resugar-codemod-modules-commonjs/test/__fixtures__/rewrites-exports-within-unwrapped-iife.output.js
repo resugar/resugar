@@ -1,2 +1,1 @@
-let _foo = 1;
-export { _foo as foo };
+export let foo = 1;
