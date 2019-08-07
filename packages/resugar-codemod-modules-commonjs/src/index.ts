@@ -288,6 +288,12 @@ function mapExportObject(node: t.Node): Array<t.ExportDeclaration> | undefined {
       return undefined;
     }
 
+    // Don't allow destructuring patterns. I'm not sure this can actually happen,
+    // but the types make me rule it out.
+    if (t.isPatternLike(property.value) && !t.isIdentifier(property.value)) {
+      return undefined;
+    }
+
     // Handle simple mappings of existing bindings, i.e.
     //
     //   module.exports = { a: b, c };
@@ -336,6 +342,15 @@ function mapExportObject(node: t.Node): Array<t.ExportDeclaration> | undefined {
 
       continue;
     }
+
+    result.push(
+      t.exportNamedDeclaration(
+        t.variableDeclaration('let', [
+          t.variableDeclarator(property.key, property.value)
+        ]),
+        []
+      )
+    );
   }
 
   return result;
