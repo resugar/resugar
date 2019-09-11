@@ -20,7 +20,7 @@
     ]
   },
   "scripts": {
-    "lint": "eslint 'packages/**/*.ts' jest.config.js",
+    "lint": "eslint 'packages/**/*.ts' 'script/**/*.ts' 'script/run' jest.config.js",
     "prepare": "lerna run prepare",
     "pretest": "yarn lint",
     "test": "jest"
