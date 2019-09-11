@@ -9,7 +9,7 @@ export interface Options {
   disableConst?: boolean | ((path: NodePath) => boolean);
 }
 
-export default function({ types: t }: typeof Babel): Babel.PluginObj {
+export default function(): Babel.PluginItem {
   return {
     name: '@resugar/codemod-declarations-block-scope',
     visitor: {

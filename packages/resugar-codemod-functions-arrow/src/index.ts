@@ -3,7 +3,7 @@ import { NodePath } from '@babel/traverse';
 import * as Babel from '@babel/core';
 import { replaceWithAndPreserveComments } from '@resugar/helper-comments';
 
-export default function({ types: t }: typeof Babel): Babel.PluginObj {
+export default function(): Babel.PluginItem {
   return {
     name: '@resugar/codemod-functions-arrow',
     visitor: {

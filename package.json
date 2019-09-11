@@ -20,7 +20,7 @@
     ]
   },
   "scripts": {
-    "lint": "eslint packages/**/*.ts jest.config.js",
+    "lint": "eslint 'packages/**/*.ts' jest.config.js",
     "prepare": "lerna run prepare",
     "pretest": "yarn lint",
     "test": "jest"
@@ -52,10 +52,11 @@
     "@types/node": "^11.9.4",
     "@types/shebang-regex": "^2.0.0",
     "@types/strip-indent": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.2.0",
+    "@typescript-eslint/parser": "^2.2.0",
     "eslint": "^5.14.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-typescript": "^0.14.0",
     "husky": "^3.0.5",
     "jest": "^24.1.0",
     "lerna": "^3.13.0",
@@ -64,10 +65,9 @@
     "recast": "^0.17.3",
     "sort-package-json": "^1.22.1",
     "source-map-support": "^0.4.8",
-    "ts-jest": "^24.0.0",
-    "ts-node": "^5.0.0",
-    "typescript": "^3.3.3",
-    "typescript-eslint-parser": "^22.0.0"
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.3"
   },
   "engines": {
     "node": ">=8.0.0"

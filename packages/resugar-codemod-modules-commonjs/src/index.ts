@@ -11,7 +11,7 @@ export interface Options {
   safeFunctionIdentifiers?: Array<string>;
 }
 
-export default function({ types: t }: typeof Babel): Babel.PluginObj {
+export default function(): Babel.PluginItem {
   return {
     name: '@resugar/codemod-modules-commonjs',
     visitor: {
@@ -52,7 +52,7 @@ export default function({ types: t }: typeof Babel): Babel.PluginObj {
         }
       }
     }
-  } as Babel.PluginObj;
+  } as Babel.PluginItem;
 }
 
 /**

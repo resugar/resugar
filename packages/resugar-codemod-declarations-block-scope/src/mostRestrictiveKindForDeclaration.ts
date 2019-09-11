@@ -116,7 +116,9 @@ function isBindingAssignedBeforeUse(binding: Binding): boolean {
   let loopParent = binding.path.findParent(path => path.isLoop());
   if (loopParent !== null) {
     if (loopParent.isForOfStatement() || loopParent.isForInStatement()) {
-      if (isDescendant(binding.path, loopParent.get('left'))) {
+      if (
+        isDescendant(binding.path, loopParent.get('left') as NodePath<t.Node>)
+      ) {
         return true;
       }
     }
