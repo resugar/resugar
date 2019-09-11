@@ -10,8 +10,7 @@ import { transform } from '@codemod/core';
 export default async function main(
   args: ReadonlyArray<string>,
   stdin: typeof process.stdin,
-  stdout: typeof process.stdout,
-  stderr: typeof process.stderr
+  stdout: typeof process.stdout
 ): Promise<number> {
   const input = await readStream(stdin);
   stdout.write(transform(input, {
