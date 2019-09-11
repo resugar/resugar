@@ -1,0 +1,1 @@
+fn.apply(null, args);

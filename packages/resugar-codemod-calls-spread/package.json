@@ -1,0 +1,30 @@
+{
+  "name": "@resugar/codemod-calls-spread",
+  "version": "1.0.0",
+  "description": "Convert `.apply` to call spreads.",
+  "keywords": [
+    "apply",
+    "function",
+    "spread"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/resugar/resugar.git"
+  },
+  "license": "MIT",
+  "author": "Brian Donovan",
+  "main": "src/index.js",
+  "scripts": {
+    "prepare": "tsc",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@codemod/matchers": "^1.0.5"
+  },
+  "devDependencies": {
+    "@resugar/test-runner": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
