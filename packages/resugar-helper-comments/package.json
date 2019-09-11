@@ -2,23 +2,23 @@
   "name": "@resugar/helper-comments",
   "version": "1.0.2",
   "description": "Utilities for manipulating comments in an AST.",
-  "main": "src/index.js",
-  "scripts": {
-    "prepare": "tsc",
-    "test": "echo 'no tests'"
+  "bugs": "https://github.com/resugar/resugar/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/resugar/resugar.git"
   },
+  "license": "MIT",
+  "author": "Brian Donovan",
   "files": [
     "src/**/*.js",
     "src/**/*.d.ts",
     "src/**/*.js.map"
   ],
-  "author": "Brian Donovan",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/resugar/resugar.git"
+  "main": "src/index.js",
+  "scripts": {
+    "prepare": "tsc",
+    "test": "echo 'no tests'"
   },
-  "bugs": "https://github.com/resugar/resugar/issues",
   "publishConfig": {
     "access": "public"
   }

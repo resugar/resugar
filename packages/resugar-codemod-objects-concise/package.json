@@ -2,19 +2,19 @@
   "name": "@resugar/codemod-objects-concise",
   "version": "1.0.1",
   "description": "Convert object function properties to be concise methods as appropriate.",
+  "keywords": [],
+  "bugs": "https://github.com/resugar/resugar/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/resugar/resugar.git"
+  },
+  "license": "MIT",
+  "author": "Brian Donovan",
   "main": "src/index.js",
   "scripts": {
     "prepare": "tsc",
     "test": "jest"
   },
-  "keywords": [],
-  "author": "Brian Donovan",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/resugar/resugar.git"
-  },
-  "bugs": "https://github.com/resugar/resugar/issues",
   "devDependencies": {
     "@resugar/test-runner": "*"
   },

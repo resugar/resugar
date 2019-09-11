@@ -2,27 +2,27 @@
   "name": "@resugar/codemod-strings-template",
   "version": "1.0.1",
   "description": "Converts string concatenation to template literals as appropriate.",
-  "main": "src/index.js",
-  "scripts": {
-    "prepare": "tsc",
-    "test": "jest"
+  "keywords": [],
+  "bugs": "https://github.com/resugar/resugar/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/resugar/resugar.git"
   },
+  "license": "MIT",
+  "author": "Brian Donovan",
   "files": [
     "src/**/*.js",
     "src/**/*.d.ts",
     "src/**/*.js.map"
   ],
-  "keywords": [],
-  "author": "Brian Donovan",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/resugar/resugar.git"
+  "main": "src/index.js",
+  "scripts": {
+    "prepare": "tsc",
+    "test": "jest"
   },
-  "bugs": "https://github.com/resugar/resugar/issues",
   "devDependencies": {
-    "@resugar/test-runner": "*",
-    "@resugar/extra-types": "*"
+    "@resugar/extra-types": "*",
+    "@resugar/test-runner": "*"
   },
   "publishConfig": {
     "access": "public"

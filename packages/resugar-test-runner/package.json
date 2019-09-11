@@ -3,18 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "description": "Test runner for codemods",
+  "bugs": "https://github.com/resugar/resugar/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/resugar/resugar.git"
+  },
+  "license": "MIT",
+  "author": "Brian Donovan",
   "main": "src/index.ts",
   "scripts": {
     "prepare": "tsc",
     "test": "echo 'no tests'"
   },
-  "author": "Brian Donovan",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/resugar/resugar.git"
-  },
-  "bugs": "https://github.com/resugar/resugar/issues",
   "devDependencies": {
     "@codemod/core": "^1.0.0"
   }

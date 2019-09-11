@@ -1,28 +1,45 @@
 {
   "name": "@resugar/resugar",
-  "description": "Update your project to the latest ECMAScript syntax.",
   "private": true,
-  "scripts": {
-    "prepare": "lerna run prepare",
-    "lint": "eslint packages/**/*.ts jest.config.js",
-    "pretest": "yarn lint",
-    "test": "jest"
-  },
+  "description": "Update your project to the latest ECMAScript syntax.",
   "keywords": [
+    "ast",
     "es6",
-    "es7",
-    "ast"
+    "es7"
   ],
-  "engines": {
-    "node": ">=8.0.0"
-  },
-  "author": "Brian Donovan",
-  "license": "MIT",
+  "bugs": "https://github.com/resugar/resugar/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/resugar/resugar.git"
   },
-  "bugs": "https://github.com/resugar/resugar/issues",
+  "license": "MIT",
+  "author": "Brian Donovan",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "lint": "eslint packages/**/*.ts jest.config.js",
+    "prepare": "lerna run prepare",
+    "pretest": "yarn lint",
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,md,json}": [
+      "prettier --write",
+      "git add"
+    ],
+    "package.json": [
+      "sort-package-json",
+      "git add"
+    ]
+  },
   "devDependencies": {
     "@babel/core": "^7.3.3",
     "@babel/parser": "^7.3.3",
@@ -39,22 +56,23 @@
     "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-typescript": "^0.14.0",
+    "husky": "^3.0.5",
     "jest": "^24.1.0",
     "lerna": "^3.13.0",
+    "lint-staged": "^9.2.5",
     "prettier": "^1.16.4",
     "recast": "^0.17.3",
+    "sort-package-json": "^1.22.1",
     "source-map-support": "^0.4.8",
     "ts-jest": "^24.0.0",
     "ts-node": "^5.0.0",
     "typescript": "^3.3.3",
     "typescript-eslint-parser": "^22.0.0"
   },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  },
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
   }
 }

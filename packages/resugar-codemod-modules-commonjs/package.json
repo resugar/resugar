@@ -2,24 +2,24 @@
   "name": "@resugar/codemod-modules-commonjs",
   "version": "1.0.4",
   "description": "Convert CommonJS `require` and `module.exports` to ES module syntax.",
-  "main": "src/index.js",
-  "scripts": {
-    "prepare": "tsc",
-    "test": "jest"
+  "keywords": [],
+  "bugs": "https://github.com/resugar/resugar/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/resugar/resugar.git"
   },
+  "license": "MIT",
+  "author": "Brian Donovan",
   "files": [
     "src/**/*.js",
     "src/**/*.d.ts",
     "src/**/*.js.map"
   ],
-  "keywords": [],
-  "author": "Brian Donovan",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/resugar/resugar.git"
+  "main": "src/index.js",
+  "scripts": {
+    "prepare": "tsc",
+    "test": "jest"
   },
-  "bugs": "https://github.com/resugar/resugar/issues",
   "dependencies": {
     "@resugar/helper-comments": "^1.0.0"
   },
