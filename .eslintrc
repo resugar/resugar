@@ -3,10 +3,7 @@
   "parserOptions": {
     "sourceType": "module"
   },
-  "extends": [
-    "eslint:recommended",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "prettier"],
   "env": {
     "node": true,
     "jest": true,
@@ -16,7 +13,7 @@
     "strict": 0,
     "no-console": 1,
     "no-unused-vars": 0,
-    "prettier/prettier": [2, {"singleQuote": true}],
+    "prettier/prettier": 2,
     "no-use-before-define": [2, "nofunc"],
     "typescript/no-unused-vars": 2
   },

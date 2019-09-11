@@ -3,15 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "description": "Various extra types useful for the `@resugar` packages.",
-  "main": "src/index.ts",
-  "scripts": {
-    "test": "echo 'no tests'"
-  },
-  "author": "Brian Donovan",
-  "license": "MIT",
+  "bugs": "https://github.com/resugar/resugar/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/resugar/resugar.git"
   },
-  "bugs": "https://github.com/resugar/resugar/issues"
+  "license": "MIT",
+  "author": "Brian Donovan",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo 'no tests'"
+  }
 }

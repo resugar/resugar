@@ -25,7 +25,9 @@ After installing, run `esnext -h` for comprehensive usage instructions.
 Translate some regular functions to arrow functions:
 
 ```js
-list.map(function(item) { return item.name; });
+list.map(function(item) {
+  return item.name;
+});
 
 // ↑ becomes ↓
 
@@ -58,7 +60,7 @@ Use shorthand syntax for various object constructs:
 let person = {
   first: first,
   last: last,
-  
+
   fullName: function() {
     return `${first} ${last}`;
   }
@@ -69,7 +71,7 @@ let person = {
 let person = {
   first,
   last,
-  
+
   fullName() {
     return `${first} ${last}`;
   }
@@ -95,8 +97,9 @@ let greeting = `Hello, ${name}`;
 Convert assignments and declarations to use object destructuring syntax:
 
 ```js
-let a = obj.a, b = obj.b;
-a = obj2.a, b = obj2.b;
+let a = obj.a,
+  b = obj.b;
+(a = obj2.a), (b = obj2.b);
 
 // ↑ becomes ↓
 
