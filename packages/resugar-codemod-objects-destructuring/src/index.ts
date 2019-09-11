@@ -2,7 +2,7 @@ import * as t from '@babel/types';
 import { NodePath } from '@babel/traverse';
 import * as Babel from '@babel/core';
 
-export default function({ types: t }: typeof Babel): Babel.PluginObj {
+export default function(): Babel.PluginItem {
   return {
     name: '@resugar/codemod-objects-destructuring',
     visitor: {
@@ -167,8 +167,4 @@ function leftRightOfAssignment(
   } else {
     return null;
   }
-}
-
-function isSafeToConsolidate(node: t.Node): boolean {
-  return t.isIdentifier(node);
 }

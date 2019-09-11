@@ -1,5 +1,5 @@
 {
-  "parser": "typescript-eslint-parser",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "sourceType": "module"
   },
@@ -15,7 +15,7 @@
     "no-unused-vars": 0,
     "prettier/prettier": 2,
     "no-use-before-define": [2, "nofunc"],
-    "typescript/no-unused-vars": 2
+    "@typescript-eslint/no-unused-vars": 2
   },
-  "plugins": ["prettier", "typescript"]
+  "plugins": ["prettier", "@typescript-eslint/eslint-plugin"]
 }

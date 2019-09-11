@@ -6,7 +6,7 @@ import {
   copyLeadingComments
 } from '@resugar/helper-comments';
 
-export default function({ types: t }: typeof Babel): Babel.PluginObj {
+export default function(): Babel.PluginItem {
   return {
     name: '@resugar/codemod-objects-shorthand',
     visitor: {

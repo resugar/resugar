@@ -4,7 +4,7 @@ import * as t from '@babel/types';
 import convertStringEscaping from './convertStringEscaping';
 import { Token } from '@resugar/extra-types';
 
-export default function({ types: t }: typeof Babel): Babel.PluginObj {
+export default function(): Babel.PluginItem {
   let tokens!: Array<Token>;
 
   return {
@@ -129,7 +129,7 @@ export default function({ types: t }: typeof Babel): Babel.PluginObj {
     let cooked = '';
     let raw = '';
 
-    parts.forEach(({ node, prefix, suffix }, i) => {
+    parts.forEach(({ node, prefix, suffix }) => {
       if (prefix || suffix || !t.isStringLiteral(node)) {
         // This one has to be an interpolated expression.
         expressions.push(node);
