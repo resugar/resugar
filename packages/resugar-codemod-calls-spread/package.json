@@ -13,6 +13,11 @@
   },
   "license": "MIT",
   "author": "Brian Donovan",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts",
+    "src/**/*.js.map"
+  ],
   "main": "src/index.js",
   "scripts": {
     "prepare": "tsc",
