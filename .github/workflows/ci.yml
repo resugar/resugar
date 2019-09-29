@@ -1,0 +1,22 @@
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: [8, 10, 12]
+        # os: [ubuntu-latest, windows-latest, macOS-latest]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Node.js for use with actions
+      uses: actions/setup-node@v1
+      with:
+        version: ${{ matrix.node_version }}
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    - name: Run tests
+      run: yarn jest --ci --verbose
