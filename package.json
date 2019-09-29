@@ -21,7 +21,7 @@
   },
   "scripts": {
     "lint": "eslint 'packages/**/*.ts' 'script/**/*.ts' 'script/run' jest.config.js",
-    "prepare": "lerna run prepare",
+    "prepare": "in-publish && lerna run prepare || not-in-publish",
     "pretest": "yarn lint",
     "test": "jest"
   },
@@ -58,6 +58,7 @@
     "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-prettier": "^3.0.1",
     "husky": "^3.0.5",
+    "in-publish": "^2.0.0",
     "jest": "^24.1.0",
     "lerna": "^3.13.0",
     "lint-staged": "^9.2.5",
