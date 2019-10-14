@@ -51,7 +51,7 @@
     "@types/mkdirp": "^0.5.2",
     "@types/node": "^12.7.5",
     "@types/shebang-regex": "^2.0.0",
-    "@types/strip-indent": "^2.0.0",
+    "@types/strip-indent": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
     "eslint": "^5.14.0",
