@@ -778,9 +778,6 @@ function removeDefaultAccesses(
   programPath.traverse({
     MemberExpression(path: NodePath<t.MemberExpression>): void {
       const { object, property, computed } = path.node;
-      if (computed) {
-        return;
-      }
       if (
         !computed &&
         t.isIdentifier(object) &&
