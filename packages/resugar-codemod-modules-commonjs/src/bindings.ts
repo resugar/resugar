@@ -20,9 +20,7 @@ export class Binding {
  * Builds an export specifier list string for use in an export statement.
  */
 export class ExportSpecifierListStringBuilder {
-  constructor(private readonly bindings: Array<Binding>) {
-    this.bindings = bindings;
-  }
+  constructor(private readonly bindings: Array<Binding>) {}
 
   static build(bindings: Array<Binding>): string {
     return new ExportSpecifierListStringBuilder(bindings).toString();
@@ -45,9 +43,7 @@ export class ExportSpecifierListStringBuilder {
  * Builds an import specifier list string for use in an import statement.
  */
 export class ImportSpecifierListStringBuilder {
-  constructor(private readonly bindings: Array<Binding>) {
-    this.bindings = bindings;
-  }
+  constructor(private readonly bindings: Array<Binding>) {}
 
   static build(bindings: Array<Binding>): string {
     return new ImportSpecifierListStringBuilder(bindings).toString();
