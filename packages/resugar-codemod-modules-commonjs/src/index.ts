@@ -86,6 +86,7 @@ function removeUseStrictDirective(
 
     if (directive.value.value === 'use strict') {
       directives.splice(i, 1);
+      i--;
     }
   }
 }
