@@ -461,20 +461,19 @@ function rewriteNamedIdentifierExport(
   const right = expression.get('right') as NodePath<t.Identifier>;
 
   let replacements: Array<t.Statement>;
-  let localBinding: t.Identifier;
 
   if (path.scope.hasBinding(right.node.name)) {
-    localBinding = right.node;
+    const localBinding = right.node;
 
     replacements = [
       t.exportNamedDeclaration(
         null,
-        [t.exportSpecifier(right.node, property.node)],
+        [t.exportSpecifier(localBinding, property.node)],
         null
       )
     ];
   } else {
-    localBinding = generateUidIdentifier(path.scope, property.node.name);
+    const localBinding = generateUidIdentifier(path.scope, property.node.name);
 
     if (localBinding.name === property.node.name) {
       replacements = [
