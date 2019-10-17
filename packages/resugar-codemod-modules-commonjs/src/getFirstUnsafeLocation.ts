@@ -64,7 +64,11 @@ export default function getFirstUnsafeLocation(
     },
 
     CallExpression(path: NodePath<t.CallExpression>): void {
-      if (!hasIdentifier(path.get('callee'), allowedFunctionIdentifiers)) {
+      const callee = path.get('callee');
+      if (
+        callee.isExpression() &&
+        !hasIdentifier(callee, allowedFunctionIdentifiers)
+      ) {
         resultLoc = Math.min(resultLoc, path.node.start!);
         path.skip();
       }
