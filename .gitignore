@@ -8,4 +8,5 @@ node_modules
 *.map
 src/**/*.js
 packages/*/src/**/*.js
+script/**/*.js
 test.js
