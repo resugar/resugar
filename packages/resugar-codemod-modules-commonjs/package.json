@@ -11,9 +11,7 @@
   "license": "MIT",
   "author": "Brian Donovan",
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts",
-    "src/**/*.js.map"
+    "src/**/*.{js,d.ts,js.map}"
   ],
   "main": "src/index.js",
   "scripts": {
