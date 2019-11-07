@@ -2443,6 +2443,11 @@ detect-indent@^5.0.0:
   resolved "https://registry.npmjs.org/detect-indent/-/detect-indent-5.0.0.tgz#3871cc0a6a002e8c3e5b3cf7f336264675f06b9d"
   integrity sha1-OHHMCmoALow+Wzz38zYmRnXwa50=
 
+detect-indent@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/detect-indent/-/detect-indent-6.0.0.tgz#0abd0f549f69fc6659a254fe96786186b6f528fd"
+  integrity sha512-oSyFlqaTHCItVRGK5RmrmjB+CmaMOW7IaNA/kdxqhoa6d17j/5ce9O9eWXmV/KEdRwqpQA+Vqe8a8Bsybu4YnA==
+
 detect-libc@^1.0.2:
   version "1.0.3"
   resolved "https://registry.npmjs.org/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
@@ -6541,11 +6546,11 @@ sort-object-keys@^1.1.2:
   integrity sha1-06bEjcKsl+a8lDZ2luA/bQnTeVI=
 
 sort-package-json@^1.22.1:
-  version "1.23.0"
-  resolved "https://registry.yarnpkg.com/sort-package-json/-/sort-package-json-1.23.0.tgz#f488fbf299ffd8e46fd43c03ab362392b1268b67"
-  integrity sha512-IecZcGIM/ATY9MFHYonoCzqzzvFhZo0MgE0ZEaUKiGLRsbIhSrCKysF6nLgZ4RzneaatSIO3y6dAdlTSqOJZGw==
+  version "1.23.1"
+  resolved "https://registry.yarnpkg.com/sort-package-json/-/sort-package-json-1.23.1.tgz#7882349ad885ee6d82ff57af4184f9d6e9159e1d"
+  integrity sha512-dg6XChDHL+V1gPBLW4fDWsip5T94wpDVlowm8gxXsxQMxX2271zw8JM1RRbJSIrN80/UlwlRdBVkk2SuiuZ2cw==
   dependencies:
-    detect-indent "^5.0.0"
+    detect-indent "^6.0.0"
     glob "^7.1.6"
     sort-object-keys "^1.1.2"
 
