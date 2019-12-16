@@ -121,7 +121,7 @@
     globals "^11.1.0"
     lodash "^4.17.13"
 
-"@babel/types@7.7.2", "@babel/types@^7.0.0", "@babel/types@^7.3.0", "@babel/types@^7.6.3", "@babel/types@^7.7.2", "@babel/types@^7.7.4":
+"@babel/types@7.7.2", "@babel/types@^7.0.0", "@babel/types@^7.3.0", "@babel/types@^7.7.2", "@babel/types@^7.7.4":
   version "7.7.2"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.7.2.tgz#550b82e5571dcd174af576e23f0adba7ffc683f7"
   integrity sha512-YTf6PXoh3+eZgRCBzzP25Bugd2ngmpQVrk7kXX0i5N9BO7TFBtIgZYs7WtxtOGs8e6A4ZI7ECkbBCEHeXocvOA==
@@ -151,11 +151,11 @@
     ts-jest "^24.0.2"
 
 "@codemod/matchers@^1.0.5":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@codemod/matchers/-/matchers-1.0.7.tgz#30e30299168a4c278d8fa8d2a89acafce0e08878"
-  integrity sha512-FPCdqgLhWJL9WU3de7SR/q7W28G84AouYBrupkfelzOK4WFnKc4tU+uUpvi8b38y0puWmfjrwxYSgY2mgyXjDw==
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@codemod/matchers/-/matchers-1.0.8.tgz#782e05f6b8dc9951084272f8366586ed63cdc977"
+  integrity sha512-1iWoHWRM/Y1pLBG96Hd98VDsEQiO8LVU6QSr8uw8umojUdZl2X3WpjfQ1Nc3p3ouDM3zO89y638LmYmMmOOsTw==
   dependencies:
-    "@babel/types" "^7.6.3"
+    "@babel/types" "^7.7.4"
 
 "@codemod/parser@^1.0.4":
   version "1.0.4"
