@@ -47,7 +47,7 @@
     "@babel/types": "^7.7.2",
     "@types/babel__core": "^7.0.5",
     "@types/babel__traverse": "^7.0.6",
-    "@types/jest": "^24.0.5",
+    "@types/jest": "^25.1.0",
     "@types/mkdirp": "^0.5.2",
     "@types/node": "^13.1.0",
     "@types/shebang-regex": "^3.0.0",
