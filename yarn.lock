@@ -6251,9 +6251,9 @@ realpath-native@^1.1.0:
     util.promisify "^1.0.0"
 
 recast@^0.18.1, recast@^0.18.5:
-  version "0.18.6"
-  resolved "https://registry.yarnpkg.com/recast/-/recast-0.18.6.tgz#7c272602dd230687e91372980f9c9769a373382e"
-  integrity sha512-G9AbL8435imOHgKs7CYFYxVxeQWTVgO8sKybD3Ij23uZCICS4EGt3kGOmWUDw4D7jnQfXJXl/SLtpij/1ldWRg==
+  version "0.18.7"
+  resolved "https://registry.yarnpkg.com/recast/-/recast-0.18.7.tgz#56338a6d803c8c3b9113344440dc70d13c8a1ef7"
+  integrity sha512-qNfoxvMkW4k8jJgNCfmIES7S31MEejXcEQs57eKUcQGiJUuX7cXNOD2h+W9z0rjNun2EkKqf0WvuRtmHw4NPNg==
   dependencies:
     ast-types "0.13.2"
     esprima "~4.0.0"
