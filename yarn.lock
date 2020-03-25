@@ -9,7 +9,7 @@
   dependencies:
     "@babel/highlight" "^7.8.3"
 
-"@babel/core@^7.1.0", "@babel/core@^7.3.3", "@babel/core@^7.8.0":
+"@babel/core@^7.1.0", "@babel/core@^7.3.3", "@babel/core@^7.9.0":
   version "7.9.0"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.9.0.tgz#ac977b538b77e132ff706f3b8a4dbad09c03c56e"
   integrity sha512-kWc7L0fw1xwvI0zi8OKVBuxRVefwGOrKSQMvrQ3dW+bIIavBY3/NpXmpjMy7bQnLgwgzWQZ8TlM57YHpHNHz4w==
@@ -31,10 +31,10 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/generator@^7.0.0", "@babel/generator@^7.8.0", "@babel/generator@^7.9.0":
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.9.0.tgz#0f67adea4ec39dad6e63345f70eec33014d78c89"
-  integrity sha512-onl4Oy46oGCzymOXtKMQpI7VXtCbTSHK1kqBydZ6AmzuNcacEVqGk9tZtAS+48IA9IstZcDCgIg8hQKnb7suRw==
+"@babel/generator@^7.0.0", "@babel/generator@^7.9.0", "@babel/generator@^7.9.3":
+  version "7.9.4"
+  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.9.4.tgz#12441e90c3b3c4159cdecf312075bf1a8ce2dbce"
+  integrity sha512-rjP8ahaDy/ouhrvCoU1E5mqaitWrxwuNGU+dy1EpaoK48jZay4MdkskKGIMHLZNewg8sAsqpGSREJwP0zH3YQA==
   dependencies:
     "@babel/types" "^7.9.0"
     jsesc "^2.5.1"
@@ -139,7 +139,7 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.0.0", "@babel/parser@^7.1.0", "@babel/parser@^7.3.3", "@babel/parser@^7.6.4", "@babel/parser@^7.8.6", "@babel/parser@^7.9.0":
+"@babel/parser@^7.0.0", "@babel/parser@^7.1.0", "@babel/parser@^7.3.3", "@babel/parser@^7.8.6", "@babel/parser@^7.9.0":
   version "7.9.4"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.9.4.tgz#68a35e6b0319bbc014465be43828300113f2f2e8"
   integrity sha512-bC49otXX6N0/VYhgOMh4gnP26E9xnDZK3TmbNpxYzzz9BQLBosQwfyOe9/cXUU3txYhTzLCbcqd5c8y/OmCjHA==
@@ -200,13 +200,13 @@
     minimist "^1.2.0"
 
 "@codemod/core@^1.0.0":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@codemod/core/-/core-1.0.5.tgz#fec0755f897ffa7b06b3c664beff425d2afbc11b"
-  integrity sha512-Pc8ts5YqtcDeBDmllWb84TuWLrn8QBtddpb/mwbxsPLSIL5xukiVzERx5c4GHH+67O5fejtLlb4PApr26sDXMQ==
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@codemod/core/-/core-1.0.6.tgz#139c5fd1848ae6a9ecbff4c07a3889c0d66240ce"
+  integrity sha512-+3ZaYwnkYr4XoFFQ2jhigOatXS7G21w3rD9ep2eGexq0TP4n+RSun568DHjpA6FK68cwz41sdEJzT3XRq+n7Zg==
   dependencies:
-    "@babel/core" "^7.8.0"
-    "@babel/generator" "^7.8.0"
-    "@codemod/parser" "^1.0.4"
+    "@babel/core" "^7.9.0"
+    "@babel/generator" "^7.9.3"
+    "@codemod/parser" "^1.0.7"
     recast "^0.18.1"
     resolve "^1.12.0"
 
@@ -217,12 +217,12 @@
   dependencies:
     "@babel/types" "^7.8.0"
 
-"@codemod/parser@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@codemod/parser/-/parser-1.0.4.tgz#11aa1b8b89498fa4c3fd32cf7d54325e159563e0"
-  integrity sha512-CVZ4cfrOruc2daVEOV8p9YdDAoIsgrzwLXFLKX/YoKzamLxKWDXT1YMHxR95xYw+suJg6k0/VyuUCa5NGjKN/g==
+"@codemod/parser@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@codemod/parser/-/parser-1.0.7.tgz#00e69a53c88c8dc1f8b2f6b75346485cdd4a5f87"
+  integrity sha512-GSrc8CvwDN24GluYQ7xDBMMQo5mFJO6cs2/jZssfDjOalRKKKb9UqvkNYFuYXXm4buRAF23Soih9bpPhcDxA/g==
   dependencies:
-    "@babel/parser" "^7.6.4"
+    "@babel/parser" "^7.9.0"
 
 "@evocateur/libnpmaccess@^3.1.2":
   version "3.1.2"
