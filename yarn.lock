@@ -121,6 +121,11 @@
   dependencies:
     "@babel/types" "^7.8.3"
 
+"@babel/helper-validator-identifier@^7.9.0":
+  version "7.9.0"
+  resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.9.0.tgz#ad53562a7fc29b3b9a91bbf7d10397fd146346ed"
+  integrity sha512-6G8bQKjOh+of4PV/ThDm/rRqlU7+IGoJuofpagU5GlEl29Vv0RGqqt86ZGRV8ZuSOY3o+8yXl5y782SMcG7SHw==
+
 "@babel/helpers@^7.9.0":
   version "7.9.0"
   resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.9.0.tgz#ab2c1bc4821af766cab51d4868a5038874ea5a12"
@@ -182,7 +187,7 @@
     globals "^11.1.0"
     lodash "^4.17.13"
 
-"@babel/types@7.7.2", "@babel/types@^7.0.0", "@babel/types@^7.3.0", "@babel/types@^7.7.2", "@babel/types@^7.8.0", "@babel/types@^7.8.3", "@babel/types@^7.8.6", "@babel/types@^7.9.0":
+"@babel/types@7.7.2", "@babel/types@^7.0.0", "@babel/types@^7.3.0", "@babel/types@^7.7.2", "@babel/types@^7.8.3", "@babel/types@^7.8.6", "@babel/types@^7.9.0":
   version "7.7.2"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.7.2.tgz#550b82e5571dcd174af576e23f0adba7ffc683f7"
   integrity sha512-YTf6PXoh3+eZgRCBzzP25Bugd2ngmpQVrk7kXX0i5N9BO7TFBtIgZYs7WtxtOGs8e6A4ZI7ECkbBCEHeXocvOA==
@@ -211,11 +216,11 @@
     resolve "^1.12.0"
 
 "@codemod/matchers@^1.0.5":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@codemod/matchers/-/matchers-1.0.9.tgz#4c275e34a7fbd7bc7891ce37135427db909f458e"
-  integrity sha512-uEXCFdZcGndixUlJRLqPzjqQBp1LqYSTDKSHrHW71JoIFJ/A56lVOKqmKPP4Jz153UF0uJgTB1sa94FYwOKcYA==
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@codemod/matchers/-/matchers-1.0.10.tgz#96af3f8fb266036ac0ebce73598c2056f11e147c"
+  integrity sha512-o72rx8MLDIma0VWLEmNVMZ/nS1dTnyKN0tzE6t0E/kMWN+WJxetkf0j0ieH5pywYye9aaHl05m5jBogvjH4xzw==
   dependencies:
-    "@babel/types" "^7.8.0"
+    "@babel/types" "^7.9.0"
 
 "@codemod/parser@^1.0.4":
   version "1.0.4"
