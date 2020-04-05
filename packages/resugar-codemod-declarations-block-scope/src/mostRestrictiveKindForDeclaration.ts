@@ -13,7 +13,9 @@ export default function mostRestrictiveKindForDeclaration(
 ): DeclarationKind {
   let ids = path.getBindingIdentifiers();
   let { scope } = path;
-  let isConst = path.node.declarations.every(declaration => !!declaration.init);
+  let isConst = path.node.declarations.every(
+    (declaration) => !!declaration.init
+  );
 
   if (t.isSwitchCase(path.parent)) {
     return 'var';
@@ -42,19 +44,19 @@ export default function mostRestrictiveKindForDeclaration(
 function bindingCouldBeBlockScope(binding: Binding): boolean {
   // Are there duplicate declarations?
   if (
-    binding.constantViolations.some(path => t.isVariableDeclarator(path.node))
+    binding.constantViolations.some((path) => t.isVariableDeclarator(path.node))
   ) {
     return false;
   }
 
   let definition = binding.path as NodePath<t.VariableDeclarator>;
-  let definitionBlockParent = definition.findParent(path =>
+  let definitionBlockParent = definition.findParent((path) =>
     path.isBlockParent()
   );
 
   if (
     [...binding.referencePaths, ...binding.constantViolations].some(
-      reference =>
+      (reference) =>
         // Does this reference come before the definition?
         reference.node.start! < definition.node.start! ||
         // Does this reference exist outside the declaration block?
@@ -69,7 +71,7 @@ function bindingCouldBeBlockScope(binding: Binding): boolean {
   }
 
   let functionParent = definition.getFunctionParent();
-  let loopParent = definition.findParent(path => path.isLoop());
+  let loopParent = definition.findParent((path) => path.isLoop());
 
   // Is this declaration within a loop in the current function scope?
   if (
@@ -79,7 +81,7 @@ function bindingCouldBeBlockScope(binding: Binding): boolean {
     // Is any reference within a closure?
     if (
       binding.referencePaths.some(
-        reference => reference.getFunctionParent() !== functionParent
+        (reference) => reference.getFunctionParent() !== functionParent
       )
     ) {
       return false;
@@ -113,7 +115,7 @@ function isDescendant(descendant: NodePath, ancestor: NodePath): boolean {
  */
 function isBindingAssignedBeforeUse(binding: Binding): boolean {
   // Loop assignees are always initialized before use.
-  let loopParent = binding.path.findParent(path => path.isLoop());
+  let loopParent = binding.path.findParent((path) => path.isLoop());
   if (loopParent !== null) {
     if (loopParent.isForOfStatement() || loopParent.isForInStatement()) {
       if (
@@ -133,13 +135,13 @@ function isBindingAssignedBeforeUse(binding: Binding): boolean {
   // theoretically be extended to do more advanced static analysis, e.g.
   // traversing into conditional blocks and ternary expressions to see if all
   // code paths assign to this variable, but this should get the common case.
-  let blockParent = binding.path.findParent(path => path.isBlockParent());
+  let blockParent = binding.path.findParent((path) => path.isBlockParent());
   let earliestUsage = Math.min(
-    ...binding.referencePaths.map(reference => reference.node.start!)
+    ...binding.referencePaths.map((reference) => reference.node.start!)
   );
   if (
     binding.constantViolations.some(
-      path =>
+      (path) =>
         path.node.end! < earliestUsage &&
         path.isAssignmentExpression() &&
         path.parentPath.isExpressionStatement() &&

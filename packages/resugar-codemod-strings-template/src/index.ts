@@ -4,7 +4,7 @@ import * as t from '@babel/types';
 import convertStringEscaping from './convertStringEscaping';
 import { Token } from '@resugar/extra-types';
 
-export default function(): Babel.PluginItem {
+export default function (): Babel.PluginItem {
   let tokens!: Array<Token>;
 
   return {
@@ -21,8 +21,8 @@ export default function(): Babel.PluginItem {
         if (parts) {
           path.replaceWith(combine(parts));
         }
-      }
-    }
+      },
+    },
   };
 
   interface StringLiteralWithMetadata {
@@ -77,7 +77,7 @@ export default function(): Babel.PluginItem {
       let annotatedPart: StringLiteralWithMetadata = {
         node: part,
         prefix: '',
-        suffix: ''
+        suffix: '',
       };
 
       if (previousPart) {
@@ -98,7 +98,7 @@ export default function(): Babel.PluginItem {
 
     if (
       annotatedParts.every(
-        part => t.isStringLiteral(part.node) && !part.prefix && !part.suffix
+        (part) => t.isStringLiteral(part.node) && !part.prefix && !part.suffix
       )
     ) {
       return combineStrings(parts);

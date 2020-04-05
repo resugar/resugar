@@ -2,7 +2,7 @@ import * as Babel from '@babel/core';
 import { NodePath } from '@babel/traverse';
 import * as t from '@babel/types';
 
-export default function(): Babel.PluginItem {
+export default function (): Babel.PluginItem {
   return {
     name: '@resugar/codemod-objects-concise',
     visitor: {
@@ -22,7 +22,7 @@ export default function(): Babel.PluginItem {
             node.computed
           )
         );
-      }
-    }
+      },
+    },
   };
 }

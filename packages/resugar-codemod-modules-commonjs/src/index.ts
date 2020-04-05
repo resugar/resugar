@@ -11,48 +11,52 @@ export interface Options {
   safeFunctionIdentifiers?: Array<string>;
 }
 
-export default function(): Babel.PluginItem {
-  return {
-    name: '@resugar/codemod-modules-commonjs',
-    visitor: {
-      Program(path: NodePath<t.Program>, state?: { opts?: Options }): void {
-        unwrapIIFE(path);
-        removeUseStrictDirective(path);
-        rewriteImportsAndExports(
-          path,
-          state && state.opts ? state.opts.safeFunctionIdentifiers : undefined,
-          (state && state.opts && state.opts.forceDefaultExport) || false
-        );
-      },
+export default function (): Babel.PluginItem {
+  return (
+    {
+      name: '@resugar/codemod-modules-commonjs',
+      visitor: {
+        Program(path: NodePath<t.Program>, state?: { opts?: Options }): void {
+          unwrapIIFE(path);
+          removeUseStrictDirective(path);
+          rewriteImportsAndExports(
+            path,
+            state && state.opts
+              ? state.opts.safeFunctionIdentifiers
+              : undefined,
+            (state && state.opts && state.opts.forceDefaultExport) || false
+          );
+        },
 
-      ReferencedIdentifier(
-        path: NodePath<t.Identifier>,
-        state?: { opts?: Options }
-      ): void {
-        // TODO: Warn about `require`, `module`, and `exports` global references.
-        let { node } = path;
-        let onWarn = (state && state.opts && state.opts.onWarn) || (() => {});
+        ReferencedIdentifier(
+          path: NodePath<t.Identifier>,
+          state?: { opts?: Options }
+        ): void {
+          // TODO: Warn about `require`, `module`, and `exports` global references.
+          let { node } = path;
+          let onWarn = (state && state.opts && state.opts.onWarn) || (() => {});
 
-        if (node.name === 'require' && !path.scope.hasBinding('require')) {
-          let source = extractRequirePathNode(path.parent);
+          if (node.name === 'require' && !path.scope.hasBinding('require')) {
+            let source = extractRequirePathNode(path.parent);
 
-          if (source) {
+            if (source) {
+              onWarn(
+                path.parent,
+                'unsupported-import',
+                `Unsupported 'require' call cannot be transformed into an import`
+              );
+            }
+          } else if (node.name === 'exports') {
             onWarn(
-              path.parent,
-              'unsupported-import',
-              `Unsupported 'require' call cannot be transformed into an import`
+              node,
+              'unsupported-export',
+              `Unsupported export cannot be turned into an 'export' statement`
             );
           }
-        } else if (node.name === 'exports') {
-          onWarn(
-            node,
-            'unsupported-export',
-            `Unsupported export cannot be turned into an 'export' statement`
-          );
-        }
-      }
-    }
-  } as Babel.PluginItem;
+        },
+      },
+    } as Babel.PluginItem
+  );
 }
 
 /**
@@ -116,7 +120,7 @@ function rewriteImportsAndExports(
   const collectedDefaultImportNames: Array<string> = [];
   const firstUnsafeLocation = getFirstUnsafeLocation(path, [
     'require',
-    ...safeFunctionIdentifiers
+    ...safeFunctionIdentifiers,
   ]);
 
   for (const statement of body) {
@@ -148,7 +152,7 @@ function rewriteStatementsAsDefaultExport(programPath: NodePath<t.Program>) {
         exportPaths.push(path);
         path.skip();
       }
-    }
+    },
   } as Babel.Visitor);
 
   if (exportPaths.length === 0) {
@@ -181,7 +185,7 @@ function rewriteStatementsAsDefaultExport(programPath: NodePath<t.Program>) {
   lastStatement.scope.registerDeclaration(
     firstStatement.insertBefore(
       t.variableDeclaration('var', [
-        t.variableDeclarator(exportsIdentifier, t.objectExpression([]))
+        t.variableDeclarator(exportsIdentifier, t.objectExpression([])),
       ])
     )[0]
   );
@@ -347,7 +351,7 @@ function mapExportObject(node: t.Node): Array<t.ExportDeclaration> | undefined {
     result.push(
       t.exportNamedDeclaration(
         t.variableDeclaration('let', [
-          t.variableDeclarator(property.key, property.value)
+          t.variableDeclarator(property.key, property.value),
         ]),
         []
       )
@@ -438,15 +442,15 @@ function rewriteNamedFunctionExpressionExport(
       // no-op
     } else {
       declaration = t.variableDeclaration('let', [
-        t.variableDeclarator(localId, right.node)
+        t.variableDeclarator(localId, right.node),
       ]);
     }
 
     replaceWithAndPreserveComments(path, [
       declaration,
       t.exportNamedDeclaration(null, [
-        t.exportSpecifier(localId, t.identifier(exportName))
-      ])
+        t.exportSpecifier(localId, t.identifier(exportName)),
+      ]),
     ]);
   }
 
@@ -471,7 +475,7 @@ function rewriteNamedIdentifierExport(
         null,
         [t.exportSpecifier(localBinding, property.node)],
         null
-      )
+      ),
     ];
   } else {
     const localBinding = generateUidIdentifier(path.scope, property.node.name);
@@ -480,22 +484,22 @@ function rewriteNamedIdentifierExport(
       replacements = [
         t.exportNamedDeclaration(
           t.variableDeclaration('let', [
-            t.variableDeclarator(localBinding, right.node)
+            t.variableDeclarator(localBinding, right.node),
           ]),
           [],
           null
-        )
+        ),
       ];
     } else {
       replacements = [
         t.variableDeclaration('let', [
-          t.variableDeclarator(localBinding, right.node)
+          t.variableDeclarator(localBinding, right.node),
         ]),
         t.exportNamedDeclaration(
           null,
           [t.exportSpecifier(localBinding, property.node)],
           null
-        )
+        ),
       ];
     }
   }
@@ -519,7 +523,7 @@ function rewriteNamedValueExport(
       path,
       t.exportNamedDeclaration(
         t.variableDeclaration('let', [
-          t.variableDeclarator(t.identifier(property.node.name), right.node)
+          t.variableDeclarator(t.identifier(property.node.name), right.node),
         ]),
         [],
         null
@@ -539,13 +543,13 @@ function rewriteNamedValueExport(
 
     replaceWithAndPreserveComments(path, [
       t.variableDeclaration('let', [
-        t.variableDeclarator(localBinding, right.node)
+        t.variableDeclarator(localBinding, right.node),
       ]),
       t.exportNamedDeclaration(
         null,
         [t.exportSpecifier(localBinding, t.identifier(property.node.name))],
         null
-      )
+      ),
     ]);
   }
 
@@ -602,7 +606,7 @@ function rewriteSingleExportRequire(
     pathNode: t.StringLiteral;
   }> = [];
 
-  declarations.forEach(declaration => {
+  declarations.forEach((declaration) => {
     let { id, init } = declaration;
 
     if (!t.isIdentifier(id) || !init) {
@@ -618,7 +622,7 @@ function rewriteSingleExportRequire(
     extractableDeclarations.push({
       declaration,
       id,
-      pathNode
+      pathNode,
     });
   });
 
@@ -639,7 +643,7 @@ function rewriteSingleExportRequire(
   );
 
   collectedDefaultImportNames.push(
-    ...extractableDeclarations.map(d => d.id.name)
+    ...extractableDeclarations.map((d) => d.id.name)
   );
   return true;
 }
@@ -726,7 +730,7 @@ function rewriteDeconstructedImportRequire(path: NodePath): boolean {
   replaceWithAndPreserveComments(
     path,
     t.importDeclaration(
-      bindings.map(binding =>
+      bindings.map((binding) =>
         t.importSpecifier(
           t.identifier(binding.localName),
           t.identifier(binding.exportName)
@@ -787,7 +791,7 @@ function removeDefaultAccesses(
       ) {
         path.replaceWith(object);
       }
-    }
+    },
   });
 }
 

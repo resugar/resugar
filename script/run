@@ -6,7 +6,7 @@ require('./_commands/run.ts')
   .then((code = 0) => {
     process.exitCode = code;
   })
-  .catch(error => {
+  .catch((error) => {
     process.stderr.write(error.stack + '\n');
     process.exitCode = 1;
   });

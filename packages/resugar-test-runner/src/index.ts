@@ -46,7 +46,9 @@ export function defineTestSuites(
 
   function transform(code: string, config?: any): string {
     const result = codemodTransform(code, {
-      plugins: [...plugins.map(plugin => (config ? [plugin, config] : plugin))]
+      plugins: [
+        ...plugins.map((plugin) => (config ? [plugin, config] : plugin)),
+      ],
     });
 
     if (!result || !result.code) {

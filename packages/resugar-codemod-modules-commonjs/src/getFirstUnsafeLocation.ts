@@ -10,7 +10,7 @@ function hasMemberAccess(assignmentPath: NodePath<t.Node>): boolean {
     MemberExpression(path: NodePath<t.MemberExpression>) {
       found = true;
       path.skip();
-    }
+    },
   });
   return found;
 }
@@ -32,7 +32,7 @@ function hasIdentifier(
         found = true;
         path.skip();
       }
-    }
+    },
   });
   return found;
 }
@@ -82,7 +82,7 @@ export default function getFirstUnsafeLocation(
     ThrowStatement(path: NodePath<t.ThrowStatement>) {
       resultLoc = Math.min(resultLoc, path.node.start!);
       path.skip();
-    }
+    },
   });
 
   return resultLoc;

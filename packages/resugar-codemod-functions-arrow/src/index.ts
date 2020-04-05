@@ -3,7 +3,7 @@ import { NodePath } from '@babel/traverse';
 import * as Babel from '@babel/core';
 import { replaceWithAndPreserveComments } from '@resugar/helper-comments';
 
-export default function(): Babel.PluginItem {
+export default function (): Babel.PluginItem {
   return {
     name: '@resugar/codemod-functions-arrow',
     visitor: {
@@ -106,8 +106,8 @@ export default function(): Babel.PluginItem {
             object.node.async
           )
         );
-      }
-    }
+      },
+    },
   };
 }
 
@@ -132,7 +132,7 @@ function referencesThisOrArguments(path: NodePath): boolean {
         result = true;
         identPath.stop();
       }
-    }
+    },
   } as any);
 
   return result;
@@ -152,7 +152,7 @@ function referencesArguments(path: NodePath): boolean {
         result = true;
         identPath.stop();
       }
-    }
+    },
   });
 
   return result;
