@@ -24,10 +24,6 @@ aliases:
 
 version: 2
 jobs:
-  node-v8-latest:
-    docker:
-      - image: circleci/node:8
-    <<: *unit_test
   node-v10-latest:
     docker:
       - image: circleci/node:10
@@ -45,7 +41,6 @@ workflows:
   version: 2
   test:
     jobs:
-      - node-v8-latest
       - node-v10-latest
       - node-v11-latest
       - node-v12-latest

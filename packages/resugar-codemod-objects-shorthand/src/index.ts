@@ -3,10 +3,10 @@ import { NodePath } from '@babel/traverse';
 import * as Babel from '@babel/core';
 import {
   addTrailingComment,
-  copyLeadingComments
+  copyLeadingComments,
 } from '@resugar/helper-comments';
 
-export default function(): Babel.PluginItem {
+export default function (): Babel.PluginItem {
   return {
     name: '@resugar/codemod-objects-shorthand',
     visitor: {
@@ -28,7 +28,7 @@ export default function(): Babel.PluginItem {
         node.shorthand = true;
 
         copyLeadingComments(node.value, node.key, addTrailingComment);
-      }
-    }
+      },
+    },
   };
 }

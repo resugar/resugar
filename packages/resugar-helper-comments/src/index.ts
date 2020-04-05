@@ -34,15 +34,18 @@ export function replaceWithAndPreserveComments(
       copyTrailingComments(path.node, lastNode);
     }
 
-    registerDeclarations(path.scope, (path.replaceWithMultiple(
-      nodeOrNodes
-    ) as unknown) as Array<NodePath<t.Node>>);
+    registerDeclarations(
+      path.scope,
+      (path.replaceWithMultiple(nodeOrNodes) as unknown) as
+        Array<NodePath<t.Node>>
+    );
   } else {
     copyLeadingComments(path.node as RecastNode, nodeOrNodes as RecastNode);
     copyTrailingComments(path.node, nodeOrNodes);
-    registerDeclarations(path.scope, (path.replaceWith(
-      nodeOrNodes
-    ) as unknown) as NodePath<t.Node>);
+    registerDeclarations(
+      path.scope,
+      (path.replaceWith(nodeOrNodes) as unknown) as NodePath<t.Node>
+    );
   }
 }
 
@@ -64,10 +67,10 @@ export function addTrailingComment(comment: t.Comment, to: Node): void {
   comments.push({
     ...comment,
     leading: false,
-    trailing: true
+    trailing: true,
   });
 
-  to.trailingComments = comments.filter(comment => comment.trailing);
+  to.trailingComments = comments.filter((comment) => comment.trailing);
 }
 
 export function addLeadingComment(comment: t.Comment, to: Node): void {
@@ -77,10 +80,10 @@ export function addLeadingComment(comment: t.Comment, to: Node): void {
   comments.push({
     ...comment,
     leading: true,
-    trailing: false
+    trailing: false,
   });
 
-  to.leadingComments = comments.filter(comment => comment.leading);
+  to.leadingComments = comments.filter((comment) => comment.leading);
 }
 
 export type CommentPredicate = (comment: RecastComment) => boolean;
@@ -118,7 +121,7 @@ export function copyLeadingComments(
   to: Node,
   addComment = addLeadingComment
 ): void {
-  copyComments(from, to, comment => comment.leading === true, addComment);
+  copyComments(from, to, (comment) => comment.leading === true, addComment);
 }
 
 export function copyTrailingComments(
@@ -126,5 +129,5 @@ export function copyTrailingComments(
   to: Node,
   addComment = addTrailingComment
 ): void {
-  copyComments(from, to, comment => comment.trailing === true, addComment);
+  copyComments(from, to, (comment) => comment.trailing === true, addComment);
 }

@@ -11,7 +11,7 @@ function replaceSparseArrayElementsWithUndefined(
   elements: t.ArrayExpression['elements']
 ): Array<t.Expression | t.SpreadElement> {
   const undefinedNode = t.identifier('undefined');
-  return elements.map(element => element || undefinedNode);
+  return elements.map((element) => element || undefinedNode);
 }
 
 /**
@@ -25,7 +25,7 @@ function replaceSparseArrayElementsWithUndefined(
  * this.min.apply(this, args); // before
  * this.min(...args);          // after
  */
-export default function(): Babel.PluginItem {
+export default function (): Babel.PluginItem {
   return {
     name: '@resugar/codemod-calls-spread',
     visitor: {
@@ -46,11 +46,11 @@ export default function(): Babel.PluginItem {
           ),
           m.callExpression(m.memberExpression(thisFn, m.identifier('apply')), [
             m.thisExpression(),
-            args
+            args,
           ]),
           m.callExpression(m.memberExpression(bareFn, m.identifier('apply')), [
             m.nullLiteral(),
-            args
+            args,
           ])
         );
 
@@ -71,7 +71,7 @@ export default function(): Babel.PluginItem {
             );
           }
         );
-      }
-    }
+      },
+    },
   };
 }

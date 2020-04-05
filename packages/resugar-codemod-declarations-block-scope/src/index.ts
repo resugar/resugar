@@ -9,7 +9,7 @@ export interface Options {
   disableConst?: boolean | ((path: NodePath) => boolean);
 }
 
-export default function(): Babel.PluginItem {
+export default function (): Babel.PluginItem {
   return {
     name: '@resugar/codemod-declarations-block-scope',
     visitor: {
@@ -39,8 +39,8 @@ export default function(): Babel.PluginItem {
             `'var' declaration cannot be converted to block scope`
           );
         }
-      }
-    }
+      },
+    },
   };
 }
 

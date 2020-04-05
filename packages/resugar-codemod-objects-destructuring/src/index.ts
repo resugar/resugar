@@ -2,7 +2,7 @@ import * as t from '@babel/types';
 import { NodePath } from '@babel/traverse';
 import * as Babel from '@babel/core';
 
-export default function(): Babel.PluginItem {
+export default function (): Babel.PluginItem {
   return {
     name: '@resugar/codemod-objects-destructuring',
     visitor: {
@@ -21,7 +21,7 @@ export default function(): Babel.PluginItem {
               elements.length,
               t.variableDeclarator(
                 t.objectPattern(
-                  elements.map(declarator =>
+                  elements.map((declarator) =>
                     t.objectProperty(
                       declarator.id,
                       declarator.id as t.Expression,
@@ -53,7 +53,7 @@ export default function(): Babel.PluginItem {
           t.assignmentExpression(
             '=',
             t.objectPattern(
-              assignments.map(assignment =>
+              assignments.map((assignment) =>
                 t.objectProperty(
                   t.identifier((assignment.left as t.Identifier).name),
                   t.identifier((assignment.left as t.Identifier).name),
@@ -69,7 +69,7 @@ export default function(): Babel.PluginItem {
 
       SequenceExpression(path: NodePath<t.SequenceExpression>) {
         let {
-          node: { expressions }
+          node: { expressions },
         } = path;
 
         for (let index = 0; index < expressions.length; index++) {
@@ -98,8 +98,8 @@ export default function(): Babel.PluginItem {
         if (expressions.length === 1) {
           path.replaceWith(expressions[0]);
         }
-      }
-    }
+      },
+    },
   };
 }
 

@@ -13,17 +13,19 @@ export default async function main(
   stdout: typeof process.stdout
 ): Promise<number> {
   const input = await readStream(stdin);
-  stdout.write(transform(input, {
-    plugins: [
-      codemodDeclarationsBlockScope,
-      codemodFunctionsArrow,
-      codemodModulesCommonJS,
-      codemodObjectsConcise,
-      codemodObjectsDestructuring,
-      codemodObjectsShorthand,
-      codemodStringsTemplate
-    ]
-  }).code as string);
+  stdout.write(
+    transform(input, {
+      plugins: [
+        codemodDeclarationsBlockScope,
+        codemodFunctionsArrow,
+        codemodModulesCommonJS,
+        codemodObjectsConcise,
+        codemodObjectsDestructuring,
+        codemodObjectsShorthand,
+        codemodStringsTemplate,
+      ],
+    }).code as string
+  );
   return 0;
 }
 
@@ -31,7 +33,7 @@ async function readStream(
   input: NodeJS.ReadStream,
   encoding = 'utf8'
 ): Promise<string> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     let data = '';
 
     input.setEncoding(encoding);
