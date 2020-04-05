@@ -6181,9 +6181,9 @@ realpath-native@^2.0.0:
   integrity sha512-v1SEYUOXXdbBZK8ZuNgO4TBjamPsiSgcFr0aP+tEKpQZK8vooEUqV6nm6Cv502mX4NF2EfsnVqtNAHG+/6Ur1Q==
 
 recast@^0.18.1, recast@^0.18.5:
-  version "0.18.9"
-  resolved "https://registry.yarnpkg.com/recast/-/recast-0.18.9.tgz#d546975a36f0f1fd2f7a994a19c0a66d1f6555ac"
-  integrity sha512-1c7Mn0WqPe0l2SonCuyRofWfQjO/mHqx5KjiS5QAHO/CZGR/u8mosMydCLi7LFE9X9pZ9LyyU6SNyH034fdZZQ==
+  version "0.18.10"
+  resolved "https://registry.yarnpkg.com/recast/-/recast-0.18.10.tgz#605ebbe621511eb89b6356a7e224bff66ed91478"
+  integrity sha512-XNvYvkfdAN9QewbrxeTOjgINkdY/odTgTS56ZNEWL9Ml0weT4T3sFtvnTuF+Gxyu46ANcRm1ntrF6F5LAJPAaQ==
   dependencies:
     ast-types "0.13.3"
     esprima "~4.0.0"
