@@ -126,11 +126,6 @@
   dependencies:
     "@babel/types" "^7.8.3"
 
-"@babel/helper-validator-identifier@^7.9.5":
-  version "7.9.5"
-  resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.9.5.tgz#90977a8e6fbf6b431a7dc31752eee233bf052d80"
-  integrity sha512-/8arLKUFq882w4tWGj9JYzRpAlZgiWUJ+dtteNTDqrRBz9Iguck9Rn3ykuBDoUwh2TO4tSAJlrxDUOXWklJe4g==
-
 "@babel/helpers@^7.10.0":
   version "7.10.0"
   resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.10.0.tgz#634400a0977b8dcf7b311761a77ca94ed974b3b6"
@@ -6847,9 +6842,9 @@ sort-object-keys@^1.1.3:
   integrity sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==
 
 sort-package-json@^1.22.1:
-  version "1.42.3"
-  resolved "https://registry.yarnpkg.com/sort-package-json/-/sort-package-json-1.42.3.tgz#cbd04f9432418d5a0d601ac67744ca82f8c83338"
-  integrity sha512-K00EtaQEJ58/I/jSzX5zkY9WD5hD8+iJhN/aO+zANGirMsX+MC/q7cLZoox7c6pE8QXbz+SozNK3w/ZoIvktRg==
+  version "1.43.0"
+  resolved "https://registry.yarnpkg.com/sort-package-json/-/sort-package-json-1.43.0.tgz#6c37c09aa3cf9dc41782907588984f2013dc767a"
+  integrity sha512-44jXWI9nyUGDgOOk2SCrrkuPgC1pLgsLwpl0Qd9Cc+rZR7GpNRBidTFxAW08Zq/FSxn4gDyJBnV0aNE0/bSQAg==
   dependencies:
     detect-indent "^6.0.0"
     detect-newline "3.1.0"
