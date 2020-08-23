@@ -6292,6 +6292,16 @@ recast@^0.19.0:
     private "^0.1.8"
     source-map "~0.6.1"
 
+recast@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/recast/-/recast-0.20.0.tgz#c5712965b27b1f0c5f8aeaa68ba6b68e2e7e88f8"
+  integrity sha512-4fxsO5q170W1Ihz3uUXY5dkb+zNTK0CUt44K7avxhbkXbLFAzorfpj+7PNlrYWI2AaNWGzcnNuKwIQfVp1d6XQ==
+  dependencies:
+    ast-types "0.13.3"
+    esprima "~4.0.0"
+    private "^0.1.8"
+    source-map "~0.6.1"
+
 redent@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/redent/-/redent-1.0.0.tgz#cf916ab1fd5f1f16dfb20822dd6ec7f730c2afde"
