@@ -1828,6 +1828,13 @@ ast-types@0.13.3:
   resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.13.3.tgz#50da3f28d17bdbc7969a3a2d83a0e4a72ae755a7"
   integrity sha512-XTZ7xGML849LkQP86sWdQzfhwbt3YwIO6MqbX9mUNYY98VKaaVZP7YNNm70IpwecbkkxmfC5IYAzOQ/2p29zRA==
 
+ast-types@^0.13.4:
+  version "0.13.4"
+  resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.13.4.tgz#ee0d77b343263965ecc3fb62da16e7222b2b6782"
+  integrity sha512-x1FCFnFifvYDDzTaLII71vG5uvDwgtmDTEVWAxrgeiR8VjMONcCXJx7E+USjDtHlwFmt9MysbqgF9b9Vjr6w+w==
+  dependencies:
+    tslib "^2.0.1"
+
 astral-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/astral-regex/-/astral-regex-1.0.0.tgz#6c8c3fb827dd43ee3918f27b82782ab7658a6fd9"
@@ -6293,11 +6300,11 @@ recast@^0.19.0:
     source-map "~0.6.1"
 
 recast@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/recast/-/recast-0.20.0.tgz#c5712965b27b1f0c5f8aeaa68ba6b68e2e7e88f8"
-  integrity sha512-4fxsO5q170W1Ihz3uUXY5dkb+zNTK0CUt44K7avxhbkXbLFAzorfpj+7PNlrYWI2AaNWGzcnNuKwIQfVp1d6XQ==
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/recast/-/recast-0.20.1.tgz#390e9d76027004303cf25934b11014a1097a6967"
+  integrity sha512-WffDnzdel4JZE6NV/gWkOPLvQOerO6PyIpwkS6hVt5ApKyn7GcF2FjdSKVaZIHkDa4B7XM0gz/nBzy0hsQg/lw==
   dependencies:
-    ast-types "0.13.3"
+    ast-types "^0.13.4"
     esprima "~4.0.0"
     private "^0.1.8"
     source-map "~0.6.1"
@@ -7446,6 +7453,11 @@ tslib@^1.9.0:
   version "1.9.3"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
+
+tslib@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
+  integrity sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==
 
 tsutils@^3.17.1:
   version "3.17.1"
