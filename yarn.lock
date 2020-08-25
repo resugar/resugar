@@ -1828,10 +1828,10 @@ ast-types@0.13.3:
   resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.13.3.tgz#50da3f28d17bdbc7969a3a2d83a0e4a72ae755a7"
   integrity sha512-XTZ7xGML849LkQP86sWdQzfhwbt3YwIO6MqbX9mUNYY98VKaaVZP7YNNm70IpwecbkkxmfC5IYAzOQ/2p29zRA==
 
-ast-types@^0.13.4:
-  version "0.13.4"
-  resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.13.4.tgz#ee0d77b343263965ecc3fb62da16e7222b2b6782"
-  integrity sha512-x1FCFnFifvYDDzTaLII71vG5uvDwgtmDTEVWAxrgeiR8VjMONcCXJx7E+USjDtHlwFmt9MysbqgF9b9Vjr6w+w==
+ast-types@0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.14.1.tgz#0b415043770d7a2cbe4b2770271cbd7d2c9f61b9"
+  integrity sha512-pfSiukbt23P1qMhNnsozLzhMLBs7EEeXqPyvPmnuZM+RMfwfqwDbSVKYflgGuVI7/VehR4oMks0igzdNAg4VeQ==
   dependencies:
     tslib "^2.0.1"
 
@@ -6300,11 +6300,11 @@ recast@^0.19.0:
     source-map "~0.6.1"
 
 recast@^0.20.0:
-  version "0.20.1"
-  resolved "https://registry.yarnpkg.com/recast/-/recast-0.20.1.tgz#390e9d76027004303cf25934b11014a1097a6967"
-  integrity sha512-WffDnzdel4JZE6NV/gWkOPLvQOerO6PyIpwkS6hVt5ApKyn7GcF2FjdSKVaZIHkDa4B7XM0gz/nBzy0hsQg/lw==
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/recast/-/recast-0.20.2.tgz#0152546463334533ce7d6d17e3cebc9e8f83ba9b"
+  integrity sha512-awmBZTpZ4465cZPTBF9bmd/GNF2p7EMBVXxbWfwWAm44PuLMu2p68DSW+a3c0iacdATt2HZCR9gHp2b8d+7Rog==
   dependencies:
-    ast-types "^0.13.4"
+    ast-types "0.14.1"
     esprima "~4.0.0"
     private "^0.1.8"
     source-map "~0.6.1"
