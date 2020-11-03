@@ -248,7 +248,7 @@
     globals "^11.1.0"
     lodash "^4.17.19"
 
-"@babel/types@7.7.2", "@babel/types@^7.0.0", "@babel/types@^7.10.4", "@babel/types@^7.11.0", "@babel/types@^7.12.1", "@babel/types@^7.12.5", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.7.2", "@babel/types@^7.8.0":
+"@babel/types@7.7.2", "@babel/types@^7.0.0", "@babel/types@^7.10.4", "@babel/types@^7.11.0", "@babel/types@^7.12.1", "@babel/types@^7.12.5", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.7.2", "@babel/types@^7.9.0":
   version "7.7.2"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.7.2.tgz#550b82e5571dcd174af576e23f0adba7ffc683f7"
   integrity sha512-YTf6PXoh3+eZgRCBzzP25Bugd2ngmpQVrk7kXX0i5N9BO7TFBtIgZYs7WtxtOGs8e6A4ZI7ECkbBCEHeXocvOA==
@@ -282,11 +282,11 @@
     resolve "^1.12.0"
 
 "@codemod/matchers@^1.0.5":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@codemod/matchers/-/matchers-1.0.9.tgz#4c275e34a7fbd7bc7891ce37135427db909f458e"
-  integrity sha512-uEXCFdZcGndixUlJRLqPzjqQBp1LqYSTDKSHrHW71JoIFJ/A56lVOKqmKPP4Jz153UF0uJgTB1sa94FYwOKcYA==
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@codemod/matchers/-/matchers-1.0.11.tgz#7ee317dc4d97d0114b0f1f78a9218acea745e2f8"
+  integrity sha512-UX7bFDw1sZRK+lKfpfbPi2syufuSMLNeoOiUpEwM5CWfKssdsNuI9bCOiovj78SPh2YjxkDuULCOZIEGewyY/g==
   dependencies:
-    "@babel/types" "^7.8.0"
+    "@babel/types" "^7.9.0"
 
 "@codemod/parser@^1.0.7":
   version "1.0.7"
