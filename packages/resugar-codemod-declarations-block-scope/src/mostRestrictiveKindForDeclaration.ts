@@ -21,6 +21,18 @@ export default function mostRestrictiveKindForDeclaration(
     return 'var';
   }
 
+  if (
+    t.isConditional(path.parent) &&
+    (path.parent.consequent === path.node ||
+      path.parent.alternate === path.node)
+  ) {
+    return 'var';
+  }
+
+  if (t.isLoop(path.parent) && path.parent.body === path.node) {
+    return 'var';
+  }
+
   for (let id in ids) {
     let binding = scope.getBinding(id)!;
 
